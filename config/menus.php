@@ -35,4 +35,19 @@ return [
             ],
         ],
     ],
+    'branch' => [
+        'index' => [
+            'title' => 'Gudang',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Gudang',
+                    'route' => 'branch.index',
+                ],
+            ],
+        ],
+    ],
 ];

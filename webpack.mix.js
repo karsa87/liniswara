@@ -23,6 +23,10 @@ mix.combine('resources/theme/admin/js/custom/apps/user-management/permissions/up
 mix.combine('resources/theme/admin/js/custom/apps/user-management/roles/list/add.js', 'public/assets/js/custom/apps/user-management/roles/list/add.js');
 mix.combine('resources/theme/admin/js/custom/apps/user-management/roles/list/update-role.js', 'public/assets/js/custom/apps/user-management/roles/list/update-role.js');
 
+mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/table.js', 'public/assets/js/custom/apps/user-management/users/list/table.js');
+mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/add.js', 'public/assets/js/custom/apps/user-management/users/list/add.js');
+mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/update.js', 'public/assets/js/custom/apps/user-management/users/list/update.js');
+
 /**
 * plugins specific issue workaround for webpack
 * @see https://github.com/morrisjs/morris.js/issues/697

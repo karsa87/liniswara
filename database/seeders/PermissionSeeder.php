@@ -17,9 +17,51 @@ class PermissionSeeder extends Seeder
     {
         $this->rolePermissions = collect();
 
+        $this->createPermissionRole();
         $this->createPermissionUser();
+        $this->createPermissionBranch();
 
         $this->syncPermissionRole();
+    }
+
+    private function createPermissionRole()
+    {
+        $permissions = [
+            [
+                'name' => 'Role - Tambah',
+                'key' => 'role-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Role - Edit',
+                'key' => 'role-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Role - View',
+                'key' => 'role-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Role - Delete',
+                'key' => 'role-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
     }
 
     private function createPermissionUser()
@@ -30,7 +72,7 @@ class PermissionSeeder extends Seeder
                 'key' => 'user-tambah',
                 'role-slug' => [
                     'developer',
-                    'superadmin',
+                    'super-admin',
                 ],
             ],
             [
@@ -38,7 +80,7 @@ class PermissionSeeder extends Seeder
                 'key' => 'user-edit',
                 'role-slug' => [
                     'developer',
-                    'superadmin',
+                    'super-admin',
                 ],
             ],
             [
@@ -46,7 +88,7 @@ class PermissionSeeder extends Seeder
                 'key' => 'user-view',
                 'role-slug' => [
                     'developer',
-                    'superadmin',
+                    'super-admin',
                 ],
             ],
             [
@@ -54,7 +96,47 @@ class PermissionSeeder extends Seeder
                 'key' => 'user-delete',
                 'role-slug' => [
                     'developer',
-                    'superadmin',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionBranch()
+    {
+        $permissions = [
+            [
+                'name' => 'Gudang - Tambah',
+                'key' => 'branch-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Gudang - Edit',
+                'key' => 'branch-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Gudang - View',
+                'key' => 'branch-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Gudang - Delete',
+                'key' => 'branch-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
                 ],
             ],
         ];
@@ -87,7 +169,7 @@ class PermissionSeeder extends Seeder
     private function syncPermissionRole()
     {
         foreach ($this->rolePermissions->groupBy('role_slug') as $roleSlug => $permissions) {
-            $role = Role::whereSlug($roleSlug)->first();
+            $role = Role::whereSlug($roleSlug)->withoutGlobalScope('exclude_developer')->first();
             if ($role) {
                 $role->permissions()->syncWithoutDetaching(
                     collect($permissions)->pluck('permission_id')->toArray()

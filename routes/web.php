@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
@@ -92,6 +93,26 @@ Route::middleware('auth')->group(function () {
             ->name('delete');
         Route::put('update/{id?}', [
             UserController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('branch.')->prefix('branch/')->group(function () {
+        Route::get('/', [
+            BranchController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            BranchController::class, 'index',
+        ])->name('index.list');
+        Route::post('store', [
+            BranchController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            BranchController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            BranchController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
     });
