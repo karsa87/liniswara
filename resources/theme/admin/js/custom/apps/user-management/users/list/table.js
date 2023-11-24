@@ -179,6 +179,9 @@ var KTUsersList = function () {
                 // Select parent row
                 const parent = e.target.closest('tr');
 
+                // Select parent row
+                const button = e.target.closest('a');
+
                 // Get user name
                 const userName = parent.querySelectorAll('td')[0].querySelector('span').innerText;
 

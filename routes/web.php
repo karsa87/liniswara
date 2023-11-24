@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -115,5 +117,42 @@ Route::middleware('auth')->group(function () {
             BranchController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
+    });
+
+    Route::name('supplier.')->prefix('supplier/')->group(function () {
+        Route::get('/', [
+            SupplierController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            SupplierController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            SupplierController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            SupplierController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            SupplierController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            SupplierController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('ajax.')->prefix('ajax')->group(function () {
+        Route::name('region.')->prefix('region')->group(function () {
+            Route::get('list', [
+                RegionController::class,
+                'list',
+            ])->name('list');
+            Route::get('province', [
+                RegionController::class,
+                'province',
+            ])->name('province');
+        });
     });
 });

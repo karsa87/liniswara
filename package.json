@@ -9,7 +9,8 @@
         "prod": "npm run production",
         "production": "mix --production",
         "beautify": "./vendor/bin/pint",
-        "checkcode": "./vendor/bin/phpstan"
+        "checkcode": "./vendor/bin/phpstan analyze",
+        "checkchangecode": "./vendor/bin/phpstan analyse $(git diff --cached --name-only --diff-filter=ACM -- '*.php')"
     },
     "devDependencies": {
         "@ckeditor/ckeditor5-alignment": "38.1.1",

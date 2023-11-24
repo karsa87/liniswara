@@ -14,6 +14,9 @@ let mix = require('laravel-mix');
 
 // copy images folder into laravel public folder
 mix.copyDirectory('resources/theme/admin', 'public/assets');
+
+mix.combine('resources/theme/admin/js/custom/components/region/list.js', 'public/assets/js/custom/components/region/list.js');
+
 mix.combine('resources/theme/admin/js/custom/authentication/sign-in/general.js', 'public/assets/js/custom/authentication/sign-in/general.js');
 
 mix.combine('resources/theme/admin/js/custom/apps/user-management/permissions/list.js', 'public/assets/js/custom/apps/user-management/permissions/list.js');
@@ -26,6 +29,10 @@ mix.combine('resources/theme/admin/js/custom/apps/user-management/roles/list/upd
 mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/table.js', 'public/assets/js/custom/apps/user-management/users/list/table.js');
 mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/add.js', 'public/assets/js/custom/apps/user-management/users/list/add.js');
 mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/update.js', 'public/assets/js/custom/apps/user-management/users/list/update.js');
+
+mix.combine('resources/theme/admin/js/custom/apps/master/supplier/list/table.js', 'public/assets/js/custom/apps/master/supplier/list/table.js');
+mix.combine('resources/theme/admin/js/custom/apps/master/supplier/list/add.js', 'public/assets/js/custom/apps/master/supplier/list/add.js');
+
 
 /**
 * plugins specific issue workaround for webpack

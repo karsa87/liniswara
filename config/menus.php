@@ -50,4 +50,19 @@ return [
             ],
         ],
     ],
+    'supplier' => [
+        'index' => [
+            'title' => 'Pemasok',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Pemasok',
+                    'route' => 'supplier.index',
+                ],
+            ],
+        ],
+    ],
 ];
