@@ -1,0 +1,232 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Customer\CustomerStoreUpdateRequest;
+use App\Http\Resources\Admin\Customer\CustomerListResource;
+use App\Http\Resources\Admin\Customer\CustomerResource;
+use App\Models\Customer;
+use App\Models\CustomerAddress;
+use App\Models\User;
+use App\Utils\Phone;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+
+class CustomerController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = User::with([
+                'customer',
+                'customer.address.province:id,name',
+                'customer.address.regency:id,name',
+                'customer.address.district:id,name',
+                'customer.address.village:id,name',
+            ])
+                ->has('customer')
+                ->offset($request->get('start', 0))
+                ->limit($request->get('length', 10));
+
+            if ($q = $request->input('search.value')) {
+                $query->where(function ($qUser) use ($q) {
+                    $qUser->whereLike('name', $q)
+                        ->orWhereLike('company', $q)
+                        ->orWhereLike('phone', $q)
+                        ->orWhereLike('email', $q);
+                });
+            }
+
+            if (is_numeric($request->input('order.0.column'))) {
+                $column = $request->input('order.0.column');
+                $columnData = $request->input("columns.$column.data");
+                $sorting = $request->input('order.0.dir');
+
+                if ($sorting == 'desc') {
+                    $query->orderBy($columnData, 'DESC');
+                } else {
+                    $query->orderBy($columnData, 'ASC');
+                }
+            }
+
+            $customers = $query->get();
+
+            $totalAll = User::has('customer')->count();
+
+            return CustomerListResource::collection($customers)->additional([
+                'recordsTotal' => $totalAll,
+                'recordsFiltered' => $customers->count(),
+            ]);
+        }
+
+        return view('admin.customer.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(CustomerStoreUpdateRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = new User();
+            $user->fill([
+                'name' => $request->input('customer_name'),
+                'email' => $request->input('customer_email'),
+                'company' => $request->input('customer_company'),
+                'phone_number' => Phone::normalize($request->input('customer_phone_number')),
+                'password' => $request->input('customer_password'),
+            ]);
+
+            if ($user->save()) {
+                $customer = new Customer();
+                $customer->fill([
+                    'type' => $request->input('customer_type'),
+                    'user_id' => $user->id,
+                ]);
+
+                if (
+                    $customer->save()
+                    && $request->input('customer_address')
+                ) {
+                    $address = new CustomerAddress();
+                    $address->fill([
+                        'customer_id' => $customer->id,
+                        'name' => 'Alamat 1',
+                        'address' => $request->input('customer_address'),
+                        'province_id' => $request->input('customer_province_id'),
+                        'regency_id' => $request->input('customer_regency_id'),
+                        'district_id' => $request->input('customer_district_id'),
+                        'village_id' => $request->input('customer_village_id'),
+                        'is_default' => true,
+                    ]);
+                    $address->save();
+                }
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
+                'exception_message' => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $customer = Customer::find($id);
+
+        if (is_null($customer)) {
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
+            ]);
+        }
+
+        return new CustomerResource($customer);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(CustomerStoreUpdateRequest $request, string $id)
+    {
+        $customer = Customer::find($id);
+
+        if (is_null($customer)) {
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
+            ]);
+        }
+
+        DB::beginTransaction();
+        try {
+            $user = $customer->user;
+            $user->fill([
+                'name' => $request->input('customer_name'),
+                'email' => $request->input('customer_email'),
+                'company' => $request->input('customer_company'),
+                'phone_number' => Phone::normalize($request->input('customer_phone_number')),
+            ]);
+
+            if (! is_null($request->input('customer_password'))) {
+                $user->password = $request->input('customer_password');
+            }
+
+            if ($user->save()) {
+                $customer->fill([
+                    'type' => $request->input('customer_type'),
+                    'user_id' => $user->id,
+                ]);
+
+                if (
+                    $customer->save()
+                    && $request->input('customer_address')
+                ) {
+                    $customer->loadMissing('address');
+                    $address = $customer->address;
+                    $address->fill([
+                        'customer_id' => $customer->id,
+                        'address' => $request->input('customer_address'),
+                        'province_id' => $request->input('customer_province_id'),
+                        'regency_id' => $request->input('customer_regency_id'),
+                        'district_id' => $request->input('customer_district_id'),
+                        'village_id' => $request->input('customer_village_id'),
+                        'is_default' => true,
+                    ]);
+                    $address->save();
+                }
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
+                'exception_message' => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $customer = Customer::find($id);
+
+        if (is_null($customer)) {
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
+            ]);
+        }
+
+        try {
+            if ($customer->user->delete()) {
+                $customer->delete();
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
+                'exception_message' => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json();
+    }
+}

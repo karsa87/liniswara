@@ -110,6 +110,7 @@ var KTRegionSearchModal = function () {
 
                 let target = table.dataset.targetElement ?? '';
                 document.querySelector(`[data-kt-region="${target}region_description"]`).innerHTML = `${village}, Kec. ${district} <br/> ${regency} - ${province}`;
+                document.querySelector(`[data-kt-region="${target}region_description"]`).value = `${village}, Kec. ${district} \r \n ${regency} - ${province}`;
 
                 document.querySelector(`[data-kt-region="${target}province_id"]`).value = provinceId;
                 document.querySelector(`[data-kt-region="${target}regency_id"]`).value = regencyId;

@@ -12,29 +12,6 @@ var KTSuppliersAddSupplier = function () {
         $('[data-kt-modal-select-region="province"]').select2({
             dropdownParent: $('#kt_modal_add_supplier')
         });
-        // $('.select2').select2({
-        //     minimumInputLength: 3,
-        //     allowClear: true,
-        //     placeholder: 'masukkan nama propinsi',
-        //     ajax: {
-        //         dataType: 'json',
-        //         url: 'action/daftarProvinsi.php',
-        //         delay: 800,
-        //         data: function(params) {
-        //             return {
-        //                 search: params.term
-        //             }
-        //         },
-        //         processResults: function (data, page) {
-        //         return {
-        //             results: data
-        //         };
-        //         },
-        //     }
-        // }).on('select2:select', function (evt) {
-        //     var data = $(".select2 option:selected").text();
-        //     alert("Data yang dipilih adalah "+data);
-        // });
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         var validator = FormValidation.formValidation(
@@ -76,7 +53,7 @@ var KTSuppliersAddSupplier = function () {
             // Validate form before submit
             if (validator) {
                 validator.validate().then(function (status) {
-                    console.log('validated!');
+
 
                     if (status == 'Valid') {
                         // Show loading indication

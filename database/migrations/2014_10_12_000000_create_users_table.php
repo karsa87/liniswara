@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('company')->nullable();
             $table->string('name');
             $table->string('phone_number')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('profile_photo_id')->nullable();
             $table->foreignId('current_team_id')->nullable();

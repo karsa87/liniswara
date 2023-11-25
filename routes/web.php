@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\CustomerAddressController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -141,6 +143,54 @@ Route::middleware('auth')->group(function () {
             SupplierController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
+    });
+
+    Route::name('customer.')->prefix('customer/')->group(function () {
+        Route::get('/', [
+            CustomerController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            CustomerController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            CustomerController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            CustomerController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            CustomerController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            CustomerController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+
+        Route::name('customer_address.')->prefix('{customerId}/customer-address')->group(function () {
+            Route::get('/', [
+                CustomerAddressController::class, 'index',
+            ])->name('index');
+            Route::get('/index/list', [
+                CustomerAddressController::class, 'index',
+            ])->name('index.list');
+            Route::get('/detail/{id?}', [
+                CustomerAddressController::class, 'show',
+            ])->where('id', '[0-9]+')
+                ->name('show');
+            Route::post('store', [
+                CustomerAddressController::class, 'store',
+            ])->name('store');
+            Route::delete('delete/{id?}', [
+                CustomerAddressController::class, 'destroy',
+            ])->where('id', '[0-9]+')
+                ->name('delete');
+            Route::put('update/{id?}', [
+                CustomerAddressController::class, 'update',
+            ])->where('id', '[0-9]+')
+                ->name('update');
+        });
     });
 
     Route::name('ajax.')->prefix('ajax')->group(function () {

@@ -287,7 +287,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog" target="_blank">
+                    <a class="menu-link {{ str(request()->route()->getName())->contains(['customer.', 'customer.customer_address.']) ? 'active here' : '' }}" href="{{ route('customer.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-profile-user fs-2">
                                 <span class="path1"></span>
