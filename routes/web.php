@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\CollectorController;
 use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
@@ -143,6 +144,30 @@ Route::middleware('auth')->group(function () {
             ->name('delete');
         Route::put('update/{id?}', [
             SupplierController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('collector.')->prefix('collector/')->group(function () {
+        Route::get('/', [
+            CollectorController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            CollectorController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            CollectorController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            CollectorController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            CollectorController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            CollectorController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
     });

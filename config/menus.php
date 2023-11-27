@@ -67,14 +67,14 @@ return [
     ],
     'customer' => [
         'index' => [
-            'title' => 'Pelanggan',
+            'title' => 'Agen',
             'breadcrumbs' => [
                 [
                     'name' => 'Master Data',
                     'route' => '#',
                 ],
                 [
-                    'name' => 'Pelanggan',
+                    'name' => 'Agen',
                     'route' => 'customer.index',
                 ],
             ],
@@ -82,18 +82,18 @@ return [
     ],
     'customer_address' => [
         'index' => [
-            'title' => 'Alamat Pelanggan',
+            'title' => 'Alamat Agen',
             'breadcrumbs' => [
                 [
                     'name' => 'Master Data',
                     'route' => '#',
                 ],
                 [
-                    'name' => 'Pelanggan',
+                    'name' => 'Agen',
                     'route' => 'customer.index',
                 ],
                 [
-                    'name' => 'Alamat Pelanggan',
+                    'name' => 'Alamat Agen',
                     'route' => '#',
                 ],
             ],
@@ -110,6 +110,21 @@ return [
                 [
                     'name' => 'Ekspedisi',
                     'route' => 'expedition.index',
+                ],
+            ],
+        ],
+    ],
+    'collector' => [
+        'index' => [
+            'title' => 'Penagih',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Penagih',
+                    'route' => 'collector.index',
                 ],
             ],
         ],

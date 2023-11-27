@@ -34,7 +34,7 @@
                         <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_regions" data-url="{{ route('ajax.region.list') }}" data-target-element="{{ $target_element }}">
                             <thead>
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="min-w-125px">Provinsi</th>
+                                    <th class="min-w-125px">Alamat</th>
                                     <th class="min-w-125px">Kota / Kabupaten</th>
                                     <th class="min-w-125px">Kecamatan</th>
                                     <th class="min-w-125px">Desa / Kelurahan</th>

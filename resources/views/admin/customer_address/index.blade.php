@@ -13,7 +13,7 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <input type="text" data-kt-customer-address-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search customer" />
+                <input type="text" data-kt-customer-address-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Alamat Agen" />
             </div>
             <!--end::Search-->
         </div>
@@ -24,7 +24,7 @@
             <div class="d-flex justify-content-end" data-kt-customer-address-table-toolbar="base">
                 <!--begin::Add customer-->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer_address">
-                <i class="ki-duotone ki-plus fs-2"></i>Tambah Pemasok</button>
+                <i class="ki-duotone ki-plus fs-2"></i>Tambah Alamat Agen</button>
                 <!--end::Add customer-->
             </div>
             <!--end::Toolbar-->
@@ -38,7 +38,7 @@
                         <!--begin::Modal header-->
                         <div class="modal-header" id="kt_modal_add_customer_address_header">
                             <!--begin::Modal title-->
-                            <h2 class="fw-bold">Tambah Pemasok</h2>
+                            <h2 class="fw-bold">Tambah Alamat Agen</h2>
                             <!--end::Modal title-->
                             <!--begin::Close-->
                             <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-customers-modal-action="close">
@@ -106,7 +106,7 @@
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
                                             <label class="fw-semibold fs-6 mb-2">
-                                                Provinsi
+                                                Alamat
                                                 <button type="button" class="btn btn-icon btn-light-primary w-100px h-30px me-3" data-bs-stacked-modal="#kt_modal_search_region">
                                                     <i class="ki-duotone ki-geolocation fs-3">
                                                         <span class="path1"></span>
@@ -129,7 +129,7 @@
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
                                             <label class="fs-5 fw-bold form-label mb-2">
-                                                <span class="required">Alamat</span>
+                                                <span class="required">Alamat Detail</span>
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
@@ -175,7 +175,7 @@
                     <th class="min-w-125px">Desa / Kelurahan</th>
                     <th class="min-w-125px">Kecamatan</th>
                     <th class="min-w-125px">Kota / Kabupaten</th>
-                    <th class="min-w-125px">Provinsi</th>
+                    <th class="min-w-125px">Alamat</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>

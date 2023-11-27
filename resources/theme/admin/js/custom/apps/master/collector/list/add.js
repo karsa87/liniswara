@@ -1,17 +1,17 @@
 "use strict";
 
 // Class definition
-var KTExpeditionsAddExpedition = function () {
+var KTCollectorsAddCollector = function () {
     // Shared variables
-    const element = document.getElementById('kt_modal_add_expedition');
-    const form = element.querySelector('#kt_modal_add_expedition_form');
+    const element = document.getElementById('kt_modal_add_collector');
+    const form = element.querySelector('#kt_modal_add_collector_form');
     const modal = new bootstrap.Modal(element);
     var dropzone = '';
 
     // Init add schedule modal
-    var initAddExpedition = () => {
+    var initAddCollector = () => {
         // For more info about Dropzone plugin visit:  https://www.dropzonejs.com/#usage
-		dropzone = new Dropzone("#kt_modal_add_update_expedition_logo", {
+		dropzone = new Dropzone("#kt_modal_add_update_collector_signin", {
 			url: "file/upload", // Set the url for your upload script location
             paramName: "file", // The name that will be used to transfer the file
             maxFiles: 1,
@@ -30,7 +30,7 @@ var KTExpeditionsAddExpedition = function () {
             },
             init: function() {
                 this.on('success',function(file, result){
-                    document.querySelector('input[name="expedition_logo_id"]').value = result.id;
+                    document.querySelector('input[name="collector_signin_file_id"]').value = result.id;
 
                     Swal.fire({
                         title: "Upload",
@@ -67,7 +67,7 @@ var KTExpeditionsAddExpedition = function () {
                         }
                     }).then(function (result) {
                         if (result.isConfirmed) {
-                            axios.delete('file/delete/' + document.querySelector('input[name="expedition_logo_id"]').value, {})
+                            axios.delete('file/delete/' + document.querySelector('input[name="collector_signin_file_id"]').value, {})
                             .then(response => {
                                 if (response) {
                                     Swal.fire({
@@ -138,10 +138,17 @@ var KTExpeditionsAddExpedition = function () {
             form,
             {
                 fields: {
-                    'expedition_name': {
+                    'collector_name': {
                         validators: {
                             notEmpty: {
                                 message: 'Full name is required'
+                            }
+                        }
+                    },
+                    'collector_email': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Valid email address is required'
                             }
                         }
                     },
@@ -159,13 +166,15 @@ var KTExpeditionsAddExpedition = function () {
         );
 
         // Submit button handler
-        const submitButton = element.querySelector('[data-kt-expeditions-modal-action="submit"]');
+        const submitButton = element.querySelector('[data-kt-collectors-modal-action="submit"]');
         submitButton.addEventListener('click', e => {
             e.preventDefault();
 
             // Validate form before submit
             if (validator) {
                 validator.validate().then(function (status) {
+
+
                     if (status == 'Valid') {
                         // Show loading indication
                         submitButton.setAttribute('data-kt-indicator', 'on');
@@ -177,28 +186,16 @@ var KTExpeditionsAddExpedition = function () {
                         // Check axios library docs: https://axios-http.com/docs/intro
                         let param = new FormData(form);
                         let formSubmit = null;
-                        if (param.get('expedition_id') != null && param.get('expedition_id') != undefined  && param.get('expedition_id') != '') {
+                        if (param.get('collector_id') != null && param.get('collector_id') != undefined  && param.get('collector_id') != '') {
+                            console.log('masuk update');
                             param.append('_method', 'PUT');
 
                             formSubmit = axios.post(
-                                submitButton.closest('form').getAttribute('action-update') + '/' + param.get('expedition_id'),
-                                param,
-                                {
-                                    headers: {
-                                        "Content-Type": "multipart/form-data",
-                                    }
-                                }
+                                submitButton.closest('form').getAttribute('action-update') + '/' + param.get('collector_id'),
+                                param
                             )
                         } else {
-                            formSubmit = axios.post(
-                                submitButton.closest('form').getAttribute('action'),
-                                param,
-                                {
-                                    headers: {
-                                        "Content-Type": "multipart/form-data",
-                                    }
-                                }
-                            );
+                            formSubmit = axios.post(submitButton.closest('form').getAttribute('action'), param);
                         }
 
                         formSubmit.then(function (response) {
@@ -259,7 +256,7 @@ var KTExpeditionsAddExpedition = function () {
 
                             // Enable button
                             submitButton.disabled = false;
-                            KTExpeditionsList.refresh();
+                            KTCollectorsList.refresh();
                         });
                     } else {
                         // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -278,7 +275,7 @@ var KTExpeditionsAddExpedition = function () {
         });
 
         // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-expeditions-modal-action="cancel"]');
+        const cancelButton = element.querySelector('[data-kt-collectors-modal-action="cancel"]');
         cancelButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -312,7 +309,7 @@ var KTExpeditionsAddExpedition = function () {
         });
 
         // Close button handler
-        const closeButton = element.querySelector('[data-kt-expeditions-modal-action="close"]');
+        const closeButton = element.querySelector('[data-kt-collectors-modal-action="close"]');
         closeButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -349,7 +346,7 @@ var KTExpeditionsAddExpedition = function () {
     return {
         // Public functions
         init: function () {
-            initAddExpedition();
+            initAddCollector();
         },
         addImage(name, full_url)
         {
@@ -370,5 +367,5 @@ var KTExpeditionsAddExpedition = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTExpeditionsAddExpedition.init();
+    KTCollectorsAddCollector.init();
 });

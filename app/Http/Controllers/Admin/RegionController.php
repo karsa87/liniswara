@@ -23,11 +23,12 @@ class RegionController extends Controller
                 $qSupplier->whereLike('name', $q)
                     ->orWhereHas('district', function ($qDistrict) use ($q) {
                         $qDistrict->whereLike('name', $q);
-                    })->orWhereHas('district.regency', function ($qRegency) use ($q) {
-                        $qRegency->whereLike('name', $q);
-                    })->orWhereHas('district.regency.province', function ($qProvince) use ($q) {
-                        $qProvince->whereLike('name', $q);
                     });
+                // ->orWhereHas('district.regency', function ($qRegency) use ($q) {
+                //     $qRegency->whereLike('name', $q);
+                // })->orWhereHas('district.regency.province', function ($qProvince) use ($q) {
+                //     $qProvince->whereLike('name', $q);
+                // });
             });
         }
 

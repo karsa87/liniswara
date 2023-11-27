@@ -136,9 +136,10 @@ class ExpeditionController extends Controller
         }
 
         try {
-            if ($expedition->logo->delete()) {
-                $expedition->delete();
+            if ($expedition->logo) {
+                $expedition->logo->delete();
             }
+            $expedition->delete();
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],

@@ -13,7 +13,7 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <input type="text" data-kt-branchs-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Branchs" />
+                <input type="text" data-kt-branchs-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Gudang" />
             </div>
             <!--end::Search-->
         </div>
@@ -26,7 +26,7 @@
                 <span class="path1"></span>
                 <span class="path2"></span>
                 <span class="path3"></span>
-            </i>Add Branch</button>
+            </i>Add Gudang</button>
             <!--end::Button-->
         </div>
         <!--end::Card toolbar-->
@@ -60,7 +60,7 @@
             <!--begin::Modal header-->
             <div class="modal-header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Add a Branch</h2>
+                <h2 class="fw-bold">Add a Gudang</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-branchs-modal-action="close">
@@ -81,8 +81,8 @@
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
                         <label class="fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Branch Name</span>
-                            <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Branch names is required to be unique.">
+                            <span class="required">Gudang Name</span>
+                            <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Gudang names is required to be unique.">
                                 <i class="ki-duotone ki-information fs-7">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
@@ -125,7 +125,7 @@
             <!--begin::Modal header-->
             <div class="modal-header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Update Branch</h2>
+                <h2 class="fw-bold">Update Gudang</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-branchs-modal-action="close">
@@ -169,8 +169,8 @@
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
                         <label class="fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Branch Name</span>
-                            <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Branch names is required to be unique.">
+                            <span class="required">Gudang Name</span>
+                            <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Gudang names is required to be unique.">
                                 <i class="ki-duotone ki-information fs-7">
                                     <span class="path1"></span>
                                     <span class="path2"></span>

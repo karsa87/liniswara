@@ -13,7 +13,7 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <input type="text" data-kt-supplier-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search supplier" />
+                <input type="text" data-kt-supplier-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Pemasok" />
             </div>
             <!--end::Search-->
         </div>
@@ -150,7 +150,7 @@
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
                                             <label class="fw-semibold fs-6 mb-2">
-                                                Provinsi
+                                                Alamat
                                                 <button type="button" class="btn btn-icon btn-light-primary w-100px h-30px me-3" data-bs-stacked-modal="#kt_modal_search_region">
                                                     <i class="ki-duotone ki-geolocation fs-3">
                                                         <span class="path1"></span>
@@ -175,7 +175,7 @@
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
                                             <label class="fs-5 fw-bold form-label mb-2">
-                                                <span class="required">Alamat</span>
+                                                <span class="required">Alamat Detail</span>
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
