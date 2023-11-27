@@ -65,4 +65,53 @@ return [
             ],
         ],
     ],
+    'customer' => [
+        'index' => [
+            'title' => 'Pelanggan',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Pelanggan',
+                    'route' => 'customer.index',
+                ],
+            ],
+        ],
+    ],
+    'customer_address' => [
+        'index' => [
+            'title' => 'Alamat Pelanggan',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Pelanggan',
+                    'route' => 'customer.index',
+                ],
+                [
+                    'name' => 'Alamat Pelanggan',
+                    'route' => '#',
+                ],
+            ],
+        ],
+    ],
+    'expedition' => [
+        'index' => [
+            'title' => 'Ekspedisi',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Ekspedisi',
+                    'route' => 'expedition.index',
+                ],
+            ],
+        ],
+    ],
 ];

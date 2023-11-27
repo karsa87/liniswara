@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\ExpeditionController;
+use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -191,6 +193,40 @@ Route::middleware('auth')->group(function () {
             ])->where('id', '[0-9]+')
                 ->name('update');
         });
+    });
+
+    Route::name('expedition.')->prefix('expedition/')->group(function () {
+        Route::get('/', [
+            ExpeditionController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            ExpeditionController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            ExpeditionController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            ExpeditionController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            ExpeditionController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            ExpeditionController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('file.')->prefix('file/')->group(function () {
+        Route::post('upload', [
+            FileController::class, 'upload',
+        ])->name('upload');
+        Route::delete('delete/{id?}', [
+            FileController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
     });
 
     Route::name('ajax.')->prefix('ajax')->group(function () {

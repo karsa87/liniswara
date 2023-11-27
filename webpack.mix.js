@@ -33,6 +33,9 @@ mix.combine('resources/theme/admin/js/custom/apps/user-management/users/list/upd
 mix.combine('resources/theme/admin/js/custom/apps/master/supplier/list/table.js', 'public/assets/js/custom/apps/master/supplier/list/table.js');
 mix.combine('resources/theme/admin/js/custom/apps/master/supplier/list/add.js', 'public/assets/js/custom/apps/master/supplier/list/add.js');
 
+mix.combine('resources/theme/admin/js/custom/apps/master/expedition/list/table.js', 'public/assets/js/custom/apps/master/expedition/list/table.js');
+mix.combine('resources/theme/admin/js/custom/apps/master/expedition/list/add.js', 'public/assets/js/custom/apps/master/expedition/list/add.js');
+
 
 /**
 * plugins specific issue workaround for webpack
