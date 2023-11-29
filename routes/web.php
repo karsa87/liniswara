@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CollectorController;
 use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
@@ -240,6 +241,30 @@ Route::middleware('auth')->group(function () {
             ->name('delete');
         Route::put('update/{id?}', [
             ExpeditionController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('category.')->prefix('category/')->group(function () {
+        Route::get('/', [
+            CategoryController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            CategoryController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            CategoryController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            CategoryController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            CategoryController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            CategoryController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
     });

@@ -59,7 +59,7 @@
                                 <input type="hidden" name="customer_id" />
                                 <!--begin::Scroll-->
                                 <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
-                                    <div class="d-flex flex-column flex-md-row gap-5">
+                                    {{-- <div class="d-flex flex-column flex-md-row gap-5">
                                         <!--begin::Input group-->
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
@@ -78,7 +78,7 @@
                                             <!--end::Select2-->
                                         </div>
                                         <!--end::Input group-->
-                                    </div>
+                                    </div> --}}
 
                                     <div class="d-flex flex-column flex-md-row gap-5">
                                         <!--begin::Input group-->
