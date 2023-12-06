@@ -143,7 +143,7 @@
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['category.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['category.','product.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -163,7 +163,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link {{ str(request()->route()->getName())->contains(['product.']) ? 'active here' : '' }}" href="{{ route('product.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

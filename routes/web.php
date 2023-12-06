@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SupplierController;
@@ -269,6 +270,37 @@ Route::middleware('auth')->group(function () {
             ->name('update');
     });
 
+    Route::name('product.')->prefix('product/')->group(function () {
+        Route::get('/', [
+            ProductController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            ProductController::class, 'index',
+        ])->name('index.list');
+        Route::get('/create', [
+            ProductController::class, 'create',
+        ])->name('create');
+        Route::get('/detail/{id?}', [
+            ProductController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::get('/edit/{id?}', [
+            ProductController::class, 'edit',
+        ])->where('id', '[0-9]+')
+            ->name('edit');
+        Route::post('store', [
+            ProductController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            ProductController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            ProductController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
     Route::name('file.')->prefix('file/')->group(function () {
         Route::post('upload', [
             FileController::class, 'upload',
@@ -290,5 +322,9 @@ Route::middleware('auth')->group(function () {
                 'province',
             ])->name('province');
         });
+        Route::get('category', [
+            CategoryController::class,
+            'ajax_list_category',
+        ])->name('category.list');
     });
 });

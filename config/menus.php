@@ -129,4 +129,19 @@ return [
             ],
         ],
     ],
+    'product' => [
+        'index' => [
+            'title' => 'Produk',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Katalog Produk',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Produk',
+                    'route' => 'product.index',
+                ],
+            ],
+        ],
+    ],
 ];
