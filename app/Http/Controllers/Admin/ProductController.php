@@ -292,4 +292,39 @@ class ProductController extends Controller
 
         return response()->json();
     }
+
+    public function ajax_list_product(Request $request)
+    {
+        $params = $request->all();
+        $excludeIds = collect(json_decode($request->get('exid', '[]')));
+        $excludeIds->unique()->filter();
+
+        $query = Product::query();
+
+        $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        if ($excludeIds->isNotEmpty()) {
+            $query->whereNotIn('id', $excludeIds);
+        }
+
+        $products = $query->limit(20)->get();
+        $list = [];
+        foreach ($products as $product) {
+            $list[] = [
+                'id' => $product->id,
+                'text' => $product->name,
+                'name' => $product->name,
+                'code' => $product->code,
+                'stock' => $product->stock,
+            ];
+        }
+
+        return response()->json([
+            'items' => $list,
+            'count' => count($list),
+        ]);
+    }
 }

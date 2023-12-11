@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RegionController;
+use App\Http\Controllers\Admin\RestockController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
@@ -301,6 +302,37 @@ Route::middleware('auth')->group(function () {
             ->name('update');
     });
 
+    Route::name('restock.')->prefix('restock/')->group(function () {
+        Route::get('/', [
+            RestockController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            RestockController::class, 'index',
+        ])->name('index.list');
+        Route::get('/create', [
+            RestockController::class, 'create',
+        ])->name('create');
+        Route::get('/detail/{id?}', [
+            RestockController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::get('/edit/{id?}', [
+            RestockController::class, 'edit',
+        ])->where('id', '[0-9]+')
+            ->name('edit');
+        Route::post('store', [
+            RestockController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            RestockController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            RestockController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
     Route::name('file.')->prefix('file/')->group(function () {
         Route::post('upload', [
             FileController::class, 'upload',
@@ -326,5 +358,13 @@ Route::middleware('auth')->group(function () {
             CategoryController::class,
             'ajax_list_category',
         ])->name('category.list');
+        Route::get('branch', [
+            BranchController::class,
+            'ajax_list_branch',
+        ])->name('branch.list');
+        Route::get('product', [
+            ProductController::class,
+            'ajax_list_product',
+        ])->name('product.list');
     });
 });

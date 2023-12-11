@@ -42,6 +42,9 @@ mix.combine('resources/theme/admin/js/custom/apps/master/collector/list/add.js',
 mix.combine('resources/theme/admin/js/custom/apps/master/category/list/table.js', 'public/assets/js/custom/apps/master/category/list/table.js');
 mix.combine('resources/theme/admin/js/custom/apps/master/category/list/add.js', 'public/assets/js/custom/apps/master/category/list/add.js');
 
+mix.combine('resources/theme/admin/js/custom/apps/transaction/restock/list/table.js', 'public/assets/js/custom/apps/transaction/restock/list/table.js');
+mix.combine('resources/theme/admin/js/custom/apps/transaction/restock/list/add.js', 'public/assets/js/custom/apps/transaction/restock/list/add.js');
+
 
 /**
 * plugins specific issue workaround for webpack

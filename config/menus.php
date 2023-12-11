@@ -144,4 +144,19 @@ return [
             ],
         ],
     ],
+    'restock' => [
+        'index' => [
+            'title' => 'Re-Stok',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Katalog Produk',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Re-Stock',
+                    'route' => 'restock.index',
+                ],
+            ],
+        ],
+    ],
 ];
