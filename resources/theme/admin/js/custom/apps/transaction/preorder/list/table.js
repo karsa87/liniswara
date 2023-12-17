@@ -198,7 +198,7 @@ var KTPreordersList = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        return `
+                        let result = `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <i class="ki-duotone ki-down fs-5 ms-1"></i>
                             </a>
@@ -216,11 +216,26 @@ var KTPreordersList = function () {
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_status" data-bs-toggle="modal" data-bs-target="#kt_modal_update_status_preorder" data-id='${row.id}'>Status</a>
                                 </div>
+                        `;
+
+                        if (
+                            row.shipping != undefined
+                            && row.shipping != null
+                            && row.shipping.resi != null
+                        ) {
+                            result += `
                                 <div class="menu-item px-3">
+                                <a href="preorder/track/${row.id}/" class="menu-link px-3">Track</a>
+                                </div>
+                            `;
+                        }
+
+                        result += `<div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="delete_row" data-id='${row.id}'>Delete</a>
                                 </div>
                             </div>
                         `;
+                        return result;
                     },
                 },
             ],

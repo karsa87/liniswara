@@ -126,6 +126,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'expedition' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/sync-expedition.log'),
+            'level' => 'info',
+            'replace_placeholders' => true,
+        ],
     ],
 
 ];

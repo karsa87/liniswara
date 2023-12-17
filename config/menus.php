@@ -174,4 +174,15 @@ return [
             ],
         ],
     ],
+    'setting' => [
+        'index' => [
+            'title' => 'Setting',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Setting',
+                    'route' => 'setting.index',
+                ],
+            ],
+        ],
+    ],
 ];

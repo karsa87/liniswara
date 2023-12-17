@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RestockController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -124,6 +125,23 @@ Route::middleware('auth')->group(function () {
             ->name('delete');
         Route::put('update/{id?}', [
             BranchController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('setting.')->prefix('setting/')->group(function () {
+        Route::get('/', [
+            SettingController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            SettingController::class, 'index',
+        ])->name('index.list');
+        Route::delete('delete/{id?}', [
+            SettingController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            SettingController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
     });
@@ -375,6 +393,10 @@ Route::middleware('auth')->group(function () {
             PreorderController::class, 'update_status',
         ])->where('id', '[0-9]+')
             ->name('update_status');
+        Route::get('track/{id?}', [
+            PreorderController::class, 'track',
+        ])->where('id', '[0-9]+')
+            ->name('track');
     });
 
     Route::name('file.')->prefix('file/')->group(function () {

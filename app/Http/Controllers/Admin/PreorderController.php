@@ -12,7 +12,7 @@ use App\Http\Resources\Admin\Preorder\PreorderResource;
 use App\Models\Preorder;
 use App\Models\PreorderDetail;
 use App\Models\PreorderShipping;
-use App\Services\StockHistoryLogService;
+use App\Services\TrackExpeditionService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 class PreorderController extends Controller
 {
     public function __construct(
-        private StockHistoryLogService $stockLogService
+        private TrackExpeditionService $trackExpeditionService
     ) {
     }
 
@@ -505,5 +505,35 @@ class PreorderController extends Controller
         }
 
         return response()->json();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function track(string $id)
+    {
+        $preorder = Preorder::with([
+            'shipping.expedition',
+        ])->find($id);
+
+        if (is_null($preorder)) {
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
+            ]);
+        }
+
+        $detailTrack = null;
+        if (optional($preorder->shipping)->expedition) {
+            $expedition = $preorder->shipping->expedition;
+            $detailTrack = $this->trackExpeditionService->track(
+                $expedition->courier,
+                $preorder->shipping->resi
+            )['data'];
+        }
+
+        return view('admin.preorder.track', [
+            'preorder' => $preorder,
+            'detailTrack' => $detailTrack,
+        ]);
     }
 }
