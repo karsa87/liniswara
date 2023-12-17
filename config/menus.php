@@ -159,4 +159,19 @@ return [
             ],
         ],
     ],
+    'preorder' => [
+        'index' => [
+            'title' => 'Preorder',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Transaksi',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Preorder',
+                    'route' => 'preorder.index',
+                ],
+            ],
+        ],
+    ],
 ];

@@ -140,7 +140,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::wiht('image')->find($id);
+        $category = Category::with('image')->find($id);
 
         if (is_null($category)) {
             return response()->json([

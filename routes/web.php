@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PreorderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RestockController;
@@ -333,6 +334,49 @@ Route::middleware('auth')->group(function () {
             ->name('update');
     });
 
+    Route::name('preorder.')->prefix('preorder/')->group(function () {
+        Route::get('/', [
+            PreorderController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            PreorderController::class, 'index',
+        ])->name('index.list');
+        Route::get('/create', [
+            PreorderController::class, 'create',
+        ])->name('create');
+        Route::get('/detail/{id?}', [
+            PreorderController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::get('/detail-json/{id?}', [
+            PreorderController::class, 'detail',
+        ])->where('id', '[0-9]+')
+            ->name('detail');
+        Route::get('/edit/{id?}', [
+            PreorderController::class, 'edit',
+        ])->where('id', '[0-9]+')
+            ->name('edit');
+        Route::post('store', [
+            PreorderController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            PreorderController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            PreorderController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+        Route::put('update-discount/{id?}', [
+            PreorderController::class, 'update_discount',
+        ])->where('id', '[0-9]+')
+            ->name('update_discount');
+        Route::put('update-status/{id?}', [
+            PreorderController::class, 'update_status',
+        ])->where('id', '[0-9]+')
+            ->name('update_status');
+    });
+
     Route::name('file.')->prefix('file/')->group(function () {
         Route::post('upload', [
             FileController::class, 'upload',
@@ -366,5 +410,17 @@ Route::middleware('auth')->group(function () {
             ProductController::class,
             'ajax_list_product',
         ])->name('product.list');
+        Route::get('customer', [
+            CustomerController::class,
+            'ajax_list_customer',
+        ])->name('customer.list');
+        Route::get('collector', [
+            CollectorController::class,
+            'ajax_list_collector',
+        ])->name('collector.list');
+        Route::get('expedition', [
+            ExpeditionController::class,
+            'ajax_list_expedition',
+        ])->name('expedition.list');
     });
 });

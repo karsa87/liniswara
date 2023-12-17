@@ -269,7 +269,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::wiht('thumbnail')->find($id);
+        $product = Product::with('thumbnail')->find($id);
 
         if (is_null($product)) {
             return response()->json([
@@ -319,6 +319,11 @@ class ProductController extends Controller
                 'name' => $product->name,
                 'code' => $product->code,
                 'stock' => $product->stock,
+                'price' => $product->price,
+                'discount' => $product->discount,
+                'price_zone_2' => $product->price_zone_2,
+                'discount_zone_2' => $product->discount_zone_2,
+                'discount_description' => $product->discount_description,
             ];
         }
 

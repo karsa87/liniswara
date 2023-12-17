@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\ScopeLike;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,5 +54,34 @@ class CustomerAddress extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    /**
+     * Get the full address.
+     */
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $address = $attributes['address'];
+                if ($this->village) {
+                    $address .= ' Desa '.$this->village->name;
+                }
+
+                if ($this->district) {
+                    $address .= ', Kec. '.$this->district->name;
+                }
+
+                if ($this->regency) {
+                    $address .= ', Kota/Kab '.$this->regency->name;
+                }
+
+                if ($this->province) {
+                    $address .= ' - '.$this->province->name;
+                }
+
+                return $address;
+            },
+        );
     }
 }

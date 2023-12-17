@@ -229,4 +229,50 @@ class CustomerController extends Controller
 
         return response()->json();
     }
+
+    public function ajax_list_customer(Request $request)
+    {
+        $params = $request->all();
+        $query = Customer::with(
+            [
+                'user:id,name',
+                'addresses' => function ($qAddress) {
+                    $qAddress->orderBy('is_default', 'ASC');
+                },
+                'addresses.province:id,name',
+                'addresses.regency:id,name',
+                'addresses.district:id,name',
+                'addresses.village:id,name',
+            ]
+        );
+
+        $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
+        if ($q) {
+            $query->whereHas('user', function ($qUser) use ($q) {
+                $qUser->whereLike('name', $q);
+            });
+        }
+
+        $customers = $query->limit(20)->get();
+        $list = [];
+        foreach ($customers as $customer) {
+            $addresses = [];
+            foreach ($customer->addresses as $address) {
+                $addresses[] = [
+                    'id' => $address->id,
+                    'text' => $address->full_address,
+                ];
+            }
+            $list[] = [
+                'id' => $customer->id,
+                'text' => optional($customer->user)->name,
+                'addresses' => $addresses,
+            ];
+        }
+
+        return response()->json([
+            'items' => $list,
+            'count' => count($list),
+        ]);
+    }
 }

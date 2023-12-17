@@ -6,25 +6,24 @@ use App\Models\Scopes\ScopeLike;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StockHistory extends Model
+class PreorderDetail extends Model
 {
-    use HasFactory, ScopeLike;
+    use HasFactory, ScopeLike, SoftDeletes;
 
     protected $guarded = [];
-
-    protected $table = 'stock_histories';
 
     /**
      * The data that belong to the file.
      */
-    public function from(): BelongsTo
+    public function preorder(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(Preorder::class, 'preorder_id');
     }
 
     /**
-     * The data that belong to the category.
+     * The data that belong to the file.
      */
     public function product(): BelongsTo
     {

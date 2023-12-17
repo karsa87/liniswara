@@ -208,4 +208,29 @@ class CollectorController extends Controller
 
         return response()->json();
     }
+
+    public function ajax_list_collector(Request $request)
+    {
+        $params = $request->all();
+        $query = Collector::query();
+
+        $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        $collectors = $query->limit(20)->get();
+        $list = [];
+        foreach ($collectors as $collector) {
+            $list[] = [
+                'id' => $collector->id,
+                'text' => $collector->name,
+            ];
+        }
+
+        return response()->json([
+            'items' => $list,
+            'count' => count($list),
+        ]);
+    }
 }

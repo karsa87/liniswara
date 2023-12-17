@@ -190,7 +190,7 @@ class RestockController extends Controller
      */
     public function destroy(string $id)
     {
-        $restock = Restock::wiht('details.product', 'details.stockHistory')->find($id);
+        $restock = Restock::with('details.product', 'details.stockHistory')->find($id);
 
         if (is_null($restock)) {
             return response()->json([

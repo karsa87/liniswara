@@ -45,6 +45,10 @@ mix.combine('resources/theme/admin/js/custom/apps/master/category/list/add.js', 
 mix.combine('resources/theme/admin/js/custom/apps/transaction/restock/list/table.js', 'public/assets/js/custom/apps/transaction/restock/list/table.js');
 mix.combine('resources/theme/admin/js/custom/apps/transaction/restock/list/add.js', 'public/assets/js/custom/apps/transaction/restock/list/add.js');
 
+mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/table.js', 'public/assets/js/custom/apps/transaction/preorder/list/table.js');
+mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/add.js', 'public/assets/js/custom/apps/transaction/preorder/list/add.js');
+mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/update_discount.js', 'public/assets/js/custom/apps/transaction/preorder/list/update_discount.js');
+mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/update_status.js', 'public/assets/js/custom/apps/transaction/preorder/list/update_status.js');
 
 /**
 * plugins specific issue workaround for webpack

@@ -44,11 +44,11 @@
                     </span>
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-sub menu-sub-accordion {{ str(request()->route()->getName())->contains(['preorder.']) ? 'hover show' : '' }}">
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link {{ str(request()->route()->getName())->contains(['preorder.']) ? 'active here' : '' }}" href="{{ route('preorder.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -99,7 +99,7 @@
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
-                <div class="menu-item">
+                {{-- <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
@@ -112,7 +112,7 @@
                         <span class="menu-title">Pembayaran</span>
                     </a>
                     <!--end:Menu link-->
-                </div>
+                </div> --}}
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->

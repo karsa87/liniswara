@@ -127,7 +127,7 @@ class ExpeditionController extends Controller
      */
     public function destroy(string $id)
     {
-        $expedition = Expedition::wiht('logo')->find($id);
+        $expedition = Expedition::with('logo')->find($id);
 
         if (is_null($expedition)) {
             return response()->json([
@@ -148,5 +148,24 @@ class ExpeditionController extends Controller
         }
 
         return response()->json();
+    }
+
+    public function ajax_list_expedition(Request $request)
+    {
+        $params = request()->all();
+
+        $query = Expedition::select('id', 'name as text');
+
+        $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        $list = $query->limit(20)->get()->toArray();
+
+        return response()->json([
+            'items' => $list,
+            'count' => count($list),
+        ]);
     }
 }
