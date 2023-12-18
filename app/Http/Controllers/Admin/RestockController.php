@@ -103,7 +103,7 @@ class RestockController extends Controller
                             $product->stock = $oldStock + $restockDetail->qty;
                             $this->stockLogService->logStockIn(
                                 $restock,
-                                $restock->id,
+                                $product->id,
                                 $oldStock,
                                 $restockDetail->qty
                             );
@@ -113,7 +113,7 @@ class RestockController extends Controller
                             $product->stock = $oldStock - $restockDetail->qty;
                             $this->stockLogService->logStockOut(
                                 $restock,
-                                $restock->id,
+                                $product->id,
                                 $oldStock,
                                 $restockDetail->qty
                             );
@@ -126,7 +126,6 @@ class RestockController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
 
             return response()->json([
                 'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
@@ -206,7 +205,7 @@ class RestockController extends Controller
                     $product->stock = $oldStock - $restockDetail->qty;
                     $this->stockLogService->logStockOut(
                         $restock,
-                        $restock->id,
+                        $product->id,
                         $oldStock,
                         $restockDetail->qty
                     );
@@ -216,7 +215,7 @@ class RestockController extends Controller
                     $product->stock = $oldStock + $restockDetail->qty;
                     $this->stockLogService->logStockIn(
                         $restock,
-                        $restock->id,
+                        $product->id,
                         $oldStock,
                         $restockDetail->qty
                     );

@@ -200,4 +200,19 @@ return [
             ],
         ],
     ],
+    'stock_product' => [
+        'index' => [
+            'title' => 'Log Stok Produk',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Log',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Buku Preorder',
+                    'route' => 'log.stock_product.index',
+                ],
+            ],
+        ],
+    ],
 ];

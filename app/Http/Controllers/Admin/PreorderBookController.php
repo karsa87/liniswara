@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\PreorderBookExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\PreorderBook\PreorderBookResource;
-use App\Models\Preorder;
 use App\Models\PreorderDetail;
 use App\Services\TrackExpeditionService;
 use Illuminate\Http\Request;
@@ -43,8 +42,7 @@ class PreorderBookController extends Controller
             }
 
             $preorders = $query->get();
-
-            $totalAll = Preorder::count();
+            $totalAll = PreorderDetail::select('product_id')->has('product')->groupBy('product_id')->count();
 
             return PreorderBookResource::collection($preorders)->additional([
                 'recordsTotal' => $totalAll,

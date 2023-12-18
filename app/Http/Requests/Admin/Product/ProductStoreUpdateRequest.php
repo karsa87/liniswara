@@ -48,6 +48,11 @@ class ProductStoreUpdateRequest extends FormRequest
                 'numeric',
                 'min:0',
             ],
+            'product_price_zone_2' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
             'product_discount_price' => [
                 'nullable',
                 'numeric',

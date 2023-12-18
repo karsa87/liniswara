@@ -109,6 +109,7 @@
     "/assets/js/custom/apps/inbox/reply.js": "/assets/js/custom/apps/inbox/reply.js",
     "/assets/js/custom/apps/invoices/create.608a7f9f5e9529c57ddd113583cdb023.js": "/assets/js/custom/apps/invoices/create.608a7f9f5e9529c57ddd113583cdb023.js",
     "/assets/js/custom/apps/invoices/create.js": "/assets/js/custom/apps/invoices/create.js",
+    "/assets/js/custom/apps/log/stock_product/list.js": "/assets/js/custom/apps/log/stock_product/list.js",
     "/assets/js/custom/apps/master/branch/add-branch.9fb177605e00c36174099b2ce888b467.js": "/assets/js/custom/apps/master/branch/add-branch.9fb177605e00c36174099b2ce888b467.js",
     "/assets/js/custom/apps/master/branch/add-branch.js": "/assets/js/custom/apps/master/branch/add-branch.js",
     "/assets/js/custom/apps/master/branch/list.840775511a8a07798348a380860225c2.js": "/assets/js/custom/apps/master/branch/list.840775511a8a07798348a380860225c2.js",
@@ -117,6 +118,7 @@
     "/assets/js/custom/apps/master/branch/update-branch.js": "/assets/js/custom/apps/master/branch/update-branch.js",
     "/assets/js/custom/apps/master/category/list/add.js": "/assets/js/custom/apps/master/category/list/add.js",
     "/assets/js/custom/apps/master/category/list/table.js": "/assets/js/custom/apps/master/category/list/table.js",
+    "/assets/js/custom/apps/master/category/setting/list.js": "/assets/js/custom/apps/master/category/setting/list.js",
     "/assets/js/custom/apps/master/collector/list/add.js": "/assets/js/custom/apps/master/collector/list/add.js",
     "/assets/js/custom/apps/master/collector/list/table.js": "/assets/js/custom/apps/master/collector/list/table.js",
     "/assets/js/custom/apps/master/customer/list/add.js": "/assets/js/custom/apps/master/customer/list/add.js",
@@ -4481,6 +4483,5 @@
     "/assets/plugins/global/plugins.bundle.51d229be55662dfc5b3d47540342bcf0.css": "/assets/plugins/global/plugins.bundle.51d229be55662dfc5b3d47540342bcf0.css",
     "/assets/plugins/global/plugins.bundle.css": "/assets/plugins/global/plugins.bundle.css",
     "/assets/plugins/global/plugins.bundle.f4411b2917cad4d71af881086ea5920a.js": "/assets/plugins/global/plugins.bundle.f4411b2917cad4d71af881086ea5920a.js",
-    "/assets/plugins/global/plugins.bundle.js": "/assets/plugins/global/plugins.bundle.js",
-    "/assets/js/custom/apps/master/category/setting/list.js": "/assets/js/custom/apps/master/category/setting/list.js"
+    "/assets/plugins/global/plugins.bundle.js": "/assets/plugins/global/plugins.bundle.js"
 }

@@ -33,7 +33,7 @@ var KTSuppliersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'asc']],
+            order: [[1, 'asc']],
             stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -60,6 +60,7 @@ var KTSuppliersList = function () {
                 }
             },
             columns: [
+                { data: null },
                 { data: 'name' },
                 { data: 'code' },
                 { data: 'stock' },
@@ -68,28 +69,20 @@ var KTSuppliersList = function () {
             ],
             columnDefs: [
                 {
-                    targets: 1,
+                    targets: 0,
+                    orderable: false,
                     render: function (data, type, row) {
-                        let content = `<div class="d-flex align-items-center">`;
-
                         if (row.thumbnail != null && row.thumbnail.full_url != null && row.thumbnail.full_url != '' && row.thumbnail.full_url != undefined) {
-                            content += `<!--begin::Thumbnail-->
-                            <a href="${row.url_detail}" class="symbol symbol-50px">
+                            return `<a href="${row.url_detail}" class="symbol symbol-50px">
                                 <span class="symbol-label" style="background-image:url(${row.thumbnail.full_url});"></span>
-                            </a>
-                            <!--end::Thumbnail-->`;
+                            </a>`;
                         }
 
-                        return content + `<div class="ms-5">
-                                    <!--begin::Title-->
-                                    <a href="${row.url_detail}" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">${row.name}</a>
-                                    <!--end::Title-->
-                                </div>
-                            </div>`;
+                        return '';
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     render: function (data, type, row) {
                         if (row.category != null && row.category.name != undefined && row.category.name != null) {
                             return row.category.name;

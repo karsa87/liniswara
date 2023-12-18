@@ -416,6 +416,23 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
+                    <a class="menu-link {{ str(request()->route()->getName())->contains(['log.stock_product.']) ? 'active here' : '' }}" href="{{ route('log.stock_product.index') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-pointers fs-2">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Log Stok Produk</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
                     <a class="menu-link {{ str(request()->route()->getName())->contains(['setting.']) ? 'active here' : '' }}" href="{{ route('setting.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-setting-2 fs-2">

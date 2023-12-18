@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\Log\StockProductController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PreorderBookController;
 use App\Http\Controllers\Admin\PreorderController;
@@ -410,6 +411,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/export', [
             PreorderBookController::class, 'export',
         ])->name('export');
+    });
+
+    Route::name('log.')->prefix('log')->group(function () {
+        Route::name('stock_product.')->prefix('stock-product/')->group(function () {
+            Route::get('/', [
+                StockProductController::class, 'index',
+            ])->name('index');
+            Route::get('/index/list', [
+                StockProductController::class, 'index',
+            ])->name('index.list');
+        });
     });
 
     Route::name('file.')->prefix('file/')->group(function () {

@@ -250,10 +250,23 @@
                 <!--begin::Input group-->
                 <div class="mb-10 fv-row">
                     <!--begin::Label-->
-                    <label class="required form-label">Harga</label>
+                    <label class="required form-label">Harga Zona 1</label>
                     <!--end::Label-->
                     <!--begin::Input-->
                     <input type="text" name="product_price" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price }}" />
+                    <!--end::Input-->
+                    <!--begin::Description-->
+                    <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                    <!--end::Description-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="mb-10 fv-row">
+                    <!--begin::Label-->
+                    <label class="required form-label">Harga Zona 2</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input type="text" name="product_price_zone_2" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_2 }}" />
                     <!--end::Input-->
                     <!--begin::Description-->
                     <div class="text-muted fs-7">Tetapkan harga produk.</div>
