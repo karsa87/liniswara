@@ -70,6 +70,10 @@ class PreorderBookController extends Controller
             ->has('product')
             ->groupBy('product_id');
 
+        if ($request->product_id) {
+            $query->where('product_id', $request->product_id);
+        }
+
         $preorders = $query->get();
 
         return Excel::download(new PreorderBookExport($preorders), 'preorder_book.xlsx');
