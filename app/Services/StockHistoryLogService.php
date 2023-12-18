@@ -77,6 +77,7 @@ class StockHistoryLogService
             'stock_new' => $stockCurrent + ($stockIn ?: 0) - ($stockOut ?: 0),
             'from_id' => $from->id,
             'from_type' => get_class($from),
+            'user_id' => auth()->user()->id,
         ]);
     }
 }

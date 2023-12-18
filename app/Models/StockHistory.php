@@ -30,4 +30,12 @@ class StockHistory extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    /**
+     * The data that belong to the user.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

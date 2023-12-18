@@ -97,7 +97,7 @@
                 <!--begin::Label-->
                 <label class="form-label">Jumlah</label>
                 <!--end::Label-->
-                <input type="text" name="product_stock" class="form-control mb-2" placeholder="Jumlah produk" value="{{ $product->stock }}" />
+                <input type="text" name="product_stock" class="form-control mb-2" placeholder="Jumlah produk" value="{{ $product->stock }}" {{ $product->id ? 'readonly' : '' }} />
                 <!--end::Input group-->
             </div>
             <!--end::Card body-->

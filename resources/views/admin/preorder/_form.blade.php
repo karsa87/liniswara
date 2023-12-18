@@ -232,7 +232,7 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <select class="form-select mb-2" data-placeholder="Select Zona" data-allow-clear="true" name="preorder_zone" style="width: 200px;" id="form-select-zone">
                             @foreach (\App\Enums\Preorder\ZoneEnum::MAP_LABEL as $key => $name)
-                                <option value="{{ $key }}">{{ $name }}</option>
+                                <option value="{{ $key }}" {{ $preorder->zone == $key ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -261,7 +261,7 @@
                                 </tr>
                             </thead>
                             <tbody data-repeater-list="preorder_details" id="table-detail-body">
-                                @if ($preorder->details)
+                                @if ($preorder->details->count() > 0)
                                     @foreach ($preorder->details as $detail)
                                     <tr data-repeater-item="" data-id="1">
                                         <td>

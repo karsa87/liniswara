@@ -153,7 +153,9 @@ class RestockController extends Controller
             ]);
         }
 
-        return new RestockResource($restock);
+        return view('admin.restock.show', [
+            'restock' => $restock,
+        ]);
     }
 
     /**

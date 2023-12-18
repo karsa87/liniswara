@@ -147,6 +147,10 @@ class ProductController extends Controller
         $product = Product::with([
             'thumbnail',
             'categories',
+            'stock_histories' => function ($qStory) {
+                $qStory->orderBy('created_at', 'DESC');
+            },
+            'stock_histories.user',
         ])->find($id);
 
         if (is_null($product)) {
@@ -155,7 +159,9 @@ class ProductController extends Controller
             ]);
         }
 
-        return new ProductResource($product);
+        return view('admin.product.show', [
+            'product' => $product,
+        ]);
     }
 
     /**
