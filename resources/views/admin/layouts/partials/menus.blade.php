@@ -175,7 +175,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link {{ str(request()->route()->getName())->contains(['preorder_book.']) ? 'active here' : '' }}" href="{{ route('preorder_book.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

@@ -217,7 +217,6 @@
 @endpush
 
 @push('js')
-resources/theme/admin/js/custom/apps/
     <script src="{{ mix('assets/js/custom/apps/master/branch/list.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/branch/update-branch.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/branch/add-branch.js') }}"></script>

@@ -159,6 +159,21 @@ return [
             ],
         ],
     ],
+    'preorder_book' => [
+        'index' => [
+            'title' => 'Buku Preorder',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Katalog Produk',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Buku Preorder',
+                    'route' => 'preorder_book.index',
+                ],
+            ],
+        ],
+    ],
     'preorder' => [
         'index' => [
             'title' => 'Preorder',

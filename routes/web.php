@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PreorderBookController;
 use App\Http\Controllers\Admin\PreorderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RegionController;
@@ -397,6 +398,18 @@ Route::middleware('auth')->group(function () {
             PreorderController::class, 'track',
         ])->where('id', '[0-9]+')
             ->name('track');
+    });
+
+    Route::name('preorder_book.')->prefix('preorder-book/')->group(function () {
+        Route::get('/', [
+            PreorderBookController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            PreorderBookController::class, 'index',
+        ])->name('index.list');
+        Route::get('/export', [
+            PreorderBookController::class, 'export',
+        ])->name('export');
     });
 
     Route::name('file.')->prefix('file/')->group(function () {
