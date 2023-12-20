@@ -107,7 +107,7 @@ class PreorderController extends Controller
                 'zone' => $request->input('preorder_zone'),
                 'notes' => $request->input('preorder_notes') ? htmlentities($request->input('preorder_notes')) : null,
                 'notes_staff' => $request->input('preorder_notes_staff') ? htmlentities($request->input('preorder_notes_staff')) : null,
-                'shipping_price' => $request->input('preorder_shipping_price', 0),
+                'shipping_price' => $request->input('preorder_shipping_price', 0) ?: 0,
                 'discount_type' => $request->input('preorder_discount_type', DiscountTypeEnum::DISCOUNT_NO),
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
@@ -295,7 +295,7 @@ class PreorderController extends Controller
                 'zone' => $request->input('preorder_zone'),
                 'notes' => $request->input('preorder_notes') ? htmlentities($request->input('preorder_notes')) : null,
                 'notes_staff' => $request->input('preorder_notes_staff') ? htmlentities($request->input('preorder_notes_staff')) : null,
-                'shipping_price' => $request->input('preorder_shipping_price', 0),
+                'shipping_price' => $request->input('preorder_shipping_price', 0) ?: 0,
                 'discount_type' => $request->input('preorder_discount_type', DiscountTypeEnum::DISCOUNT_NO),
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
@@ -417,7 +417,7 @@ class PreorderController extends Controller
             }
 
             $preorder->fill([
-                'shipping_price' => $request->input('preorder_shipping_price'),
+                'shipping_price' => $request->input('preorder_shipping_price') ?: 0,
                 'discount_type' => $request->input('preorder_discount_type', DiscountTypeEnum::DISCOUNT_NO),
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
