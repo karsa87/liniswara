@@ -34,7 +34,7 @@ class ProductResource extends JsonResource
                 ];
             }
 
-            $category = count($categories) > 0 ? $categories[0] : null;
+            $category = $categories && count($categories) > 0 ? $categories[0] : null;
         }
 
         return [
