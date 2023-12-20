@@ -65,7 +65,7 @@ class CustomerStoreUpdateRequest extends FormRequest
                 'required_without:customer_id',
             ],
             'customer_type' => [
-                'required',
+                'nullable',
                 Rule::in([
                     CustomerTypeEnum::GENERAL,
                     CustomerTypeEnum::DISTRIBUTOR_CASH,
