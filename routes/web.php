@@ -39,6 +39,9 @@ Route::middleware(['web'])->group(function () {
     Route::post('submit-login', [
         AuthController::class, 'submit_login',
     ])->name('auth.submit.login');
+    Route::get('logout', [
+        AuthController::class, 'logout',
+    ])->name('auth.logout');
 });
 
 Route::middleware('auth')->group(function () {

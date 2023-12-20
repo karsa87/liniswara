@@ -48,4 +48,12 @@ class AuthController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function logout()
+    {
+        \Session::flush();
+        \Auth::logout();
+
+        return redirect()->route('auth.login');
+    }
 }
