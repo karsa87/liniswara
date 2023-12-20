@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SettingKeyEnum;
 use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
@@ -12,7 +13,7 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (SettingKeyEnumL::getValues() as $setting) {
+        foreach (SettingKeyEnum::getValues() as $setting) {
             Setting::updateOrCreate(
                 [
                     'key' => $setting,
