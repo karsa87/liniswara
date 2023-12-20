@@ -365,7 +365,9 @@ class PreorderController extends Controller
                     ]);
                     $shipping->save();
                 } else {
-                    $preorder->shipping->delete;
+                    if ($preorder->shipping) {
+                        $preorder->shipping->delete();
+                    }
                 }
             }
 
