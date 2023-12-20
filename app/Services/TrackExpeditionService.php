@@ -21,7 +21,7 @@ class TrackExpeditionService
     ): ?array {
         $url = config('myapp.expedition.url');
         if (empty($url)) {
-            Log::stack('expedition')->warning('API URL expedition not setting');
+            Log::stack(['expedition'])->warning('API URL expedition not setting');
         }
 
         $setting = Setting::where('key', SettingKeyEnum::EXPEDITION_API_KEY)->first();
@@ -29,7 +29,7 @@ class TrackExpeditionService
             empty($setting)
             || empty(optional($setting)->value)
         ) {
-            Log::stack('expedition')->warning('Setting API key not found');
+            Log::stack(['expedition'])->warning('Setting API key not found');
         }
 
         $response = Http::get(
@@ -48,7 +48,7 @@ class TrackExpeditionService
         try {
             return $response->throw()->json();
         } catch (\Throwable $th) {
-            Log::stack('expedition')->error($th->getMessage());
+            Log::stack(['expedition'])->error($th->getMessage());
         }
 
         return null;

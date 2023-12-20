@@ -32,7 +32,7 @@ class SyncExpedition extends Command
     {
         $url = config('myapp.expedition.url');
         if (empty($url)) {
-            Log::stack('expedition')->warning('API URL expedition not setting');
+            Log::stack(['expedition'])->warning('API URL expedition not setting');
         }
 
         $setting = Setting::where('key', SettingKeyEnum::EXPEDITION_API_KEY)->first();
@@ -40,7 +40,7 @@ class SyncExpedition extends Command
             empty($setting)
             || empty(optional($setting)->value)
         ) {
-            Log::stack('expedition')->warning('Setting API key not found');
+            Log::stack(['expedition'])->warning('Setting API key not found');
         }
 
         try {
@@ -68,7 +68,7 @@ class SyncExpedition extends Command
                 );
             }
         } catch (\Throwable $th) {
-            Log::stack('expedition')->error($th->getMessage());
+            Log::stack(['expedition'])->error($th->getMessage());
         }
     }
 }
