@@ -53,7 +53,7 @@ class CustomerResource extends JsonResource
             'email' => optional($this->user)->email,
             'phone_number' => optional($this->user)->phone_number,
             'company' => optional($this->user)->company,
-            'type_label' => CustomerTypeEnum::fromValue($this->type)->getLabel(),
+            'type_label' => $this->type ? CustomerTypeEnum::fromValue($this->type)->getLabel() : '',
             'type' => $this->type,
             'address' => optional($this->address)->address,
             'province' => $province,
