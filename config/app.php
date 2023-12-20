@@ -187,4 +187,5 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
+    'enable_ssl' => env('APP_ENABLE_SSL', false),
 ];
