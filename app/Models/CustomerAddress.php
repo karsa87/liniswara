@@ -84,4 +84,26 @@ class CustomerAddress extends Model
             },
         );
     }
+
+    /**
+     * Get the full address.
+     */
+    protected function summaryAddress(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $address = $attributes['name'];
+
+                if ($this->regency) {
+                    $address .= ' - '.$this->regency->name;
+                }
+
+                if ($this->province) {
+                    $address .= ' - '.$this->province->name;
+                }
+
+                return $address;
+            },
+        );
+    }
 }

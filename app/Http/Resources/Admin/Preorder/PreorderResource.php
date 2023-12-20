@@ -53,6 +53,7 @@ class PreorderResource extends JsonResource
                 'id' => $this->customer_address->id,
                 'name' => $this->customer_address->name,
                 'full_address' => $this->customer_address->full_address,
+                'summary_address' => $this->customer_address->summary_address,
             ];
         }
 

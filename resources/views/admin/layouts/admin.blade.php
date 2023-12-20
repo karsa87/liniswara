@@ -93,7 +93,7 @@
 								</div>
 								<!--end::Aside  toggle-->
 								<!--begin::Logo-->
-								<a href="../../demo14/dist/index.html">
+								<a href="{{ route('dashboard') }}">
 									<img alt="Logo" src="{{ mix('assets/media/logos/default-small.svg') }}" class="h-25px h-lg-30px" />
 								</a>
 								<!--end::Logo-->
@@ -101,7 +101,7 @@
 								<div class="ms-5 ms-md-10">
 									<!--begin::Toggle-->
 									<button type="button" class="btn btn-flex btn-active-color-white align-items-cenrer justify-content-center justify-content-md-between align-items-lg-center flex-md-content-between bg-white bg-opacity-10 btn-color-white px-0 ps-md-6 pe-md-5 h-30px w-30px h-md-35px w-md-200px" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-										<span class="d-none d-md-inline">Dashboard</span>
+										<span class="d-none d-md-inline">Transaksi 2024</span>
 										<i class="ki-duotone ki-down fs-4 ms-2 ms-md-3 me-0"></i>
 									</button>
 									<!--end::Toggle-->
@@ -109,7 +109,7 @@
 									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg fw-semibold w-200px pb-3" data-kt-menu="true">
 										<!--begin::Menu item-->
 										<div class="menu-item px-3">
-											<div class="menu-content fs-7 text-dark fw-bold px-3 py-4">Select department:</div>
+											<div class="menu-content fs-7 text-dark fw-bold px-3 py-4">Pilih Tahun Transaksi:</div>
 										</div>
 										<!--end::Menu item-->
 										<!--begin::Menu separator-->
@@ -117,7 +117,26 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-3">
-											<a href="#" class="menu-link px-3">Marketing</a>
+											<a href="{{ route('dashboard') }}" class="menu-link px-3">
+                                                <i class="ki-duotone ki-delivery-3 fs-4 ms-2 ms-md-3 me-0">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                                Transaksi 2024
+                                            </a>
+										</div>
+										<!--end::Menu item-->
+										<!--begin::Menu item-->
+										<div class="menu-item px-3">
+											<a href="https://store.liniswara.com/admin/1wire_rty/login" class="menu-link px-3">
+                                                <i class="ki-duotone ki-delivery-3 fs-4 ms-2 ms-md-3 me-0">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                                Transaksi 2023
+                                            </a>
 										</div>
 										<!--end::Menu item-->
 									</div>
@@ -338,9 +357,8 @@
 												<!--end::Avatar-->
 												<!--begin::Username-->
 												<div class="d-flex flex-column">
-													<div class="fw-bold d-flex align-items-center fs-5">Max Smith
-													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+													<div class="fw-bold d-flex align-items-center fs-5">{{ auth()->user()->name }}</div>
+                                                    <div class="fw-semibold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</div>
 												</div>
 												<!--end::Username-->
 											</div>
@@ -351,7 +369,7 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
-											<a href="../../demo14/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+											<a href="#" class="menu-link px-5">My Profile</a>
 										</div>
 										<!--end::Menu item-->
 										<!--begin::Menu separator-->
@@ -359,7 +377,7 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
-											<a href="{{ route('auth.logout') }}" class="menu-link px-5">Sign Out</a>
+											<a href="{{ route('auth.logout') }}" class="menu-link px-5">Keluar</a>
 										</div>
 										<!--end::Menu item-->
 									</div>
@@ -391,7 +409,7 @@
 								<!--begin::Copyright-->
 								<div class="text-dark order-2 order-md-1">
 									<span class="text-muted fw-semibold me-1">{{ date('Y') }}&copy;</span>
-									<a href="https://www.asrakit.com" target="_blank" class="text-gray-800 text-hover-primary">AsrakIT</a>
+								    <a href="{{ route('dashboard') }}" class="text-gray-800 text-hover-primary">PT Lini Suara Nusantara</a>
 								</div>
 								<!--end::Copyright-->
 							</div>

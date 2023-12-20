@@ -53,6 +53,9 @@ mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/add.
 mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/update_discount.js', 'public/assets/js/custom/apps/transaction/preorder/list/update_discount.js');
 mix.combine('resources/theme/admin/js/custom/apps/transaction/preorder/list/update_status.js', 'public/assets/js/custom/apps/transaction/preorder/list/update_status.js');
 
+// copy assets marketing folder into laravel public folder
+mix.copyDirectory('resources/theme/marketing', 'public/marketing/assets');
+
 /**
 * plugins specific issue workaround for webpack
 * @see https://github.com/morrisjs/morris.js/issues/697

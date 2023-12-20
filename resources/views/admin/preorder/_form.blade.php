@@ -199,10 +199,10 @@
                             <select class="form-select mb-2" data-placeholder="Select Alamat" data-allow-clear="true" name="preorder_customer_address_id" data-kt-ecommerce-catalog-add-preorder="preorder_option" id="form-select-customer-address">
                                 <option></option>
                                 @if ($preorder->customer_address)
-                                    <option value="{{ $preorder->customer_address->id }}" selected>{{ $preorder->customer_address->full_address }}</option>
+                                    <option value="{{ $preorder->customer_address->id }}" selected>{{ $preorder->customer_address->summary_address }}</option>
 
                                     @foreach ($preorder->customer->addresses->where('id', '!=', $preorder->customer_address->id) as $address)
-                                        <option value="{{ $address->id }}">{{ $address->full_address }}</option>
+                                        <option value="{{ $address->id }}">{{ $address->summary_address }}</option>
                                     @endforeach
                                 @endif
                             </select>

@@ -210,7 +210,7 @@ class Util
      * @param  string  $prefix Prefix for format number ex: Rp.
      * @return string
      */
-    public static function format_currency($number, $decimal = 0, $prefix = '')
+    public static function format_currency($number, $decimal = 0, $prefix = 'Rp. ')
     {
         $number_abs = $number;
         if ($number < 0) {

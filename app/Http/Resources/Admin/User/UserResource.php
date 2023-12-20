@@ -31,6 +31,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone_number' => $this->phone_number,
             'company' => $this->company,
+            'can_access_marketing' => $this->can_access_marketing,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'role' => $role,
         ];

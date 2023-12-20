@@ -150,7 +150,7 @@ class PreorderController extends Controller
                     $shipping = new PreorderShipping();
                     $shipping->fill([
                         'preorder_id' => $preorder->id,
-                        'resi' => $request->preorder_resi,
+                        'resi' => str($request->preorder_resi)->upper(),
                         'expedition_id' => $request->preorder_expedition_id,
                         'name' => $preorder->customer->user->name ?? '',
                         'email' => $preorder->customer->user->email ?? '',
@@ -351,7 +351,7 @@ class PreorderController extends Controller
                     $shipping = $preorder->shipping ?: new PreorderShipping();
                     $shipping->fill([
                         'preorder_id' => $preorder->id,
-                        'resi' => $request->preorder_resi,
+                        'resi' => str($request->preorder_resi)->upper(),
                         'expedition_id' => $request->preorder_expedition_id,
                         'name' => $preorder->customer->user->name ?? '',
                         'email' => $preorder->customer->user->email ?? '',

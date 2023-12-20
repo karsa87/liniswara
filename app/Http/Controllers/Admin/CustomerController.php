@@ -260,7 +260,7 @@ class CustomerController extends Controller
             foreach ($customer->addresses as $address) {
                 $addresses[] = [
                     'id' => $address->id,
-                    'text' => $address->full_address,
+                    'text' => $address->summary_address,
                 ];
             }
             $list[] = [

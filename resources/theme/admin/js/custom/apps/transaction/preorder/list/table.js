@@ -46,10 +46,8 @@ var KTPreordersList = function () {
                 }
             },
             columns: [
-                { data: 'date' },
                 { data: 'invoice_number' },
                 { data: null },
-                { data: 'zone' },
                 { data: 'total_amount' },
                 { data: null },
                 { data: 'marketing' },
@@ -60,7 +58,13 @@ var KTPreordersList = function () {
             ],
             columnDefs: [
                 {
-                    targets: 2,
+                    targets: 0,
+                    render: function (data, type, row) {
+                        return `<span class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</span><br><span class="fs-7 text-muted">${row.date}</span>`;
+                    }
+                },
+                {
+                    targets: 1,
                     orderable: false,
                     render: function (data, type, row) {
                         var result = '';
@@ -76,35 +80,33 @@ var KTPreordersList = function () {
                                 && row.customer_address.id != undefined
                                 && row.customer_address.id != null
                             ) {
-                                result += `<br><span class="fs-7 text-muted">${row.customer_address.full_address}</span>`;
+                                result += `<br><span class="fs-7 text-muted">${row.customer_address.summary_address}</span>`;
                             }
                         }
+
+                        result += `<br><span class="fs-7 text-muted">${row.notes}</span>`;
 
                         return result;
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 2,
                     render: function (data, type, row) {
-                        if (row.zone == 2) {
-                            return 'Zona 2';
-                        }
-
-                        return 'Zona 1';
-                    }
-                },
-                {
-                    targets: 4,
-                    render: function (data, type, row) {
+                        let total_amount = 0;
                         if (typeof row.total_amount == 'number') {
-                            return row.total_amount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            total_amount = row.total_amount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                         }
 
-                        return 0;
+                        let zone = 'Zona 1';
+                        if (row.zone == 2) {
+                            zone = 'Zona 2';
+                        }
+
+                        return `<span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span><br><span class="fs-7 text-muted">${zone}</span>`;
                     }
                 },
                 {
-                    targets: 5,
+                    targets: 3,
                     orderable: false,
                     render: function (data, type, row) {
                         if (
@@ -120,7 +122,7 @@ var KTPreordersList = function () {
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 4,
                     orderable: false,
                     render: function (data, type, row) {
                         let result = '';
@@ -129,7 +131,7 @@ var KTPreordersList = function () {
                             && row.created_by.id != undefined
                             && row.created_by.id != null
                         ) {
-                            result +=`<span class="badge badge-primary">${row.created_by.name}</span> / `;
+                            result +=`<span class="badge badge-primary">${row.created_by.name}</span> <br> `;
                         }
 
                         if (row.marketing == 1 || row.marketing == "1") {
@@ -146,7 +148,7 @@ var KTPreordersList = function () {
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 5,
                     render: function (data, type, row) {
                         let result = '';
                         if (row.status == 1 || row.status == "1") {
@@ -163,7 +165,7 @@ var KTPreordersList = function () {
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 6,
                     render: function (data, type, row) {
                         let result = '';
                         if (row.status_payment == 1 || row.status_payment == "1") {
@@ -178,7 +180,7 @@ var KTPreordersList = function () {
                     }
                 },
                 {
-                    targets: 9,
+                    targets: 7,
                     render: function (data, type, row) {
                         let result = '';
                         if (row.method_payment == 1 || row.method_payment == "1") {

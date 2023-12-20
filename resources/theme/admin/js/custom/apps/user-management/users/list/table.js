@@ -289,6 +289,10 @@ var KTUsersList = function () {
                         if (user.role.name != undefined) {
                             form.querySelector(`input[name='user_role_id'][value='3']`).setAttribute('checked', "");
                         }
+
+                        if (user.can_access_marketing) {
+                            form.querySelector(`input[name='user_can_access_marketing']`).setAttribute('checked', "");
+                        }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({

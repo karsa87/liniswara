@@ -79,6 +79,7 @@ class UserController extends Controller
                 'company' => $request->input('user_company'),
                 'phone_number' => Phone::normalize($request->input('user_phone_number')),
                 'password' => $request->input('user_password'),
+                'can_access_marketing' => $request->input('user_can_access_marketing') ?: false,
             ]);
 
             if (
@@ -147,6 +148,7 @@ class UserController extends Controller
                 'email' => $request->input('user_email'),
                 'company' => $request->input('user_company'),
                 'phone_number' => Phone::normalize($request->input('user_phone_number')),
+                'can_access_marketing' => $request->input('user_can_access_marketing') ?: false,
             ]);
 
             if (! is_null($request->input('user_password'))) {

@@ -24,7 +24,7 @@ class UserStoreUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'user_name' => [
                 'required',
                 'string',
@@ -50,7 +50,17 @@ class UserStoreUpdateRequest extends FormRequest
             'user_password' => [
                 'required_without:user_id',
             ],
+            'user_can_access_marketing' => [
+                'nullable',
+                'boolean',
+            ],
         ];
+
+        if ($this->get('user_id')) {
+            unset($rules['user_email'][1]);
+        }
+
+        return $rules;
     }
 
     /**

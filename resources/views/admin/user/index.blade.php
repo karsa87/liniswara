@@ -354,6 +354,15 @@
                                         <label class="required fw-semibold fs-6 mb-5">Role</label>
                                         <!--end::Label-->
                                         <!--begin::Roles-->
+                                        <!--begin::Input row-->
+                                        <div class="d-flex fv-row">
+                                            <div class="form-check form-check-custom form-check-solid mb-2">
+                                                <input class="form-check-input" type="checkbox" value="1" name="user_can_access_marketing" />
+                                                <label class="form-check-label">Bisa akses halaman marketing</label>
+                                            </div>
+                                        </div>
+                                        <!--end::Input row-->
+                                        <div class='separator separator-dashed my-5'></div>
                                         @foreach ($roles as $role)
                                             <!--begin::Input row-->
                                             <div class="d-flex fv-row">

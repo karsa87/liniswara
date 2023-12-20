@@ -11,7 +11,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link" href="{{ url('/') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-home fs-2"></i>
+                            <i class="ki-duotone ki-home fs-2 text-info"></i>
                         </span>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -23,7 +23,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">ADMINISTRASI</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7 text-dark">ADMINISTRASI</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -34,7 +34,7 @@
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-purchase fs-2">
+                            <i class="ki-duotone ki-purchase fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
@@ -103,7 +103,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-tag fs-2">
+                            <i class="ki-duotone ki-tag fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -120,7 +120,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-delivery-3 fs-2">
+                            <i class="ki-duotone ki-delivery-3 fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -136,7 +136,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">DATA REFERENSI</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7 text-dark">DATA REFERENSI</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -147,7 +147,7 @@
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-book-open fs-2">
+                            <i class="ki-duotone ki-book-open fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -218,7 +218,7 @@
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-category fs-2">
+                            <i class="ki-duotone ki-category fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -255,7 +255,7 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        <!--begin:Menu item-->
+                        {{-- <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link {{ str(request()->route()->getName())->contains(['supplier.']) ? 'active here' : '' }}" href="{{ route('supplier.index') }}">
@@ -266,7 +266,7 @@
                             </a>
                             <!--end:Menu link-->
                         </div>
-                        <!--end:Menu item-->
+                        <!--end:Menu item--> --}}
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -289,7 +289,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link {{ str(request()->route()->getName())->contains(['customer.', 'customer.customer_address.']) ? 'active here' : '' }}" href="{{ route('customer.index') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-profile-user fs-2">
+                            <i class="ki-duotone ki-profile-user fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -307,7 +307,7 @@
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-setting-2 fs-2">
+                            <i class="ki-duotone ki-setting-2 fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
@@ -363,7 +363,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">LAPORAN</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7 text-dark">LAPORAN</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -374,7 +374,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-chart-line fs-2">
+                            <i class="ki-duotone ki-chart-line fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
@@ -382,6 +382,22 @@
                         <span class="menu-title">Laporan</span>
                     </a>
                     <!--end:Menu link-->
+                    @if (auth()->guard('marketing')->check())
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('marketing.dashboard') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-shop fs-2 text-info">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Marketing</span>
+                        </a>
+                        <!--end:Menu link-->
+                    @endif
                 </div>
                 <!--end:Menu item-->
 
@@ -389,7 +405,7 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">PUSAT BANTUAN</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7 text-dark">PUSAT BANTUAN</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -400,7 +416,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-book fs-2">
+                            <i class="ki-duotone ki-book fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -413,12 +429,12 @@
                 </div>
                 <!--end:Menu item-->
 
-                <!--begin:Menu item-->
+                {{-- <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ str(request()->route()->getName())->contains(['log.stock_product.']) ? 'active here' : '' }}" href="{{ route('log.stock_product.index') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-pointers fs-2">
+                            <i class="ki-duotone ki-pointers fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>
@@ -428,14 +444,14 @@
                     </a>
                     <!--end:Menu link-->
                 </div>
-                <!--end:Menu item-->
+                <!--end:Menu item--> --}}
 
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ str(request()->route()->getName())->contains(['setting.']) ? 'active here' : '' }}" href="{{ route('setting.index') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-setting-2 fs-2">
+                            <i class="ki-duotone ki-setting-2 fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                                 <span class="path3"></span>

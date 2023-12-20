@@ -24,7 +24,11 @@ class AuthController extends Controller
         ]);
 
         try {
-            $user = User::whereEmail($request->email)->first();
+            $user = User::with([
+                'roles' => function ($qRole) {
+                    $qRole->withoutGlobalScope('exclude_developer');
+                },
+            ])->whereEmail($request->email)->first();
 
             if (empty($user)) {
                 return response()->json([
@@ -36,6 +40,13 @@ class AuthController extends Controller
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             } else {
                 Auth::login($user, false);
+
+                if (
+                    $user->can_access_marketing
+                    || $user->isDeveloper()
+                ) {
+                    Auth::guard('marketing')->login($user, false);
+                }
 
                 // event(new UserLogin($user));
 
@@ -51,8 +62,15 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $user = auth()->user();
+        if (
+            $user->can_access_marketing
+            || $user->isDeveloper()
+        ) {
+            Auth::guard('marketing')->logout();
+        }
         \Session::flush();
-        \Auth::logout();
+        Auth::logout();
 
         return redirect()->route('auth.login');
     }

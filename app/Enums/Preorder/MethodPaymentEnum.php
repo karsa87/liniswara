@@ -21,7 +21,7 @@ final class MethodPaymentEnum extends Enum
 
     const MAP_LABEL = [
         self::CASH => 'Cash',
-        self::DEBIT => 'Debit',
+        // self::DEBIT => 'Debit',
         self::FREELANCE => 'Freelance',
     ];
 

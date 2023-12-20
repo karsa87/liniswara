@@ -72,4 +72,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Customer::class, 'user_id');
     }
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function isDeveloper()
+    {
+        return $this->roles->firstWhere('slug', 'developer') ? true : false;
+    }
 }

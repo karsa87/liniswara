@@ -220,7 +220,7 @@ var KTExpeditionsAddExpedition = function () {
                                     }
                                 }).then(function (result) {
                                     if (result.isConfirmed) {
-                                        modal.hide();
+                                        window.location.reload();
                                     }
                                 });
                             } else {
