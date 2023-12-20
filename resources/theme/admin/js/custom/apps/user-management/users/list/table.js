@@ -51,13 +51,6 @@ var KTUsersList = function () {
                     className: 'd-flex align-items-center',
                     render: function (data, type, row) {
                         return `
-                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                <a href="../../demo14/dist/apps/user-management/users/view.html">
-                                    <div class="symbol-label">
-                                        <img src="assets/media/avatars/300-6.jpg" alt="Emma Smith" class="w-100" />
-                                    </div>
-                                </a>
-                            </div>
                             <div class="d-flex flex-column">
                                 <span class="text-gray-800 text-hover-primary mb-1">${row.name}</span>
                                 <span>${row.email}</span>
