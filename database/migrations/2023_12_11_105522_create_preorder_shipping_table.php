@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('village_id')->nullable();
             $table->text('notes')->nullable();
-            $table->double('shipping_price', 18, 2);
+            $table->double('shipping_price', 18, 2)->default(0);
             $table->timestamps();
         });
     }
