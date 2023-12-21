@@ -94,6 +94,52 @@
 								</a>
 							</div>
 							<!--end::Header Logo-->
+                            <!--begin::Nav-->
+                            <div class="ms-5 ms-md-10">
+                                <!--begin::Toggle-->
+                                <button type="button" class="btn btn-flex btn-secondary align-items-cenrer justify-content-center justify-content-md-between align-items-lg-center flex-md-content-between px-0 ps-md-6 pe-md-5 h-30px w-30px h-md-35px w-md-200px" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
+                                    <span class="d-none d-md-inline">Transaksi 2024</span>
+                                    <i class="ki-duotone ki-down fs-4 ms-2 ms-md-3 me-0"></i>
+                                </button>
+                                <!--end::Toggle-->
+                                <!--begin::Menu-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg fw-semibold w-200px pb-3" data-kt-menu="true">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content fs-7 text-dark fw-bold px-3 py-4">Pilih Tahun Transaksi:</div>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu separator-->
+                                    <div class="separator mb-3 opacity-75"></div>
+                                    <!--end::Menu separator-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{ route('dashboard') }}" class="menu-link px-3">
+                                            <i class="ki-duotone ki-delivery-3 fs-4 ms-2 ms-md-3 me-0">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
+                                            Transaksi 2024
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="https://store.liniswara.com/admin/1wire_rty/login" class="menu-link px-3">
+                                            <i class="ki-duotone ki-delivery-3 fs-4 ms-2 ms-md-3 me-0">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
+                                            Transaksi 2023
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu-->
+                            </div>
+                            <!--end::Nav-->
 							<!--begin::Wrapper-->
 							<div class="d-flex align-items-stretch justify-content-end flex-lg-grow-1">
 								@include('marketing.layouts.partials.menus')
