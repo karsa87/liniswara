@@ -64,6 +64,18 @@ class PreorderController extends Controller
                 $query->where('marketing', $marketingId);
             }
 
+            if ($status = $request->input('search.status')) {
+                $query->where('status', $status);
+            }
+
+            if ($status = $request->input('search.status_payment')) {
+                $query->where('status_payment', $status);
+            }
+
+            if ($status = $request->input('search.method_payment')) {
+                $query->where('method_payment', $status);
+            }
+
             $preorders = $query->get();
 
             $totalAll = Preorder::count();

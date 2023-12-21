@@ -30,7 +30,7 @@
                     <!--end::Separator-->
                     <!--begin::Content-->
                     <div class="px-7 py-5" data-kt-preorder-table-filter="form">
-                        <!--begin::Input group-->
+                        {{-- <!--begin::Input group-->
                         <div class="mb-10">
                             <label class="form-label fs-6 fw-semibold">Gudang</label>
                             <select class="form-select form-select-solid fw-bold select-filter-preorder" data-kt-select2="true" data-placeholder="Pilih" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_branch_id" id="filter-search_branch_id" data-url="{{ route('ajax.branch.list') }}">
@@ -45,12 +45,45 @@
                                 <option value="" selected></option>
                             </select>
                         </div>
-                        <!--end::Input group-->
+                        <!--end::Input group--> --}}
                         <!--begin::Input group-->
                         <div class="mb-10">
                             <label class="form-label fs-6 fw-semibold">Agen</label>
                             <select class="form-select form-select-solid fw-bold select-filter-preorder" data-kt-select2="true" data-placeholder="Pilih" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_customer_id" id="filter-search_customer_id" data-url="{{ route('ajax.customer.list') }}">
                                 <option value="" selected></option>
+                            </select>
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="mb-10">
+                            <label class="form-label fs-6 fw-semibold">Status Order</label>
+                            <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Pilih" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_status" id="filter-search_status">
+                                <option value="" selected></option>
+                                @foreach (\App\Enums\Preorder\StatusEnum::MAP_LABEL as $key => $name)
+                                    <option value="{{ $key }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="mb-10">
+                            <label class="form-label fs-6 fw-semibold">Status Pembayaran</label>
+                            <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Pilih" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_status_payment" id="filter-search_status_payment">
+                                <option value="" selected></option>
+                                @foreach (\App\Enums\Preorder\StatusPaymentEnum::MAP_LABEL as $key => $name)
+                                    <option value="{{ $key }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="mb-10">
+                            <label class="form-label fs-6 fw-semibold">Method Pembayaran</label>
+                            <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Pilih" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_method_payment" id="filter-search_method_payment">
+                                <option value="" selected></option>
+                                @foreach (\App\Enums\Preorder\MethodPaymentEnum::MAP_LABEL as $key => $name)
+                                    <option value="{{ $key }}">{{ $name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <!--end::Input group-->

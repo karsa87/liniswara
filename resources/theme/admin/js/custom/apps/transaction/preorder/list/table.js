@@ -39,10 +39,13 @@ var KTPreordersList = function () {
             ajax: {
                 url: table.dataset.url,
                 "data": function ( d ) {
-                    d.search.branch_id = $('#filter-search_branch_id').val();
-                    d.search.collector_id = $('#filter-search_collector_id').val();
+                    // d.search.branch_id = $('#filter-search_branch_id').val();
+                    // d.search.collector_id = $('#filter-search_collector_id').val();
                     d.search.customer_id = $('#filter-search_customer_id').val();
                     d.search.marketing_id = $('#filter-search_marketing_id').val();
+                    d.search.status = $('#filter-search_status').val();
+                    d.search.status_payment = $('#filter-search_status_payment').val();
+                    d.search.method_payment = $('#filter-search_method_payment').val();
                 }
             },
             columns: [
@@ -60,7 +63,15 @@ var KTPreordersList = function () {
                 {
                     targets: 0,
                     render: function (data, type, row) {
-                        return `<span class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</span><br><span class="fs-7 text-muted">${row.date}</span>`;
+                        let result = `<span class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</span><br><span class="fs-7 text-muted">${row.date}</span>`;
+                        if (
+                            row.created_by != null
+                            && row.created_by.id != undefined
+                            && row.created_by.id != null
+                        ) {
+                            result +=`<br><span class="badge badge-success">By ${row.created_by.name}</span> <br> `;
+                        }
+                        return result;
                     }
                 },
                 {
@@ -102,7 +113,7 @@ var KTPreordersList = function () {
                             zone = 'Zona 2';
                         }
 
-                        return `<span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span><br><span class="fs-7 text-muted">${zone}</span>`;
+                        return `<span class="badge badge-dark">${zone}</span><br><span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span>`;
                     }
                 },
                 {
@@ -115,7 +126,7 @@ var KTPreordersList = function () {
                             && row.shipping.expedition != null
                             && row.shipping.expedition.id != null
                         ) {
-                            return row.shipping.expedition.name;
+                            return `<span class="fw-bold text-gray-600 text-hover-primary">${row.shipping.expedition.name}</span><br><span class="badge badge-success">${row.shipping.resi}</span>`;
                         }
 
                         return '';
@@ -126,14 +137,6 @@ var KTPreordersList = function () {
                     orderable: false,
                     render: function (data, type, row) {
                         let result = '';
-                        if (
-                            row.created_by != null
-                            && row.created_by.id != undefined
-                            && row.created_by.id != null
-                        ) {
-                            result +=`<span class="badge badge-primary">${row.created_by.name}</span> <br> `;
-                        }
-
                         if (row.marketing == 1 || row.marketing == "1") {
                             result +=`<span class="badge badge-info">Tim A</span>`;
                         } else if (row.marketing == 2 || row.marketing == "2") {
@@ -171,7 +174,7 @@ var KTPreordersList = function () {
                         if (row.status_payment == 1 || row.status_payment == "1") {
                             result +=`<span class="badge badge-danger">Belum Terbayar</span>`;
                         } else if (row.status_payment == 2 || row.status_payment == "2") {
-                            result +=`<span class="badge badge-success">Lunas</span>`;
+                            result +=`<span class="badge badge-success">Terbayar</span>`;
                         } else if (row.status_payment == 3 || row.status_payment == "3") {
                             result +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
                         }
