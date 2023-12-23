@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\UserLogin;
+use App\Listeners\UserRoleListener;
 use App\Models\User;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
@@ -17,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
+        UserLogin::class => [
+            UserRoleListener::class,
+        ],
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],

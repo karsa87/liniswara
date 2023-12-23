@@ -29,6 +29,7 @@
                 </div>
                 <!--end:Menu item-->
 
+                @if (auth()->user()->has('preorder-view'))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <!--begin:Menu link-->
@@ -97,6 +98,7 @@
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
+                @endif
 
                 <!--begin:Menu item-->
                 {{-- <div class="menu-item">
@@ -142,6 +144,7 @@
                 </div>
                 <!--end:Menu item-->
 
+                @if (auth()->user()->has(['product-view', 'preorder_book-view', 'restock-view', 'category-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['category.','product.','restock.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
@@ -160,6 +163,7 @@
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
+                        @hasPermission('product-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -172,6 +176,8 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('preorder_book-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -184,6 +190,8 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('restock-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -196,6 +204,8 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('category-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -208,11 +218,14 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
                     </div>
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
+                @endif
 
+                @if (auth()->user()->has(['branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['branch.', 'supplier.', 'expedition.', 'collector.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
@@ -231,6 +244,7 @@
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
+                        @hasPermission('expedition-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -243,6 +257,8 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('collector-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -255,7 +271,9 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        {{-- <!--begin:Menu item-->
+                        @endhasPermission
+                        @hasPermission('supplier-view')
+                        <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link {{ str(request()->route()->getName())->contains(['supplier.']) ? 'active here' : '' }}" href="{{ route('supplier.index') }}">
@@ -266,7 +284,9 @@
                             </a>
                             <!--end:Menu link-->
                         </div>
-                        <!--end:Menu item--> --}}
+                        <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('branch-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -279,11 +299,14 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
                     </div>
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
+                @endif
 
+                @hasPermission('customer-view')
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -301,7 +324,9 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+                @endhasPermission
 
+                @if (auth()->user()->has(['permission-view', 'user-view', 'role-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['permission.', 'user.', 'role.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
@@ -318,6 +343,7 @@
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
+                        @hasPermission('user-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -330,6 +356,8 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('role-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -342,22 +370,26 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['permission.']) ? 'active here' : '' }}" href="{{ route('permission.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Permission</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
+                        @endhasPermission
+                        @if (auth()->user()->isDeveloper())
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link {{ str(request()->route()->getName())->contains(['permission.']) ? 'active here' : '' }}" href="{{ route('permission.index') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Permission</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+                        @endif
                     </div>
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
+                @endif
 
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">
@@ -446,6 +478,7 @@
                 </div>
                 <!--end:Menu item--> --}}
 
+                @if (auth()->user()->isDeveloper())
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -463,6 +496,7 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+                @endif
             </div>
             <!--end::Menu-->
         </div>

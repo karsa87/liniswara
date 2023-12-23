@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\BladeServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -169,6 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        BladeServiceProvider::class,
     ])->toArray(),
 
     /*

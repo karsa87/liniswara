@@ -54,7 +54,7 @@ class User extends Authenticatable
             'user_roles',
             'user_id',
             'role_id',
-        );
+        )->withoutGlobalScope('exclude_developer');
     }
 
     /**
@@ -79,5 +79,23 @@ class User extends Authenticatable
     public function isDeveloper()
     {
         return $this->roles->firstWhere('slug', 'developer') ? true : false;
+    }
+
+    public function has($findPermissions)
+    {
+        $has = false;
+        $permissions = \Session::get('user-permission');
+        $findPermissions = is_array($findPermissions) ? $findPermissions : (json_decode($findPermissions, true) ?: $findPermissions);
+        if (is_array($findPermissions)) {
+            foreach ($findPermissions as $p) {
+                if ($permissions->has($p)) {
+                    $has = true;
+                }
+            }
+        } elseif (is_string($findPermissions) && $permissions->has($findPermissions)) {
+            $has = true;
+        }
+
+        return $has;
     }
 }

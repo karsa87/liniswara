@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\UserLogin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class AuthController extends Controller
                 'roles' => function ($qRole) {
                     $qRole->withoutGlobalScope('exclude_developer');
                 },
+                'role',
             ])->whereEmail($request->email)->first();
 
             if (empty($user)) {
@@ -48,7 +50,7 @@ class AuthController extends Controller
                     Auth::guard('marketing')->login($user, false);
                 }
 
-                // event(new UserLogin($user));
+                event(new UserLogin($user));
 
                 return response()->json();
             }
