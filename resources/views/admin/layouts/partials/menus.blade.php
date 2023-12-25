@@ -29,7 +29,7 @@
                 </div>
                 <!--end:Menu item-->
 
-                @if (auth()->user()->has('preorder-view'))
+                @if (auth()->user()->hasPermission('preorder-view'))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <!--begin:Menu link-->
@@ -144,7 +144,7 @@
                 </div>
                 <!--end:Menu item-->
 
-                @if (auth()->user()->has(['product-view', 'preorder_book-view', 'restock-view', 'category-view']))
+                @if (auth()->user()->hasPermission(['product-view', 'preorder_book-view', 'restock-view', 'category-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['category.','product.','restock.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
@@ -225,7 +225,7 @@
                 <!--end:Menu item-->
                 @endif
 
-                @if (auth()->user()->has(['branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
+                @if (auth()->user()->hasPermission(['branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['branch.', 'supplier.', 'expedition.', 'collector.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
@@ -326,7 +326,7 @@
                 <!--end:Menu item-->
                 @endhasPermission
 
-                @if (auth()->user()->has(['permission-view', 'user-view', 'role-view']))
+                @if (auth()->user()->hasPermission(['permission-view', 'user-view', 'role-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['permission.', 'user.', 'role.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->

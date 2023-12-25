@@ -81,7 +81,7 @@ class User extends Authenticatable
         return $this->roles->firstWhere('slug', 'developer') ? true : false;
     }
 
-    public function has($findPermissions)
+    public function hasPermission($findPermissions)
     {
         $has = false;
         $permissions = \Session::get('user-permission');

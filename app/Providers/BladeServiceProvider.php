@@ -27,13 +27,13 @@ class BladeServiceProvider extends ServiceProvider
             $permission = str_replace("'", '"', $permission);
             $permissionArr = json_decode($permission, true);
             if ($permissionArr && is_array($permissionArr)) {
-                return "<?php if ( auth()->user()->has('$permission') ) { ?>";
+                return "<?php if ( auth()->user()->hasPermission('$permission') ) { ?>";
             }
 
             $permission = str_replace("'", '', $permission);
             $permission = str_replace('"', '', $permission);
 
-            return '<?php if (auth()->user()->has("'.$permission.'")) { ?>';
+            return '<?php if (auth()->user()->hasPermission("'.$permission.'")) { ?>';
         });
 
         \Blade::directive('elsehasPermission', function () {
