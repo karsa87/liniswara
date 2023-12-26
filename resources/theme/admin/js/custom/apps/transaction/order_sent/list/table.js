@@ -2,14 +2,14 @@
 
 var KTPreordersList = function () {
     // Define shared variables
-    var table = document.getElementById('kt_table_preorders');
+    var table = document.getElementById('kt_table_orders');
     var datatable;
 
     // Private functions
     var initPreorderTable = function () {
-        $('.select-filter-preorder').each(function () {
+        $('.select-filter-order').each(function () {
             $(this).select2({
-                dropdownParent: $('#data-kt-menu-filter-preorder'),
+                dropdownParent: $('#data-kt-menu-filter-order'),
                 ajax: {
                     url: $(this).data('url'),
                     dataType: 'json',
@@ -39,8 +39,6 @@ var KTPreordersList = function () {
             ajax: {
                 url: table.dataset.url,
                 "data": function ( d ) {
-                    // d.search.branch_id = $('#filter-search_branch_id').val();
-                    // d.search.collector_id = $('#filter-search_collector_id').val();
                     d.search.customer_id = $('#filter-search_customer_id').val();
                     d.search.marketing_id = $('#filter-search_marketing_id').val();
                     d.search.status = $('#filter-search_status').val();
@@ -63,7 +61,7 @@ var KTPreordersList = function () {
                 {
                     targets: 0,
                     render: function (data, type, row) {
-                        let result = `<a href="preorder/detail/${row.id}/" class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</a><br><span class="fs-7 text-muted">${row.date}</span>`;
+                        let result = `<a href="order/detail/${row.id}/" class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</a><br><span class="fs-7 text-muted">${row.date}</span>`;
                         if (
                             row.created_by != null
                             && row.created_by.id != undefined
@@ -209,48 +207,72 @@ var KTPreordersList = function () {
                             </a>
 
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <a href="preorder/print/purchase-order/${row.id}" class="menu-link px-3">
-                                        <i class="ki-duotone ki-message-text fs-2 me-2 text-info">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                            <span class="path5"></span>
-                                        </i>
-                                        Purchase Order
-                                    </a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">
-                                        <i class="ki-duotone ki-directbox-default fs-2 me-2 text-info">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                        Faktur
-                                    </a>
-                                </div>
-                                <div class="separator mb-3 opacity-75"></div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_discount" data-bs-toggle="modal" data-bs-target="#kt_modal_update_discount_preorder" data-id='${row.id}'>
-                                        <i class="ki-duotone ki-discount fs-2 me-2 text-primary">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        Diskon
-                                    </a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_status" data-bs-toggle="modal" data-bs-target="#kt_modal_update_status_preorder" data-id='${row.id}'>
-                                        <i class="ki-duotone ki-message-edit fs-2 me-2 text-primary">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        Status
-                                    </a>
-                                </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3">
+                                    <i class="ki-duotone ki-printer fs-2 me-2 text-info">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
+                                    </i>
+                                    Cetak Alamat
+                                </a>
+                            </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3">
+                                    <i class="ki-duotone ki-message-text fs-2 me-2 text-info">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
+                                    </i>
+                                    Purchase Order
+                                </a>
+                            </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3">
+                                    <i class="ki-duotone ki-directbox-default fs-2 me-2 text-info">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                    </i>
+                                    Faktur
+                                </a>
+                            </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3">
+                                    <i class="ki-duotone ki-delivery fs-2 me-2 text-info">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
+                                    </i>
+                                    Surat Jalan
+                                </a>
+                            </div>
+                            <div class="separator mb-3 opacity-75"></div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-kt-orders-table-filter="update_discount" data-bs-toggle="modal" data-bs-target="#kt_modal_update_discount_order" data-id='${row.id}'>
+                                    <i class="ki-duotone ki-discount fs-2 me-2 text-primary">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                    Diskon
+                                </a>
+                            </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-kt-orders-table-filter="update_status" data-bs-toggle="modal" data-bs-target="#kt_modal_update_status_order" data-id='${row.id}'>
+                                    <i class="ki-duotone ki-message-edit fs-2 me-2 text-primary">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                    Status
+                                </a>
+                            </div>
                         `;
 
                         if (
@@ -260,7 +282,7 @@ var KTPreordersList = function () {
                         ) {
                             result += `
                                 <div class="menu-item px-3">
-                                    <a href="preorder/track/${row.id}/" class="menu-link px-3">
+                                    <a href="order/track/${row.id}/" class="menu-link px-3">
                                         <i class="ki-duotone ki-delivery-time fs-2 me-2 text-primary">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -274,38 +296,7 @@ var KTPreordersList = function () {
                             `;
                         }
 
-                        // will show if preorder not sent all
-                        if (
-                            true
-                        ) {
-                            result += `
-                                <div class="menu-item px-3">
-                                    <a href="order/create/${row.id}/" class="menu-link px-3">
-                                    <i class="ki-duotone ki-delivery-3 fs-2 me-2 text-primary">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                        </i>
-                                        Migrate ke Ready
-                                    </a>
-                                </div>
-                            `;
-                        }
-
-                        result += `<div class="separator mb-3 opacity-75"></div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="delete_row" data-id='${row.id}'>
-                                        <i class="ki-duotone ki-trash-square fs-2 me-2 text-danger">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                        Delete
-                                    </a>
-                                </div>
-                            </div>
-                        `;
+                        result += `</div>`;
                         return result;
                     },
                 },
@@ -314,7 +305,6 @@ var KTPreordersList = function () {
 
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
-            handleDeleteRows();
             handleEditDiscountRows();
             handleEditStatusRows();
             KTMenu.createInstances();
@@ -332,8 +322,8 @@ var KTPreordersList = function () {
     // Filter Datatable
     var handleFilterDatatable = () => {
         // Select filter options
-        const filterForm = document.querySelector('[data-kt-preorder-table-filter="form"]');
-        const filterButton = filterForm.querySelector('[data-kt-preorder-table-filter="filter"]');
+        const filterForm = document.querySelector('[data-kt-order-table-filter="form"]');
+        const filterButton = filterForm.querySelector('[data-kt-order-table-filter="filter"]');
         const selectOptions = filterForm.querySelectorAll('select');
 
         // Filter datatable on submit
@@ -346,12 +336,12 @@ var KTPreordersList = function () {
     // Reset Filter
     var handleResetForm = () => {
         // Select reset button
-        const resetButton = document.querySelector('[data-kt-preorder-table-filter="reset"]');
+        const resetButton = document.querySelector('[data-kt-order-table-filter="reset"]');
 
         // Reset datatable
         resetButton.addEventListener('click', function () {
             // Select filter options
-            const filterForm = document.querySelector('[data-kt-preorder-table-filter="form"]');
+            const filterForm = document.querySelector('[data-kt-order-table-filter="form"]');
             const selectOptions = filterForm.querySelectorAll('select');
 
             // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
@@ -364,110 +354,10 @@ var KTPreordersList = function () {
         });
     }
 
-
-    // Delete subscirption
-    var handleDeleteRows = () => {
-        // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-preorders-table-filter="delete_row"]');
-
-        deleteButtons.forEach(d => {
-            // Delete button on click
-            d.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                // Select parent row
-                const parent = e.target.closest('tr');
-
-                // Select parent row
-                const button = e.target.closest('a');
-
-                // Get preorder name
-                const preorderName = parent.querySelectorAll('td')[1].innerText;
-
-                // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-                Swal.fire({
-                    text: "Are you sure you want to delete " + preorderName + "?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        axios.delete(table.dataset.urlDelete + '/' + button.getAttribute('data-id'), {})
-                        .then(response => {
-                            if (response) {
-                                Swal.fire({
-                                    text: "You have deleted " + preorderName + "!.",
-                                    icon: "success",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn fw-bold btn-primary",
-                                    }
-                                }).then(function () {
-                                    // Remove current row
-                                    datatable.row($(parent)).remove().draw();
-                                });
-                            } else {
-                                Swal.fire({
-                                    text: "Sorry, looks like failed deleted, please try again.",
-                                    icon: "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            let msg = "Sorry, failed delete, please try again.";
-                            if (
-                                error.response && error.response.data
-                                && error.response.data != undefined
-                                && error.response.data != null
-                                && error.response.data != ''
-                                && error.response.data.message
-                            ) {
-                                msg = error.response.data.message;
-                            }
-
-                            Swal.fire({
-                                title: "Failed Delete",
-                                text: msg,
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            });
-                        });
-                    } else if (result.dismiss === 'cancel') {
-                        Swal.fire({
-                            text: preorderName + " was not deleted.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary",
-                            }
-                        });
-                    }
-                });
-            })
-        });
-    }
-
-    // Update preorder
+    // Update order
     var handleEditDiscountRows = () => {
         // Select all update buttons
-        const updateButtons = table.querySelectorAll('[data-kt-preorders-table-filter="update_discount"]');
+        const updateButtons = table.querySelectorAll('[data-kt-orders-table-filter="update_discount"]');
 
         updateButtons.forEach(d => {
             // Update button on click
@@ -477,20 +367,20 @@ var KTPreordersList = function () {
                 // // Select parent row
                 const button = e.target.closest('a');
 
-                const element = document.getElementById('kt_modal_update_discount_preorder');
-                const form = element.querySelector('#kt_modal_update_discount_preorder_form');
+                const element = document.getElementById('kt_modal_update_discount_order');
+                const form = element.querySelector('#kt_modal_update_discount_order_form');
 
                 KTApp.showPageLoading();
 
                 // Check axios library docs: https://axios-http.com/docs/intro
                 axios.get(table.dataset.urlEdit + '/' + button.getAttribute('data-id')).then(function (response) {
                     if (response && response.data) {
-                        let preorder = response.data.data;
-                        form.querySelector("input[name='preorder_id']").value = preorder.id;
-                        form.querySelector("input[name='preorder_discount_price']").value = preorder.discount_price;
-                        form.querySelector("input[name='preorder_discount_percentage']").value = preorder.discount_percentage;
-                        form.querySelector("input[name='preorder_shipping_price']").value = preorder.shipping_price;
-                        $('#form-select-discount-type').val(preorder.discount_type).trigger('change');
+                        let order = response.data.data;
+                        form.querySelector("input[name='order_id']").value = order.id;
+                        form.querySelector("input[name='order_discount_price']").value = order.discount_price;
+                        form.querySelector("input[name='order_discount_percentage']").value = order.discount_percentage;
+                        form.querySelector("input[name='order_shipping_price']").value = order.shipping_price;
+                        $('#form-select-discount-type').val(order.discount_type).trigger('change');
                         $('#form-select-discount-type').change();
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -534,10 +424,10 @@ var KTPreordersList = function () {
         });
     }
 
-    // Update preorder
+    // Update order
     var handleEditStatusRows = () => {
         // Select all update buttons
-        const updateButtons = table.querySelectorAll('[data-kt-preorders-table-filter="update_status"]');
+        const updateButtons = table.querySelectorAll('[data-kt-orders-table-filter="update_status"]');
 
         updateButtons.forEach(d => {
             // Update button on click
@@ -547,23 +437,23 @@ var KTPreordersList = function () {
                 // // Select parent row
                 const button = e.target.closest('a');
 
-                const element = document.getElementById('kt_modal_update_status_preorder');
-                const form = element.querySelector('#kt_modal_update_status_preorder_form');
+                const element = document.getElementById('kt_modal_update_status_order');
+                const form = element.querySelector('#kt_modal_update_status_order_form');
 
                 KTApp.showPageLoading();
 
                 // Check axios library docs: https://axios-http.com/docs/intro
                 axios.get(table.dataset.urlEdit + '/' + button.getAttribute('data-id')).then(function (response) {
                     if (response && response.data) {
-                        let preorder = response.data.data;
-                        form.querySelector("input[name='preorder_id']").value = preorder.id;
-                        $('#form-select-status-marketing').val(preorder.marketing).trigger('change');
+                        let order = response.data.data;
+                        form.querySelector("input[name='order_id']").value = order.id;
+                        $('#form-select-status-marketing').val(order.marketing).trigger('change');
                         $('#form-select-status-marketing').change();
-                        $('#form-select-status-status').val(preorder.status).trigger('change');
+                        $('#form-select-status-status').val(order.status).trigger('change');
                         $('#form-select-status-status').change();
-                        $('#form-select-status-status_payment').val(preorder.status_payment).trigger('change');
+                        $('#form-select-status-status_payment').val(order.status_payment).trigger('change');
                         $('#form-select-status-status_payment').change();
-                        $('#form-select-status-method_payment').val(preorder.method_payment).trigger('change');
+                        $('#form-select-status-method_payment').val(order.method_payment).trigger('change');
                         $('#form-select-status-method_payment').change();
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -617,14 +507,13 @@ var KTPreordersList = function () {
 
             initPreorderTable();
             handleResetForm();
-            handleDeleteRows();
             handleFilterDatatable();
             handleEditDiscountRows();
             handleEditStatusRows();
             handleSearchDatatable();
         },
         refresh: function() {
-            datatable.ajax.reload(null, false); // preorder paging is not reset on reload
+            datatable.ajax.reload(null, false); // order paging is not reset on reload
         }
     }
 }();

@@ -16,12 +16,12 @@
         </ul>
         <!--end:::Tabs-->
         <!--begin::Button-->
-        <a href="{{ route('preorder.index') }}" class="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
+        <a href="{{ route('order.index') }}" class="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
             <i class="ki-duotone ki-left fs-2"></i>
         </a>
         <!--end::Button-->
         <!--begin::Button-->
-        <a href="{{ route('preorder.edit', $preorder->id) }}" class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
+        <a href="{{ route('order.edit', $order->id) }}" class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
         <!--end::Button-->
         <!--begin::Button-->
         {{-- <a href="../../demo14/dist/apps/ecommerce/sales/add-order.html" class="btn btn-primary btn-sm">Add New Order</a> --}}
@@ -52,7 +52,7 @@
                                         <span class="path2"></span>
                                     </i>Tanggal</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ $preorder->date }}</td>
+                                <td class="fw-bold text-end">{{ $order->date }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -63,7 +63,7 @@
                                         <span class="path3"></span>
                                     </i>Penagih</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional($preorder->collector)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional($order->collector)->name }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -74,7 +74,7 @@
                                         <span class="path3"></span>
                                     </i>Gudang</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional($preorder->branch)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional($order->branch)->name }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -85,7 +85,7 @@
                                         <span class="path3"></span>
                                     </i>Marketing</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\MarketingEnum::MAP_LABEL[$preorder->marketing] }}</td>
+                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\MarketingEnum::MAP_LABEL[$order->marketing] }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -97,7 +97,7 @@
                                         <span class="path4"></span>
                                     </i>Catatan Staff
                                 </td>
-                                <td class="fw-bold text-end">{!! html_entity_decode($preorder->notes_staff) !!}</td>
+                                <td class="fw-bold text-end">{!! html_entity_decode($order->notes_staff) !!}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -107,7 +107,7 @@
                                         <span class="path2"></span>
                                     </i>Catatan
                                 </td>
-                                <td class="fw-bold text-end">{!! html_entity_decode($preorder->notes) !!}</td>
+                                <td class="fw-bold text-end">{!! html_entity_decode($order->notes) !!}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -133,7 +133,7 @@
                     <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
                         <tbody class="fw-semibold text-gray-600">
                             @php
-                                $customer = $preorder->customer;
+                                $customer = $order->customer;
                             @endphp
                             <tr>
                                 <td class="text-muted">
@@ -174,7 +174,7 @@
                                         <span class="path2"></span>
                                     </i>Alamat</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional($preorder->customer_address)->address }}</td>
+                                <td class="fw-bold text-end">{{ optional($order->customer_address)->address }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -184,7 +184,7 @@
                                         <span class="path2"></span>
                                     </i>Kelurahan / Desa</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional(optional($preorder->customer_address)->village)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional(optional($order->customer_address)->village)->name }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -194,7 +194,7 @@
                                         <span class="path2"></span>
                                     </i>Kecamatan</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional(optional($preorder->customer_address)->district)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional(optional($order->customer_address)->district)->name }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -204,7 +204,7 @@
                                         <span class="path2"></span>
                                     </i>Kabupaten / Kota</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional(optional($preorder->customer_address)->regency)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional(optional($order->customer_address)->regency)->name }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -214,7 +214,7 @@
                                         <span class="path2"></span>
                                     </i>Provinsi</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional(optional($preorder->customer_address)->province)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional(optional($order->customer_address)->province)->name }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -257,7 +257,7 @@
                                         </i>
                                     </span></div>
                                 </td>
-                                <td class="fw-bold text-end">{{ $preorder->invoice_number }}</td>
+                                <td class="fw-bold text-end">{{ $order->invoice_number }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -275,7 +275,7 @@
                                         </i>
                                     </span></div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional($preorder->shipping)->resi }}</td>
+                                <td class="fw-bold text-end">{{ optional($order->shipping)->resi }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -288,7 +288,7 @@
                                         <span class="path5"></span>
                                     </i>Ekspedisi
                                 </td>
-                                <td class="fw-bold text-end">{{ optional(optional($preorder->shipping)->expedition)->name }}</td>
+                                <td class="fw-bold text-end">{{ optional(optional($order->shipping)->expedition)->name }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -300,7 +300,7 @@
                                         <span class="path4"></span>
                                     </i>Status Order</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\StatusEnum::MAP_LABEL[$preorder->status] }}</td>
+                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\StatusEnum::MAP_LABEL[$order->status] }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -312,7 +312,7 @@
                                         <span class="path4"></span>
                                     </i>Status Terbayar</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\StatusPaymentEnum::MAP_LABEL[$preorder->status_payment] }}</td>
+                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\StatusPaymentEnum::MAP_LABEL[$order->status_payment] }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -324,7 +324,7 @@
                                         <span class="path4"></span>
                                     </i>Status Pembayaran</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\MethodPaymentEnum::MAP_LABEL[$preorder->method_payment] }}</td>
+                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\MethodPaymentEnum::MAP_LABEL[$order->method_payment] }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -334,7 +334,7 @@
                                         <span class="path2"></span>
                                     </i>Total Preorder
                                 </td>
-                                <td class="fw-bold text-end">{{ $util->format_currency($preorder->total_amount, 0 , 'Rp. ') }}</td>
+                                <td class="fw-bold text-end">{{ $util->format_currency($order->total_amount, 0 , 'Rp. ') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -369,7 +369,7 @@
                                 <thead>
                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-10px">No</th>
-                                        <th class="min-w-175px">Nama Produk</th>
+                                        <th class="min-w-175px">No</th>
                                         <th class="min-w-100px text-end">Kode</th>
                                         <th class="min-w-70px text-end">Jumlah</th>
                                         <th class="min-w-100px text-end">Harga</th>
@@ -378,7 +378,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                    @foreach ($preorder->details as $i => $detail)
+                                    @foreach ($order->details as $i => $detail)
                                         <tr>
                                             <td>{{ $i+1 }}</td>
                                             <td>
@@ -408,15 +408,15 @@
                                     @endforeach
                                     <tr>
                                         <td colspan="6" class="text-end">Subtotal</td>
-                                        <td class="text-end">{{ $util->format_currency($preorder->subtotal, 0, 'Rp. ') }}</td>
+                                        <td class="text-end">{{ $util->format_currency($order->subtotal, 0, 'Rp. ') }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="6" class="text-end">Diskon</td>
                                         <td class="text-end">
                                             @php
-                                                $discountPrice = $preorder->discount_price;
-                                                if ($preorder->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
-                                                    $discountPrice = $preorder->subtotal * ($preorder->discount_percentage / 100);
+                                                $discountPrice = $order->discount_price;
+                                                if ($order->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
+                                                    $discountPrice = $order->subtotal * ($order->discount_percentage / 100);
                                                 }
                                             @endphp
                                             {{ $util->format_currency($discountPrice, 0, 'Rp. ') }}
@@ -424,22 +424,22 @@
                                     </tr>
                                     <tr>
                                         <td colspan="6" class="fs-3 text-dark text-end">Total</td>
-                                        <td class="text-dark fs-3 fw-bolder text-end">{{ $util->format_currency($preorder->total_amount, 0, 'Rp. ') }}</td>
+                                        <td class="text-dark fs-3 fw-bolder text-end">{{ $util->format_currency($order->total_amount, 0, 'Rp. ') }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="6" class="text-end">Ongkir</td>
-                                        <td class="text-end">{{ $util->format_currency($preorder->shipping_price, 0, 'Rp. ') }}</td>
+                                        <td class="text-end">{{ $util->format_currency($order->shipping_price, 0, 'Rp. ') }}</td>
                                     </tr>
-                                    @if ($preorder->tax)
+                                    @if ($order->tax)
                                     <tr>
-                                        <td colspan="6" class="text-end">{{ \App\Enums\Preorder\TaxEnum::MAP_LABEL[$preorder->tax] }}</td>
-                                        <td class="text-end">{{ $util->format_currency($preorder->tax_amount, 0, 'Rp. ') }}</td>
+                                        <td colspan="6" class="text-end">{{ \App\Enums\Preorder\TaxEnum::MAP_LABEL[$order->tax] }}</td>
+                                        <td class="text-end">{{ $util->format_currency($order->tax_amount, 0, 'Rp. ') }}</td>
                                     </tr>
                                     @endif
                                     <tr>
                                         <td colspan="6" class="fs-3 text-dark text-end">Grand Total</td>
                                         <td class="text-dark fs-3 fw-bolder text-end">
-                                            {{ $util->format_currency($preorder->total_amount + $preorder->tax_amount + $preorder->shipping_price, 0, 'Rp. ') }}
+                                            {{ $util->format_currency($order->total_amount + $order->tax_amount + $order->shipping_price, 0, 'Rp. ') }}
                                         </td>
                                     </tr>
                                 </tbody>

@@ -311,7 +311,8 @@ class ProductController extends Controller
 
         $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
         if ($q) {
-            $query->whereLike('name', $q);
+            $query->whereLike('name', $q)
+                ->orWhereLike('code', $q);
         }
 
         if ($excludeIds->isNotEmpty()) {

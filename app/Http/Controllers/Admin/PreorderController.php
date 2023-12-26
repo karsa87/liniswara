@@ -550,4 +550,22 @@ class PreorderController extends Controller
             'detailTrack' => $detailTrack,
         ]);
     }
+
+    public function purchase_order($id)
+    {
+        $preorder = Preorder::with([
+            'customer_address',
+            'collector',
+            'createdBy',
+            'customer.user',
+            'customer.addresses',
+            'branch',
+            'shipping',
+            'details.product',
+        ])->find($id);
+
+        return view('admin.preorder.print.index', [
+            'preorder' => $preorder,
+        ]);
+    }
 }

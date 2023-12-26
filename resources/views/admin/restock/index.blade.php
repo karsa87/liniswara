@@ -51,7 +51,7 @@
                 <!--end::Filter-->
                 <!--begin::Add restock-->
                 <a href="{{ route('restock.create') }}" class="btn btn-primary">
-                    <i class="ki-duotone ki-plus fs-2"></i>Tambah Penyesuaian
+                    <i class="ki-duotone ki-plus fs-2"></i>Tambah Restock
                 </a>
                 <!--end::Add restock-->
             </div>

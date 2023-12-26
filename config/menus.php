@@ -215,4 +215,49 @@ return [
             ],
         ],
     ],
+    'order' => [
+        'index' => [
+            'title' => 'Pesanan',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Transaksi',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Pesanan',
+                    'route' => 'order.index',
+                ],
+            ],
+        ],
+    ],
+    'order_sent' => [
+        'index' => [
+            'title' => 'Pengiriman',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Transaksi',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Pengiriman',
+                    'route' => 'order_sent.index',
+                ],
+            ],
+        ],
+    ],
+    'order_arsip' => [
+        'index' => [
+            'title' => 'Arsip',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Transaksi',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Arsip',
+                    'route' => 'order_arsip.index',
+                ],
+            ],
+        ],
+    ],
 ];

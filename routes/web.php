@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\Log\StockProductController;
+use App\Http\Controllers\Admin\OrderArsipController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\OrderSentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PreorderBookController;
 use App\Http\Controllers\Admin\PreorderController;
@@ -402,6 +405,79 @@ Route::middleware('auth')->group(function () {
             PreorderController::class, 'track',
         ])->where('id', '[0-9]+')
             ->name('track');
+
+        // START PRINT REPORT
+        Route::name('print.')->prefix('print')->group(function () {
+            Route::get('purchase-order/{id?}', [
+                PreorderController::class, 'purchase_order',
+            ])->where('id', '[0-9]+')
+                ->name('purchase_order');
+        });
+    });
+
+    Route::name('order.')->prefix('order/')->group(function () {
+        Route::get('/', [
+            OrderController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            OrderController::class, 'index',
+        ])->name('index.list');
+        Route::get('/create/{preorder_id?}', [
+            OrderController::class, 'create',
+        ])->name('create');
+        Route::get('/detail/{id?}', [
+            OrderController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::get('/detail-json/{id?}', [
+            OrderController::class, 'detail',
+        ])->where('id', '[0-9]+')
+            ->name('detail');
+        Route::get('/edit/{id?}', [
+            OrderController::class, 'edit',
+        ])->where('id', '[0-9]+')
+            ->name('edit');
+        Route::post('/store/{preorder_id?}', [
+            OrderController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            OrderController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            OrderController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+        Route::put('update-discount/{id?}', [
+            OrderController::class, 'update_discount',
+        ])->where('id', '[0-9]+')
+            ->name('update_discount');
+        Route::put('update-status/{id?}', [
+            OrderController::class, 'update_status',
+        ])->where('id', '[0-9]+')
+            ->name('update_status');
+        Route::get('track/{id?}', [
+            OrderController::class, 'track',
+        ])->where('id', '[0-9]+')
+            ->name('track');
+    });
+
+    Route::name('order_sent.')->prefix('order-sent/')->group(function () {
+        Route::get('/', [
+            OrderSentController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            OrderSentController::class, 'index',
+        ])->name('index.list');
+    });
+
+    Route::name('order_arsip.')->prefix('order-arsip/')->group(function () {
+        Route::get('/', [
+            OrderArsipController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            OrderArsipController::class, 'index',
+        ])->name('index.list');
     });
 
     Route::name('preorder_book.')->prefix('preorder-book/')->group(function () {

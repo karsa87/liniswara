@@ -29,7 +29,7 @@
                 </div>
                 <!--end:Menu item-->
 
-                @if (auth()->user()->hasPermission('preorder-view'))
+                @if (auth()->user()->hasPermission(['preorder-view', 'order-view', 'order_sent-view', 'order_arsip-view' ]))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <!--begin:Menu link-->
@@ -45,11 +45,12 @@
                     </span>
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion {{ str(request()->route()->getName())->contains(['preorder.']) ? 'hover show' : '' }}">
+                    <div class="menu-sub menu-sub-accordion {{ str(request()->route()->getName())->startsWith(['preorder.', 'order.', 'order_sent.', 'order_arsip.']) ? 'hover show' : '' }}">
+                        @hasPermission('preorder-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['preorder.']) ? 'active here' : '' }}" href="{{ route('preorder.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['preorder.']) ? 'active here' : '' }}" href="{{ route('preorder.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -58,10 +59,12 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('order-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['order.']) ? 'active here' : '' }}" href="{{ route('order.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -70,10 +73,12 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('order_sent-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['order_sent.']) ? 'active here' : '' }}" href="{{ route('order_sent.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -82,10 +87,12 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('order_arsip-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['order_arsip.']) ? 'active here' : '' }}" href="{{ route('order_arsip.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -94,6 +101,7 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @endhasPermission
                     </div>
                     <!--end:Menu sub-->
                 </div>
@@ -146,7 +154,7 @@
 
                 @if (auth()->user()->hasPermission(['product-view', 'preorder_book-view', 'restock-view', 'category-view']))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['category.','product.','restock.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['category.','product.','restock.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -167,7 +175,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['product.']) ? 'active here' : '' }}" href="{{ route('product.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['product.']) ? 'active here' : '' }}" href="{{ route('product.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -181,7 +189,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['preorder_book.']) ? 'active here' : '' }}" href="{{ route('preorder_book.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['preorder_book.']) ? 'active here' : '' }}" href="{{ route('preorder_book.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -195,7 +203,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['restock.']) ? 'active here' : '' }}" href="{{ route('restock.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['restock.']) ? 'active here' : '' }}" href="{{ route('restock.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -209,7 +217,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['category.']) ? 'active here' : '' }}" href="{{ route('category.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['category.']) ? 'active here' : '' }}" href="{{ route('category.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -227,7 +235,7 @@
 
                 @if (auth()->user()->hasPermission(['branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['branch.', 'supplier.', 'expedition.', 'collector.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['branch.', 'supplier.', 'expedition.', 'collector.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -248,7 +256,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['expedition.']) ? 'active here' : '' }}" href="{{ route('expedition.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['expedition.']) ? 'active here' : '' }}" href="{{ route('expedition.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -262,7 +270,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['collector.']) ? 'active here' : '' }}" href="{{ route('collector.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['collector.']) ? 'active here' : '' }}" href="{{ route('collector.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -276,7 +284,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['supplier.']) ? 'active here' : '' }}" href="{{ route('supplier.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['supplier.']) ? 'active here' : '' }}" href="{{ route('supplier.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -290,7 +298,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['branch.']) ? 'active here' : '' }}" href="{{ route('branch.index') }}"">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['branch.']) ? 'active here' : '' }}" href="{{ route('branch.index') }}"">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -310,7 +318,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link {{ str(request()->route()->getName())->contains(['customer.', 'customer.customer_address.']) ? 'active here' : '' }}" href="{{ route('customer.index') }}">
+                    <a class="menu-link {{ str(request()->route()->getName())->startsWith(['customer.', 'customer.customer_address.']) ? 'active here' : '' }}" href="{{ route('customer.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-profile-user fs-2 text-info">
                                 <span class="path1"></span>
@@ -328,7 +336,7 @@
 
                 @if (auth()->user()->hasPermission(['permission-view', 'user-view', 'role-view']))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->contains(['permission.', 'user.', 'role.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['permission.', 'user.', 'role.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -347,7 +355,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['user.']) ? 'active here' : '' }}" href="{{ route('user.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['user.']) ? 'active here' : '' }}" href="{{ route('user.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -361,7 +369,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ str(request()->route()->getName())->contains(['role.']) ? 'active here' : '' }}" href="{{ route('role.index') }}">
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['role.']) ? 'active here' : '' }}" href="{{ route('role.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -375,7 +383,7 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link {{ str(request()->route()->getName())->contains(['permission.']) ? 'active here' : '' }}" href="{{ route('permission.index') }}">
+                                <a class="menu-link {{ str(request()->route()->getName())->startsWith(['permission.']) ? 'active here' : '' }}" href="{{ route('permission.index') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -464,7 +472,7 @@
                 {{-- <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link {{ str(request()->route()->getName())->contains(['log.stock_product.']) ? 'active here' : '' }}" href="{{ route('log.stock_product.index') }}">
+                    <a class="menu-link {{ str(request()->route()->getName())->startsWith(['log.stock_product.']) ? 'active here' : '' }}" href="{{ route('log.stock_product.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-pointers fs-2 text-info">
                                 <span class="path1"></span>
@@ -482,7 +490,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link {{ str(request()->route()->getName())->contains(['setting.']) ? 'active here' : '' }}" href="{{ route('setting.index') }}">
+                    <a class="menu-link {{ str(request()->route()->getName())->startsWith(['setting.']) ? 'active here' : '' }}" href="{{ route('setting.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-setting-2 fs-2 text-info">
                                 <span class="path1"></span>

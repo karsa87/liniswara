@@ -21,7 +21,7 @@ final class StatusPaymentEnum extends Enum
 
     const MAP_LABEL = [
         self::NOT_PAID => 'Belum Terbayar',
-        self::PAID => 'Terbayar',
+        self::PAID => 'Lunas',
         self::DP => 'Terbayar Sebagian',
     ];
 
@@ -29,7 +29,7 @@ final class StatusPaymentEnum extends Enum
     {
         return match ($this->value) {
             self::NOT_PAID => 'Belum Terbayar',
-            self::PAID => 'Terbayar',
+            self::PAID => 'Lunas',
             self::DP => 'Terbayar Sebagian',
             default => ''
         };

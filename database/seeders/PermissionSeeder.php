@@ -32,6 +32,9 @@ class PermissionSeeder extends Seeder
         $this->createPermissionPreorder();
         $this->createPermissionPreorderBook();
         $this->createPermissionLogStock();
+        $this->createPermissionOrder();
+        $this->createPermissionOrderSent();
+        $this->createPermissionOrderArsip();
 
         $this->syncPermissionRole();
     }
@@ -610,6 +613,150 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Log Stock - View',
                 'key' => 'log_stock-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionOrder()
+    {
+        $permissions = [
+            [
+                'name' => 'Order - Tambah',
+                'key' => 'order-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Edit',
+                'key' => 'order-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - View',
+                'key' => 'order-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - View',
+                'key' => 'order-view_detail',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Delete',
+                'key' => 'order-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Update Diskon',
+                'key' => 'order-update_discount',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Update Status',
+                'key' => 'order-update_status',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Track',
+                'key' => 'order-track',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionOrderSent()
+    {
+        $permissions = [
+            [
+                'name' => 'Pengiriman - View',
+                'key' => 'order_sent-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - View',
+                'key' => 'order_sent-view_detail',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - Update Diskon',
+                'key' => 'order_sent-update_discount',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - Update Status',
+                'key' => 'order_sent-update_status',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - Track',
+                'key' => 'order_sent-track',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionOrderArsip()
+    {
+        $permissions = [
+            [
+                'name' => 'Arsip - View',
+                'key' => 'order_arsip-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Arsip - View',
+                'key' => 'order_arsip-view_detail',
                 'role-slug' => [
                     'developer',
                     'super-admin',
