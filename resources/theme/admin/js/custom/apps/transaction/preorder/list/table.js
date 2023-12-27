@@ -222,7 +222,7 @@ var KTPreordersList = function () {
                                     </a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">
+                                    <a href="preorder/print/faktur/${row.id}" class="menu-link px-3">
                                         <i class="ki-duotone ki-directbox-default fs-2 me-2 text-info">
                                             <span class="path1"></span>
                                             <span class="path2"></span>

@@ -412,6 +412,10 @@ Route::middleware('auth')->group(function () {
                 PreorderController::class, 'purchase_order',
             ])->where('id', '[0-9]+')
                 ->name('purchase_order');
+            Route::get('faktur/{id?}', [
+                PreorderController::class, 'faktur',
+            ])->where('id', '[0-9]+')
+                ->name('faktur');
         });
     });
 
@@ -460,6 +464,26 @@ Route::middleware('auth')->group(function () {
             OrderController::class, 'track',
         ])->where('id', '[0-9]+')
             ->name('track');
+
+        // START PRINT REPORT
+        Route::name('print.')->prefix('print')->group(function () {
+            Route::get('purchase-order/{id?}', [
+                OrderController::class, 'purchase_order',
+            ])->where('id', '[0-9]+')
+                ->name('purchase_order');
+            Route::get('faktur/{id?}', [
+                OrderController::class, 'faktur',
+            ])->where('id', '[0-9]+')
+                ->name('faktur');
+            Route::get('address/{id?}', [
+                OrderController::class, 'address',
+            ])->where('id', '[0-9]+')
+                ->name('address');
+            Route::get('sent-document/{id?}', [
+                OrderController::class, 'sent_document',
+            ])->where('id', '[0-9]+')
+                ->name('sent_document');
+        });
     });
 
     Route::name('order_sent.')->prefix('order-sent/')->group(function () {

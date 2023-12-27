@@ -673,4 +673,76 @@ class OrderController extends Controller
             'detailTrack' => $detailTrack,
         ]);
     }
+
+    public function purchase_order($id)
+    {
+        $order = Order::with([
+            'customer_address',
+            'collector',
+            'createdBy',
+            'customer.user',
+            'customer.addresses',
+            'branch',
+            'shipping',
+            'details.product',
+        ])->find($id);
+
+        return view('admin.order.print.purchasing', [
+            'order' => $order,
+        ]);
+    }
+
+    public function faktur($id)
+    {
+        $order = Order::with([
+            'customer_address',
+            'collector',
+            'createdBy',
+            'customer.user',
+            'customer.addresses',
+            'branch',
+            'shipping',
+            'details.product',
+        ])->find($id);
+
+        return view('admin.order.print.faktur', [
+            'order' => $order,
+        ]);
+    }
+
+    public function address($id)
+    {
+        $order = Order::with([
+            'customer_address',
+            'collector',
+            'createdBy',
+            'customer.user',
+            'customer.addresses',
+            'branch',
+            'shipping',
+            'details.product',
+        ])->find($id);
+
+        return view('admin.order.print.address', [
+            'order' => $order,
+        ]);
+    }
+
+    public function sent_document($id)
+    {
+        $order = Order::with([
+            'customer_address',
+            'collector',
+            'createdBy',
+            'customer.user',
+            'customer.addresses',
+            'branch',
+            'shipping',
+            'details.product',
+        ])->find($id);
+
+        return view('admin.order.print.sent_document', [
+            'order' => $order,
+        ]);
+    }
 }

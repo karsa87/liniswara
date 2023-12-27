@@ -208,7 +208,7 @@ var KTPreordersList = function () {
 
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">
+                                    <a href="order/print/purchase-order/${row.id}" class="menu-link px-3">
                                         <i class="ki-duotone ki-message-text fs-2 me-2 text-info">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -220,7 +220,7 @@ var KTPreordersList = function () {
                                     </a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">
+                                    <a href="order/print/faktur/${row.id}" class="menu-link px-3">
                                         <i class="ki-duotone ki-directbox-default fs-2 me-2 text-info">
                                             <span class="path1"></span>
                                             <span class="path2"></span>

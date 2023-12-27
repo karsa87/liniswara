@@ -564,7 +564,25 @@ class PreorderController extends Controller
             'details.product',
         ])->find($id);
 
-        return view('admin.preorder.print.index', [
+        return view('admin.preorder.print.purchasing', [
+            'preorder' => $preorder,
+        ]);
+    }
+
+    public function faktur($id)
+    {
+        $preorder = Preorder::with([
+            'customer_address',
+            'collector',
+            'createdBy',
+            'customer.user',
+            'customer.addresses',
+            'branch',
+            'shipping',
+            'details.product',
+        ])->find($id);
+
+        return view('admin.preorder.print.faktur', [
             'preorder' => $preorder,
         ]);
     }
