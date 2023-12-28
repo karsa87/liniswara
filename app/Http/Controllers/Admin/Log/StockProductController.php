@@ -19,9 +19,7 @@ class StockProductController extends Controller
                 'product',
             ])
                 ->has('product')
-                ->orderBy('created_at', 'DESC')
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+                ->orderBy('created_at', 'DESC');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($q2) use ($q) {
@@ -35,8 +33,10 @@ class StockProductController extends Controller
                 $query->where('product_id', $q);
             }
 
-            $preorders = $query->get();
-            $totalAll = StockHistory::has('product')->count();
+            $totalAll = (clone $query)->count();
+            $preorders = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return StockProductResource::collection($preorders)->additional([
                 'recordsTotal' => $totalAll,

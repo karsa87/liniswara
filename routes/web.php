@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\Log\HistoryController;
 use App\Http\Controllers\Admin\Log\StockProductController;
 use App\Http\Controllers\Admin\OrderArsipController;
 use App\Http\Controllers\Admin\OrderController;
@@ -525,6 +526,18 @@ Route::middleware('auth')->group(function () {
                 StockProductController::class, 'index',
             ])->name('index.list');
         });
+        Route::name('history.')->prefix('history/')->group(function () {
+            Route::get('/', [
+                HistoryController::class, 'index',
+            ])->name('index');
+            Route::get('/index/list', [
+                HistoryController::class, 'index',
+            ])->name('index.list');
+            Route::get('/detail/{id?}', [
+                HistoryController::class, 'show',
+            ])->where('id', '[0-9]+')
+                ->name('show');
+        });
     });
 
     Route::name('file.')->prefix('file/')->group(function () {
@@ -572,5 +585,9 @@ Route::middleware('auth')->group(function () {
             ExpeditionController::class,
             'ajax_list_expedition',
         ])->name('expedition.list');
+        Route::get('user', [
+            UserController::class,
+            'ajax_list_user',
+        ])->name('user.list');
     });
 });

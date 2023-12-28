@@ -215,6 +215,21 @@ return [
             ],
         ],
     ],
+    'history' => [
+        'index' => [
+            'title' => 'Aktifitas',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Log',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Aktifitas',
+                    'route' => 'log.history.index',
+                ],
+            ],
+        ],
+    ],
     'order' => [
         'index' => [
             'title' => 'Pesanan',

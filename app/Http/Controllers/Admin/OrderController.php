@@ -210,7 +210,7 @@ class OrderController extends Controller
                     $shipping = new OrderShipping();
                     $shipping->fill([
                         'order_id' => $order->id,
-                        'resi' => str($request->order_resi)->upper(),
+                        'resi' => str($request->order_resi)->trim()->upper(),
                         'expedition_id' => $request->order_expedition_id,
                         'name' => $order->customer->user->name ?? '',
                         'email' => $order->customer->user->email ?? '',
@@ -244,7 +244,7 @@ class OrderController extends Controller
             } elseif ($order->tax == TaxEnum::VAT_20) {
                 $order->tax_amount = $order->total_amount * 0.2;
             }
-            $order->save();
+            $order->skipLog()->save();
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -467,7 +467,7 @@ class OrderController extends Controller
                     $shipping = $order->shipping ?: new OrderShipping();
                     $shipping->fill([
                         'order_id' => $order->id,
-                        'resi' => str($request->order_resi)->upper(),
+                        'resi' => str($request->order_resi)->trim()->upper(),
                         'expedition_id' => $request->order_expedition_id,
                         'name' => $order->customer->user->name ?? '',
                         'email' => $order->customer->user->email ?? '',

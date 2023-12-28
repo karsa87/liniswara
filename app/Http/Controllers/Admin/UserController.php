@@ -201,4 +201,23 @@ class UserController extends Controller
 
         return response()->json();
     }
+
+    public function ajax_list_user(Request $request)
+    {
+        $params = request()->all();
+
+        $query = User::select('id', 'name as text');
+
+        $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        $list = $query->limit(20)->get()->toArray();
+
+        return response()->json([
+            'items' => $list,
+            'count' => count($list),
+        ]);
+    }
 }

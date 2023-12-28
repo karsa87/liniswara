@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_histories', function (Blueprint $table) {
+        Schema::connection('mysql_log')->create('stock_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->double('stock_in', 12)->default(0);
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_histories');
+        Schema::connection('mysql_log')->dropIfExists('stock_histories');
     }
 };

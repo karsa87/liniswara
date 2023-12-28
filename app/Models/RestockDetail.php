@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\RestockTypeEnum;
 use App\Models\Scopes\ScopeLike;
+use App\Models\Traits\LogHistoryTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RestockDetail extends Model
 {
-    use HasFactory, ScopeLike, SoftDeletes;
+    use HasFactory, LogHistoryTrait, ScopeLike, SoftDeletes;
 
     protected $guarded = [];
 

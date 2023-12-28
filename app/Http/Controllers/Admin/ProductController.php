@@ -148,9 +148,8 @@ class ProductController extends Controller
             'thumbnail',
             'categories',
             'stock_histories' => function ($qStory) {
-                $qStory->orderBy('created_at', 'DESC');
+                $qStory->with(['user', 'product'])->orderBy('created_at', 'DESC');
             },
-            'stock_histories.user',
         ])->find($id);
 
         if (is_null($product)) {

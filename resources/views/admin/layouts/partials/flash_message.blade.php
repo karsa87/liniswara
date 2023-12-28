@@ -1,17 +1,25 @@
 @if ($message = Session::get('success'))
-<script>showAlert('{!! $message !!}', 'success');</script>
+<script>
+    toastr.success("{!! $message !!}");
+</script>
 @endif
 
 @if ($message = Session::get('error'))
-<script>showAlert('{!! $message !!}', 'error');</script>
+<script>
+    toastr.error("{!! $message !!}");
+</script>
 @endif
 
 @if ($message = Session::get('warning'))
-<script>showAlert('{!! $message !!}', 'warning');</script>
+<script>
+    toastr.warning("{!! $message !!}");
+</script>
 @endif
 
 @if ($message = Session::get('info'))
-<script>showAlert('{!! $message !!}', 'info');</script>
+<script>
+    toastr.info("{!! $message !!}");
+</script>
 @endif
 
 @if ($errors->any())
@@ -20,5 +28,7 @@
         <ul class='text-left'><li>{!! implode("</li><li>", $message) !!}</li></ul>
     </div>
     @endif
-<script>showAlert("{!! '<ul class=\'text-left\'><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}", 'warning');</script>
+<script>
+    toastr.warning("{!! '<ul class=\'text-left\'><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}");
+</script>
 @endif

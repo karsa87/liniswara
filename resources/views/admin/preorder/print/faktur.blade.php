@@ -45,13 +45,16 @@
                             <br />Email: cvsuarapendidikannusantara@gmail.com</span>
                         </div>
                         <div class="flex-root d-flex flex-column">
+                            @php
+                                $customerAddress = $order->customer_address;
+                            @endphp
                             <span class="text-muted">Kepada</span>
-                            <span class="fs-6">{{ $preorder->customer_address->name }},
-                            <br />{{ $preorder->customer_address->address }}, {{ $preorder->customer_address->village->name }}
-                            <br />{{ $preorder->customer_address->district->name }},
-                            <br />{{ $preorder->customer_address->regency->name }},
-                            <br />{{ $preorder->customer_address->province->name }},
-                            <br />Telepon: {{ $preorder->customer_address->phone_number }}
+                            <span class="fs-6">{{ optional($customerAddress)->name }},
+                            <br />{{ optional($customerAddress)->address }}, {{ optional($customerAddress)->village->name }}
+                            <br />{{ optional($customerAddress)->district->name }},
+                            <br />{{ optional($customerAddress)->regency->name }},
+                            <br />{{ optional($customerAddress)->province->name }},
+                            <br />Telepon: {{ optional($customerAddress)->phone_number }}
                             <br />Email: {{ $preorder->customer->user->email }}</span>
                         </div>
                     </div>
@@ -152,7 +155,7 @@
                         <div class="flex-root d-flex flex-column">
                             <h2>Catatan</h2>
                             <span class="fs-5">
-                                {!! html_entity_decode($preorder->collector->billing_notes) !!}
+                                {!! html_entity_decode(optional($preorder->collector)->billing_notes ?? '') !!}
                             </span>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stock_histories', function (Blueprint $table) {
+        Schema::connection('mysql_log')->table('stock_histories', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable();
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stock_histories', function (Blueprint $table) {
+        Schema::connection('mysql_log')->table('stock_histories', function (Blueprint $table) {
             $table->dropColumn('user_id');
         });
     }

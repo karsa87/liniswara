@@ -454,7 +454,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="#">
+                    <a class="menu-link {{ str(request()->route()->getName())->startsWith(['log.history.']) ? 'active here' : '' }}" href="{{ route('log.history.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-book fs-2 text-info">
                                 <span class="path1"></span>

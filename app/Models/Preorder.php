@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Scopes\LogCreateUpdateTrait;
 use App\Models\Scopes\ScopeLike;
+use App\Models\Traits\LogHistoryTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Preorder extends Model
 {
-    use HasFactory, LogCreateUpdateTrait, ScopeLike, SoftDeletes;
+    use HasFactory, LogCreateUpdateTrait, LogHistoryTrait, ScopeLike, SoftDeletes;
 
     protected $guarded = [];
 
@@ -39,7 +40,7 @@ class Preorder extends Model
      */
     public function branch(): BelongsTo
     {
-        return $this->belongsTo(Branch::class, 'branch_id');
+        return $this->belongsTo(Branch::class, 'branch_id')->withTrashed();
     }
 
     /**
@@ -47,7 +48,7 @@ class Preorder extends Model
      */
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id')->withTrashed();
     }
 
     /**

@@ -13,6 +13,8 @@ class StockHistory extends Model
 
     protected $guarded = [];
 
+    protected $connection = 'mysql_log';
+
     protected $table = 'stock_histories';
 
     /**
@@ -20,7 +22,7 @@ class StockHistory extends Model
      */
     public function from(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->setConnection(config('database.default'))->morphTo();
     }
 
     /**
@@ -28,7 +30,7 @@ class StockHistory extends Model
      */
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->setConnection(config('database.default'))->belongsTo(Product::class, 'product_id');
     }
 
     /**
@@ -36,6 +38,6 @@ class StockHistory extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->setConnection(config('database.default'))->belongsTo(User::class, 'user_id');
     }
 }

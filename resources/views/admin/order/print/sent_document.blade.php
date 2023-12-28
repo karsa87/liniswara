@@ -45,13 +45,16 @@
                             <br />Email: cvsuarapendidikannusantara@gmail.com</span>
                         </div>
                         <div class="flex-root d-flex flex-column">
+                            @php
+                                $customerAddress = $order->customer_address;
+                            @endphp
                             <span class="text-muted">Kepada</span>
-                            <span class="fs-6">{{ $order->customer_address->name }},
-                            <br />{{ $order->customer_address->address }}, {{ $order->customer_address->village->name }}
-                            <br />{{ $order->customer_address->district->name }},
-                            <br />{{ $order->customer_address->regency->name }},
-                            <br />{{ $order->customer_address->province->name }},
-                            <br />Telepon: {{ $order->customer_address->phone_number }}
+                            <span class="fs-6">{{ optional($customerAddress)->name }},
+                            <br />{{ optional($customerAddress)->address }}, {{ optional($customerAddress)->village->name }}
+                            <br />{{ optional($customerAddress)->district->name }},
+                            <br />{{ optional($customerAddress)->regency->name }},
+                            <br />{{ optional($customerAddress)->province->name }},
+                            <br />Telepon: {{ optional($customerAddress)->phone_number }}
                             <br />Email: {{ $order->customer->user->email }}</span>
                         </div>
                     </div>
@@ -107,7 +110,7 @@
                         <div class="flex-root d-flex flex-column">
                             <h2>Catatan</h2>
                             <span class="fs-5">
-                                {!! html_entity_decode($order->collector->billing_notes) !!}
+                                {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
                             </span>
                         </div>
                         <div class="flex-root d-flex flex-column">

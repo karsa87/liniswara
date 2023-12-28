@@ -241,7 +241,6 @@ var KTUsersUpdatePermissions = function () {
                         });
                     }
                 }).catch(function (error) {
-                    console.log(error);
                     let msg = "Sorry, looks like there are some errors detected, please try again.";
                     if (
                         error.response && error.response.data

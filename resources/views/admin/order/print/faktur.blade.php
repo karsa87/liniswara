@@ -152,7 +152,7 @@
                         <div class="flex-root d-flex flex-column">
                             <h2>Catatan</h2>
                             <span class="fs-5">
-                                {!! html_entity_decode($order->collector->billing_notes) !!}
+                                {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
                             </span>
                         </div>
                     </div>
