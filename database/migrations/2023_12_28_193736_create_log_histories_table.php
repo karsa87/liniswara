@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('log_histories', function (Blueprint $table) {
+        Schema::connection('mysql_log')->create('log_histories', function (Blueprint $table) {
             $table->id();
             $table->dateTime('log_datetime');
             $table->bigInteger('user_id');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('log_histories');
+        Schema::connection('mysql_log')->dropIfExists('log_histories');
     }
 };
