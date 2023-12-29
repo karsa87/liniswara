@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Scopes\ScopeLike;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -71,6 +72,14 @@ class User extends Authenticatable
     public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, 'user_id');
+    }
+
+    /**
+     * The data that belong to the file.
+     */
+    public function profile_photo(): BelongsTo
+    {
+        return $this->belongsTo(File::class, 'profile_photo_id');
     }
 
     /**

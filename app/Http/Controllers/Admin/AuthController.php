@@ -30,6 +30,7 @@ class AuthController extends Controller
                     $qRole->withoutGlobalScope('exclude_developer');
                 },
                 'role',
+                'profile_photo',
             ])->whereEmail($request->email)->first();
 
             if (empty($user)) {

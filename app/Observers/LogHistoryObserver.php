@@ -82,7 +82,7 @@ class LogHistoryObserver
                 'record_id' => $object->id,
                 'data_after' => $data_after,
                 'data_before' => $data_before,
-                'transaction_type' => LogHistory::TRANSACTION_DELETE,
+                'transaction_type' => LogHistoryEnum::TRANSACTION_DELETE,
                 'information' => sprintf('Hapus %s', $object_name),
                 'record_type' => get_class($object),
                 'table' => $table,

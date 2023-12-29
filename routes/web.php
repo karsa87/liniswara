@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PreorderBookController;
 use App\Http\Controllers\Admin\PreorderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RestockController;
 use App\Http\Controllers\Admin\RoleController;
@@ -515,6 +516,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/export', [
             PreorderBookController::class, 'export',
         ])->name('export');
+    });
+
+    Route::name('profile.')->prefix('profile/')->group(function () {
+        Route::get('/', [
+            ProfileController::class, 'index',
+        ])->name('index');
+        Route::put('update', [
+            ProfileController::class, 'update',
+        ])->name('update');
+        Route::put('update/email', [
+            ProfileController::class, 'update_email',
+        ])->name('update.email');
+        Route::put('update/password', [
+            ProfileController::class, 'update_password',
+        ])->name('update.password');
     });
 
     Route::name('log.')->prefix('log')->group(function () {

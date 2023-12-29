@@ -18,7 +18,7 @@ var KTUsersAddUser = function () {
                     'user_name': {
                         validators: {
                             notEmpty: {
-                                message: 'Full name is required'
+                                message: 'Full name harus diisi'
                             }
                         }
                     },
@@ -28,7 +28,7 @@ var KTUsersAddUser = function () {
                                 message: 'Valid password is required'
                             },
                             callback: {
-                                message: 'Use 8 or more characters with a mix of letters, numbers & symbols.',
+                                message: 'Gunakan 8 karakter atau lebih dengan campuran huruf, angka & simbol.',
                                 callback: function (input) {
                                     let validatePassword = false;
                                     let password = input.value;
@@ -91,7 +91,6 @@ var KTUsersAddUser = function () {
             // Validate form before submit
             if (validator) {
                 validator.validate().then(function (status) {
-
 
                     if (status == 'Valid') {
                         // Show loading indication

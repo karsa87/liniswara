@@ -344,7 +344,11 @@
 										<!--end::Name-->
 										<!--begin::Symbol-->
 										<div class="symbol symbol-30px symbol-md-40px">
-											<img src="{{ mix('assets/media/avatars/300-1.jpg') }}" alt="image" />
+                                            @if (auth()->user()->profile_photo)
+                                                <img src="{{ auth()->user()->profile_photo->full_url }}" alt="{{ auth()->user()->name }}" />
+                                            @else
+                                                <img src="{{ mix('assets/media/avatars/blank.png') }}" alt="{{ auth()->user()->name }}" />
+                                            @endif
 										</div>
 										<!--end::Symbol-->
 									</div>
@@ -356,7 +360,11 @@
 											<div class="menu-content d-flex align-items-center px-3">
 												<!--begin::Avatar-->
 												<div class="symbol symbol-50px me-5">
-													<img alt="Logo" src="{{ mix('assets/media/avatars/300-1.jpg') }}" />
+                                                    @if (auth()->user()->profile_photo)
+                                                        <img src="{{ auth()->user()->profile_photo->full_url }}" alt="{{ auth()->user()->name }}" />
+                                                    @else
+                                                        <img src="{{ mix('assets/media/avatars/blank.png') }}" alt="{{ auth()->user()->name }}" />
+                                                    @endif
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Username-->
@@ -373,7 +381,7 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
-											<a href="#" class="menu-link px-5">My Profile</a>
+											<a href="{{ route('profile.index') }}" class="menu-link px-5">My Profile</a>
 										</div>
 										<!--end::Menu item-->
 										<!--begin::Menu separator-->
