@@ -329,6 +329,9 @@ Route::middleware('auth')->group(function () {
             ProductController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
+        Route::get('/export', [
+            ProductController::class, 'export',
+        ])->name('export');
     });
 
     Route::name('restock.')->prefix('restock/')->group(function () {
@@ -407,6 +410,9 @@ Route::middleware('auth')->group(function () {
             PreorderController::class, 'track',
         ])->where('id', '[0-9]+')
             ->name('track');
+        Route::get('/export', [
+            PreorderController::class, 'export',
+        ])->name('export');
 
         // START PRINT REPORT
         Route::name('print.')->prefix('print')->group(function () {
@@ -466,6 +472,9 @@ Route::middleware('auth')->group(function () {
             OrderController::class, 'track',
         ])->where('id', '[0-9]+')
             ->name('track');
+        Route::get('/export', [
+            OrderController::class, 'export',
+        ])->name('export');
 
         // START PRINT REPORT
         Route::name('print.')->prefix('print')->group(function () {
@@ -576,6 +585,10 @@ Route::middleware('auth')->group(function () {
                 RegionController::class,
                 'province',
             ])->name('province');
+            Route::get('regency', [
+                RegionController::class,
+                'ajax_list_regency',
+            ])->name('regency.list');
         });
         Route::get('category', [
             CategoryController::class,

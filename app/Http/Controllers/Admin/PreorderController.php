@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Preorder\DiscountTypeEnum;
 use App\Enums\Preorder\TaxEnum;
+use App\Exports\PreorderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Preorder\PreorderStoreUpdateRequest;
 use App\Http\Requests\Admin\Preorder\PreorderUpdateDiscountRequest;
@@ -17,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PreorderController extends Controller
 {
@@ -586,5 +588,37 @@ class PreorderController extends Controller
         return view('admin.preorder.print.faktur', [
             'preorder' => $preorder,
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function export(Request $request)
+    {
+        $query = Preorder::with([
+            'customer.user',
+            'customer_address',
+        ]);
+
+        if ($request->search_customer_id) {
+            $query->where('customer_id', $request->search_customer_id);
+        }
+
+        if ($request->search_regency_id) {
+            $regencyId = $request->search_regency_id;
+            $query->whereHas('customer_address', function ($qAddress) use ($regencyId) {
+                $qAddress->where('regency_id', $regencyId);
+            });
+        }
+
+        if ($q = $request->input('1')) {
+            $query->where(function ($q2) use ($q) {
+                $q2->whereLike('invoice_number', $q);
+            });
+        }
+
+        $preorders = $query->get();
+
+        return Excel::download(new PreorderExport($preorders), 'Preorder.xlsx');
     }
 }

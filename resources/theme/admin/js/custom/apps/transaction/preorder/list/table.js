@@ -29,6 +29,28 @@ var KTPreordersList = function () {
             });
         });
 
+        $('.select-export-preorder').each(function () {
+            $(this).select2({
+                dropdownParent: $('#data-kt-menu-export-preorder'),
+                ajax: {
+                    url: $(this).data('url'),
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function(data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data.items
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
             searchDelay: 1000,
@@ -323,7 +345,7 @@ var KTPreordersList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-product-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-preorder-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -608,6 +630,25 @@ var KTPreordersList = function () {
         });
     }
 
+    // Export Datatable
+    var handleExportDatatable = () => {
+        // Select filter options
+        const filterForm = document.querySelector('[data-kt-preorder-table-export="form"]');
+        const filterButton = filterForm.querySelector('[data-kt-preorder-table-export="export"]');
+
+        // Export datatable on submit
+        filterButton.addEventListener('click', function (e) {
+            // Prevent default button action
+            e.preventDefault();
+            const form = document.getElementById('kt_ecommerce_export_preorder_form');
+            let param = new FormData(form);
+            param.append('q', document.querySelector('[data-kt-preorder-table-filter="search"]').value);
+            const objString = '?' + new URLSearchParams(Object.fromEntries(param)).toString();
+
+            window.open(form.action + objString);
+        });
+    }
+
     return {
         // Public functions
         init: function () {
@@ -622,6 +663,7 @@ var KTPreordersList = function () {
             handleEditDiscountRows();
             handleEditStatusRows();
             handleSearchDatatable();
+            handleExportDatatable();
         },
         refresh: function() {
             datatable.ajax.reload(null, false); // preorder paging is not reset on reload

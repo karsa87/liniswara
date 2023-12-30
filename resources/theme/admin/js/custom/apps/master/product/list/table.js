@@ -28,6 +28,28 @@ var KTSuppliersList = function () {
             }
         });
 
+        $('.select-export-product').each(function () {
+            $(this).select2({
+                dropdownParent: $('#data-kt-menu-export-product'),
+                ajax: {
+                    url: $(this).data('url'),
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function(data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data.items
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
             searchDelay: 1000,
@@ -348,6 +370,25 @@ var KTSuppliersList = function () {
         });
     }
 
+    // Export Datatable
+    var handleExportDatatable = () => {
+        // Select filter options
+        const filterForm = document.querySelector('[data-kt-product-table-export="form"]');
+        const filterButton = filterForm.querySelector('[data-kt-product-table-export="export"]');
+
+        // Export datatable on submit
+        filterButton.addEventListener('click', function (e) {
+            // Prevent default button action
+            e.preventDefault();
+            const form = document.getElementById('kt_ecommerce_export_product_form');
+            let param = new FormData(form);
+            param.append('q', document.querySelector('[data-kt-product-table-filter="search"]').value);
+            const objString = '?' + new URLSearchParams(Object.fromEntries(param)).toString();
+
+            window.open(form.action + objString);
+        });
+    }
+
     return {
         // Public functions
         init: function () {
@@ -361,6 +402,7 @@ var KTSuppliersList = function () {
             handleDeleteRows();
             handleEditRows();
             handleFilterDatatable();
+            handleExportDatatable();
         },
         refresh: function() {
             datatable.ajax.reload(null, false); // product paging is not reset on reload

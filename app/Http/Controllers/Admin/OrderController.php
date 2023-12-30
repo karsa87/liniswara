@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\Preorder\DiscountTypeEnum;
 use App\Enums\Preorder\StatusEnum;
 use App\Enums\Preorder\TaxEnum;
+use App\Exports\PreorderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\OrderStoreUpdateRequest;
 use App\Http\Requests\Admin\Order\OrderUpdateDiscountRequest;
@@ -23,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -744,5 +746,40 @@ class OrderController extends Controller
         return view('admin.order.print.sent_document', [
             'order' => $order,
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function export(Request $request)
+    {
+        $query = Order::with([
+            'customer.user',
+            'customer_address',
+        ])->whereIn('status', [
+            StatusEnum::PROCESS,
+            StatusEnum::VALIDATION_ADMIN,
+        ]);
+
+        if ($request->search_customer_id) {
+            $query->where('customer_id', $request->search_customer_id);
+        }
+
+        if ($request->search_regency_id) {
+            $regencyId = $request->search_regency_id;
+            $query->whereHas('customer_address', function ($qAddress) use ($regencyId) {
+                $qAddress->where('regency_id', $regencyId);
+            });
+        }
+
+        if ($q = $request->input('q')) {
+            $query->where(function ($q2) use ($q) {
+                $q2->whereLike('invoice_number', $q);
+            });
+        }
+
+        $preorders = $query->get();
+
+        return Excel::download(new PreorderExport($preorders), 'Pesanan.xlsx');
     }
 }

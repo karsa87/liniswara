@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\ProductDiscountTypeEnum;
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\ProductStoreUpdateRequest;
 use App\Http\Resources\Admin\Product\ProductResource;
@@ -11,6 +12,7 @@ use App\Services\StockHistoryLogService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -339,5 +341,32 @@ class ProductController extends Controller
             'items' => $list,
             'count' => count($list),
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function export(Request $request)
+    {
+        $query = Product::with([
+            'categories',
+        ]);
+
+        if ($request->search_category_id) {
+            $qCategoryId = $request->search_category_id;
+            $query->whereHas('categories', function ($qCategory) use ($qCategoryId) {
+                $qCategory->where('category_id', $qCategoryId);
+            });
+        }
+
+        if ($q = $request->input('q')) {
+            $query->where(function ($q2) use ($q) {
+                $q2->whereLike('name', $q);
+            });
+        }
+
+        $products = $query->get();
+
+        return Excel::download(new ProductExport($products), 'Produk.xlsx');
     }
 }
