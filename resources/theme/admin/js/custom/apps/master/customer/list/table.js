@@ -101,42 +101,6 @@ var KTSuppliersList = function () {
         });
     }
 
-    // Filter Datatable
-    var handleFilterDatatable = () => {
-        // Select filter options
-        const filterForm = document.querySelector('[data-kt-customer-table-filter="form"]');
-        const filterButton = filterForm.querySelector('[data-kt-customer-table-filter="filter"]');
-        const selectOptions = filterForm.querySelectorAll('select');
-
-        // Filter datatable on submit
-        filterButton.addEventListener('click', function () {
-            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-            datatable.draw();
-        });
-    }
-
-    // Reset Filter
-    var handleResetForm = () => {
-        // Select reset button
-        const resetButton = document.querySelector('[data-kt-customer-table-filter="reset"]');
-
-        // Reset datatable
-        resetButton.addEventListener('click', function () {
-            // Select filter options
-            const filterForm = document.querySelector('[data-kt-customer-table-filter="form"]');
-            const selectOptions = filterForm.querySelectorAll('select');
-
-            // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
-            selectOptions.forEach(select => {
-                $(select).val('').trigger('change');
-            });
-
-            // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
-            datatable.search('').draw();
-        });
-    }
-
-
     // Delete subscirption
     var handleDeleteRows = () => {
         // Select all delete buttons
@@ -323,10 +287,8 @@ var KTSuppliersList = function () {
 
             initSupplierTable();
             handleSearchDatatable();
-            handleResetForm();
             handleDeleteRows();
             handleEditRows();
-            handleFilterDatatable();
         },
         refresh: function() {
             datatable.ajax.reload(null, false); // customer paging is not reset on reload

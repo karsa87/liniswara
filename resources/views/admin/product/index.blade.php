@@ -21,6 +21,20 @@
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
             <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end me-2" data-kt-product-table-toolbar="base">
+                <!--begin::Add product-->
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#kt_modal_import_product">
+                    <i class="ki-duotone ki-file-up fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    Import
+                </button>
+                <!--end::Add product-->
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Toolbar-->
             <div class="d-flex justify-content-end me-1" data-kt-product-table-toolbar="base">
                 <!--begin::Filter-->
                 <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -109,6 +123,96 @@
                 <!--end::Add product-->
             </div>
             <!--end::Toolbar-->
+
+
+            <!--begin::Modal - Add task-->
+            <div class="modal fade" id="kt_modal_import_product" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_import_product_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Tambah Agen</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-products-modal-import-action="close">
+                                <i class="ki-duotone ki-cross fs-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body px-5 my-7">
+                            <!--begin::Form-->
+                            <form id="kt_modal_import_product_form" class="form" action="{{ route('product.import') }}">
+                                @csrf
+
+                                <!--begin::Scroll-->
+                                <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_import_product_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_import_product_header" data-kt-scroll-wrappers="#kt_modal_import_product_scroll" data-kt-scroll-offset="300px">
+
+                                    <div class="d-flex flex-column flex-md-row gap-5 mb-5">
+                                        <a href="{{ route('product.export.template_import') }}" class="btn btn-success" target="_blank">
+                                            <i class="ki-duotone ki-file-down fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            Download Template
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-column flex-md-row gap-5 mb-5">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row flex-row-fluid">
+                                            <!--begin::Dropzone-->
+                                            <div class="dropzone" id="kt_modal_import_product_file">
+                                                <!--begin::Message-->
+                                                <div class="dz-message needsclick">
+                                                    <!--begin::Icon-->
+                                                    <i class="ki-duotone ki-file-up fs-3hx text-primary">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                    </i>
+                                                    <!--end::Icon-->
+                                                    <!--begin::Info-->
+                                                    <div class="ms-4">
+                                                        <h3 class="dfs-3 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+                                                        <span class="fw-semibold fs-4 text-muted">Upload 1 file, only jpg, jpeg and png with max size 2Mb</span>
+                                                    </div>
+                                                    <!--end::Info-->
+                                                </div>
+                                            </div>
+                                            <!--end::Dropzone-->
+                                            <input type="hidden" name="product_file" value="" id="input_product_file" />
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                </div>
+                                <!--end::Scroll-->
+                                <!--begin::Actions-->
+                                <div class="text-center pt-10">
+                                    <button type="reset" class="btn btn-light me-3" data-kt-products-modal-import-action="cancel">Discard</button>
+                                    <button type="submit" class="btn btn-primary" data-kt-products-modal-import-action="submit">
+                                        <span class="indicator-label">Submit</span>
+                                        <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Modal body-->
+                    </div>
+                    <!--end::Modal content-->
+                </div>
+                <!--end::Modal dialog-->
+            </div>
+            <!--end::Modal - Add task-->
+
         </div>
         <!--end::Card toolbar-->
     </div>
@@ -147,4 +251,5 @@
 
 @push('js')
     <script src="{{ mix('assets/js/custom/apps/master/product/list/table.js') }}"></script>
+    <script src="{{ mix('assets/js/custom/apps/master/product/import.js') }}"></script>
 @endpush

@@ -275,4 +275,19 @@ return [
             ],
         ],
     ],
+    'import' => [
+        'index' => [
+            'title' => 'Import',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Log',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Import',
+                    'route' => 'log.import.index',
+                ],
+            ],
+        ],
+    ],
 ];

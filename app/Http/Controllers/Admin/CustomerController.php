@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\Template\CustomerImportExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Customer\CustomerStoreUpdateRequest;
 use App\Http\Resources\Admin\Customer\CustomerListResource;
 use App\Http\Resources\Admin\Customer\CustomerResource;
+use App\Jobs\Import\CustomerImportJob;
 use App\Models\Customer;
 use App\Models\CustomerAddress;
+use App\Models\File;
+use App\Models\Import;
 use App\Models\User;
 use App\Utils\Phone;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -274,5 +281,41 @@ class CustomerController extends Controller
             'items' => $list,
             'count' => count($list),
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function export_template_import()
+    {
+        return Excel::download(new CustomerImportExport(), 'Template Import Pelanggan.xlsx');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'customer_file' => [
+                'required',
+                'numeric',
+                Rule::exists((new File())->getTable(), 'id'),
+            ],
+        ]);
+
+        $now = Carbon::now();
+        $import = Import::create([
+            'name' => sprintf(
+                'Pelanggan - %s%s%s',
+                $now->format('d'),
+                $now->format('m'),
+                $now->format('y'),
+            ),
+            'file_id' => $request->customer_file,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        CustomerImportJob::dispatch($import);
     }
 }

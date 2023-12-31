@@ -469,6 +469,22 @@
                 </div>
                 <!--end:Menu item-->
 
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a class="menu-link {{ str(request()->route()->getName())->startsWith(['log.import.']) ? 'active here' : '' }}" href="{{ route('log.import.index') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-questionnaire-tablet fs-2 text-info">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Import</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+
                 {{-- <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->

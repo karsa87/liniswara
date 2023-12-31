@@ -162,6 +162,7 @@
 								</div>
 								<!--end::Activities-->
 								<!--begin::Quick links-->
+                                {{--
 								<div class="d-flex align-items-center ms-1">
 									<!--begin::Menu wrapper-->
 									<div class="btn btn-icon btn-color-white bg-hover-white bg-hover-opacity-10 w-30px h-30px h-40px w-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -250,6 +251,7 @@
 									<!--end::Menu-->
 									<!--end::Menu wrapper-->
 								</div>
+                                --}}
 								<!--end::Quick links-->
 								<!--begin::Theme mode-->
 								<div class="d-flex align-items-center ms-1">

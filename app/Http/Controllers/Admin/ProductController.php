@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ProductDiscountTypeEnum;
 use App\Exports\ProductExport;
+use App\Exports\Template\ProductImportExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\ProductStoreUpdateRequest;
 use App\Http\Resources\Admin\Product\ProductResource;
+use App\Jobs\Import\ProductImportJob;
+use App\Models\File;
+use App\Models\Import;
 use App\Models\Product;
 use App\Services\StockHistoryLogService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
@@ -368,5 +374,41 @@ class ProductController extends Controller
         $products = $query->get();
 
         return Excel::download(new ProductExport($products), 'Produk.xlsx');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function export_template_import()
+    {
+        return Excel::download(new ProductImportExport(), 'Template Import Produk.xlsx');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'product_file' => [
+                'required',
+                'numeric',
+                Rule::exists((new File())->getTable(), 'id'),
+            ],
+        ]);
+
+        $now = Carbon::now();
+        $import = Import::create([
+            'name' => sprintf(
+                'Produk - %s%s%s',
+                $now->format('d'),
+                $now->format('m'),
+                $now->format('y'),
+            ),
+            'file_id' => $request->product_file,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        ProductImportJob::dispatch($import);
     }
 }
