@@ -46,7 +46,7 @@
                         </div>
                         <div class="flex-root d-flex flex-column">
                             @php
-                                $customerAddress = $order->customer_address;
+                                $customerAddress = $preorder->customer_address;
                             @endphp
                             <span class="text-muted">Kepada</span>
                             <span class="fs-6">{{ optional($customerAddress)->name }},
