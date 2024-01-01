@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Admin\Order;
 
+use App\Enums\Order\StatusEnum;
 use App\Enums\Preorder\MarketingEnum;
 use App\Enums\Preorder\MethodPaymentEnum;
-use App\Enums\Preorder\StatusEnum;
 use App\Enums\Preorder\StatusPaymentEnum;
 use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
@@ -34,6 +34,8 @@ class OrderUpdateStatusRequest extends FormRequest
                 Rule::in([
                     StatusEnum::VALIDATION_ADMIN,
                     StatusEnum::PROCESS,
+                    StatusEnum::PACKING,
+                    StatusEnum::CANCEL,
                     StatusEnum::SENT,
                     StatusEnum::DONE,
                 ]),

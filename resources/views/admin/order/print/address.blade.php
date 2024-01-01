@@ -11,16 +11,25 @@
         <!-- begin::Wrapper-->
         <div class="mw-lg-950px mx-auto w-100">
             <!-- begin::Header-->
-            <div class="d-flex justify-content-between flex-column flex-sm-row mb-19">
-                <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">LINISWARA</h4>
+            <div class="d-flex justify-content-between flex-column flex-sm-row border p-5">
+                <span class="d-block ms-sm-auto w-75">
+                    <img alt="Liniswara" src="{{ mix('assets/media/logos/logo-liniswara.png') }}" class="mw-50">
+                </span>
                 <!--end::Logo-->
-                <div class="text-sm-end">
+                <div class="text-sm-end w-50">
                     <!--begin::Text-->
-                    <div class="text-sm-end fw-semibold fs-4 text-muted mt-7">
-                        <div>
-                            {{ $carbon->now()->locale('id')->format('l, j F Y H:i:s') }}
-                        </div>
-                    </div>
+                    <span class="d-block ms-sm-auto">
+                        @if (
+                            $order->shipping
+                            && $order->shipping->expedition
+                            && $order->shipping->expedition->logo
+                            && $order->shipping->expedition->logo->full_url
+                        )
+                            <img alt="{{ $order->shipping->expedition->name }}" src="{{ $order->shipping->expedition->logo->full_url }}" class="w-50">
+                        @else
+                            <img alt="Ekspedisi" src="{{ mix('assets/media/logos/expedition-default.png') }}" class="w-50">
+                        @endif
+                    </span>
                     <!--end::Text-->
                 </div>
             </div>
@@ -28,46 +37,46 @@
             <!--begin::Body-->
             <div class="pb-12">
                 <!--begin::Wrapper-->
-                <div class="d-flex flex-column gap-7 gap-md-10">
+                <div class="d-flex flex-column p-5 border">
                     <!--begin::Order details-->
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Invoice Number</span>
-                            <span class="fs-5">{{ $order->invoice_number }}</span>
-                        </div>
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Order ID</span>
-                            <span class="fs-5">{{ $order->id }}</span>
+                        <div class="flex-root d-flex flex-column text-center">
+                            <span class="fs-1">No Faktur : {{ $order->invoice_number }}</span>
+                            <span class="fs-5 text-muted">
+                                {{ $carbon->now()->locale('id')->format('l : d-m-Y H:i') }}
+                            </span>
                         </div>
                     </div>
                     <!--end::Order details-->
                     <!--begin::Separator-->
-                    <div class="separator"></div>
+                    <div class="separator mt-5 mb-5"></div>
                     <!--begin::Separator-->
                     <!--begin::Billing & shipping-->
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                         <div class="flex-root d-flex flex-column">
                             <span class="text-muted">Dari</span>
-                            <span class="fs-6">CV. SUARA PENDIDIKAN NUSANTARA
-                            <br />Jl. Kyai Raden Santri, RT/RW, 02/01, Dukuhan Gunungpring
-                            <br />Kec. Muntilan Magelang,
-                            <br />Jawa Tengah,
-                            <br />Indonesia.
-                            <br />Telepon: 085171694758
-                            <br />Email: cvsuarapendidikannusantara@gmail.com</span>
+                            <span class="fs-5">CV. SUARA PENDIDIKAN NUSANTARA</span>
+                            <span class="fs-6 text-gray-600 fw-medium">
+                                <br />{{ str('Jl. Kyai Raden Santri, RT/RW, 02/01, Dukuhan Gunungpring')->upper() }}
+                                <br />{{ str('Kec. Muntilan Magelang')->upper() }}
+                                <br />JAWA TENGAH
+                                <br />T: 085171694758
+                                <br />E: cvsuarapendidikannusantara@gmail.com
+                            </span>
                         </div>
-                        <div class="flex-root d-flex flex-column">
+                        <div class="flex-root d-flex flex-column text-end">
                             @php
                                 $customerAddress = $order->customer_address;
                             @endphp
                             <span class="text-muted">Kepada</span>
-                            <span class="fs-6">{{ optional($customerAddress)->name }},
-                            <br />{{ optional($customerAddress)->address }}, {{ optional($customerAddress)->village->name }}
-                            <br />{{ optional($customerAddress)->district->name }},
-                            <br />{{ optional($customerAddress)->regency->name }},
-                            <br />{{ optional($customerAddress)->province->name }},
-                            <br />Telepon: {{ optional($customerAddress)->phone_number }}
-                            <br />Email: {{ $order->customer->user->email }}</span>
+                            <span class="fs-5">{{ optional($customerAddress)->name }}</span>
+                            <span class="fs-6 text-gray-600 fw-medium">
+                                <br />{{ str(optional($customerAddress)->address ?? '')->upper() }}, {{ str(optional($customerAddress)->village->name ?? '')->upper() }}
+                                <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
+                                <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},
+                                <br />T: {{ optional($customerAddress)->phone_number }}
+                                <br />E: {{ $order->customer->user->email }}
+                            </span>
                         </div>
                     </div>
                     <!--end::Billing & shipping-->
@@ -102,25 +111,27 @@
     @media print {
         @page { margin: 15px 20px 10px 20px; }
         body { margin: 1.6cm; }
+        .header-fixed .wrapper{
+            padding-top: 0px;
+        }
     }
 </style>
-@endpush
-
-@push('js-plugin')
 @endpush
 
 @push('js')
 <script>
     function printArticle() {
-        const originalHTML = document.body.innerHTML;
-        document.body.innerHTML = document.getElementById('kt_content').innerHTML;
         document.querySelectorAll('button')
             .forEach(button => button.remove());
         document.querySelectorAll('a')
             .forEach(button => button.remove());
+        document.getElementById("kt_header").remove();
+        document.getElementById("kt_footer").remove();
+        document.getElementById("kt_aside").remove();
+        document.getElementById("kt_wrapper").style.paddingTop = '0px';
+        document.getElementById("kt_wrapper").style.paddingLeft = '0px';
 
         var afterPrint = function() {
-            // document.body.innerHTML = originalHtml;
             window.location.reload();
         };
 

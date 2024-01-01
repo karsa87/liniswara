@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Order\StatusEnum;
 use App\Enums\Preorder\DiscountTypeEnum;
-use App\Enums\Preorder\StatusEnum;
 use App\Enums\Preorder\TaxEnum;
 use App\Exports\PreorderExport;
 use App\Http\Controllers\Controller;
@@ -45,6 +45,7 @@ class OrderController extends Controller
                 [
                     StatusEnum::VALIDATION_ADMIN,
                     StatusEnum::PROCESS,
+                    StatusEnum::PACKING,
                 ],
                 $request->all()
             );
@@ -723,6 +724,7 @@ class OrderController extends Controller
             'branch',
             'shipping',
             'details.product',
+            'shipping.expedition',
         ])->find($id);
 
         return view('admin.order.print.address', [
@@ -759,6 +761,7 @@ class OrderController extends Controller
         ])->whereIn('status', [
             StatusEnum::PROCESS,
             StatusEnum::VALIDATION_ADMIN,
+            StatusEnum::PACKING,
         ]);
 
         if ($request->search_customer_id) {

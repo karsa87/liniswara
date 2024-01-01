@@ -285,7 +285,7 @@
                                         <span class="path4"></span>
                                     </i>Status Order</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ \App\Enums\Preorder\StatusEnum::MAP_LABEL[$order->status] }}</td>
+                                <td class="fw-bold text-end">{{ \App\Enums\Order\StatusEnum::MAP_LABEL[$order->status] }}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">

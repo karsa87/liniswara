@@ -116,7 +116,7 @@
                         <label class="required form-label">Status Order</label>
                         <!--end::Label-->
                         <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status" data-kt-ecommerce-catalog-add-order="order_option">
-                            @foreach (\App\Enums\Preorder\StatusEnum::MAP_LABEL as $key => $name)
+                            @foreach (\App\Enums\Order\StatusEnum::MAP_LABEL as $key => $name)
                                 <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>

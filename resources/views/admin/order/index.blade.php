@@ -120,7 +120,7 @@
                             <label class="form-label fs-6 fw-semibold">Status Order</label>
                             <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Pilih" data-allow-clear="true" data-kt-order-table-filter="order" name="search_status" id="filter-search_status">
                                 <option value="" selected></option>
-                                @foreach (\App\Enums\Preorder\StatusEnum::MAP_LABEL as $key => $name)
+                                @foreach (\App\Enums\Order\StatusEnum::MAP_LABEL as $key => $name)
                                     <option value="{{ $key }}">{{ $name }}</option>
                                 @endforeach
                             </select>
@@ -357,7 +357,7 @@
                                 <label class="required form-label">Status Order</label>
                                 <!--end::Label-->
                                 <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-status-status">
-                                    @foreach (\App\Enums\Preorder\StatusEnum::MAP_LABEL as $key => $name)
+                                    @foreach (\App\Enums\Order\StatusEnum::MAP_LABEL as $key => $name)
                                         <option value="{{ $key }}">{{ $name }}</option>
                                     @endforeach
                                 </select>

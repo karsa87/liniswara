@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\LogHistoryEnum;
-use App\Enums\Preorder\StatusEnum;
+use App\Enums\Order\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Profile\UpdateEmailRequest;
 use App\Http\Requests\Admin\Profile\UpdateInfoRequest;
@@ -26,6 +26,7 @@ class ProfileController extends Controller
             'order' => Order::where('created_by', $user->id)->where('status', [
                 StatusEnum::VALIDATION_ADMIN,
                 StatusEnum::PROCESS,
+                StatusEnum::PACKING,
             ])->sum('total_amount'),
             'order_sent' => Order::where('created_by', $user->id)->where('status', [
                 StatusEnum::SENT,

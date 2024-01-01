@@ -11,16 +11,28 @@
         <!-- begin::Wrapper-->
         <div class="mw-lg-950px mx-auto w-100">
             <!-- begin::Header-->
-            <div class="d-flex justify-content-between flex-column flex-sm-row mb-19">
-                <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">FAKTUR PENJUALAN</h4>
+            <div class="d-flex justify-content-between flex-column flex-sm-row">
                 <!--end::Logo-->
-                <div class="text-sm-end">
+                <div class="text-sm-start w-75">
+                    <h4 class="fw-bolder fw-bold fs-3x pe-5" style="color: #6e87a7 !important;">FAKTUR PENJUALAN</h4>
+                    <h5 class="fw-bolder fw-semibold fs-5 pe-5">
+                        CV. SUARA PENDIDIKAN NUSANTARA
+                    </h5>
                     <!--begin::Text-->
-                    <div class="text-sm-end fw-semibold fs-4 text-muted mt-7">
-                        <div>
-                            {{ $carbon->now()->locale('id')->format('l, j F Y H:i:s') }}
-                        </div>
-                    </div>
+                    <span class="text-sm-end fs-7 text-muted mt-7">
+                        JL. KIYAI RADEN SANTRI RT 01 RW 01 KEC. MUNTILAN KAB. MAGELANG JAWA TIMUR
+                    </span>
+                    <br>
+                    <span class="text-sm-end fs-7 text-muted mt-7">
+                        P : 0812-3333-4444 E: CVSUARAPENDIDIKANNUSATRA@GMAIL.COM
+                    </span>
+                    <!--end::Text-->
+                </div>
+                <div class="text-sm-end w-50">
+                    <!--begin::Text-->
+                    <span class="d-block ms-sm-auto">
+                        <img alt="Liniswara" src="{{ mix('assets/media/logos/logo-liniswara.png') }}" class="mw-75">
+                    </span>
                     <!--end::Text-->
                 </div>
             </div>
@@ -30,29 +42,28 @@
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-column gap-7 gap-md-10">
                     <!--begin::Separator-->
-                    <div class="separator"></div>
+                    <div class="mb-2 mt-2" style="display: block; height: 0; border-bottom: 4px solid #000000;"></div>
                     <!--begin::Separator-->
                     <!--begin::Billing & shipping-->
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Dari</span>
-                            <span class="fs-6">CV. SUARA PENDIDIKAN NUSANTARA
-                            <br />Jl. Kyai Raden Santri, RT/RW, 02/01, Dukuhan Gunungpring
-                            <br />Kec. Muntilan Magelang,
-                            <br />Jawa Tengah,
-                            <br />Indonesia.
-                            <br />Telepon: 085171694758
-                            <br />Email: cvsuarapendidikannusantara@gmail.com</span>
-                        </div>
-                        <div class="flex-root d-flex flex-column">
+                        <div class="flex-root d-flex flex-column border p-5">
+                            @php
+                                $customerAddress = $order->customer_address;
+                            @endphp
                             <span class="text-muted">Kepada</span>
-                            <span class="fs-6">{{ $order->customer_address->name }},
-                            <br />{{ $order->customer_address->address }}, {{ $order->customer_address->village->name }}
-                            <br />{{ $order->customer_address->district->name }},
-                            <br />{{ $order->customer_address->regency->name }},
-                            <br />{{ $order->customer_address->province->name }},
-                            <br />Telepon: {{ $order->customer_address->phone_number }}
-                            <br />Email: {{ $order->customer->user->email }}</span>
+                            <span class="fs-2x">{{ optional($customerAddress)->name }}</span>
+                            <span class="fs-6 text-gray-600 fw-medium">
+                                {{ str(optional($customerAddress)->address ?? '')->upper() }}, {{ str(optional($customerAddress)->village->name ?? '')->upper() }}
+                                <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
+                                <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},
+                                <br />T: {{ optional($customerAddress)->phone_number }}
+                                <br />E: {{ $order->customer->user->email }}
+                            </span>
+                        </div>
+                        <div class="flex-root d-flex flex-column border p-5 pt-12">
+                            <span class="fs-1">NO FAKTUR: {{ $order->invoice_number }}</span>
+                            <span class="fs-6 text-gray-600 fw-medium">ADMIN: {{ auth()->user()->name }}</span>
+                            <span class="fs-6 text-gray-600 fw-medium">TANGGAL CETAK: {{ $carbon->now()->locale('id')->format('d-m-Y H:i') }}</span>
                         </div>
                     </div>
                     <!--end::Billing & shipping-->
@@ -206,15 +217,17 @@
 @push('js')
 <script>
     function printArticle() {
-        const originalHTML = document.body.innerHTML;
-        document.body.innerHTML = document.getElementById('kt_content').innerHTML;
         document.querySelectorAll('button')
             .forEach(button => button.remove());
         document.querySelectorAll('a')
             .forEach(button => button.remove());
+        document.getElementById("kt_header").remove();
+        document.getElementById("kt_footer").remove();
+        document.getElementById("kt_aside").remove();
+        document.getElementById("kt_wrapper").style.paddingTop = '0px';
+        document.getElementById("kt_wrapper").style.paddingLeft = '0px';
 
         var afterPrint = function() {
-            // document.body.innerHTML = originalHtml;
             window.location.reload();
         };
 
