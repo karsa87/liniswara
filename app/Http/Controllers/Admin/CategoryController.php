@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
             return CategoryResource::collection($categorys)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $categorys->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

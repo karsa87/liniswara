@@ -53,7 +53,7 @@ class UserController extends Controller
 
             return UserResource::collection($users)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $users->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

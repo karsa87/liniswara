@@ -58,7 +58,7 @@ class ProductController extends Controller
 
             return ProductResource::collection($products)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $products->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

@@ -70,7 +70,7 @@ class CollectorController extends Controller
 
             return CollectorResource::collection($collectors)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $collectors->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

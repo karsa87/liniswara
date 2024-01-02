@@ -36,7 +36,7 @@ class ExpeditionController extends Controller
 
             return ExpeditionResource::collection($expeditions)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $expeditions->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

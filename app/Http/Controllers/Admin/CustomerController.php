@@ -67,7 +67,7 @@ class CustomerController extends Controller
 
             return CustomerListResource::collection($customers)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $customers->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

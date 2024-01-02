@@ -44,7 +44,7 @@ class BranchController extends Controller
 
             return BranchResource::collection($branchs)->additional([
                 'recordsTotal' => $total,
-                'recordsFiltered' => $branchs->count(),
+                'recordsFiltered' => $total,
             ]);
         }
 

@@ -44,7 +44,7 @@ class SettingController extends Controller
 
             return SettingResource::collection($settings)->additional([
                 'recordsTotal' => $total,
-                'recordsFiltered' => $settings->count(),
+                'recordsFiltered' => $total,
             ]);
         }
 

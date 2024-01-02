@@ -49,7 +49,7 @@ class RestockController extends Controller
 
             return RestockResource::collection($restocks)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $restocks->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

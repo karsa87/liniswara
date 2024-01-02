@@ -72,7 +72,7 @@ class CustomerAddressController extends Controller
 
             return CustomerAddressResource::collection($customerAddresses)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $customerAddresses->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

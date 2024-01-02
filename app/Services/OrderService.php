@@ -82,14 +82,9 @@ class OrderService
             ->limit($params['length'] ?? 10)
             ->get();
 
-        $a = OrderResource::collection($orders)->additional([
-            'recordsTotal' => $totalAll,
-            'recordsFiltered' => $orders->count(),
-        ]);
-
         return OrderResource::collection($orders)->additional([
             'recordsTotal' => $totalAll,
-            'recordsFiltered' => $orders->count(),
+            'recordsFiltered' => $totalAll,
         ]);
     }
 }

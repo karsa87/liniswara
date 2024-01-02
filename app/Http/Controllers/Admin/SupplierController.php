@@ -70,7 +70,7 @@ class SupplierController extends Controller
 
             return SupplierResource::collection($suppliers)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $suppliers->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

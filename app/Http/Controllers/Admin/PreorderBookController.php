@@ -46,7 +46,7 @@ class PreorderBookController extends Controller
 
             return PreorderBookResource::collection($preorders)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $preorders->count(),
+                'recordsFiltered' => $totalAll,
             ]);
         }
 

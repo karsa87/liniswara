@@ -42,7 +42,7 @@ class RegionController extends Controller
 
         return ListResource::collection($villages)->additional([
             'recordsTotal' => $count,
-            'recordsFiltered' => $countFilter,
+            'recordsFiltered' => $count,
         ]);
     }
 
