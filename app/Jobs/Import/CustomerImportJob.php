@@ -172,7 +172,7 @@ class CustomerImportJob implements ShouldQueue
             $this->import->status = StatusEnum::DONE;
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd();
+
             $this->import->status = StatusEnum::FAILED;
 
             $logFailed[] = [
