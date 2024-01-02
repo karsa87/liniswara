@@ -36,9 +36,7 @@ class ProductController extends Controller
             $query = Product::with([
                 'thumbnail',
                 'categories',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qProduct) use ($q) {
@@ -53,9 +51,10 @@ class ProductController extends Controller
                 });
             }
 
-            $products = $query->get();
-
-            $totalAll = Product::count();
+            $totalAll = (clone $query)->count();
+            $products = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return ProductResource::collection($products)->additional([
                 'recordsTotal' => $totalAll,

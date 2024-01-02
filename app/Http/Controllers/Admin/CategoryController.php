@@ -21,9 +21,7 @@ class CategoryController extends Controller
             $query = Category::with([
                 'image',
                 'parent',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qCategory) use ($q) {
@@ -31,9 +29,11 @@ class CategoryController extends Controller
                 });
             }
 
-            $categorys = $query->get();
+            $totalAll = (clone $query)->count();
 
-            $totalAll = Category::count();
+            $categorys = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return CategoryResource::collection($categorys)->additional([
                 'recordsTotal' => $totalAll,

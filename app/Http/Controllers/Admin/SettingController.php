@@ -17,8 +17,7 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Setting::offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            $query = Setting::query();
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qSetting) use ($q) {
@@ -38,10 +37,13 @@ class SettingController extends Controller
                 }
             }
 
-            $settings = $query->get();
+            $total = (clone $query)->count();
+            $settings = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return SettingResource::collection($settings)->additional([
-                'recordsTotal' => Setting::count(),
+                'recordsTotal' => $total,
                 'recordsFiltered' => $settings->count(),
             ]);
         }

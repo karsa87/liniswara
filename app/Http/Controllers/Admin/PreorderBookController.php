@@ -29,9 +29,7 @@ class PreorderBookController extends Controller
                     'product',
                 ])
                 ->has('product')
-                ->groupBy('product_id')
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+                ->groupBy('product_id');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($q2) use ($q) {
@@ -41,8 +39,10 @@ class PreorderBookController extends Controller
                 });
             }
 
-            $preorders = $query->get();
-            $totalAll = PreorderDetail::select('product_id')->has('product')->groupBy('product_id')->count();
+            $totalAll = (clone $query)->count();
+            $preorders = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return PreorderBookResource::collection($preorders)->additional([
                 'recordsTotal' => $totalAll,

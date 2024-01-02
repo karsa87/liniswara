@@ -20,9 +20,7 @@ class ExpeditionController extends Controller
         if ($request->ajax()) {
             $query = Expedition::with([
                 'logo',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qExpedition) use ($q) {
@@ -30,9 +28,11 @@ class ExpeditionController extends Controller
                 });
             }
 
-            $expeditions = $query->get();
+            $totalAll = (clone $query)->count();
 
-            $totalAll = Expedition::count();
+            $expeditions = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return ExpeditionResource::collection($expeditions)->additional([
                 'recordsTotal' => $totalAll,

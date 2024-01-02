@@ -40,9 +40,7 @@ class PreorderController extends Controller
                 'customer.user',
                 'branch',
                 'shipping',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($q2) use ($q) {
@@ -78,9 +76,10 @@ class PreorderController extends Controller
                 $query->where('method_payment', $status);
             }
 
-            $preorders = $query->get();
-
-            $totalAll = Preorder::count();
+            $totalAll = (clone $query)->count();
+            $preorders = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return PreorderResource::collection($preorders)->additional([
                 'recordsTotal' => $totalAll,

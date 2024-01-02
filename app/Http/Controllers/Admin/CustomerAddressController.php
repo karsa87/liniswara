@@ -26,8 +26,6 @@ class CustomerAddressController extends Controller
                 'village:id,name',
             ])
                 ->whereCustomerId($customerId)
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10))
                 ->orderBy('is_default', 'DESC');
 
             if ($q = $request->input('search.value')) {
@@ -66,9 +64,11 @@ class CustomerAddressController extends Controller
                 }
             }
 
-            $customerAddresses = $query->get();
+            $totalAll = (clone $query)->count();
 
-            $totalAll = CustomerAddress::count();
+            $customerAddresses = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return CustomerAddressResource::collection($customerAddresses)->additional([
                 'recordsTotal' => $totalAll,

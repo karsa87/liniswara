@@ -30,9 +30,7 @@ class RestockController extends Controller
             $query = Restock::with([
                 'createdBy',
                 'branch',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($q2) use ($q) {
@@ -44,9 +42,10 @@ class RestockController extends Controller
                 $query->where('branch_id', $branchId);
             }
 
-            $restocks = $query->get();
-
-            $totalAll = Restock::count();
+            $totalAll = (clone $query)->count();
+            $restocks = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return RestockResource::collection($restocks)->additional([
                 'recordsTotal' => $totalAll,

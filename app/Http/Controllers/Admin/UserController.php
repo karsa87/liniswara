@@ -20,9 +20,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = User::with('role:id,name')
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            $query = User::with('role:id,name');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qUser) use ($q) {
@@ -48,13 +46,14 @@ class UserController extends Controller
                 }
             }
 
-            $users = $query->get();
-
-            $totalAll = User::count();
+            $totalAll = (clone $query)->count();
+            $users = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return UserResource::collection($users)->additional([
                 'recordsTotal' => $totalAll,
-                'recordsFiltered' => $totalAll,
+                'recordsFiltered' => $users->count(),
             ]);
         }
 

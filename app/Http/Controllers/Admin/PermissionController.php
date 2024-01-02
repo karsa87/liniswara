@@ -17,9 +17,7 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Permission::with('roles:id,name')
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            $query = Permission::with('roles:id,name');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qPermission) use ($q) {
@@ -39,11 +37,14 @@ class PermissionController extends Controller
                 }
             }
 
-            $permissions = $query->get();
+            $total = (clone $query)->count();
+            $permissions = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return PermissionResource::collection($permissions)->additional([
-                'recordsTotal' => Permission::count(),
-                'recordsFiltered' => Permission::count(),
+                'recordsTotal' => $total,
+                'recordsFiltered' => $permissions->count(),
             ]);
         }
 

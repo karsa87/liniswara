@@ -24,9 +24,7 @@ class SupplierController extends Controller
                 'regency:id,name',
                 'district:id,name',
                 'village:id,name',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qSupplier) use ($q) {
@@ -65,9 +63,10 @@ class SupplierController extends Controller
                 }
             }
 
-            $suppliers = $query->get();
-
-            $totalAll = Supplier::count();
+            $totalAll = (clone $query)->count();
+            $suppliers = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return SupplierResource::collection($suppliers)->additional([
                 'recordsTotal' => $totalAll,

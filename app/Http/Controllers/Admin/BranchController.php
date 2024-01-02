@@ -17,8 +17,7 @@ class BranchController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Branch::offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            $query = Branch::query();
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qBranch) use ($q) {
@@ -38,10 +37,13 @@ class BranchController extends Controller
                 }
             }
 
-            $branchs = $query->get();
+            $total = (clone $query)->count();
+            $branchs = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return BranchResource::collection($branchs)->additional([
-                'recordsTotal' => Branch::count(),
+                'recordsTotal' => $total,
                 'recordsFiltered' => $branchs->count(),
             ]);
         }

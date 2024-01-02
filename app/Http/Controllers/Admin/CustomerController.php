@@ -36,9 +36,7 @@ class CustomerController extends Controller
                 'customer.address.district:id,name',
                 'customer.address.village:id,name',
             ])
-                ->has('customer')
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+                ->has('customer');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qUser) use ($q) {
@@ -61,9 +59,11 @@ class CustomerController extends Controller
                 }
             }
 
-            $customers = $query->get();
+            $totalAll = (clone $query)->count();
 
-            $totalAll = User::has('customer')->count();
+            $customers = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return CustomerListResource::collection($customers)->additional([
                 'recordsTotal' => $totalAll,

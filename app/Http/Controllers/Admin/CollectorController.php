@@ -24,9 +24,7 @@ class CollectorController extends Controller
                 'regency:id,name',
                 'district:id,name',
                 'village:id,name',
-            ])
-                ->offset($request->get('start', 0))
-                ->limit($request->get('length', 10));
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qCollector) use ($q) {
@@ -65,9 +63,10 @@ class CollectorController extends Controller
                 }
             }
 
-            $collectors = $query->get();
-
-            $totalAll = Collector::count();
+            $totalAll = (clone $query)->count();
+            $collectors = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
 
             return CollectorResource::collection($collectors)->additional([
                 'recordsTotal' => $totalAll,
