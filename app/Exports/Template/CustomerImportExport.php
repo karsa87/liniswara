@@ -20,6 +20,9 @@ class CustomerImportExport implements FromCollection, ShouldAutoSize, WithHeadin
                 'email' => 'agus.indra@gmail.com',
                 'company' => 'PT. XXX',
                 'phone' => '089878234768',
+                'name_address' => 'Agus',
+                'address' => 'Bugis Sawojajar',
+                'phone_address' => '089878234768',
             ],
         ]);
     }
@@ -34,6 +37,9 @@ class CustomerImportExport implements FromCollection, ShouldAutoSize, WithHeadin
             $customer['email'],
             $customer['company'],
             $customer['phone'],
+            $customer['name_address'],
+            $customer['address'],
+            $customer['phone_address'],
         ];
     }
 
@@ -44,6 +50,9 @@ class CustomerImportExport implements FromCollection, ShouldAutoSize, WithHeadin
             'Email',
             'Perusahaan',
             'Phone',
+            'Nama Alamat',
+            'Alamat',
+            'Phone Alamat',
         ];
     }
 }

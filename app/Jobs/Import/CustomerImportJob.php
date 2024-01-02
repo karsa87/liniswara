@@ -5,6 +5,7 @@ namespace App\Jobs\Import;
 use App\Enums\Import\StatusEnum;
 use App\Imports\CustomerImport;
 use App\Models\Customer;
+use App\Models\CustomerAddress;
 use App\Models\ImportDetail;
 use App\Models\User;
 use App\Utils\Phone;
@@ -42,13 +43,14 @@ class CustomerImportJob implements ShouldQueue
         $totalFailed = 0;
         $logFailed = [];
 
+        $this->import->loadMissing('file');
+        $file = $this->import->file;
+        $data = Excel::toCollection(CustomerImport::class, $file->path);
+
+        $this->import->total_record = $data->count();
+
         DB::beginTransaction();
         try {
-            $this->import->loadMissing('file');
-            $file = $this->import->file;
-            $data = Excel::toCollection(CustomerImport::class, $file->path);
-
-            $this->import->total_record = $data->count();
             if ($this->import->total_record > 0) {
                 foreach ($data->first() as $i => $row) {
                     if ($i == 0) {
@@ -60,6 +62,9 @@ class CustomerImportJob implements ShouldQueue
                         'email' => $row[1],
                         'company' => $row[2],
                         'phone_number' => Phone::normalize($row[3]),
+                        'name_address' => $row[4],
+                        'address' => $row[5],
+                        'phone_address' => $row[6] ? Phone::normalize($row[6]) : '',
                     ];
 
                     $validator = Validator::make($input, [
@@ -75,7 +80,7 @@ class CustomerImportJob implements ShouldQueue
                                 return $query;
                             }),
                         ],
-                        'phone' => [
+                        'phone_number' => [
                             'nullable',
                             'regex:/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/',
                             'not_regex:/[a-zA-Z]/',
@@ -85,11 +90,28 @@ class CustomerImportJob implements ShouldQueue
                             'nullable',
                             'string',
                         ],
+                        'name_address' => [
+                            'nullable',
+                            'string',
+                        ],
+                        'address' => [
+                            'nullable',
+                            'string',
+                        ],
+                        'phone_address' => [
+                            'nullable',
+                            'regex:/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/',
+                            'not_regex:/[a-zA-Z]/',
+                            'max:16',
+                        ],
                     ], [], [
                         'name' => 'Nama',
                         'email' => 'Email',
                         'company' => 'Perusahaan',
                         'phone' => 'Phone',
+                        'name_address' => 'Nama Alamat',
+                        'address' => 'Alamat',
+                        'phone_address' => 'Phone Alamat',
                     ]);
 
                     if ($validator->fails()) {
@@ -107,7 +129,12 @@ class CustomerImportJob implements ShouldQueue
                     }
 
                     $user = new User();
-                    $user->fill($input);
+                    $user->fill([
+                        'name' => $input['name'],
+                        'email' => $input['email'],
+                        'company' => $input['company'],
+                        'phone_number' => $input['phone_number'],
+                    ]);
                     $user->password = Str::slug($input['name'], '.').'@'.Str::substr($input['phone_number'], (Str::length($input['phone_number']) - 4), 4);
 
                     if ($user->save()) {
@@ -115,17 +142,37 @@ class CustomerImportJob implements ShouldQueue
                         $customer->fill([
                             'user_id' => $user->id,
                         ]);
-                        $customer->save();
+
+                        if (
+                            $customer->save()
+                            && $input['address']
+                        ) {
+                            $address = new CustomerAddress();
+                            $nameAddress = $input['name_address'];
+                            if (empty($nameAddress)) {
+                                $nameAddress = $user->name;
+                            }
+
+                            $address->fill([
+                                'customer_id' => $customer->id,
+                                'name' => $nameAddress,
+                                'address' => $input['address'],
+                                'phone_number' => $input['phone_address'],
+                                'is_default' => true,
+                            ]);
+                            $address->save();
+                        }
                     }
 
                     $totalSuccess++;
                 }
             }
-
             DB::commit();
+
             $this->import->status = StatusEnum::DONE;
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd();
             $this->import->status = StatusEnum::FAILED;
 
             $logFailed[] = [

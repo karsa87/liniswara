@@ -104,7 +104,7 @@ class CustomerController extends Controller
                     $address = new CustomerAddress();
                     $address->fill([
                         'customer_id' => $customer->id,
-                        'name' => $customer->name,
+                        'name' => $user->name,
                         'address' => $request->input('customer_address'),
                         'province_id' => $request->input('customer_province_id'),
                         'regency_id' => $request->input('customer_regency_id'),

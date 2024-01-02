@@ -73,6 +73,8 @@ var KTStockProductsList = function () {
                             result +=`<span class="badge badge-primary">Proses</span>`;
                         } else if (row.status == 2 || row.status == "2") {
                             result +=`<span class="badge badge-success">Selesai</span>`;
+                        } else if (row.status == 3 || row.status == "3") {
+                            result +=`<span class="badge badge-danger">Selesai</span>`;
                         }
 
                         return result;
