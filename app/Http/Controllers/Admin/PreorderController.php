@@ -40,7 +40,9 @@ class PreorderController extends Controller
                 'customer.user',
                 'branch',
                 'shipping',
-            ]);
+            ])->whereHas('details', function ($qDetail) {
+                $qDetail->whereRaw('qty != qty_order');
+            });
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($q2) use ($q) {

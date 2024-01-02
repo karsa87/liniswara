@@ -589,6 +589,26 @@ class OrderController extends Controller
 
             $order->save();
 
+            if ($order->status == StatusEnum::CANCEL) {
+                $details = $order->details()->with('product', 'preorder_detail')->get();
+                foreach ($details as $detail) {
+                    $product = $detail->product;
+                    $oldStock = $product->stock;
+                    $product->stock += $detail->qty;
+                    $product->save();
+
+                    $this->stockLogService->logStockIn(
+                        $order,
+                        $product->id,
+                        $oldStock,
+                        $detail->qty
+                    );
+
+                    $detail->preorder_detail->qty_order = ($detail->preorder_detail->qty_order ?: 0) - $detail->qty;
+                    $detail->preorder_detail->save();
+                }
+            }
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
