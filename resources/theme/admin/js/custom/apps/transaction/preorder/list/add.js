@@ -141,14 +141,28 @@ var KTAppEcommerceSaveProduct = function () {
                     $(type).closest("tr").children()[4].querySelector('span.text-muted').innerHTML = data.discount_description;
                     $(type).closest("tr").children()[4].querySelector('input.preorder_details_discount').value = discount;
                     $(type).closest("tr").children()[4].querySelector('input.preorder_details_discount_description').value = data.discount_description;
+                    let qty = $(type).closest("tr").children()[5].querySelector('input.preorder_detail_qty').value;
 
-                    let total = (price * 1) - (discount * 1);
+                    let total = ((price * 1) - (discount * 1)) * qty;
                     $(type).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                 }
 
                 KTApp.hidePageLoading();
             });
         });
+    }
+
+    const calculateTotal = () => {
+        KTApp.showPageLoading();
+        let totalAmountDetail = 0;
+        $('.amount_detail').each(function () {
+            let amount = $(this).text();
+            amount = amount.replace(/[^0-9]/g, "");
+            amount = parseInt(amount);
+            totalAmountDetail += amount;
+        });
+        $('#total-amount-detail').text(totalAmountDetail.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
+        KTApp.hidePageLoading();
     }
 
     // Init form repeater --- more info: https://github.com/DubFriend/jquery.repeater
@@ -170,6 +184,7 @@ var KTAppEcommerceSaveProduct = function () {
 
             hide: function (deleteElement) {
                 $(this).slideUp(deleteElement);
+                calculateTotal();
             },
         });
     }
@@ -253,6 +268,7 @@ var KTAppEcommerceSaveProduct = function () {
                             $(type).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
                             $(this).closest("tr").find('input.preorder_detail_qty').removeAttr('disabled');
+                            calculateTotal();
                         } else {
                             $(type).closest("tr").children()[1].innerHTML = '-';
                             $(type).closest("tr").children()[2].innerHTML = '-';
@@ -304,6 +320,8 @@ var KTAppEcommerceSaveProduct = function () {
 
             let total = (price * qty) - (discount * qty);
             $(this).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+            calculateTotal();
         });
     }
 
@@ -489,6 +507,7 @@ var KTAppEcommerceSaveProduct = function () {
 
             // Handle forms
             handleSubmit();
+            calculateTotal();
         }
     };
 }();

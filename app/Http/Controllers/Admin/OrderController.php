@@ -106,9 +106,10 @@ class OrderController extends Controller
             $orderDetail->price = $detail->price;
             $orderDetail->discount_description = $detail->discount_description;
             $orderDetail->discount = $detail->discount ?: 0;
-            $orderDetail->total_price = $detail->qty * $orderDetail->price;
-            $orderDetail->total_discount = $detail->qty * $orderDetail->discount;
+            $orderDetail->total_price = $orderDetail->qty * $orderDetail->price;
+            $orderDetail->total_discount = $orderDetail->qty * $orderDetail->discount;
             $orderDetail->total = $orderDetail->total_price - $orderDetail->total_discount;
+
             $orderDetail->setRelation('product', $detail->product);
             $orderDetail->setRelation('preorder_detail', $detail);
             $details->push($orderDetail);

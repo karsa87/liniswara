@@ -257,8 +257,8 @@
                                     <th>Harga</th>
                                     <th>Diskon</th>
                                     <th>Kuantitas</th>
-                                    <th>Total</th>
-                                    <th>Actions</th>
+                                    <th class="text-sm-end">Total</th>
+                                    <th class="text-sm-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody data-repeater-list="order_details" id="table-detail-body">
@@ -295,10 +295,10 @@
                                         <input type="hidden" class="form-control mw-100 w-200px order_detail_qty" name="order_details[1][qty]" value="{{ $detail->qty }}" min="1" />
                                         {{ $detail->qty }}
                                     </td>
-                                    <td>
+                                    <td class="text-sm-end">
                                         {{ $util->format_currency($detail->total, 0, 'Rp. ') }}
                                     </td>
-                                    <td>
+                                    <td class="text-sm-center">
                                         <input type="hidden" name="order_details[1][product_id]" value="{{ $detail->product->id }}" />
                                         <input type="hidden" name="order_details[1][preorder_detail_id]" value="{{ $detail->preorder_detail_id }}" />
                                         <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
@@ -311,6 +311,18 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="6" class="text-sm-end">
+                                        <h1>Total</h1>
+                                    </th>
+                                    <th class="text-sm-end">
+                                        <h1 id="total-amount-detail">
+                                            {{ $util->format_currency($order->details->sum('total'), 0, 'Rp. ') }}
+                                        </h1>
+                                    </th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <!--end::Repeater-->

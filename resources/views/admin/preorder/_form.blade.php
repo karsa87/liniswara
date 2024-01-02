@@ -256,8 +256,8 @@
                                     <th>Harga</th>
                                     <th>Diskon</th>
                                     <th>Kuantitas</th>
-                                    <th>Total</th>
-                                    <th>Actions</th>
+                                    <th class="text-sm-end">Total</th>
+                                    <th class="text-sm-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody data-repeater-list="preorder_details" id="table-detail-body">
@@ -301,10 +301,10 @@
                                         <td>
                                             <input type="number" class="form-control mw-100 w-200px preorder_detail_qty" name="preorder_details[1][qty]" value="{{ $detail->qty }}" min="1" />
                                         </td>
-                                        <td>
+                                        <td class="text-sm-end amount_detail">
                                             {{ $util->format_currency($detail->total, 0, 'Rp. ') }}
                                         </td>
-                                        <td>
+                                        <td class="text-sm-center">
                                             <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
                                                 <i class="ki-duotone ki-cross fs-1">
                                                     <span class="path1"></span>
@@ -341,10 +341,10 @@
                                     <td>
                                         <input type="number" class="form-control mw-100 w-200px preorder_detail_qty" name="preorder_details[1][qty]" value="1" min="1" disabled />
                                     </td>
-                                    <td>
+                                    <td class="text-sm-end amount_detail">
                                         0
                                     </td>
-                                    <td>
+                                    <td class="text-sm-center">
                                         <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
                                             <i class="ki-duotone ki-cross fs-1">
                                                 <span class="path1"></span>
@@ -357,7 +357,17 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="5">
+                                    <th colspan="6" class="text-sm-end">
+                                        <h1>Total</h1>
+                                    </th>
+                                    <th class="text-sm-end">
+                                        <h1 id="total-amount-detail">
+                                            {{ $util->format_currency($preorder->details->sum('total'), 0, 'Rp. ') }}
+                                        </h1>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="8">
                                         <!--begin::Form group-->
                                         <div class="form-group mt-5">
                                             <button type="button" data-repeater-create="" class="btn btn-sm btn-light-primary">
