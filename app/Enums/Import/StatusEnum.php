@@ -7,10 +7,10 @@ namespace App\Enums\Import;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static VALIDATION_ADMIN()
+ * @method static static WAITING()
  * @method static static PROCESS()
- * @method static static SENT()
  * @method static static DONE()
+ * @method static static FAILED()
  */
 final class StatusEnum extends Enum
 {
@@ -20,10 +20,13 @@ final class StatusEnum extends Enum
 
     const DONE = 2;
 
+    const FAILED = 3;
+
     const MAP_LABEL = [
         self::WAITING => 'Menunggu',
         self::PROCESS => 'Proses',
         self::DONE => 'Selesai',
+        self::FAILED => 'Gagal',
     ];
 
     public function getLabel()
@@ -32,6 +35,7 @@ final class StatusEnum extends Enum
             self::WAITING => 'Menunggu',
             self::PROCESS => 'Proses',
             self::DONE => 'Selesai',
+            self::FAILED => 'Gagal',
             default => ''
         };
     }
