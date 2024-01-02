@@ -30,7 +30,7 @@
     <!--begin::Order summary-->
     <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
         <!--begin::Order details-->
-        <div class="card card-flush py-4 flex-row-fluid">
+        <div class="card card-flush py-4 flex-row-fluid col-md-4 col-sm-12">
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">
@@ -118,7 +118,7 @@
         </div>
         <!--end::Order details-->
         <!--begin::Customer details-->
-        <div class="card card-flush py-4 flex-row-fluid">
+        <div class="card card-flush py-4 flex-row-fluid col-md-4 col-sm-12">
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">
@@ -225,7 +225,7 @@
         </div>
         <!--end::Customer details-->
         <!--begin::Documents-->
-        <div class="card card-flush py-4 flex-row-fluid">
+        <div class="card card-flush py-4 flex-row-fluid col-md-4 col-sm-12">
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">

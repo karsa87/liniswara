@@ -30,7 +30,7 @@
     <!--begin::Order summary-->
     <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
         <!--begin::Order details-->
-        <div class="card card-flush py-4 flex-row-fluid">
+        <div class="card card-flush py-4 flex-row-fluid col-md-4 col-sm-12">
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">
@@ -118,7 +118,7 @@
         </div>
         <!--end::Order details-->
         <!--begin::Customer details-->
-        <div class="card card-flush py-4 flex-row-fluid">
+        <div class="card card-flush py-4 flex-row-fluid col-md-4 col-sm-12">
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">
@@ -174,7 +174,10 @@
                                         <span class="path2"></span>
                                     </i>Alamat</div>
                                 </td>
-                                <td class="fw-bold text-end">{{ optional($preorder->customer_address)->address }}</td>
+                                {{-- <td class="fw-bold text-end">{{ optional($preorder->customer_address)->address }}</td> --}}
+                                <td class="fw-bold text-end">
+                                    SMK Diponegoro 1 Jakarta Jalan: Jl. sunan Giri Kelurahan: Rawamangun Kecamatan: Pulogadung Kota/Kab: Jakarta Timur Provinsi: DKI Jakarta Kode pos: 13220
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-muted">
@@ -225,7 +228,7 @@
         </div>
         <!--end::Customer details-->
         <!--begin::Documents-->
-        <div class="card card-flush py-4 flex-row-fluid">
+        <div class="card card-flush py-4 flex-row-fluid col-md-4 col-sm-12">
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">

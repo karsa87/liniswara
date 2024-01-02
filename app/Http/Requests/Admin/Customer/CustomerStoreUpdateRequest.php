@@ -38,6 +38,7 @@ class CustomerStoreUpdateRequest extends FormRequest
             ],
             'customer_email' => [
                 'required',
+                'email',
                 Rule::unique((new User())->getTable(), 'email')->where(function ($query) use ($input) {
                     if ($input['customer_id']) {
                         $customer = Customer::withTrashed()->find($input['customer_id']);

@@ -49,12 +49,11 @@ var KTPreordersList = function () {
             columns: [
                 { data: 'invoice_number' },
                 { data: null },
-                { data: 'total_amount' },
                 { data: null },
                 { data: 'marketing' },
                 { data: 'status_order' },
-                { data: 'status_payment' },
                 { data: 'method_payment' },
+                { data: 'total_amount' },
                 { data: null },
             ],
             columnDefs: [
@@ -100,22 +99,6 @@ var KTPreordersList = function () {
                 },
                 {
                     targets: 2,
-                    render: function (data, type, row) {
-                        let total_amount = 0;
-                        if (typeof row.total_amount == 'number') {
-                            total_amount = row.total_amount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                        }
-
-                        let zone = 'Zona 1';
-                        if (row.zone == 2) {
-                            zone = 'Zona 2';
-                        }
-
-                        return `<span class="badge badge-dark">${zone}</span><br><span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span>`;
-                    }
-                },
-                {
-                    targets: 3,
                     orderable: false,
                     render: function (data, type, row) {
                         if (
@@ -131,7 +114,7 @@ var KTPreordersList = function () {
                     }
                 },
                 {
-                    targets: 4,
+                    targets: 3,
                     orderable: false,
                     render: function (data, type, row) {
                         let result = '';
@@ -149,7 +132,7 @@ var KTPreordersList = function () {
                     }
                 },
                 {
-                    targets: 5,
+                    targets: 4,
                     render: function (data, type, row) {
                         let result = '';
                         if (row.status == 1 || row.status == "1") {
@@ -162,26 +145,16 @@ var KTPreordersList = function () {
                             result +=`<span class="badge badge-success">Selesai</span>`;
                         }
 
-                        return result;
-                    }
-                },
-                {
-                    targets: 6,
-                    render: function (data, type, row) {
-                        let result = '';
-                        if (row.status_payment == 1 || row.status_payment == "1") {
-                            result +=`<span class="badge badge-danger">Belum Terbayar</span>`;
-                        } else if (row.status_payment == 2 || row.status_payment == "2") {
-                            result +=`<span class="badge badge-success">Lunas</span>`;
-                        } else if (row.status_payment == 3 || row.status_payment == "3") {
-                            result +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
+                        let zone = 'Zona 1';
+                        if (row.zone == 2) {
+                            zone = 'Zona 2';
                         }
 
-                        return result;
+                        return `${result}<br><span class="badge badge-dark">${zone}</span>`;
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 5,
                     render: function (data, type, row) {
                         let result = '';
                         if (row.method_payment == 1 || row.method_payment == "1") {
@@ -193,6 +166,26 @@ var KTPreordersList = function () {
                         }
 
                         return result;
+                    }
+                },
+                {
+                    targets: 6,
+                    render: function (data, type, row) {
+                        let total_amount = 0;
+                        if (typeof row.total_amount == 'number') {
+                            total_amount = row.total_amount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+
+                        let result = '';
+                        if (row.status_payment == 1 || row.status_payment == "1") {
+                            result +=`<span class="badge badge-danger">Belum Terbayar</span>`;
+                        } else if (row.status_payment == 2 || row.status_payment == "2") {
+                            result +=`<span class="badge badge-success">Lunas</span>`;
+                        } else if (row.status_payment == 3 || row.status_payment == "3") {
+                            result +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
+                        }
+
+                        return `<span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span><br>${result}`;
                     }
                 },
                 {

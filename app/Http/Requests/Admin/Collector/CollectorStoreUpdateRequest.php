@@ -35,6 +35,7 @@ class CollectorStoreUpdateRequest extends FormRequest
             ],
             'collector_email' => [
                 'nullable',
+                'email',
                 'unique:'.(new Collector())->getTable().',email'.($this->get('collector_id') ? ','.$this->get('collector_id') : ''),
             ],
             'collector_phone_number' => [

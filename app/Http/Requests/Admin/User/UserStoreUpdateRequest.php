@@ -31,6 +31,7 @@ class UserStoreUpdateRequest extends FormRequest
             ],
             'user_email' => [
                 'required',
+                'email',
                 'unique:'.(new User())->getTable().',email'.($this->get('user_id') ? ','.$this->get('user_id') : ''),
             ],
             'user_phone_number' => [

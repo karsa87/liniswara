@@ -25,8 +25,8 @@ final class StatusEnum extends Enum
     const MAP_LABEL = [
         self::VALIDATION_ADMIN => 'Validasi Admin',
         self::PROCESS => 'Proses',
-        self::SENT => 'Kirim',
-        self::DONE => 'Selesai',
+        // self::SENT => 'Kirim',
+        // self::DONE => 'Selesai',
     ];
 
     public function getLabel()
@@ -34,8 +34,8 @@ final class StatusEnum extends Enum
         return match ($this->value) {
             self::VALIDATION_ADMIN => 'Validasi Admin',
             self::PROCESS => 'Proses',
-            self::SENT => 'Kirim',
-            self::DONE => 'Selesai',
+            // self::SENT => 'Kirim',
+            // self::DONE => 'Selesai',
             default => ''
         };
     }

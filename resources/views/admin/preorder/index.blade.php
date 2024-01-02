@@ -171,15 +171,13 @@
         <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_preorders" data-url="{{ route('preorder.index.list') }}" data-url-delete="{{ route('preorder.delete') }}" data-url-edit="{{ route('preorder.detail') }}" >
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                    <th class="min-w-125px">No. Faktur</th>
+                    <th class="min-w-50px">No. Faktur</th>
                     <th class="min-w-125px">Customer</th>
-                    <th class="min-w-125px">Total</th>
-                    <th class="min-w-125px">Ekspedisi</th>
-                    <th class="min-w-125px">Input <br> Marketing</th>
-                    <th class="min-w-125px">Status Order</th>
-                    <th class="min-w-125px">Status <br> Pembayaran</th>
-                    <th class="min-w-125px">Method <br> Pembayaran</th>
-                    <th class="text-end min-w-100px">Actions</ th>
+                    <th class="min-w-50px">Input <br> Marketing</th>
+                    <th class="min-w-75px">Status Order</th>
+                    <th class="min-w-75px">Method <br> Pembayaran</th>
+                    <th class="min-w-100px">Total</th>
+                    <th class="text-end min-w-50px">Actions</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 fw-semibold">

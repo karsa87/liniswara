@@ -35,6 +35,7 @@ class SupplierStoreUpdateRequest extends FormRequest
             ],
             'supplier_email' => [
                 'required',
+                'email',
                 'unique:'.(new Supplier())->getTable().',email'.($this->get('supplier_id') ? ','.$this->get('supplier_id') : ''),
             ],
             'supplier_phone_number' => [
