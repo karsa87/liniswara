@@ -280,7 +280,7 @@
                         </div>
                         <!--end:Menu item-->
                         @endhasPermission
-                        @hasPermission('supplier-view')
+                        @if (auth()->user()->isDeveloper())
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
@@ -293,7 +293,7 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        @endhasPermission
+                        @endif
                         @hasPermission('branch-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">

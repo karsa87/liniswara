@@ -45,7 +45,6 @@ class OrderController extends Controller
                 [
                     StatusEnum::VALIDATION_ADMIN,
                     StatusEnum::PROCESS,
-                    StatusEnum::PACKING,
                 ],
                 $request->all()
             );
@@ -782,7 +781,6 @@ class OrderController extends Controller
         ])->whereIn('status', [
             StatusEnum::PROCESS,
             StatusEnum::VALIDATION_ADMIN,
-            StatusEnum::PACKING,
         ]);
 
         if ($request->search_customer_id) {

@@ -46,15 +46,15 @@ var KTAppEcommerceUpdateDiscount = function () {
             let selected = $(this).val();
             if (selected == 1) {
                 $('input[name="preorder_discount_price"]').val('');
-                $('#div-discount-percentage').show();
-                $('#div-discount-price').hide();
+                $('#div-discount-percentage').removeClass('d-none');
+                $('#div-discount-price').addClass('d-none');
             } else if (selected == 2) {
                 $('input[name="preorder_discount_percentage]').val('');
-                $('#div-discount-percentage').hide();
-                $('#div-discount-price').show();
+                $('#div-discount-percentage').addClass('d-none');
+                $('#div-discount-price').removeClass('d-none');
             } else {
-                $('#div-discount-percentage').hide();
-                $('#div-discount-price').hide();
+                $('#div-discount-percentage').addClass('d-none');
+                $('#div-discount-price').addClass('d-none');
                 $('input[name="preorder_discount_percentage]').val('');
                 $('input[name="preorder_discount_price"]').val('');
             }

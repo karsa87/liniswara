@@ -107,7 +107,6 @@ var KTSuppliersAddSupplier = function () {
                         let param = new FormData(form);
                         let formSubmit = null;
                         if (param.get('customer_id') != null && param.get('customer_id') != undefined  && param.get('customer_id') != '') {
-                            console.log('masuk update');
                             param.append('_method', 'PUT');
 
                             formSubmit = axios.post(

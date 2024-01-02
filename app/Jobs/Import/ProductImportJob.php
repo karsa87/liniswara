@@ -59,36 +59,12 @@ class ProductImportJob implements ShouldQueue
                         continue;
                     }
 
+                    $category = null;
                     if (
                         $row->has(0)
                         && $row[0]
                     ) {
                         $category = Category::whereRaw('LOWER(name) = ?', $row[0])->first();
-                        if (is_null($category)) {
-                            $logFailed[] = [
-                                'import_id' => $this->import->id,
-                                'description' => 'Gagal import '.$row[1],
-                                'reason' => json_encode([
-                                    'Kategori tidak ditemukan '.$row[0],
-                                ]),
-                            ];
-
-                            $totalFailed++;
-
-                            continue;
-                        }
-                    } else {
-                        $logFailed[] = [
-                            'import_id' => $this->import->id,
-                            'description' => 'Gagal import '.$row[1],
-                            'reason' => json_encode([
-                                'Kategori harus diisi '.$row[0],
-                            ]),
-                        ];
-
-                        $totalFailed++;
-
-                        continue;
                     }
 
                     $input = [
@@ -106,7 +82,7 @@ class ProductImportJob implements ShouldQueue
 
                     $validator = Validator::make($input, [
                         'category_id' => [
-                            'required',
+                            'nullable',
                             'numeric',
                         ],
                         'code' => [
@@ -186,9 +162,11 @@ class ProductImportJob implements ShouldQueue
                     $product->fill($input);
 
                     if ($product->save()) {
-                        $product->categories()->sync([
-                            $category->id,
-                        ]);
+                        if ($category) {
+                            $product->categories()->sync([
+                                $category->id,
+                            ]);
+                        }
                     }
 
                     $this->stockLogService->logStockIn(

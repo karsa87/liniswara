@@ -157,6 +157,7 @@ var KTAppEcommerceSaveProduct = function () {
             amount = parseInt(amount);
             totalAmountDetail += amount;
         });
+        console.log(totalAmountDetail);
         $('#total-amount-detail').text(totalAmountDetail.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
         KTApp.hidePageLoading();
     }

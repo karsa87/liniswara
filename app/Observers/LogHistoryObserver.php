@@ -20,7 +20,7 @@ class LogHistoryObserver
             $data_before = $object->getOriginal();
             $data_after = $object->toArray();
             $table = $object->getTable();
-            $object_name = optional(SourceLogEnum::fromValue($table))->getLabel() ?? ucwords(str_replace('_', ' ', $table));
+            $object_name = optional(SourceLogEnum::fromValue($table))->getLabel() ?: ucwords(str_replace('_', ' ', $table));
 
             $this->log_history([
                 'record_id' => $object->id,
@@ -46,7 +46,7 @@ class LogHistoryObserver
             $data_before = $object->getOriginal();
             $data_after = $object->toArray();
             $table = $object->getTable();
-            $object_name = optional(SourceLogEnum::fromValue($table))->getLabel() ?? ucwords(str_replace('_', ' ', $table));
+            $object_name = optional(SourceLogEnum::fromValue($table))->getLabel() ?: ucwords(str_replace('_', ' ', $table));
 
             $change = $object->getChanges();
             $isDelete = array_key_exists('deleted_at', $change);
@@ -76,7 +76,7 @@ class LogHistoryObserver
             $data_before = $object->getOriginal();
             $data_after = $object->toArray();
             $table = $object->getTable();
-            $object_name = ucwords(str_replace('_', ' ', $table));
+            $object_name = optional(SourceLogEnum::fromValue($table))->getLabel() ?: ucwords(str_replace('_', ' ', $table));
 
             $this->log_history([
                 'record_id' => $object->id,

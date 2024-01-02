@@ -16,7 +16,7 @@ final class SourceLogEnum extends Enum
 
     const ORDER_DETAIL = 'order_details';
 
-    const ORDER_SHIPPING = 'order_shipping';
+    const ORDER_SHIPPING = 'order_shippings';
 
     const PREORDER = 'preorders';
 

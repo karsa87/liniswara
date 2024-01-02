@@ -123,7 +123,7 @@ class ProductController extends Controller
                 $product->save()
                 && $categories
             ) {
-                $product->categories()->sync($categories);
+                $product->categories()->sync(array_unique($categories));
             }
 
             $this->stockLogService->logStockIn(
@@ -246,7 +246,7 @@ class ProductController extends Controller
                 $product->save()
                 && $categories
             ) {
-                $product->categories()->sync($categories);
+                $product->categories()->sync(array_unique($categories));
             }
 
             if ($oldStock > $product->stock) {

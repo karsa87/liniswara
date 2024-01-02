@@ -26,10 +26,10 @@ class ProfileController extends Controller
             'order' => Order::where('created_by', $user->id)->where('status', [
                 StatusEnum::VALIDATION_ADMIN,
                 StatusEnum::PROCESS,
-                StatusEnum::PACKING,
             ])->sum('total_amount'),
             'order_sent' => Order::where('created_by', $user->id)->where('status', [
                 StatusEnum::SENT,
+                StatusEnum::PACKING,
             ])->sum('total_amount'),
             'order_arsip' => Order::where('created_by', $user->id)->where('status', [
                 StatusEnum::DONE,

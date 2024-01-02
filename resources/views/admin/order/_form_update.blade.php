@@ -294,7 +294,7 @@
                                     <td>
                                         <input type="number" class="form-control mw-100 w-200px order_detail_qty" name="order_details[1][qty]" value="{{ $detail->qty }}" min="1" max="{{ ($detail->preorder_detail->qty - $detail->preorder_detail->qty_order + $detail->qty) }}" />
                                     </td>
-                                    <td class="text-sm-end">
+                                    <td class="text-sm-end amount_detail">
                                         {{ $util->format_currency($detail->total, 0, 'Rp. ') }}
                                     </td>
                                     <td class="text-sm-center">

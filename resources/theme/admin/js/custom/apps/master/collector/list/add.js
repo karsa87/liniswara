@@ -187,7 +187,6 @@ var KTCollectorsAddCollector = function () {
                         let param = new FormData(form);
                         let formSubmit = null;
                         if (param.get('collector_id') != null && param.get('collector_id') != undefined  && param.get('collector_id') != '') {
-                            console.log('masuk update');
                             param.append('_method', 'PUT');
 
                             formSubmit = axios.post(

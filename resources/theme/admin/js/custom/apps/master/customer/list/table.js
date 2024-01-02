@@ -227,7 +227,7 @@ var KTSuppliersList = function () {
                         form.querySelector("input[name='customer_email']").value = customer.email;
                         form.querySelector("input[name='customer_company']").value = customer.company;
                         form.querySelector("input[name='customer_phone_number']").value = customer.phone_number;
-                        form.querySelector("select[name='customer_type']").value = customer.type;
+                        // form.querySelector("select[name='customer_type']").value = customer.type;
                         form.querySelector("input[name='customer_province_id']").value = customer.province.id;
                         form.querySelector("input[name='customer_regency_id']").value = customer.regency.id;
                         form.querySelector("input[name='customer_district_id']").value = customer.district.id;

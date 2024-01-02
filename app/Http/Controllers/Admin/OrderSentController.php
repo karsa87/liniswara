@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\Preorder\StatusEnum;
+use App\Enums\Order\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use App\Services\TrackExpeditionService;
@@ -25,6 +25,7 @@ class OrderSentController extends Controller
             return $this->orderService->getListByStatus(
                 [
                     StatusEnum::SENT,
+                    StatusEnum::PACKING,
                 ],
                 $request->all()
             );

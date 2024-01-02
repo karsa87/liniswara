@@ -237,7 +237,7 @@
                             <!--end::Input group-->
                         </div>
 
-                        <div class="d-flex flex-column flex-md-row gap-5 mb-2" style="display: none !important;" id="div-discount-percentage">
+                        <div class="d-flex flex-column flex-md-row gap-5 mb-2 d-none" id="div-discount-percentage">
                             <!--begin::Input group-->
                             <div class="fv-row flex-row-fluid">
                                 <!--begin::Label-->
@@ -253,7 +253,7 @@
                             <!--end::Input group-->
                         </div>
 
-                        <div class="d-flex flex-column flex-md-row gap-5 mb-2" style="display: none !important;" id="div-discount-price">
+                        <div class="d-flex flex-column flex-md-row gap-5 mb-2 d-none" id="div-discount-price">
                             <!--begin::Input group-->
                             <div class="fv-row flex-row-fluid">
                                 <!--begin::Label-->

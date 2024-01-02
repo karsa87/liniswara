@@ -45,18 +45,18 @@ var KTAppEcommerceUpdateDiscount = function () {
         $('#form-select-discount-type').on('change', function () {
             let selected = $(this).val();
             if (selected == 1) {
-                $('input[name="order_discount_price"]').val('');
-                $('#div-discount-percentage').show();
-                $('#div-discount-price').hide();
+                $('input[name="preorder_discount_price"]').val('');
+                $('#div-discount-percentage').removeClass('d-none');
+                $('#div-discount-price').addClass('d-none');
             } else if (selected == 2) {
-                $('input[name="order_discount_percentage]').val('');
-                $('#div-discount-percentage').hide();
-                $('#div-discount-price').show();
+                $('input[name="preorder_discount_percentage]').val('');
+                $('#div-discount-percentage').addClass('d-none');
+                $('#div-discount-price').removeClass('d-none');
             } else {
-                $('#div-discount-percentage').hide();
-                $('#div-discount-price').hide();
-                $('input[name="order_discount_percentage]').val('');
-                $('input[name="order_discount_price"]').val('');
+                $('#div-discount-percentage').addClass('d-none');
+                $('#div-discount-price').addClass('d-none');
+                $('input[name="preorder_discount_percentage]').val('');
+                $('input[name="preorder_discount_price"]').val('');
             }
         });
         $('#form-select-discount-type').change();

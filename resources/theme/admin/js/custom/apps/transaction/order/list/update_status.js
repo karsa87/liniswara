@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceUpdateDiscount = function () {
+var KTAppEcommerceUpdateStatus = function () {
     const element = document.getElementById('kt_modal_update_status_order');
     const form = element.querySelector('#kt_modal_update_status_order_form');
     const modal = new bootstrap.Modal(element);
@@ -41,25 +41,6 @@ var KTAppEcommerceUpdateDiscount = function () {
                 }
             }
         });
-
-        $('#form-select-discount-type').on('change', function () {
-            let selected = $(this).val();
-            if (selected == 1) {
-                $('input[name="order_discount_price"]').val('');
-                $('#div-discount-percentage').show();
-                $('#div-discount-price').hide();
-            } else if (selected == 2) {
-                $('input[name="order_discount_percentage]').val('');
-                $('#div-discount-percentage').hide();
-                $('#div-discount-price').show();
-            } else {
-                $('#div-discount-percentage').hide();
-                $('#div-discount-price').hide();
-                $('input[name="order_discount_percentage]').val('');
-                $('input[name="order_discount_price"]').val('');
-            }
-        });
-        $('#form-select-discount-type').change();
     }
 
     // Submit form handler
@@ -283,5 +264,5 @@ var KTAppEcommerceUpdateDiscount = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceUpdateDiscount.init();
+    KTAppEcommerceUpdateStatus.init();
 });
