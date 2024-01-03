@@ -42,7 +42,7 @@ class CustomerController extends Controller
                 $query->where(function ($qUser) use ($q) {
                     $qUser->whereLike('name', $q)
                         ->orWhereLike('company', $q)
-                        ->orWhereLike('phone', $q)
+                        ->orWhereLike('phone_number', $q)
                         ->orWhereLike('email', $q);
                 });
             }
