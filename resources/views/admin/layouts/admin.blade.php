@@ -39,6 +39,8 @@
         <meta name="base" content="{{ url('') }}"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="storage_url" content="{{ \Storage::url('') }}"/>
+        <meta name="file_upload_url" content="{{ route('file.upload') }}"/>
+        <meta name="file_delete_url" content="{{ route('file.delete') }}"/>
 
 		<link rel="canonical" href="https://www.asrakit.com" />
 		<link rel="shortcut icon" href="{{ mix('assets/media/logos/favicon.png') }}" />

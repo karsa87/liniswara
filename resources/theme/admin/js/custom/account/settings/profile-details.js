@@ -12,7 +12,7 @@ var KTAccountSettingsProfileDetails = function () {
     const initDropzone = () => {
         // For more info about Dropzone plugin visit:  https://www.dropzonejs.com/#usage
 		dropzone = new Dropzone("#kt_modal_add_update_user_profile_photo", {
-			url: "../file/upload", // Set the url for your upload script location
+			url: $('meta[name=file_upload_url]').attr("content"), // Set the url for your upload script location
             paramName: "file", // The name that will be used to transfer the file
             maxFiles: 1,
             maxFilesize: 2, // MB
@@ -50,7 +50,7 @@ var KTAccountSettingsProfileDetails = function () {
                 });
 
                 this.on("removedfile", function (file) {
-                    if (form.querySelector("input[name='profile_photo_id']").value == '') {
+                    if (document.querySelector("input[name='profile_photo_id']").value == '') {
                         return false;
                     }
 
@@ -67,7 +67,7 @@ var KTAccountSettingsProfileDetails = function () {
                         }
                     }).then(function (result) {
                         if (result.isConfirmed) {
-                            axios.delete('../file/delete/' + document.querySelector('input[name="profile_photo_id"]').value, {})
+                            axios.delete($('meta[name=file_delete_url]').attr("content") + '/' + document.querySelector('input[name="profile_photo_id"]').value, {})
                             .then(response => {
                                 if (response) {
                                     Swal.fire({
