@@ -167,14 +167,25 @@ class CategoryController extends Controller
     {
         $params = request()->all();
 
-        $query = Category::select('id', 'name as text');
+        $query = Category::with('parent');
 
         $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
         if ($q) {
             $query->whereLike('name', $q);
         }
 
-        $list = $query->limit(20)->get()->toArray();
+        $list = [];
+        foreach ($query->limit(20)->get() as $category) {
+            $text = $category->name;
+            if ($category->parent) {
+                $text = sprintf('%s - %s', $category->parent->name, $category->name);
+            }
+
+            $list[] = [
+                'id' => $category->id,
+                'text' => $text,
+            ];
+        }
 
         return response()->json([
             'items' => $list,
