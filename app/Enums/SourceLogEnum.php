@@ -26,7 +26,7 @@ final class SourceLogEnum extends Enum
 
     const RESTOCK = 'restocks';
 
-    const RESTOCK_DETAIL = 'restok_details';
+    const RESTOCK_DETAIL = 'restock_details';
 
     const MAP_LABEL = [
         self::ORDER => 'Pesanan',
