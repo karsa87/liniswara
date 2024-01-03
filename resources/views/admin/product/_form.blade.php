@@ -70,8 +70,8 @@
                 <!--begin::Select2-->
                 <select class="form-select mb-2" data-placeholder="Select kategori" data-allow-clear="true" multiple="multiple" name="product_category_id[]"  data-url="{{ route('ajax.category.list') }}" data-kt-ecommerce-catalog-add-product="product_option">
                     <option></option>
-                    @foreach ($product->categories->pluck('name', 'id') as $id => $name)
-                        <option value="{{ $id }}" selected>{{ $name }}</option>
+                    @foreach ($product->categories as $category)
+                        <option value="{{ $category->id }}" selected>{{ $category->full_name }}</option>
                     @endforeach
                 </select>
                 <!--end::Select2-->

@@ -31,8 +31,13 @@ class ProductExport implements FromCollection, ShouldAutoSize, WithColumnFormatt
      */
     public function map($product): array
     {
+        $category = null;
+        if ($product->categories) {
+            $category = $product->categories->first();
+        }
+
         return [
-            optional($product->category)->name,
+            optional($category)->full_name,
             $product->code,
             $product->name,
             $product->stock,

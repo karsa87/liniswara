@@ -46,7 +46,7 @@
                     <!--begin::Details-->
                     <div class="mb-0">
                         @foreach ($product->categories as $category)
-                            <span class="badge badge-outline badge-primary">{{$category->name}}</span>
+                            <span class="badge badge-outline badge-primary">{{$category->full_name}}</span>
                         @endforeach
                     </div>
                     <!--end::Details-->

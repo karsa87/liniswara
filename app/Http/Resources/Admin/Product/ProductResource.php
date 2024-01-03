@@ -30,7 +30,7 @@ class ProductResource extends JsonResource
             foreach ($this->categories as $row) {
                 $categories[] = [
                     'id' => $row->id,
-                    'name' => $row->name,
+                    'name' => $row->full_name,
                 ];
             }
 

@@ -35,7 +35,7 @@ class ProductController extends Controller
         if ($request->ajax()) {
             $query = Product::with([
                 'thumbnail',
-                'categories',
+                'categories.parent',
             ]);
 
             if ($q = $request->input('search.value')) {
@@ -153,7 +153,7 @@ class ProductController extends Controller
     {
         $product = Product::with([
             'thumbnail',
-            'categories',
+            'categories.parent',
             'stock_histories' => function ($qStory) {
                 $qStory->with(['user', 'product'])->orderBy('created_at', 'DESC');
             },
@@ -354,7 +354,7 @@ class ProductController extends Controller
     public function export(Request $request)
     {
         $query = Product::with([
-            'categories',
+            'categories.parent',
         ]);
 
         if ($request->search_category_id) {
