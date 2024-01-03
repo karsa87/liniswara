@@ -701,8 +701,11 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
-            'collector',
+            'collector.district',
+            'collector.regency',
+            'collector.province',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',
@@ -719,8 +722,11 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
-            'collector',
+            'collector.district',
+            'collector.regency',
+            'collector.province',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',
@@ -737,8 +743,11 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
-            'collector',
+            'collector.district',
+            'collector.regency',
+            'collector.province',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',
@@ -756,8 +765,11 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
-            'collector',
+            'collector.district',
+            'collector.regency',
+            'collector.province',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',

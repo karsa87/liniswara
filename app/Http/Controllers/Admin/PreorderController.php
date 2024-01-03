@@ -37,6 +37,7 @@ class PreorderController extends Controller
                 'customer_address',
                 'collector',
                 'createdBy',
+                'updatedBy',
                 'customer.user',
                 'branch',
                 'shipping',
@@ -223,6 +224,7 @@ class PreorderController extends Controller
             'customer_address',
             'collector',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',
@@ -559,8 +561,11 @@ class PreorderController extends Controller
     {
         $preorder = Preorder::with([
             'customer_address',
-            'collector',
+            'collector.district',
+            'collector.regency',
+            'collector.province',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',
@@ -577,8 +582,11 @@ class PreorderController extends Controller
     {
         $preorder = Preorder::with([
             'customer_address',
-            'collector',
+            'collector.district',
+            'collector.regency',
+            'collector.province',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'customer.addresses',
             'branch',

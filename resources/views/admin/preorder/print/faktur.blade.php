@@ -15,18 +15,29 @@
                 <!--end::Logo-->
                 <div class="text-sm-start w-75">
                     <h4 class="fw-bolder fw-bold fs-3x pe-5" style="color: #6e87a7 !important;">FAKTUR PENJUALAN</h4>
-                    <h5 class="fw-bolder fw-semibold fs-5 pe-5">
-                        CV. SUARA PENDIDIKAN NUSANTARA
-                    </h5>
-                    <!--begin::Text-->
-                    <span class="text-sm-end fs-7 text-muted mt-7">
-                        JL. KIYAI RADEN SANTRI RT 01 RW 01 KEC. MUNTILAN KAB. MAGELANG JAWA TIMUR
-                    </span>
-                    <br>
-                    <span class="text-sm-end fs-7 text-muted mt-7">
-                        P : 0812-3333-4444 E: CVSUARAPENDIDIKANNUSATRA@GMAIL.COM
-                    </span>
-                    <!--end::Text-->
+                    @if ($preorder->collector)
+                        <h5 class="fw-bolder fw-semibold fs-5 pe-5">
+                            {{ optional($preorder->collector)->name }}
+                        </h5>
+                        <!--begin::Text-->
+                        <span class="text-sm-end fs-7 text-muted mt-7">
+                            {{ optional($preorder->collector)->address }}
+                            @if (optional($preorder->collector)->district)
+                                KEC. {{ optional($preorder->collector)->district->name }}
+                            @endif
+                            @if (optional($preorder->collector)->regency)
+                                {{ optional($preorder->collector)->regency->name }}
+                            @endif
+                            @if (optional($preorder->collector)->province)
+                                {{ optional($preorder->collector)->province->name }}
+                            @endif
+                        </span>
+                        <br>
+                        <span class="text-sm-end fs-7 text-muted mt-7">
+                            P : {{ optional($preorder->collector)->phone_number }} E: {{ optional($preorder->collector)->email }}
+                        </span>
+                        <!--end::Text-->
+                    @endif
                 </div>
                 <div class="text-sm-end w-50">
                     <!--begin::Text-->

@@ -126,6 +126,8 @@ var KTPreordersList = function () {
                             result +=`<span class="badge badge-info">Retail</span>`;
                         } else if (row.marketing == 4 || row.marketing == "4") {
                             result +=`<span class="badge badge-info">Penulis</span>`;
+                        } else if (row.status == 5 || row.status == "5") {
+                            result +=`<span class="badge badge-info">Packing</span>`;
                         }
 
                         return result;

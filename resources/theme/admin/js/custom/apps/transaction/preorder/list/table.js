@@ -92,6 +92,15 @@ var KTPreordersList = function () {
                         ) {
                             result +=`<br><span class="badge badge-success">By ${row.created_by.name}</span> <br> `;
                         }
+
+                        if (
+                            row.updated_by != null
+                            && row.updated_by.id != undefined
+                            && row.updated_by.id != null
+                        ) {
+                            result +=`& Diedit <span class="badge badge-success">By ${row.updated_by.name}</span> <br> `;
+                        }
+
                         return result;
                     }
                 },

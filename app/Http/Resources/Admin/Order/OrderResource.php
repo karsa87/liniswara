@@ -23,6 +23,14 @@ class OrderResource extends JsonResource
             ];
         }
 
+        $updatedBy = null;
+        if ($this->updatedBy) {
+            $updatedBy = [
+                'id' => $this->updatedBy->id,
+                'name' => $this->updatedBy->name,
+            ];
+        }
+
         $branch = null;
         if ($this->branch) {
             $branch = [
@@ -175,6 +183,7 @@ class OrderResource extends JsonResource
             'shipping' => $shipping,
             'details' => $details,
             'created_by' => $createdBy,
+            'updated_by' => $updatedBy,
         ];
     }
 }

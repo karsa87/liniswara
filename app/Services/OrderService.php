@@ -23,6 +23,7 @@ class OrderService
             'customer_address',
             'collector',
             'createdBy',
+            'updatedBy',
             'customer.user',
             'branch',
             'shipping',

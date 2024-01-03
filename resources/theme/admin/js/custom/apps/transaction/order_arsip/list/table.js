@@ -143,6 +143,8 @@ var KTPreordersList = function () {
                             result +=`<span class="badge badge-info">Kirim</span>`;
                         } else if (row.status == 4 || row.status == "4") {
                             result +=`<span class="badge badge-success">Selesai</span>`;
+                        } else if (row.status == 5 || row.status == "5") {
+                            result +=`<span class="badge badge-info">Packing</span>`;
                         }
 
                         let zone = 'Zona 1';
