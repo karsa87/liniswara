@@ -61,13 +61,22 @@ var KTPreordersList = function () {
                     targets: 0,
                     render: function (data, type, row) {
                         let result = `<a href="order/detail/${row.id}/" class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</a><br><span class="fs-7 text-muted">${row.date}</span>`;
+
                         if (
                             row.created_by != null
                             && row.created_by.id != undefined
                             && row.created_by.id != null
                         ) {
-                            result +=`<br><span class="badge badge-success">By ${row.created_by.name}</span> <br> `;
+                            result +=`<br><span class="badge badge-success">Dibuat ${row.created_by.name}`;
+                            if (
+                                row.updated_by != null
+                                && row.updated_by.id != undefined
+                                && row.updated_by.id != null
+                            ) {
+                                result +=` & Diedit ${row.updated_by.name}</span>`;
+                            }
                         }
+
                         return result;
                     }
                 },
