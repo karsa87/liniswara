@@ -7,158 +7,136 @@
 <!-- begin::Invoice 3-->
 <div class="card">
     <!-- begin::Body-->
-    <div class="card-body py-20">
+    <div class="card-body py-10">
         <!-- begin::Wrapper-->
         <div class="mw-lg-950px mx-auto w-100">
             <!-- begin::Header-->
             <div class="d-flex justify-content-between flex-column flex-sm-row">
                 <!--end::Logo-->
-                <div class="text-sm-start w-75">
-                    <h4 class="fw-bolder fw-bold fs-3x pe-5" style="color: #6e87a7 !important;">FAKTUR PENJUALAN</h4>
-                    @if ($preorder->collector)
-                        <h5 class="fw-bolder fw-semibold fs-5 pe-5">
-                            {{ optional($preorder->collector)->name }}
-                        </h5>
-                        <!--begin::Text-->
-                        <span class="text-sm-end fs-7 text-muted mt-7">
-                            {{ optional($preorder->collector)->address }}
-                            @if (optional($preorder->collector)->district)
-                                KEC. {{ optional($preorder->collector)->district->name }}
-                            @endif
-                            @if (optional($preorder->collector)->regency)
-                                {{ optional($preorder->collector)->regency->name }}
-                            @endif
-                            @if (optional($preorder->collector)->province)
-                                {{ optional($preorder->collector)->province->name }}
-                            @endif
-                        </span>
-                        <br>
-                        <span class="text-sm-end fs-7 text-muted mt-7">
-                            P : {{ optional($preorder->collector)->phone_number }} E: {{ optional($preorder->collector)->email }}
-                        </span>
-                        <!--end::Text-->
-                    @endif
-                </div>
-                <div class="text-sm-end w-50">
-                    <!--begin::Text-->
-                    <span class="d-block ms-sm-auto">
-                        <img alt="Liniswara" src="{{ mix('assets/media/logos/logo-liniswara.png') }}" class="mw-75">
-                    </span>
-                    <!--end::Text-->
+                <div class="text-sm-start w-100">
+                    <h4 class="fw-bolder fw-bold fs-2x pe-5 text-center">FAKTUR PENJUALAN</h4>
+                    <h5 class="fw-medium fs-6 pe-5 text-center">
+                        No PO: {{ $preorder->invoice_number }}
+                    </h5>
                 </div>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
-            <div class="pb-12">
+            <div>
                 <!--begin::Wrapper-->
-                <div class="d-flex flex-column gap-7 gap-md-10">
+                <div class="d-flex flex-column gap-2">
                     <!--begin::Separator-->
                     <div class="mb-2 mt-2" style="display: block; height: 0; border-bottom: 4px solid #000000;"></div>
                     <!--begin::Separator-->
+                    <div class="d-flex flex-column gap-2">
+                        <span class="fw-medium fs-6 pe-5 text-end">
+                            {{ $carbon->now()->locale('id')->format('j F Y') }}
+                        </span>
+                    </div>
                     <!--begin::Billing & shipping-->
-                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold mt-5">
+                        <div class="flex-root d-flex flex-column border p-5">
+                            <span class="text-muted">Penyedia</span>
+                            <span class="fs-2">{{ optional($preorder->collector)->name }}</span>
+                            <span class="fs-8 text-gray-600 fw-medium">
+                                {{ str(optional($preorder->collector)->address ?? '')->upper() }}, {{ str(optional($preorder->collector)->village->name ?? '')->upper() }}
+                                @if (optional($preorder->collector)->district)
+                                    <br />Kec. {{ str(optional($preorder->collector)->district->name ?? '')->upper() }}, {{ str(optional($preorder->collector)->regency->name ?? '')->upper() }}
+                                @endif
+
+                                @if (optional($preorder->collector)->province)
+                                    <br />{{ str(optional($preorder->collector)->province->name ?? '')->upper() }},
+                                @endif
+                                <br />T: {{ optional($preorder->collector)->phone_number }}
+                            </span>
+                        </div>
                         <div class="flex-root d-flex flex-column border p-5">
                             @php
                                 $customerAddress = $preorder->customer_address;
                             @endphp
-                            <span class="text-muted">Kepada</span>
-                            <span class="fs-2x">{{ optional($customerAddress)->name }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">
+                            <span class="text-muted">Pemesan</span>
+                            <span class="fs-2">{{ optional($customerAddress)->name }}</span>
+                            <span class="fs-8 text-gray-600 fw-medium">
                                 {{ str(optional($customerAddress)->address ?? '')->upper() }}, {{ str(optional($customerAddress)->village->name ?? '')->upper() }}
-                                <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
-                                <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},
+                                @if (optional($customerAddress)->district)
+                                    <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
+                                @endif
+
+                                @if (optional($customerAddress)->province)
+                                    <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},
+                                @endif
                                 <br />T: {{ optional($customerAddress)->phone_number }}
-                                <br />E: {{ $preorder->customer->user->email }}
                             </span>
-                        </div>
-                        <div class="flex-root d-flex flex-column border p-5 pt-12">
-                            <span class="fs-1">NO FAKTUR: {{ $preorder->invoice_number }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">ADMIN: {{ auth()->user()->name }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">TANGGAL CETAK: {{ $carbon->now()->locale('id')->format('d-m-Y H:i') }}</span>
                         </div>
                     </div>
                     <!--end::Billing & shipping-->
-                    <!--begin::Separator-->
-                    <div class="separator"></div>
-                    <!--begin::Separator-->
-                    <!--begin::Order details-->
-                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Invoice Number</span>
-                            <span class="fs-5">{{ $preorder->invoice_number }}</span>
-                        </div>
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Order ID</span>
-                            <span class="fs-5">{{ $preorder->id }}</span>
-                        </div>
-                    </div>
-                    <!--end::Order details-->
                     <!--begin:Order summary-->
-                    <div class="d-flex justify-content-between flex-column">
+                    <div class="d-flex justify-content-between flex-column mt-5">
                         <!--begin::Table-->
-                        <div class="table-responsive border-bottom mb-9">
-                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                        <div class="table-responsive mb-9">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0 table-bordered">
                                 <thead>
-                                    <tr class="border-bottom fs-6 fw-bold text-muted">
-                                        <th class="min-w-10px pb-2">#</th>
-                                        <th class="min-w-70px pb-2">Kode Produk</th>
-                                        <th class="min-w-175px pb-2">Nama Produk</th>
-                                        <th class="min-w-70px text-end pb-2">Jumlah</th>
-                                        <th class="min-w-100px text-end pb-2">Harga</th>
-                                        <th class="min-w-100px text-end pb-2">Diskon</th>
-                                        <th class="min-w-100px text-end pb-2">Total</th>
+                                    <tr class="fs-6 fw-bold text-muted">
+                                        <th class="min-w-10px pb-1 pt-1 text-center">#</th>
+                                        <th class="min-w-70px pb-1 pt-1">Kode Produk</th>
+                                        <th class="min-w-175px pb-1 pt-1">Nama Produk</th>
+                                        <th class="min-w-70px text-end pb-1 pt-1 text-center">Jumlah</th>
+                                        <th class="min-w-100px text-end pb-1 pt-1">Harga</th>
+                                        {{-- <th class="min-w-100px text-end pb-1 pt-1">Diskon</th> --}}
+                                        <th class="min-w-100px text-end pb-1 pt-1">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
                                     @foreach ($preorder->details as $i => $detail)
                                         <tr>
-                                            <td>{{ $i+1 }}</td>
-                                            <td>{{ $detail->product->code }}</td>
-                                            <td>{{ $detail->product->name }}</td>
-                                            <td class="text-end">{{ $detail->qty }}</td>
-                                            <td class="text-end">{{ $util->format_currency($detail->price, 0, 'Rp. ') }}</td>
-                                            <td class="text-end">
+                                            <td class="fs-8 pb-1 pt-1 text-center">{{ $i+1 }}</td>
+                                            <td class="fs-8 pb-1 pt-1">{{ $detail->product->code }}</td>
+                                            <td class="fs-8 pb-1 pt-1">{{ $detail->product->name }}</td>
+                                            <td class="text-end fs-8 pb-1 pt-1 text-center">{{ $detail->qty }}</td>
+                                            <td class="text-end fs-8 pb-1 pt-1">{{ $util->format_currency($detail->price, 0, 'Rp. ') }}</td>
+                                            {{-- <td class="text-end fs-8 pb-1 pt-1">
                                                 {{ $util->format_currency($detail->discount, 0, 'Rp. ') }}
                                                 <div class="fs-7 text-muted">{{ $detail->discount_description }}</div>
-                                            </td>
-                                            <td class="text-end">{{ $util->format_currency($detail->total, 0, 'Rp. ') }}</td>
+                                            </td> --}}
+                                            <td class="text-end fs-8 pb-1 pt-1">{{ $util->format_currency($detail->total, 0, 'Rp. ') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="6" class="text-end">Subtotal</td>
-                                        <td class="text-end">{{ $util->format_currency($preorder->subtotal, 0, 'Rp. ') }}</td>
+                                        <td colspan="5" class="text-end fs-7 pb-1 pt-1">Subtotal</td>
+                                        <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($preorder->subtotal, 0, 'Rp. ') }}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6" class="text-end">Diskon</td>
-                                        <td class="text-end">
+                                        <td colspan="5" class="text-end fs-7 pb-1 pt-1">
+                                            Diskon
+                                        </td>
+                                        <td class="text-end fs-7 pb-1 pt-1">
                                             @php
                                                 $discountPrice = $preorder->discount_price;
                                                 if ($preorder->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
                                                     $discountPrice = $preorder->subtotal * ($preorder->discount_percentage / 100);
+                                                    echo ($preorder->discount_percentage / 100) . '% ';
                                                 }
                                             @endphp
-                                            {{ $util->format_currency($discountPrice, 0, 'Rp. ') }}
+                                            <span class="text-danger">
+                                                (-{{ $util->format_currency($discountPrice, 0, 'Rp. ') }})
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6" class="fs-3 text-dark text-end">Total</td>
-                                        <td class="text-dark fs-3 fw-bolder text-end">{{ $util->format_currency($preorder->total_amount, 0, 'Rp. ') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="text-end">Ongkir</td>
-                                        <td class="text-end">{{ $util->format_currency($preorder->shipping_price, 0, 'Rp. ') }}</td>
+                                        <td colspan="5" class="text-end fs-7 pb-1 pt-1">Biaya Kirim</td>
+                                        <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($preorder->shipping_price, 0, 'Rp. ') }}</td>
                                     </tr>
                                     @if ($preorder->tax)
                                     <tr>
-                                        <td colspan="6" class="text-end">{{ \App\Enums\Preorder\TaxEnum::MAP_LABEL[$preorder->tax] }}</td>
-                                        <td class="text-end">{{ $util->format_currency($preorder->tax_amount, 0, 'Rp. ') }}</td>
+                                        <td colspan="5" class="text-end fs-7 pb-1 pt-1">{{ \App\Enums\Preorder\TaxEnum::MAP_LABEL[$preorder->tax] }}</td>
+                                        <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($preorder->tax_amount, 0, 'Rp. ') }}</td>
                                     </tr>
                                     @endif
                                     <tr>
-                                        <td colspan="6" class="fs-3 text-dark text-end">Grand Total</td>
-                                        <td class="text-dark fs-3 fw-bolder text-end">
+                                        <td colspan="5" class="text-dark fw-bolder text-end fs-5 pb-1 pt-1">Total</td>
+                                        <td class="text-dark fw-bolder text-end fs-5 pb-1 pt-1">
                                             {{ $util->format_currency($preorder->total_amount + $preorder->tax_amount + $preorder->shipping_price, 0, 'Rp. ') }}
                                         </td>
                                     </tr>
@@ -178,20 +156,39 @@
                             </span>
                         </div>
                     </div>
-                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                    {{-- <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                         <div class="flex-root d-flex flex-column">
                             <h2>Catatan Penjualan</h2>
                             <span class="fs-5">
                                 {!! html_entity_decode($preorder->notes) !!}
                             </span>
                         </div>
-                    </div>
+                    </div> --}}
                     <!--end::Order details-->
                 </div>
                 <!--end::Wrapper-->
             </div>
             <!--end::Body-->
 
+            <!-- begin::Footer-->
+            <div class="d-flex justify-content-between flex-column flex-sm-row">
+                <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7"></h4>
+                <!--end::Logo-->
+                <div class="text-sm-end">
+                    <!--begin::Text-->
+                    <div class="text-sm-end fw-semibold fs-4 text-muted mt-2">
+                        Disetujui Oleh:
+                        <!--begin::Logo-->
+                        <span class="d-block mw-150px ms-sm-auto">
+                            <img alt="Logo" src="{{ mix('assets/media/liniswara_sign_in.png') }}" class="w-100" />
+                        </span>
+                        <!--end::Logo-->
+                        <div>CV. SUARA PENDIDIKAN NUSANTARA</div>
+                    </div>
+                    <!--end::Text-->
+                </div>
+            </div>
+            <!--end::Footer-->
             <!-- begin::Footer-->
             <div class="d-flex flex-stack flex-wrap mt-lg-20 pt-13">
                 <!-- begin::Actions-->

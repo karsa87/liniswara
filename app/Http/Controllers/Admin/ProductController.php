@@ -41,7 +41,7 @@ class ProductController extends Controller
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qProduct) use ($q) {
                     $qProduct->whereLike('name', $q)
-                        ->orWhereLike('name', $q);
+                        ->orWhereLike('code', $q);
                 });
             }
 

@@ -19,8 +19,8 @@ final class RestockTypeEnum extends Enum
     public function getLabel()
     {
         return match ($this->value) {
-            self::STOCK_ADD => 'Umum',
-            self::STOCK_MINUS => 'Distributor Cash',
+            self::STOCK_ADD => 'Penambahan',
+            self::STOCK_MINUS => 'Pengurangan',
             default => ''
         };
     }
@@ -28,8 +28,8 @@ final class RestockTypeEnum extends Enum
     public static function getLabels()
     {
         return [
-            self::STOCK_ADD => 'Umum',
-            self::STOCK_MINUS => 'Distributor Cash',
+            self::STOCK_ADD => 'Penambahan',
+            self::STOCK_MINUS => 'Pengurangan',
         ];
     }
 }

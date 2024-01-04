@@ -7,114 +7,91 @@
 <!-- begin::Invoice 3-->
 <div class="card">
     <!-- begin::Body-->
-    <div class="card-body py-20">
+    <div class="card-body py-10">
         <!-- begin::Wrapper-->
         <div class="mw-lg-950px mx-auto w-100">
             <!-- begin::Header-->
             <div class="d-flex justify-content-between flex-column flex-sm-row">
                 <!--end::Logo-->
-                <div class="text-sm-start w-75">
-                    <h4 class="fw-bolder fw-bold fs-3x pe-5" style="color: #6e87a7 !important;">SURAT JALAN</h4>
-                    @if ($order->collector)
-                        <h5 class="fw-bolder fw-semibold fs-5 pe-5">
-                            {{ optional($order->collector)->name }}
-                        </h5>
-                        <!--begin::Text-->
-                        <span class="text-sm-end fs-7 text-muted mt-7">
-                            {{ optional($order->collector)->address }}
-                            @if (optional($order->collector)->district)
-                                KEC. {{ optional($order->collector)->district->name }}
-                            @endif
-                            @if (optional($order->collector)->regency)
-                                {{ optional($order->collector)->regency->name }}
-                            @endif
-                            @if (optional($order->collector)->province)
-                                {{ optional($order->collector)->province->name }}
-                            @endif
-                        </span>
-                        <br>
-                        <span class="text-sm-end fs-7 text-muted mt-7">
-                            P : {{ optional($order->collector)->phone_number }} E: {{ optional($order->collector)->email }}
-                        </span>
-                        <!--end::Text-->
-                    @endif
-                </div>
-                <div class="text-sm-end w-50">
-                    <!--begin::Text-->
-                    <span class="d-block ms-sm-auto">
-                        <img alt="Liniswara" src="{{ mix('assets/media/logos/logo-liniswara.png') }}" class="mw-75">
-                    </span>
-                    <!--end::Text-->
+                <div class="text-sm-start w-100">
+                    <h4 class="fw-bolder fw-bold fs-2x pe-5 text-center">SURAT JALAN</h4>
+                    <h5 class="fw-medium fs-6 pe-5 text-center">
+                        No PO: {{ $order->invoice_number }}
+                    </h5>
                 </div>
             </div>
             <!--end::Header-->
             <!--begin::Body-->
-            <div class="pb-12">
+            <div>
                 <!--begin::Wrapper-->
-                <div class="d-flex flex-column gap-7 gap-md-10">
+                <div class="d-flex flex-column gap-2">
                     <!--begin::Separator-->
                     <div class="mb-2 mt-2" style="display: block; height: 0; border-bottom: 4px solid #000000;"></div>
                     <!--begin::Separator-->
+                    <div class="d-flex flex-column gap-2">
+                        <span class="fw-medium fs-6 pe-5 text-end">
+                            {{ $carbon->now()->locale('id')->format('j F Y') }}
+                        </span>
+                    </div>
                     <!--begin::Billing & shipping-->
-                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold mt-5">
+                        <div class="flex-root d-flex flex-column border p-5">
+                            <span class="text-muted">Penyedia</span>
+                            <span class="fs-2">{{ optional($order->collector)->name }}</span>
+                            <span class="fs-8 text-gray-600 fw-medium">
+                                {{ str(optional($order->collector)->address ?? '')->upper() }}, {{ str(optional($order->collector)->village->name ?? '')->upper() }}
+                                @if (optional($order->collector)->district)
+                                    <br />Kec. {{ str(optional($order->collector)->district->name ?? '')->upper() }}, {{ str(optional($order->collector)->regency->name ?? '')->upper() }}
+                                @endif
+
+                                @if (optional($order->collector)->province)
+                                    <br />{{ str(optional($order->collector)->province->name ?? '')->upper() }},
+                                @endif
+                                <br />T: {{ optional($order->collector)->phone_number }}
+                            </span>
+                        </div>
                         <div class="flex-root d-flex flex-column border p-5">
                             @php
                                 $customerAddress = $order->customer_address;
                             @endphp
-                            <span class="text-muted">Kepada</span>
-                            <span class="fs-2x">{{ optional($customerAddress)->name }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">
+                            <span class="text-muted">Pemesan</span>
+                            <span class="fs-2">{{ optional($customerAddress)->name }}</span>
+                            <span class="fs-8 text-gray-600 fw-medium">
                                 {{ str(optional($customerAddress)->address ?? '')->upper() }}, {{ str(optional($customerAddress)->village->name ?? '')->upper() }}
-                                <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
-                                <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},
+                                @if (optional($customerAddress)->district)
+                                    <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
+                                @endif
+
+                                @if (optional($customerAddress)->province)
+                                    <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},
+                                @endif
                                 <br />T: {{ optional($customerAddress)->phone_number }}
-                                <br />E: {{ $order->customer->user->email }}
                             </span>
-                        </div>
-                        <div class="flex-root d-flex flex-column border p-5 pt-12">
-                            <span class="fs-1">NO FAKTUR: {{ $order->invoice_number }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">ADMIN: {{ auth()->user()->name }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">TANGGAL CETAK: {{ $carbon->now()->locale('id')->format('d-m-Y H:i') }}</span>
                         </div>
                     </div>
                     <!--end::Billing & shipping-->
-                    <!--begin::Separator-->
-                    <div class="separator"></div>
-                    <!--begin::Separator-->
-                    <!--begin::Order details-->
-                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Invoice Number</span>
-                            <span class="fs-5">{{ $order->invoice_number }}</span>
-                        </div>
-                        <div class="flex-root d-flex flex-column">
-                            <span class="text-muted">Order ID</span>
-                            <span class="fs-5">{{ $order->id }}</span>
-                        </div>
-                    </div>
-                    <!--end::Order details-->
                     <!--begin:Order summary-->
-                    <div class="d-flex justify-content-between flex-column">
+                    <div class="d-flex justify-content-between flex-column mt-5">
                         <!--begin::Table-->
-                        <div class="table-responsive border-bottom mb-9">
-                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                        <div class="table-responsive mb-9">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0 table-bordered">
                                 <thead>
-                                    <tr class="border-bottom fs-6 fw-bold text-muted">
-                                        <th class="min-w-10px pb-2">#</th>
-                                        <th class="min-w-70px pb-2">Kode Produk</th>
-                                        <th class="min-w-175px pb-2">Nama Produk</th>
-                                        <th class="min-w-70px text-end pb-2">Jumlah</th>
-                                        <th class="min-w-100px text-end pb-2">Keterangan</th>
+                                    <tr class="fs-6 fw-bold text-muted">
+                                        <th class="min-w-10px pb-1 pt-1 text-center">#</th>
+                                        <th class="min-w-70px pb-1 pt-1">Kode Produk</th>
+                                        <th class="min-w-175px pb-1 pt-1">Nama Produk</th>
+                                        <th class="min-w-70px text-end pb-1 pt-1">Jumlah</th>
+                                        <th class="min-w-100px pb-1 pt-1">Keterangan</th>
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
                                     @foreach ($order->details as $i => $detail)
                                         <tr>
-                                            <td>{{ $i+1 }}</td>
-                                            <td>{{ $detail->product->code }}</td>
-                                            <td>{{ $detail->product->name }}</td>
-                                            <td class="text-end">{{ $detail->qty }} Exp</td>
-                                            <td class="text-end"></td>
+                                            <td class="fs-8 pb-1 pt-1 text-center">{{ $i+1 }}</td>
+                                            <td class="fs-8 pb-1 pt-1">{{ $detail->product->code }}</td>
+                                            <td class="fs-8 pb-1 pt-1">{{ $detail->product->name }}</td>
+                                            <td class="text-end fs-8 pb-1 pt-1 text-center">{{ $detail->qty }} Exp</td>
+                                            <td></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -126,14 +103,15 @@
 
                     <!--begin::Order details-->
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
+                        {{-- <div class="flex-root d-flex flex-column">
                             <h2>Catatan</h2>
                             <span class="fs-5">
                                 {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
                             </span>
                         </div>
-                        <div class="flex-root d-flex flex-column">
-                            <h2>Perhatian</h2>
+                         --}}
+                        <div class="fs-8 flex-root d-flex flex-column">
+                            <h4>Perhatian</h4>
                             <ul>
                                 <ol type="1">1. Surat Jalan ini merupakan bukti resmi penerimaan barang.</ol>
                                 <ol type="1">2. Surat Jalan ini bukan bukti penjualan.</ol>
@@ -152,7 +130,7 @@
             <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                 <div class="flex-root d-flex flex-column">
                     <!--begin::Text-->
-                    <div class="text-center fw-semibold fs-4 text-muted mt-7">
+                    <div class="text-center fw-semibold fs-7 text-muted mt-7">
                         Disetujui Oleh:
                         <!--begin::Logo-->
                         <span class="d-block mw-150px ms-sm-auto mt-4 mb-4">
@@ -165,7 +143,7 @@
                 </div>
                 <div class="flex-root d-flex flex-column">
                     <!--begin::Text-->
-                    <div class="text-center fw-semibold fs-4 text-muted mt-7">
+                    <div class="text-center fw-semibold fs-7 text-muted mt-7">
                         Dikeluarkan:
                         <!--begin::Logo-->
                         <br />
@@ -180,7 +158,7 @@
                 </div>
                 <div class="flex-root d-flex flex-column">
                     <!--begin::Text-->
-                    <div class="text-center fw-semibold fs-4 text-muted mt-7">
+                    <div class="text-center fw-semibold fs-7 text-muted mt-7">
                         Dikirim:
                         <!--begin::Logo-->
                         <br />
@@ -195,7 +173,7 @@
                 </div>
                 <div class="flex-root d-flex flex-column">
                     <!--begin::Text-->
-                    <div class="text-sm-start fw-semibold fs-4 text-muted mt-7">
+                    <div class="text-sm-start fw-semibold fs-7 text-muted mt-7">
                         Diterima:
                         <!--begin::Logo-->
                         <br />
