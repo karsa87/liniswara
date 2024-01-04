@@ -355,7 +355,7 @@
                                 <!--begin::Label-->
                                 <label class="required form-label">Status Order</label>
                                 <!--end::Label-->
-                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-status-status">
+                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status" data-kt-ecommerce-catalog-update-status-order="order_option" id="form-select-status-status">
                                     @foreach (\App\Enums\Order\StatusEnum::MAP_LABEL as $key => $name)
                                         <option value="{{ $key }}">{{ $name }}</option>
                                     @endforeach
@@ -386,7 +386,7 @@
                                     <label class="required form-label">Expedition</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid fw-bold" data-placeholder="Select option" data-allow-clear="true" data-kt-ecommerce-catalog-add-order="order_option" name="order_expedition_id" data-url="{{ route('ajax.expedition.list') }}" id="form-select-status-expedition">
+                                    <select class="form-select form-select-solid fw-bold" data-placeholder="Select option" data-allow-clear="true" data-kt-ecommerce-catalog-update-status-order="order_option" name="order_expedition_id" data-url="{{ route('ajax.expedition.list') }}" id="form-select-status-expedition">
                                         <option value="" selected></option>
                                     </select>
                                     <!--end::Input-->
@@ -404,7 +404,7 @@
                                 <label class="required form-label">Status Terbayar</label>
                                 <!--end::Label-->
                                 <!--begin::Select2-->
-                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status_payment" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-status-status_payment">
+                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status_payment" data-kt-ecommerce-catalog-update-status-order="order_option" id="form-select-status-status_payment">
                                     @foreach (\App\Enums\Preorder\StatusPaymentEnum::MAP_LABEL as $key => $name)
                                         <option value="{{ $key }}">{{ $name }}</option>
                                     @endforeach
@@ -421,7 +421,7 @@
                                 <label class="required form-label">Status Pembayaran</label>
                                 <!--end::Label-->
                                 <!--begin::Select2-->
-                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_method_payment" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-status-method_payment">
+                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_method_payment" data-kt-ecommerce-catalog-update-status-order="order_option" id="form-select-status-method_payment">
                                     @foreach (\App\Enums\Preorder\MethodPaymentEnum::MAP_LABEL as $key => $name)
                                         <option value="{{ $key }}">{{ $name }}</option>
                                     @endforeach
@@ -438,7 +438,7 @@
                                 <label class="form-label">Marketing</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <select class="form-select mb-2" data-placeholder="Select Alamat" data-allow-clear="true" name="order_marketing" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-status-marketing">
+                                <select class="form-select mb-2" data-placeholder="Select Alamat" data-allow-clear="true" name="order_marketing" data-kt-ecommerce-catalog-update-status-order="order_option" id="form-select-status-marketing">
                                     @foreach (\App\Enums\Preorder\MarketingEnum::MAP_LABEL as $key => $name)
                                         <option value="{{ $key }}">{{ $name }}</option>
                                     @endforeach

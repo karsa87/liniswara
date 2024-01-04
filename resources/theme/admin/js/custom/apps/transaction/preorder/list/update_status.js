@@ -9,7 +9,7 @@ var KTAppEcommerceUpdateStatus = function () {
     // Init condition select2
     const initConditionsSelect2 = () => {
         // Tnit new repeating condition types
-        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-preorder="preorder_option"]');
+        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-update-status-preorder="preorder_option"]');
         allConditionTypes.forEach(type => {
             if ($(type).hasClass("select2-hidden-accessible")) {
                 return;
