@@ -6,6 +6,7 @@ use App\Exports\PreorderBookExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\PreorderBook\PreorderBookResource;
 use App\Models\PreorderDetail;
+use App\Models\Product;
 use App\Services\TrackExpeditionService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,19 +24,21 @@ class PreorderBookController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = PreorderDetail::select('product_id')
-                ->selectRaw('sum(qty) as total_qty')
-                ->with([
-                    'product',
-                ])
-                ->has('product')
-                ->groupBy('product_id');
+            $query = Product::addSelect([
+                // Key is the alias, value is the sub-select
+                'stock_need' => PreorderDetail::query()
+                    // You can use eloquent methods here
+                    ->selectRaw('(sum(qty) - sum(qty_order))')
+                    ->whereColumn('product_id', 'products.id')
+                    ->whereRaw('qty != qty_order')
+                    ->groupBy('product_id'),
+            ])
+                ->havingRaw('stock < stock_need');
 
             if ($q = $request->input('search.value')) {
-                $query->where(function ($q2) use ($q) {
-                    $q2->whereHas('product', function ($qProduct) use ($q) {
-                        $qProduct->whereLike('name', $q);
-                    });
+                $query->where(function ($qProduct) use ($q) {
+                    $qProduct->whereLike('name', $q)
+                        ->orWhereLike('code', $q);
                 });
             }
 
@@ -60,16 +63,19 @@ class PreorderBookController extends Controller
      */
     public function export(Request $request)
     {
-        $query = PreorderDetail::select('product_id')
-            ->selectRaw('sum(qty) as total_qty')
-            ->with([
-                'product',
-            ])
-            ->has('product')
-            ->groupBy('product_id');
+        $query = Product::addSelect([
+            // Key is the alias, value is the sub-select
+            'stock_need' => PreorderDetail::query()
+                // You can use eloquent methods here
+                ->selectRaw('(sum(qty) - sum(qty_order))')
+                ->whereColumn('product_id', 'products.id')
+                ->whereRaw('qty != qty_order')
+                ->groupBy('product_id'),
+        ])
+            ->havingRaw('stock < stock_need');
 
         if ($request->product_id) {
-            $query->where('product_id', $request->product_id);
+            $query->where('id', $request->product_id);
         }
 
         $preorders = $query->get();

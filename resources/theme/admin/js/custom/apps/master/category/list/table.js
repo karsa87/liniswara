@@ -248,7 +248,6 @@ var KTExpeditionsList = function () {
                         form.querySelector("input[name='category_name']").value = category.name;
 
                         if (category.parent != undefined && category.parent.name != undefined && category.parent.name != null) {
-                            console.log('masuk category '+ category.parent.id);
                             $('[name=category_parent_id]').val(category.parent.id).trigger('change');;
                         }
 

@@ -116,7 +116,7 @@
                                                 $discountPrice = $order->discount_price;
                                                 if ($order->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
                                                     $discountPrice = $order->subtotal * ($order->discount_percentage / 100);
-                                                    echo ($order->discount_percentage / 100) . '% ';
+                                                    echo $order->discount_percentage . '% ';
                                                 }
                                             @endphp
                                             <span class="text-danger">

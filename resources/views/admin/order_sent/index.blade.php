@@ -297,6 +297,39 @@
                             <!--end::Input group-->
                         </div>
 
+                        <div class="d-none" id="div-expedition">
+                            <div class="separator mb-5 mt-5"></div>
+
+                            <div class="d-flex flex-column flex-md-row gap-5 mb-2">
+                                <!--begin::Input group-->
+                                <div class="fv-row flex-row-fluid">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Resi</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" name="order_resi" class="form-control mb-2" placeholder="Resi" value="" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <div class="d-flex flex-column flex-md-row gap-5 mb-2">
+                                <!--begin::Input group-->
+                                <div class="fv-row flex-row-fluid">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Expedition</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid fw-bold" data-placeholder="Select option" data-allow-clear="true" data-kt-ecommerce-catalog-add-order="order_option" name="order_expedition_id" data-url="{{ route('ajax.expedition.list') }}" id="form-select-status-expedition">
+                                        <option value="" selected></option>
+                                    </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+
+                            <div class="separator mb-5 mt-5"></div>
+                        </div>
+
                         <div class="d-flex flex-column flex-md-row gap-5 mb-2">
                             <!--begin::Input group-->
                             <div class="fv-row flex-row-fluid">

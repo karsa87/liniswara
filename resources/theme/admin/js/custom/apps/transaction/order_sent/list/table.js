@@ -460,6 +460,19 @@ var KTPreordersList = function () {
                         $('#form-select-status-status_payment').change();
                         $('#form-select-status-method_payment').val(order.method_payment).trigger('change');
                         $('#form-select-status-method_payment').change();
+
+                        if (order.shipping) {
+                            form.querySelector("input[name='order_resi']").value = order.shipping.resi;
+                            // Set the value, creating a new option if necessary
+                            if ($("#form-select-status-expedition").find("option[value=" + order.shipping.expedition.id + "]").length) {
+                                $("#form-select-status-expedition").val(order.shipping.expedition.id).trigger("change");
+                            } else {
+                                // Create the DOM option that is pre-selected by default
+                                var newState = new Option(order.shipping.expedition.name, order.shipping.expedition.id, true, true);
+                                // Append it to the select
+                                $("#form-select-status-expedition").append(newState).trigger('change');
+                            }
+                        }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({

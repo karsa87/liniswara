@@ -16,11 +16,11 @@ class PreorderBookResource extends JsonResource
     {
         return [
             'product' => [
-                'id' => $this->product->id,
-                'name' => $this->product->name,
-                'code' => $this->product->code,
+                'id' => $this->id,
+                'name' => $this->name,
+                'code' => $this->code,
             ],
-            'total_qty' => $this->total_qty,
+            'total_qty' => (string) ((int) $this->stock_need - $this->stock),
         ];
     }
 }

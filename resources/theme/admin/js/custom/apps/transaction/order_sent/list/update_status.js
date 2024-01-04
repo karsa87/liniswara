@@ -16,6 +16,7 @@ var KTAppEcommerceUpdateStatus = function () {
             } else {
                 if ($(type).data('url')) {
                     $(type).select2({
+                        dropdownParent: $('#kt_modal_update_status_order'),
                         minimumInputLength: -1,
                         ajax: {
                             url: $(type).data('url'),
@@ -41,6 +42,19 @@ var KTAppEcommerceUpdateStatus = function () {
                 }
             }
         });
+
+        $('#form-select-status-status').on('change', function () {
+            let selected = $(this).val();
+            if (selected == 3) {
+                $('input[name="order_resi"]').val('');
+                $('#div-expedition').removeClass('d-none');
+            } else {
+                $('#div-expedition').addClass('d-none');
+                $('input[name="order_resi"]').val('');
+                $('#form-select-status-expedition').val('').trigger('change');
+            }
+        });
+        $('#form-select-status-status').change();
     }
 
     // Submit form handler

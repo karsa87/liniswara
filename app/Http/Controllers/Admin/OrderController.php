@@ -572,7 +572,7 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
-            $order = Order::with('shipping')->find($id);
+            $order = Order::with('shipping', 'customer', 'customer_address')->find($id);
             if (empty($order)) {
                 return response()->json([
                     'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
@@ -587,6 +587,33 @@ class OrderController extends Controller
             ]);
 
             $order->save();
+
+            if (
+                $order->status == StatusEnum::SENT
+                && $request->order_resi
+            ) {
+                $order->loadMissing([
+                    'customer.user',
+                    'customer_address',
+                ]);
+
+                $shipping = $order->shipping ? $order->shipping : new OrderShipping();
+                $shipping->fill([
+                    'order_id' => $order->id,
+                    'resi' => str($request->order_resi)->trim()->upper(),
+                    'expedition_id' => $request->order_expedition_id,
+                    'name' => $order->customer->user->name ?? '',
+                    'email' => $order->customer->user->email ?? '',
+                    'phone' => $order->customer->user->phone ?? '',
+                    'address' => $order->customer->user->address ?? '',
+                    'province_id' => $order->customer_address->province_id,
+                    'regency_id' => $order->customer_address->regency_id,
+                    'district_id' => $order->customer_address->district_id,
+                    'village_id' => $order->customer_address->village_id,
+                    'shipping_price' => $order->shipping_price,
+                ]);
+                $shipping->save();
+            }
 
             if ($order->status == StatusEnum::CANCEL) {
                 $details = $order->details()->with('product', 'preorder_detail')->get();

@@ -6,6 +6,7 @@ use App\Enums\Order\StatusEnum;
 use App\Enums\Preorder\MarketingEnum;
 use App\Enums\Preorder\MethodPaymentEnum;
 use App\Enums\Preorder\StatusPaymentEnum;
+use App\Models\Expedition;
 use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -65,30 +66,47 @@ class OrderUpdateStatusRequest extends FormRequest
                     MarketingEnum::WRITING,
                 ]),
             ],
+            'order_resi' => [
+                'nullable',
+                'string',
+                Rule::requiredIf($this->get('order_status') == StatusEnum::SENT && ! empty($this->get('order_expedition_id'))),
+            ],
+            'order_expedition_id' => [
+                'nullable',
+                Rule::exists((new Expedition())->getTable(), 'id'),
+                Rule::requiredIf($this->get('order_status') == StatusEnum::SENT && ! empty($this->get('order_resi'))),
+            ],
         ];
     }
 
-    /**
-     * Get the "after" validation callables for the request.
-     *
-     * @return array<int, Closure>
-     */
-    public function after(): array
+    public function attributes()
     {
         return [
-            function (Validator $validator) {
-                $order = Order::with('shipping')->find($this->order_id);
-
-                if (
-                    $this->order_status == StatusEnum::SENT
-                    && is_null($order->shipping)
-                ) {
-                    $validator->errors()->add(
-                        'status',
-                        'Tidak bisa proses kirim tolong masukkan resi terlebih dahulu'
-                    );
-                }
-            },
+            'order_expedition_id' => 'Ekspedisi',
         ];
     }
+
+    // /**
+    //  * Get the "after" validation callables for the request.
+    //  *
+    //  * @return array<int, Closure>
+    //  */
+    // public function after(): array
+    // {
+    //     // return [
+    //     //     function (Validator $validator) {
+    //     //         $order = Order::with('shipping')->find($this->order_id);
+
+    //     //         if (
+    //     //             $this->order_status == StatusEnum::SENT
+
+    //     //         ) {
+    //     //             $validator->errors()->add(
+    //     //                 'status',
+    //     //                 'Tidak bisa proses kirim tolong masukkan resi terlebih dahulu'
+    //     //             );
+    //     //         }
+    //     //     },
+    //     // ];
+    // }
 }

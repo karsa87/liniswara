@@ -29,9 +29,9 @@ class PreorderBookExport implements FromCollection, WithHeadings, WithMapping
     public function map($product): array
     {
         return [
-            $product->product->code,
-            $product->product->name,
-            $product->total_qty,
+            $product->code,
+            $product->name,
+            ((int) $product->stock_need - $product->stock),
         ];
     }
 

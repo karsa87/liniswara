@@ -368,9 +368,9 @@
                             <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0">
                                 <thead>
                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                        <th class="min-w-10px">No</th>
-                                        <th class="min-w-175px">No</th>
-                                        <th class="min-w-100px text-end">Kode</th>
+                                        <th class="min-w-10px text-center">No</th>
+                                        <th class="min-w-175px">Nama</th>
+                                        <th class="min-w-100px text-center">Kode</th>
                                         <th class="min-w-70px text-end">Jumlah</th>
                                         <th class="min-w-100px text-end">Harga</th>
                                         <th class="min-w-100px text-end">Diskon</th>
@@ -380,23 +380,25 @@
                                 <tbody class="fw-semibold text-gray-600">
                                     @foreach ($order->details as $i => $detail)
                                         <tr>
-                                            <td>{{ $i+1 }}</td>
+                                            <td class="text-center">{{ $i+1 }}</td>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <!--begin::Thumbnail-->
-                                                    <a href="javascript:void(0)" class="symbol symbol-50px">
-                                                        <span class="symbol-label" style="background-image:url({{ optional($detail->product->thumbnail)->full_url }});"></span>
-                                                    </a>
-                                                    <!--end::Thumbnail-->
+                                                    @if (optional($detail->product)->thumbnail)
+                                                        <!--begin::Thumbnail-->
+                                                        <a href="javascript:void(0)" class="symbol symbol-50px mr-5">
+                                                            <span class="symbol-label" style="background-image:url({{ optional($detail->product->thumbnail)->full_url }});"></span>
+                                                        </a>
+                                                        <!--end::Thumbnail-->
+                                                    @endif
                                                     <!--begin::Title-->
-                                                    <div class="ms-5">
+                                                    <div>
                                                         <a href="javascript:void(0)" class="fw-bold text-gray-600 text-hover-primary">{{ optional($detail->product)->name }}</a>
                                                         {{-- <div class="fs-7 text-muted">Delivery Date: 19/07/2023</div> --}}
                                                     </div>
                                                     <!--end::Title-->
                                                 </div>
                                             </td>
-                                            <td class="text-end">{{ optional($detail->product)->code }}</td>
+                                            <td class="text-center">{{ optional($detail->product)->code }}</td>
                                             <td class="text-end">{{ $detail->qty }}</td>
                                             <td class="text-end">{{ $util->format_currency($detail->price, 0, 'Rp. ') }}</td>
                                             <td class="text-end">
@@ -417,9 +419,10 @@
                                                 $discountPrice = $order->discount_price;
                                                 if ($order->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
                                                     $discountPrice = $order->subtotal * ($order->discount_percentage / 100);
+                                                    echo $order->discount_percentage . '% ';
                                                 }
                                             @endphp
-                                            {{ $util->format_currency($discountPrice, 0, 'Rp. ') }}
+                                            <span class="text-danger">(-{{ $util->format_currency($discountPrice, 0, 'Rp. ') }})</span>
                                         </td>
                                     </tr>
                                     <tr>
