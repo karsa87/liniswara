@@ -168,7 +168,7 @@
     <!--begin::Card body-->
     <div class="card-body py-4">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_preorders" data-url="{{ route('preorder.index.list') }}" data-url-delete="{{ route('preorder.delete') }}" data-url-edit="{{ route('preorder.detail') }}" >
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5" id="kt_table_preorders" data-url="{{ route('preorder.index.list') }}" data-url-delete="{{ route('preorder.delete') }}" data-url-edit="{{ route('preorder.detail') }}" >
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-50px">No. Faktur</th>

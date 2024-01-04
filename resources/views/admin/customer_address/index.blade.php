@@ -167,7 +167,7 @@
     <!--begin::Card body-->
     <div class="card-body py-4">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_customer_addresss" data-url="{{ route('customer.customer_address.index.list', ['customerId'=>$customerId]) }}" data-url-delete="{{ route('customer.customer_address.delete', ['customerId'=>$customerId]) }}" data-url-edit="{{ route('customer.customer_address.show', ['customerId'=>$customerId]) }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5" id="kt_table_customer_addresss" data-url="{{ route('customer.customer_address.index.list', ['customerId'=>$customerId]) }}" data-url-delete="{{ route('customer.customer_address.delete', ['customerId'=>$customerId]) }}" data-url-edit="{{ route('customer.customer_address.show', ['customerId'=>$customerId]) }}">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Nama</th>

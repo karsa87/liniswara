@@ -220,7 +220,7 @@
     <!--begin::Card body-->
     <div class="card-body py-4">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_products" data-url="{{ route('product.index.list') }}" data-url-delete="{{ route('product.delete') }}" data-url-edit="{{ route('product.show') }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5" id="kt_table_products" data-url="{{ route('product.index.list') }}" data-url-delete="{{ route('product.delete') }}" data-url-edit="{{ route('product.show') }}">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-25px">Gambar</th>

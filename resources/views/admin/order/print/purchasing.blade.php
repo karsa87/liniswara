@@ -74,7 +74,7 @@
                     <div class="d-flex justify-content-between flex-column mt-5">
                         <!--begin::Table-->
                         <div class="table-responsive mb-9">
-                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0 table-bordered">
+                            <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0 table-bordered">
                                 <thead>
                                     <tr class="fs-6 fw-bold text-muted">
                                         <th class="min-w-10px pb-1 pt-1 text-center">#</th>

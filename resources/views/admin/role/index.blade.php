@@ -153,7 +153,7 @@
                             <!--begin::Table wrapper-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-5">
+                                <table class="table align-middle table-row-dashed table-striped fs-6 gy-5">
                                     <!--begin::Table body-->
                                     <tbody class="text-gray-600 fw-semibold">
                                         <tr>
@@ -287,7 +287,7 @@
                             <!--begin::Table wrapper-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-5">
+                                <table class="table align-middle table-row-dashed table-striped fs-6 gy-5">
                                     <!--begin::Table body-->
                                     <tbody class="text-gray-600 fw-semibold">
                                         <tr>

@@ -307,7 +307,7 @@
     <!--begin::Card body-->
     <div class="card-body py-4">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_suppliers" data-url="{{ route('supplier.index.list') }}" data-url-delete="{{ route('supplier.delete') }}" data-url-edit="{{ route('supplier.show') }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5" id="kt_table_suppliers" data-url="{{ route('supplier.index.list') }}" data-url-delete="{{ route('supplier.delete') }}" data-url-edit="{{ route('supplier.show') }}">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Perusahaan</th>

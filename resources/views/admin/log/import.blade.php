@@ -70,7 +70,7 @@
     <!--begin::Card body-->
     <div class="card-body pt-0">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0" id="kt_import_table" data-url="{{ route('log.import.index.list') }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0" id="kt_import_table" data-url="{{ route('log.import.index.list') }}">
             <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Nama</th>
@@ -114,7 +114,7 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0" id="table-show-changes">
+                <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0" id="table-show-changes">
                     <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th class="min-w-125px">Deskripsi</th>

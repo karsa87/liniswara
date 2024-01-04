@@ -35,7 +35,7 @@
     <!--begin::Card body-->
     <div class="card-body pt-0">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0" id="kt_branchs_table" data-url="{{ route('branch.index.list') }}" data-url-delete="{{ route('branch.delete') }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0" id="kt_branchs_table" data-url="{{ route('branch.index.list') }}" data-url-delete="{{ route('branch.delete') }}">
             <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Name</th>

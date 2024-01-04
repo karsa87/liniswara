@@ -69,7 +69,7 @@
     <!--begin::Card body-->
     <div class="card-body pt-0">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0" id="kt_stock_product_table" data-url="{{ route('log.stock_product.index.list') }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0" id="kt_stock_product_table" data-url="{{ route('log.stock_product.index.list') }}">
             <thead>
                 {{-- <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th colspan="4" class="min-w-125px">Stok Masuk</th>

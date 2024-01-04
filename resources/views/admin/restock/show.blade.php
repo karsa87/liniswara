@@ -104,7 +104,7 @@
                     <!--begin::Product table-->
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table class="table align-middle table-row-dashed fs-6 gy-4 mb-0">
+                        <table class="table align-middle table-row-dashed table-striped fs-6 gy-4 mb-0">
                             <!--begin::Table head-->
                             <thead>
                                 <!--begin::Table row-->

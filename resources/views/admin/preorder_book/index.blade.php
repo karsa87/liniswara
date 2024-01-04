@@ -69,7 +69,7 @@
     <!--begin::Card body-->
     <div class="card-body pt-0">
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0" id="kt_preorder_book_table" data-url="{{ route('preorder_book.index.list') }}">
+        <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0" id="kt_preorder_book_table" data-url="{{ route('preorder_book.index.list') }}">
             <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Kode</th>

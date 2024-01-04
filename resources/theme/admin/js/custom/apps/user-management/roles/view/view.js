@@ -27,7 +27,7 @@ var KTUsersViewRole = function () {
                 { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
                 { orderable: false, targets: 4 }, // Disable ordering on column 4 (actions)
             ]
-        });        
+        });
     }
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
@@ -36,6 +36,7 @@ var KTUsersViewRole = function () {
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
+        filterSearch.dispatchEvent(new KeyboardEvent('keyup',  {'key':''}));
     }
 
     // Delete user
@@ -176,7 +177,7 @@ var KTUsersViewRole = function () {
         const toolbarSelected = document.querySelector('[data-kt-view-roles-table-toolbar="selected"]');
         const selectedCount = document.querySelector('[data-kt-view-roles-table-select="selected_count"]');
 
-        // Select refreshed checkbox DOM elements 
+        // Select refreshed checkbox DOM elements
         const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
 
         // Detect checkboxes state & count
@@ -206,7 +207,7 @@ var KTUsersViewRole = function () {
         // Public functions
         init: function () {
             table = document.querySelector('#kt_roles_view_table');
-            
+
             if (!table) {
                 return;
             }

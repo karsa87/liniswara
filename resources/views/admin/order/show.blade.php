@@ -365,7 +365,7 @@
                     <div class="card-body pt-0">
                         <div class="table-responsive">
                             <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                            <table class="table align-middle table-row-dashed table-striped fs-6 gy-5 mb-0">
                                 <thead>
                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-10px">No</th>

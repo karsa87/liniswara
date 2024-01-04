@@ -105,6 +105,7 @@ var KTExpeditionsList = function () {
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
+        filterSearch.dispatchEvent(new KeyboardEvent('keyup',  {'key':''}));
     }
 
     // Delete subscirption
