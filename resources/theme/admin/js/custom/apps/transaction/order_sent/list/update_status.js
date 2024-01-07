@@ -55,6 +55,17 @@ var KTAppEcommerceUpdateStatus = function () {
             }
         });
         $('#form-select-status-status').change();
+
+        $('#form-select-status-status_payment').on('change', function () {
+            let selected = $(this).val();
+            if (selected == 2) {
+                $('#div-paid-at').removeClass('d-none');
+            }  else {
+                $('input[name="order_paid_at"]').val('');
+                $('#div-paid-at').addClass('d-none');
+            }
+        });
+        $('#form-select-status-status_payment').change();
     }
 
     // Submit form handler

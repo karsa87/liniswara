@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Order\StatusEnum;
 use App\Enums\Preorder\DiscountTypeEnum;
+use App\Enums\Preorder\StatusPaymentEnum;
 use App\Enums\Preorder\TaxEnum;
 use App\Exports\PreorderExport;
 use App\Http\Controllers\Controller;
@@ -135,6 +136,7 @@ class OrderController extends Controller
         try {
             $input = [
                 'date' => Carbon::parse($request->input('order_date'))->toDateString(),
+                'paid_at' => $request->input('order_paid_at') ? Carbon::parse($request->input('order_paid_at'))->toDateString() : null,
                 'branch_id' => $request->input('order_branch_id'),
                 'collector_id' => $request->input('order_collector_id'),
                 'customer_id' => $request->input('order_customer_id'),
@@ -153,6 +155,10 @@ class OrderController extends Controller
                 'discount_price' => $request->input('order_discount_price') ?: 0,
                 'preorder_id' => $preorderId,
             ];
+
+            if ($input['status_payment'] != StatusPaymentEnum::PAID) {
+                $input['paid_at'] = null;
+            }
 
             $order = new Order();
             $order->fill($input);
@@ -347,6 +353,7 @@ class OrderController extends Controller
         try {
             $input = [
                 'date' => Carbon::parse($request->input('order_date'))->toDateString(),
+                'paid_at' => $request->input('order_paid_at') ? Carbon::parse($request->input('order_paid_at'))->toDateString() : null,
                 'branch_id' => $request->input('order_branch_id'),
                 'collector_id' => $request->input('order_collector_id'),
                 'customer_id' => $request->input('order_customer_id'),
@@ -364,6 +371,10 @@ class OrderController extends Controller
                 'discount_percentage' => $request->input('order_discount_percentage') ?: 0,
                 'discount_price' => $request->input('order_discount_price') ?: 0,
             ];
+
+            if ($input['status_payment'] != StatusPaymentEnum::PAID) {
+                $input['paid_at'] = null;
+            }
 
             $order = Order::with('details', 'shipping')->find($id);
             if (empty($order)) {
@@ -584,7 +595,12 @@ class OrderController extends Controller
                 'status_payment' => $request->input('order_status_payment'),
                 'method_payment' => $request->input('order_method_payment'),
                 'marketing' => $request->input('order_marketing'),
+                'paid_at' => $request->input('order_paid_at') ? Carbon::parse($request->input('order_paid_at'))->toDateString() : null,
             ]);
+
+            if ($order->status_payment != StatusPaymentEnum::PAID) {
+                $order->paid_at = null;
+            }
 
             $order->save();
 

@@ -81,6 +81,11 @@ class OrderStoreUpdateRequest extends FormRequest
                     StatusPaymentEnum::DP,
                 ]),
             ],
+            'order_paid_at' => [
+                'nullable',
+                'date_format:"Y-m-d"',
+                Rule::requiredIf($this->get('order_status_payment') == StatusPaymentEnum::PAID),
+            ],
             'order_method_payment' => [
                 'required',
                 Rule::in([
@@ -214,6 +219,7 @@ class OrderStoreUpdateRequest extends FormRequest
             'order_details.*.product_id' => 'Detail Produk',
             'order_details.*.qty' => 'Detail Product Kuantitas',
             'order_details.*.price' => 'Detail Product Harga',
+            'order_paid_at' => 'Tanggal Pelunasan',
         ];
     }
 

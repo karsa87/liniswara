@@ -191,7 +191,7 @@ var KTPreordersList = function () {
                         if (row.status_payment == 1 || row.status_payment == "1") {
                             result +=`<span class="badge badge-danger">Belum Terbayar</span>`;
                         } else if (row.status_payment == 2 || row.status_payment == "2") {
-                            result +=`<span class="badge badge-success">Lunas</span>`;
+                            result +=`<span class="badge badge-success">Lunas : ${row.paid_at}</span>`;
                         } else if (row.status_payment == 3 || row.status_payment == "3") {
                             result +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
                         }

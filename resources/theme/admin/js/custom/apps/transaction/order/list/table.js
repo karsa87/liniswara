@@ -4,9 +4,17 @@ var KTPreordersList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_orders');
     var datatable;
+    var datePaidAt;
 
     // Private functions
     var initPreorderTable = function () {
+        // Init flatpickr
+        datePaidAt = $('#kt_ecommerce_edit_order_paid_at').flatpickr({
+            altInput: true,
+            altFormat: "d F, Y",
+            dateFormat: "Y-m-d",
+        });
+
         $('.select-filter-order').each(function () {
             $(this).select2({
                 dropdownParent: $('#data-kt-menu-filter-order'),
@@ -213,7 +221,7 @@ var KTPreordersList = function () {
                         if (row.status_payment == 1 || row.status_payment == "1") {
                             result +=`<span class="badge badge-danger">Belum Terbayar</span>`;
                         } else if (row.status_payment == 2 || row.status_payment == "2") {
-                            result +=`<span class="badge badge-success">Lunas</span>`;
+                            result +=`<span class="badge badge-success">Lunas : ${row.paid_at}</span>`;
                         } else if (row.status_payment == 3 || row.status_payment == "3") {
                             result +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
                         }
@@ -633,6 +641,9 @@ var KTPreordersList = function () {
                         $('#form-select-status-status').change();
                         $('#form-select-status-status_payment').val(order.status_payment).trigger('change');
                         $('#form-select-status-status_payment').change();
+                        if (order.status_payment == 2) {
+                            datePaidAt.setDate(new Date(order.paid_at));
+                        }
                         $('#form-select-status-method_payment').val(order.method_payment).trigger('change');
                         $('#form-select-status-method_payment').change();
 

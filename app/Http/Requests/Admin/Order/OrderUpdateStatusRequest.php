@@ -7,10 +7,8 @@ use App\Enums\Preorder\MarketingEnum;
 use App\Enums\Preorder\MethodPaymentEnum;
 use App\Enums\Preorder\StatusPaymentEnum;
 use App\Models\Expedition;
-use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 
 class OrderUpdateStatusRequest extends FormRequest
 {
@@ -49,6 +47,11 @@ class OrderUpdateStatusRequest extends FormRequest
                     StatusPaymentEnum::DP,
                 ]),
             ],
+            'order_paid_at' => [
+                'nullable',
+                'date_format:"Y-m-d"',
+                Rule::requiredIf($this->get('order_status_payment') == StatusPaymentEnum::PAID),
+            ],
             'order_method_payment' => [
                 'required',
                 Rule::in([
@@ -83,6 +86,7 @@ class OrderUpdateStatusRequest extends FormRequest
     {
         return [
             'order_expedition_id' => 'Ekspedisi',
+            'order_paid_at' => 'Tanggal Pelunasan',
         ];
     }
 

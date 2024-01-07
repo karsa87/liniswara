@@ -12,7 +12,6 @@ var KTAppEcommerceUpdateStatus = function () {
         const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-update-status-order="order_option"]');
         allConditionTypes.forEach(type => {
             if ($(type).hasClass("select2-hidden-accessible")) {
-                console.log(type);
                 return;
             } else {
                 if ($(type).data('url')) {
@@ -56,6 +55,17 @@ var KTAppEcommerceUpdateStatus = function () {
             }
         });
         $('#form-select-status-status').change();
+
+        $('#form-select-status-status_payment').on('change', function () {
+            let selected = $(this).val();
+            if (selected == 2) {
+                $('#div-paid-at').removeClass('d-none');
+            }  else {
+                $('input[name="order_paid_at"]').val('');
+                $('#div-paid-at').addClass('d-none');
+            }
+        });
+        $('#form-select-status-status_payment').change();
     }
 
     // Submit form handler

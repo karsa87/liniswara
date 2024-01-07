@@ -129,12 +129,24 @@
                         <label class="required form-label">Status Terbayar</label>
                         <!--end::Label-->
                         <!--begin::Select2-->
-                        <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status_payment" data-kt-ecommerce-catalog-add-order="order_option">
+                        <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="order_status_payment" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-status_payment">
                             @foreach (\App\Enums\Preorder\StatusPaymentEnum::MAP_LABEL as $key => $name)
                                 <option value="{{ $key }}" {{ $order->status_payment == $key ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         <!--end::Select2-->
+                    </div>
+
+                    <div class="fv-row d-none" id="div-paid-at">
+                        <!--begin::Label-->
+                        <label class="required form-label">Tanggal Pelunasan</label>
+                        <!--end::Label-->
+                        <!--begin::Editor-->
+                        <input id="kt_ecommerce_edit_order_paid_at" name="order_paid_at" placeholder="Select a date" class="form-control mb-2" value="{{ $order->paid_at }}" />
+                        <!--end::Editor-->
+                        <!--begin::Description-->
+                        <div class="text-muted fs-7">Pilih tanggal pelunasan pesanan.</div>
+                        <!--end::Description-->
                     </div>
                     <!--end::Input group-->
 
