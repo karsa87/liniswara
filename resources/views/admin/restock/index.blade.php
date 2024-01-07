@@ -49,11 +49,13 @@
                 </div>
                 <!--end::Menu 1-->
                 <!--end::Filter-->
+                @hasPermission('restock-tambah')
                 <!--begin::Add restock-->
                 <a href="{{ route('restock.create') }}" class="btn btn-primary">
                     <i class="ki-duotone ki-plus fs-2"></i>Tambah Restock
                 </a>
                 <!--end::Add restock-->
+                @endhasPermission
             </div>
             <!--end::Toolbar-->
         </div>
