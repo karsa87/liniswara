@@ -4,9 +4,17 @@ var KTPreordersList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_orders');
     var datatable;
+    var datePaidAt;
 
     // Private functions
     var initPreorderTable = function () {
+        // Init flatpickr
+        datePaidAt = $('#kt_ecommerce_edit_order_paid_at').flatpickr({
+            altInput: true,
+            altFormat: "d F, Y",
+            dateFormat: "Y-m-d",
+        });
+
         $('.select-filter-order').each(function () {
             $(this).select2({
                 dropdownParent: $('#data-kt-menu-filter-order'),
