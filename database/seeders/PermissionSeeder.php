@@ -747,7 +747,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Order - Purchase Order',
+                'name' => 'Order - Print Purchase Order',
                 'key' => 'order-print_po',
                 'role-slug' => [
                     'developer',
@@ -755,7 +755,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Order - Address',
+                'name' => 'Order - Print Address',
                 'key' => 'order-print_address',
                 'role-slug' => [
                     'developer',
@@ -827,7 +827,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Pengiriman - Purchase Order',
+                'name' => 'Pengiriman - Print Purchase Order',
                 'key' => 'order_sent-print_po',
                 'role-slug' => [
                     'developer',
@@ -835,7 +835,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Pengiriman - Address',
+                'name' => 'Pengiriman - Print Address',
                 'key' => 'order_sent-print_address',
                 'role-slug' => [
                     'developer',
@@ -875,7 +875,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Arsip - Purchase Order',
+                'name' => 'Arsip - Print Purchase Order',
                 'key' => 'order_arsip-print_po',
                 'role-slug' => [
                     'developer',
