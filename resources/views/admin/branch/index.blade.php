@@ -18,6 +18,8 @@
             <!--end::Search-->
         </div>
         <!--end::Card title-->
+
+        @hasPermission('branch-tambah')
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
             <!--begin::Button-->
@@ -30,6 +32,7 @@
             <!--end::Button-->
         </div>
         <!--end::Card toolbar-->
+        @endhasPermission
     </div>
     <!--end::Card header-->
     <!--begin::Card body-->
@@ -220,9 +223,4 @@
     <script src="{{ mix('assets/js/custom/apps/master/branch/list.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/branch/update-branch.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/branch/add-branch.js') }}"></script>
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

@@ -116,11 +116,13 @@
                 </div>
                 <!--end::Menu 1-->
                 <!--end::Filter-->
+                @hasPermission('product-tambah')
                 <!--begin::Add product-->
                 <a href="{{ route('product.create') }}" class="btn btn-primary">
                     <i class="ki-duotone ki-plus fs-2"></i>Tambah Produk
                 </a>
                 <!--end::Add product-->
+                @endhasPermission
             </div>
             <!--end::Toolbar-->
 

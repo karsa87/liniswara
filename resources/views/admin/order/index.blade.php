@@ -21,6 +21,7 @@
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
             <!--begin::Toolbar-->
+            @hasPermission('order-export')
             <div class="d-flex justify-content-end me-1" data-kt-order-table-toolbar="base">
                 <!--begin::Filter-->
                 <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -70,6 +71,7 @@
                 <!--end::Filter-->
             </div>
             <!--end::Toolbar-->
+            @endhasPermission
 
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-order-table-toolbar="base">

@@ -20,6 +20,7 @@
         <!--begin::Card title-->
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
+            @hasPermission('expedition-tambah')
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-expedition-table-toolbar="base">
                 <!--begin::Add expedition-->
@@ -28,6 +29,7 @@
                 <!--end::Add expedition-->
             </div>
             <!--end::Toolbar-->
+            @endhasPermission
 
             <!--begin::Modal - Add task-->
             <div class="modal fade" id="kt_modal_add_expedition" tabindex="-1" aria-hidden="true">

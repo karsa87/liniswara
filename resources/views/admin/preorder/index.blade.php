@@ -18,8 +18,10 @@
             <!--end::Search-->
         </div>
         <!--begin::Card title-->
+
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
+            @hasPermission('preorder-export')
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end me-1" data-kt-product-table-toolbar="base">
                 <!--begin::Filter-->
@@ -70,6 +72,7 @@
                 <!--end::Filter-->
             </div>
             <!--end::Toolbar-->
+            @endhasPermission
 
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-preorder-table-toolbar="base">
@@ -154,11 +157,13 @@
                 </div>
                 <!--end::Menu 1-->
                 <!--end::Filter-->
+                @hasPermission('preorder-tambah')
                 <!--begin::Add preorder-->
                 <a href="{{ route('preorder.create') }}" class="btn btn-primary">
                     <i class="ki-duotone ki-plus fs-2"></i>Tambah Preorder
                 </a>
                 <!--end::Add preorder-->
+                @endhasPermission
             </div>
             <!--end::Toolbar-->
         </div>

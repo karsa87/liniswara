@@ -61,8 +61,13 @@
                 <!--begin::Card footer-->
                 <div class="card-footer flex-wrap pt-0">
                     {{-- <a href="../../demo14/dist/apps/user-management/roles/view.html" class="btn btn-light btn-active-primary my-1 me-2">View Role</a> --}}
+                    @hasPermission('role-edit')
                     <button type="button" class="btn btn-light btn-active-light-primary my-1 me-2 update_row" data-url-edit="{{ route('role.show', $role->id) }}" data-id="{{ $role->id }}">Edit Role</button>
+                    @endhasPermission
+
+                    @hasPermission('role-delete')
                     <button type="button" class="btn btn-light btn-active-light-primary my-1 delete_row" data-url-delete='{{ route('role.delete', $role->id) }}' data-role-name='{{ $role->name }}'>Delete Role</button>
+                    @endhasPermission
                 </div>
                 <!--end::Card footer-->
             </div>
@@ -71,6 +76,7 @@
         <!--end::Col-->
     @endforeach
 
+    @hasPermission('role-tambah')
     <!--begin::Add new card-->
     <div class="ol-md-4">
         <!--begin::Card-->
@@ -93,6 +99,7 @@
         <!--begin::Card-->
     </div>
     <!--begin::Add new card-->
+    @endhasPermission
 </div>
 <!--end::Row-->
 <!--begin::Modals-->
@@ -376,9 +383,4 @@
 @push('js')
     <script src="{{ mix('assets/js/custom/apps/user-management/roles/list/add.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/user-management/roles/list/update-role.js') }}"></script>
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

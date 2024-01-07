@@ -459,7 +459,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Produk - View',
+                'name' => 'Produk - View Detail',
                 'key' => 'product-view_detail',
                 'role-slug' => [
                     'developer',
@@ -499,7 +499,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Restock - View',
+                'name' => 'Restock - View Detail',
                 'key' => 'restock-view_detail',
                 'role-slug' => [
                     'developer',
@@ -547,7 +547,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Preorder - View',
+                'name' => 'Preorder - View Detail',
                 'key' => 'preorder-view_detail',
                 'role-slug' => [
                     'developer',
@@ -579,8 +579,40 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                'name' => 'Preorder - Migrasi ke Ready',
+                'key' => 'preorder-migrate_ready',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Preorder - Print Purchasing Order',
+                'key' => 'preorder-print_po',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Preorder - Print Faktur',
+                'key' => 'preorder-print_faktur',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
                 'name' => 'Preorder - Track',
                 'key' => 'preorder-track',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Preorder - Export',
+                'key' => 'preorder-export',
                 'role-slug' => [
                     'developer',
                     'super-admin',
@@ -651,7 +683,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Order - View',
+                'name' => 'Order - View Detail',
                 'key' => 'order-view_detail',
                 'role-slug' => [
                     'developer',
@@ -690,6 +722,46 @@ class PermissionSeeder extends Seeder
                     'super-admin',
                 ],
             ],
+            [
+                'name' => 'Order - Export',
+                'key' => 'order-export',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Print Surat Jalan',
+                'key' => 'order-print_sent_letter',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Print Faktur',
+                'key' => 'order-print_faktur',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Purchase Order',
+                'key' => 'order-print_po',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Order - Address',
+                'key' => 'order-print_address',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
         ];
 
         $this->createPermission($permissions);
@@ -707,7 +779,7 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Pengiriman - View',
+                'name' => 'Pengiriman - View Detail',
                 'key' => 'order_sent-view_detail',
                 'role-slug' => [
                     'developer',
@@ -738,6 +810,38 @@ class PermissionSeeder extends Seeder
                     'super-admin',
                 ],
             ],
+            [
+                'name' => 'Pengiriman - Print Surat Jalan',
+                'key' => 'order_sent-print_sent_letter',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - Print Faktur',
+                'key' => 'order_sent-print_faktur',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - Purchase Order',
+                'key' => 'order_sent-print_po',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Pengiriman - Address',
+                'key' => 'order_sent-print_address',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
         ];
 
         $this->createPermission($permissions);
@@ -755,8 +859,24 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'Arsip - View',
+                'name' => 'Arsip - View Detail',
                 'key' => 'order_arsip-view_detail',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Arsip - Print Faktur',
+                'key' => 'order_arsip-print_faktur',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Arsip - Purchase Order',
+                'key' => 'order_arsip-print_po',
                 'role-slug' => [
                     'developer',
                     'super-admin',

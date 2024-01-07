@@ -62,10 +62,15 @@
                 </div>
                 <!--end::Menu 1-->
                 <!--end::Filter-->
+
+                @hasPermission('supplier-tambah')
                 <!--begin::Add supplier-->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_supplier">
-                <i class="ki-duotone ki-plus fs-2"></i>Tambah Pemasok</button>
+                    <i class="ki-duotone ki-plus fs-2"></i>
+                    Tambah Pemasok
+                </button>
                 <!--end::Add supplier-->
+                @endhasPermission
             </div>
             <!--end::Toolbar-->
 
@@ -344,11 +349,4 @@
 @push('js')
     <script src="{{ mix('assets/js/custom/apps/master/supplier/list/table.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/supplier/list/add.js') }}"></script>
-    {{-- <script src="{{ mix('assets/js/custom/apps/master/supplier/list/update.js') }}"></script> --}}
-
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

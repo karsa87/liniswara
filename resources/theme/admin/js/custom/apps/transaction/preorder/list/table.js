@@ -84,7 +84,12 @@ var KTPreordersList = function () {
                 {
                     targets: 0,
                     render: function (data, type, row) {
-                        let result = `<a href="preorder/detail/${row.id}/" class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</a><br><span class="fs-7 text-muted">${row.date}</span>`;
+                        let result = `<span class="fw-bold text-gray-600">${row.invoice_number}</span>`;
+                        if ('preorder-view_detail' in userPermissions) {
+                            result = `<a href="preorder/detail/${row.id}/" class="fw-bold text-gray-600 text-hover-primary">${row.invoice_number}</a>`;
+                        }
+
+                        result += `<br><span class="fs-7 text-muted">${row.date}</span>`;
 
                         if (
                             row.created_by != null
@@ -114,7 +119,7 @@ var KTPreordersList = function () {
                             && row.customer.id != undefined
                             && row.customer.id != null
                         ) {
-                            result = `<span class="fw-bold text-gray-600 text-hover-primary">${row.customer.name}</span>`;
+                            result = `<span class="fw-bold text-gray-600">${row.customer.name}</span>`;
 
                             if (
                                 row.customer_address != null
@@ -232,7 +237,11 @@ var KTPreordersList = function () {
                                 <i class="ki-duotone ki-down fs-5 ms-1"></i>
                             </a>
 
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">\
+                        `;
+
+                        if ('preorder-print_po' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="preorder/print/purchase-order/${row.id}" class="menu-link px-3">
                                         <i class="ki-duotone ki-message-text fs-2 me-2 text-info">
@@ -245,6 +254,11 @@ var KTPreordersList = function () {
                                         Purchase Order
                                     </a>
                                 </div>
+                            `;
+                        }
+
+                        if ('preorder-print_faktur' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="preorder/print/faktur/${row.id}" class="menu-link px-3">
                                         <i class="ki-duotone ki-directbox-default fs-2 me-2 text-info">
@@ -256,29 +270,47 @@ var KTPreordersList = function () {
                                         Faktur
                                     </a>
                                 </div>
-                                <div class="separator mb-3 opacity-75"></div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_discount" data-bs-toggle="modal" data-bs-target="#kt_modal_update_discount_preorder" data-id='${row.id}'>
-                                        <i class="ki-duotone ki-discount fs-2 me-2 text-primary">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        Diskon
-                                    </a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_status" data-bs-toggle="modal" data-bs-target="#kt_modal_update_status_preorder" data-id='${row.id}'>
-                                        <i class="ki-duotone ki-message-edit fs-2 me-2 text-primary">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                        Status
-                                    </a>
-                                </div>
-                        `;
+                            `;
+                        }
 
                         if (
-                            row.shipping != undefined
+                            'preorder-update_discount' in userPermissions
+                            || 'preorder-update_status' in userPermissions
+                        ) {
+                            result += `<div class="separator mb-3 opacity-75"></div>`;
+
+                            if ('preorder-update_discount' in userPermissions) {
+                                result += `
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_discount" data-bs-toggle="modal" data-bs-target="#kt_modal_update_discount_preorder" data-id='${row.id}'>
+                                            <i class="ki-duotone ki-discount fs-2 me-2 text-primary">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            Diskon
+                                        </a>
+                                    </div>
+                                `;
+                            }
+
+                            if ('preorder-update_status' in userPermissions) {
+                                result += `
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_status" data-bs-toggle="modal" data-bs-target="#kt_modal_update_status_preorder" data-id='${row.id}'>
+                                            <i class="ki-duotone ki-message-edit fs-2 me-2 text-primary">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            Status
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        }
+
+                        if (
+                            'preorder-track' in userPermissions
+                            && row.shipping != undefined
                             && row.shipping != null
                             && row.shipping.resi != null
                         ) {
@@ -300,7 +332,7 @@ var KTPreordersList = function () {
 
                         // will show if preorder not sent all
                         if (
-                            true
+                            'preorder-migrate_ready' in userPermissions
                         ) {
                             result += `
                                 <div class="menu-item px-3">
@@ -316,20 +348,23 @@ var KTPreordersList = function () {
                             `;
                         }
 
-                        result += `<div class="separator mb-3 opacity-75"></div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="delete_row" data-id='${row.id}'>
-                                        <i class="ki-duotone ki-trash-square fs-2 me-2 text-danger">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                        Delete
-                                    </a>
-                                </div>
-                            </div>
-                        `;
+                        if ('preorder-delete' in userPermissions) {
+                            result += `<div class="separator mb-3 opacity-75"></div>
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="delete_row" data-id='${row.id}'>
+                                            <i class="ki-duotone ki-trash-square fs-2 me-2 text-danger">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                            </i>
+                                            Delete
+                                        </a>
+                                    </div>
+                                `;
+                        }
+
+                        result += `</div>`;
                         return result;
                     },
                 },
@@ -637,6 +672,10 @@ var KTPreordersList = function () {
     var handleExportDatatable = () => {
         // Select filter options
         const filterForm = document.querySelector('[data-kt-preorder-table-export="form"]');
+        if (filterForm == null) {
+            return;
+        }
+
         const filterButton = filterForm.querySelector('[data-kt-preorder-table-export="export"]');
 
         // Export datatable on submit

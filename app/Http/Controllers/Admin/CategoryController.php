@@ -43,9 +43,6 @@ class CategoryController extends Controller
 
         return view(
             'admin.category.index',
-            [
-                'categories' => Category::select('id', 'name')->whereNull('parent_category_id')->get()->pluck('name', 'id'),
-            ]
         );
     }
 
@@ -172,6 +169,10 @@ class CategoryController extends Controller
         $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
         if ($q) {
             $query->whereLike('name', $q);
+        }
+
+        if ($request->get('_parent', false)) {
+            $query->whereNull('parent_category_id');
         }
 
         $list = [];

@@ -22,50 +22,12 @@
         <div class="card-toolbar">
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-collector-table-toolbar="base">
-                {{-- <!--begin::Filter-->
-                <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                <i class="ki-duotone ki-filter fs-2">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                </i>Filter</button>
-                <!--begin::Menu 1-->
-                <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                    <!--begin::Header-->
-                    <div class="px-7 py-5">
-                        <div class="fs-5 text-dark fw-bold">Filter Options</div>
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Separator-->
-                    <div class="separator border-gray-200"></div>
-                    <!--end::Separator-->
-                    <!--begin::Content-->
-                    <div class="px-7 py-5" data-kt-collector-table-filter="form">
-                        <!--begin::Input group-->
-                        <div class="mb-10">
-                            <label class="form-label fs-6 fw-semibold">Role:</label>
-                            <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-collector-table-filter="role" data-hide-search="true">
-                                <option value="" selected></option>
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}">{!! $role->name !!}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Actions-->
-                        <div class="d-flex justify-content-end">
-                            <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6" data-kt-menu-dismiss="true" data-kt-collector-table-filter="reset">Reset</button>
-                            <button type="submit" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true" data-kt-collector-table-filter="filter">Apply</button>
-                        </div>
-                        <!--end::Actions-->
-                    </div>
-                    <!--end::Content-->
-                </div>
-                <!--end::Menu 1-->
-                <!--end::Filter--> --}}
+                @hasPermission('collector-tambah')
                 <!--begin::Add collector-->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_collector">
                 <i class="ki-duotone ki-plus fs-2"></i>Tambah Penagih</button>
                 <!--end::Add collector-->
+                @endhasPermission
             </div>
             <!--end::Toolbar-->
 
@@ -329,10 +291,4 @@
 @push('js')
     <script src="{{ mix('assets/js/custom/apps/master/collector/list/table.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/collector/list/add.js') }}"></script>
-
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

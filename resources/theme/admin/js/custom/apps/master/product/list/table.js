@@ -119,23 +119,40 @@ var KTSuppliersList = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        return `
+                        var result = `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <i class="ki-duotone ki-down fs-5 ms-1"></i>
                             </a>
 
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
+                        `;
+
+                        if ('product-view_detail' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="product/detail/${row.id}/" class="menu-link px-3">Detail</a>
                                 </div>
+                            `;
+                        }
+
+                        if ('product-edit' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="product/edit/${row.id}/" class="menu-link px-3">Edit</a>
                                 </div>
+                            `;
+                        }
+
+                        if ('product-delete' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-products-table-filter="delete_row" data-id='${row.id}'>Delete</a>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        }
+
+                        result += `</div>`;
+                        return result;
                     },
                 },
             ],

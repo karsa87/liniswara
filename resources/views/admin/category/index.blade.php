@@ -109,12 +109,8 @@
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Select2-->
-                                            <select class="form-select form-select-solid" data-hide-search="false" data-allow-clear="true" data-placeholder="Pilih sub kategori" name="category_parent_id">
+                                            <select class="form-select form-select-solid fw-bold" data-placeholder="Pilih" data-allow-clear="true" name="category_parent_id" id="add-category_parent_id" data-url="{{ route('ajax.category.list', '_parent=1') }}">
                                                 <option value="" selected></option>
-
-                                                @foreach ($categories as $id => $name)
-                                                    <option value="{{ $id }}">{{ $name }}</option>
-                                                @endforeach
                                             </select>
                                             <!--end::Select2-->
                                         </div>
@@ -179,10 +175,4 @@
 @push('js')
     <script src="{{ mix('assets/js/custom/apps/master/category/list/table.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/category/list/add.js') }}"></script>
-
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

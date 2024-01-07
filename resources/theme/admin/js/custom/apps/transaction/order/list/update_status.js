@@ -16,7 +16,6 @@ var KTAppEcommerceUpdateStatus = function () {
                 return;
             } else {
                 if ($(type).data('url')) {
-                    console.log($(type).data('url'));
                     $(type).select2({
                         dropdownParent: $('#kt_modal_update_status_order'),
                         minimumInputLength: -1,

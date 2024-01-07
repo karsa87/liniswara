@@ -571,16 +571,19 @@
         @stack('js-plugin')
 		<!--end::Vendors Javascript-->
 		<!--begin::Custom Javascript(used for this page only)-->
-		<script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-		<script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-		<script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-		<script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-		<script src="{{ mix('assets/js/custom/utilities/modals/create-campaign.js') }}"></script>
-		<script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
-
 		@stack('js')
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
+
+        <script>
+            window.userPermissions = {};
+        </script>
+        @if (session('user-permission'))
+            <script>
+                window.userPermissions = $.parseJSON('{!! session('user-permission')->toJson() !!}');
+            </script>
+        @endif
+
 
         @include('admin.layouts.partials.flash_message')
 	</body>

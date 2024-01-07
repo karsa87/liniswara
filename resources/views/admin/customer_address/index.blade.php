@@ -20,6 +20,7 @@
         <!--begin::Card title-->
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
+            @hasPermission('customer_address-tambah')
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-customer-address-table-toolbar="base">
                 <!--begin::Add customer-->
@@ -28,6 +29,7 @@
                 <!--end::Add customer-->
             </div>
             <!--end::Toolbar-->
+            @endhasPermission
 
             <!--begin::Modal - Add task-->
             <div class="modal fade" id="kt_modal_add_customer_address" tabindex="-1" aria-hidden="true">

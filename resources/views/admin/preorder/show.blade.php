@@ -20,9 +20,11 @@
             <i class="ki-duotone ki-left fs-2"></i>
         </a>
         <!--end::Button-->
+        @hasPermission('preorder-edit')
         <!--begin::Button-->
         <a href="{{ route('preorder.edit', $preorder->id) }}" class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
         <!--end::Button-->
+        @endhasPermission
         <!--begin::Button-->
         {{-- <a href="../../demo14/dist/apps/ecommerce/sales/add-order.html" class="btn btn-primary btn-sm">Add New Order</a> --}}
         <!--end::Button-->

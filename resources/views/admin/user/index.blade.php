@@ -62,10 +62,13 @@
                 </div>
                 <!--end::Menu 1-->
                 <!--end::Filter-->
+
+                @hasPermission('user-tambah')
                 <!--begin::Add user-->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
                 <i class="ki-duotone ki-plus fs-2"></i>Add User</button>
                 <!--end::Add user-->
+                @endhasPermission
             </div>
             <!--end::Toolbar-->
 
@@ -448,10 +451,4 @@
     <script src="{{ mix('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/user-management/users/list/add.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/user-management/users/list/update.js') }}"></script>
-
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

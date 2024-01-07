@@ -11,7 +11,24 @@ var KTExpeditionsAddExpedition = function () {
     // Init add schedule modal
     var initAddExpedition = () => {
         $('[name="category_parent_id"]').select2({
-            dropdownParent: $('#kt_modal_add_category')
+            dropdownParent: $('#kt_modal_add_category'),
+            ajax: {
+                url: $('[name="category_parent_id"]').data('url'),
+                dataType: 'json',
+                data: function (params) {
+                    console.log(params);
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function(data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            }
         });
 
         // For more info about Dropzone plugin visit:  https://www.dropzonejs.com/#usage

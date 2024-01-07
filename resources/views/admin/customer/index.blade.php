@@ -34,6 +34,7 @@
             </div>
             <!--end::Toolbar-->
 
+            @hasPermission('customer-tambah')
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                 <!--begin::Add customer-->
@@ -42,6 +43,7 @@
                 <!--end::Add customer-->
             </div>
             <!--end::Toolbar-->
+            @endhasPermission
 
             <!--begin::Modal - Add task-->
             <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">

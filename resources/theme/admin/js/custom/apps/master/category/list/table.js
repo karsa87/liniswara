@@ -1,12 +1,12 @@
 "use strict";
 
-var KTExpeditionsList = function () {
+var KTCategoriesList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_categorys');
     var datatable;
 
     // Private functions
-    var initExpeditionTable = function () {
+    var initCategoryTable = function () {
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
             searchDelay: 1000,
@@ -83,20 +83,33 @@ var KTExpeditionsList = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        return `
+                        var result = `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <i class="ki-duotone ki-down fs-5 ms-1"></i>
                             </a>
 
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
+                        `;
+
+                        if ('category-edit' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-categorys-table-filter="update_row" data-bs-toggle="modal" data-bs-target="#kt_modal_add_category" data-id='${row.id}'>Edit</a>
                                 </div>
+                            `;
+                        }
+
+                        if ('category-delete' in userPermissions) {
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-categorys-table-filter="delete_row" data-id='${row.id}'>Delete</a>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        }
+
+                        result += `</div>`;
+
+                        return result;
                     },
                 },
             ],
@@ -251,6 +264,17 @@ var KTExpeditionsList = function () {
                             $('[name=category_parent_id]').val(category.parent.id).trigger('change');;
                         }
 
+                        if (category.parent) {
+                            // Set the value, creating a new option if necessary
+                            if ($("#add-category_parent_id").find("option[value=" + category.parent.id + "]").length) {
+                                $("#add-category_parent_id").val(category.parent.id).trigger("change");
+                            } else {
+                                // Create the DOM option that is pre-selected by default
+                                var newState = new Option(category.parent.name, category.parent.id, true, true);
+                                // Append it to the select
+                                $("#add-category_parent_id").append(newState).trigger('change');
+                            }
+                        }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
@@ -300,7 +324,7 @@ var KTExpeditionsList = function () {
                 return;
             }
 
-            initExpeditionTable();
+            initCategoryTable();
             handleSearchDatatable();
             handleDeleteRows();
             handleEditRows();
@@ -313,5 +337,5 @@ var KTExpeditionsList = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTExpeditionsList.init();
+    KTCategoriesList.init();
 });
