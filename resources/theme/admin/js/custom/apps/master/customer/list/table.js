@@ -72,7 +72,7 @@ var KTSuppliersList = function () {
                         `;
 
                         if ('customer_address-view' in userPermissions) {
-                            result = `
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="customer/${row.id}/customer-address" class="menu-link px-3" data-id='${row.id}'>Alamat</a>
                                 </div>
@@ -80,7 +80,7 @@ var KTSuppliersList = function () {
                         }
 
                         if ('customer-edit' in userPermissions) {
-                            result = `
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-customers-table-filter="update_row" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" data-id='${row.id}'>Edit</a>
                                 </div>
@@ -88,7 +88,7 @@ var KTSuppliersList = function () {
                         }
 
                         if ('customer-delete' in userPermissions) {
-                            result = `
+                            result += `
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-customers-table-filter="delete_row" data-id='${row.id}'>Delete</a>
                                 </div>
