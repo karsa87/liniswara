@@ -41,3 +41,9 @@ Route::get('transaction/{id?}', [
 Route::get('stock', [
     StockController::class, 'index',
 ])->name('stock.index');
+Route::post('stock/store', [
+    StockController::class, 'storeStock',
+])->name('stock.store');
+Route::get('download/stock/excel', [
+    StockController::class, 'downloadExcel',
+])->name('stock.download.excel');

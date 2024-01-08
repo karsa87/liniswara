@@ -424,7 +424,7 @@
                     <!--end:Menu link-->
                     @if (auth()->guard('marketing')->check())
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('marketing.dashboard') }}">
+                        <a class="menu-link" href="{{ route('marketing.stock.index') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-shop fs-2 text-info">
                                     <span class="path1"></span>
