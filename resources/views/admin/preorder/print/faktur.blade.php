@@ -102,7 +102,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
+                                <tbody>
                                     <tr>
                                         <td colspan="5" class="text-end fs-7 pb-1 pt-1">Subtotal</td>
                                         <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($preorder->subtotal, 0, 'Rp. ') }}</td>
@@ -140,7 +140,7 @@
                                             {{ $util->format_currency($preorder->total_amount + $preorder->tax_amount + $preorder->shipping_price, 0, 'Rp. ') }}
                                         </td>
                                     </tr>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                         <!--end::Table-->
