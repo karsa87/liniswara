@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\Preorder\DiscountTypeEnum;
+use App\Enums\Preorder\StatusPaymentEnum;
 use App\Enums\Preorder\TaxEnum;
 use App\Exports\PreorderExport;
 use App\Http\Controllers\Controller;
@@ -79,6 +80,18 @@ class PreorderController extends Controller
                 $query->where('method_payment', $status);
             }
 
+            if (is_numeric($request->input('order.0.column'))) {
+                $column = $request->input('order.0.column');
+                $columnData = $request->input("columns.$column.data");
+                $sorting = $request->input('order.0.dir');
+
+                if ($sorting == 'desc') {
+                    $query->orderBy($columnData, 'DESC');
+                } else {
+                    $query->orderBy($columnData, 'ASC');
+                }
+            }
+
             $totalAll = (clone $query)->count();
             $preorders = $query->offset($request->get('start', 0))
                 ->limit($request->get('length', 10))
@@ -111,6 +124,7 @@ class PreorderController extends Controller
         try {
             $input = [
                 'date' => Carbon::parse($request->input('preorder_date'))->toDateString(),
+                'paid_at' => $request->input('preorder_paid_at') ? Carbon::parse($request->input('preorder_paid_at'))->toDateString() : null,
                 'branch_id' => $request->input('preorder_branch_id'),
                 'collector_id' => $request->input('preorder_collector_id'),
                 'customer_id' => $request->input('preorder_customer_id'),
@@ -128,6 +142,10 @@ class PreorderController extends Controller
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
             ];
+
+            if ($input['status_payment'] != StatusPaymentEnum::PAID) {
+                $input['paid_at'] = null;
+            }
 
             $preorder = new Preorder();
             $preorder->fill($input);
@@ -300,6 +318,7 @@ class PreorderController extends Controller
         try {
             $input = [
                 'date' => Carbon::parse($request->input('preorder_date'))->toDateString(),
+                'paid_at' => $request->input('preorder_paid_at') ? Carbon::parse($request->input('preorder_paid_at'))->toDateString() : null,
                 'branch_id' => $request->input('preorder_branch_id'),
                 'collector_id' => $request->input('preorder_collector_id'),
                 'customer_id' => $request->input('preorder_customer_id'),
@@ -317,6 +336,10 @@ class PreorderController extends Controller
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
             ];
+
+            if ($input['status_payment'] != StatusPaymentEnum::PAID) {
+                $input['paid_at'] = null;
+            }
 
             $preorder = Preorder::with('details', 'shipping')->find($id);
             if (empty($preorder)) {
@@ -483,7 +506,12 @@ class PreorderController extends Controller
                 'status_payment' => $request->input('preorder_status_payment'),
                 'method_payment' => $request->input('preorder_method_payment'),
                 'marketing' => $request->input('preorder_marketing'),
+                'paid_at' => $request->input('preorder_paid_at') ? Carbon::parse($request->input('preorder_paid_at'))->toDateString() : null,
             ]);
+
+            if ($preorder->status_payment != StatusPaymentEnum::PAID) {
+                $preorder->paid_at = null;
+            }
 
             $preorder->save();
 

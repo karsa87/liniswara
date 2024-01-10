@@ -156,6 +156,7 @@ class PreorderResource extends JsonResource
         return [
             'id' => $this->id,
             'date' => Carbon::parse($this->date)->toDateString(),
+            'paid_at' => $this->paid_at ? Carbon::parse($this->paid_at)->toDateString() : '',
             'invoice_number' => $this->invoice_number,
             'status' => $this->status,
             'status_payment' => $this->status_payment,

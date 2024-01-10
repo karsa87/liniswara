@@ -150,6 +150,17 @@ var KTAppEcommerceSaveProduct = function () {
                 KTApp.hidePageLoading();
             });
         });
+
+        $('#form-select-status_payment').on('change', function () {
+            let selected = $(this).val();
+            if (selected == 2) {
+                $('#div-paid-at').removeClass('d-none');
+            }  else {
+                $('input[name="order_paid_at"]').val('');
+                $('#div-paid-at').addClass('d-none');
+            }
+        });
+        $('#form-select-status_payment').change();
     }
 
     const calculateTotal = () => {
@@ -488,6 +499,20 @@ var KTAppEcommerceSaveProduct = function () {
     const initForm = () => {
         // Init flatpickr
         $('#kt_ecommerce_edit_order_date').flatpickr({
+            altInput: true,
+            altFormat: "d F, Y",
+            dateFormat: "Y-m-d",
+        });
+
+        // Init flatpickr
+        $('#kt_ecommerce_edit_preorder_date').flatpickr({
+            altInput: true,
+            altFormat: "d F, Y",
+            dateFormat: "Y-m-d",
+        });
+
+        // Init flatpickr
+        $('#kt_ecommerce_edit_preorder_paid_at').flatpickr({
             altInput: true,
             altFormat: "d F, Y",
             dateFormat: "Y-m-d",

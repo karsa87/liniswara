@@ -110,15 +110,15 @@
                                     <tr>
                                         <td colspan="5" class="text-end fs-7 pb-1 pt-1">
                                             Diskon
-                                        </td>
-                                        <td class="text-end fs-7 pb-1 pt-1">
                                             @php
                                                 $discountPrice = $order->discount_price;
                                                 if ($order->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
                                                     $discountPrice = $order->subtotal * ($order->discount_percentage / 100);
-                                                    echo $order->discount_percentage . '% ';
+                                                    echo '<br>' . $order->discount_percentage . '% ';
                                                 }
                                             @endphp
+                                        </td>
+                                        <td class="text-end fs-7 pb-1 pt-1">
                                             <span class="text-danger">
                                                 (-{{ $util->format_currency($discountPrice, 0, 'Rp. ') }})
                                             </span>
@@ -148,22 +148,29 @@
                     <!--end:Order summary-->
 
                     <!--begin::Order details-->
-                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
-                            <h2>Catatan</h2>
-                            <span class="fs-5">
-                                {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
-                            </span>
-                        </div>
-                    </div>
-                    {{-- <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        <div class="flex-root d-flex flex-column">
-                            <h2>Catatan Penjualan</h2>
-                            <span class="fs-5">
-                                {!! html_entity_decode($order->notes) !!}
-                            </span>
-                        </div>
-                    </div> --}}
+                    @if (optional($order->collector)->billing_notes || $order->notes)
+                        @if (optional($order->collector)->billing_notes)
+                            <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                                <div class="flex-root d-flex flex-column">
+                                    <h4>Catatan</h4>
+                                    <span class="fs-8">
+                                        {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($order->notes)
+                            <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                                <div class="flex-root d-flex flex-column">
+                                    <h4>Catatan Penjualan</h4>
+                                    <span class="fs-8">
+                                        {!! html_entity_decode($order->notes) !!}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                     <!--end::Order details-->
                 </div>
                 <!--end::Wrapper-->

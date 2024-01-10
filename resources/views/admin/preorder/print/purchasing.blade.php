@@ -110,15 +110,15 @@
                                     <tr>
                                         <td colspan="5" class="text-end fs-7 pb-1 pt-1">
                                             Diskon
-                                        </td>
-                                        <td class="text-end fs-7 pb-1 pt-1">
                                             @php
                                                 $discountPrice = $preorder->discount_price;
                                                 if ($preorder->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
                                                     $discountPrice = $preorder->subtotal * ($preorder->discount_percentage / 100);
-                                                    echo $preorder->discount_percentage . '% ';
+                                                    echo '<br>' . $preorder->discount_percentage . '% ';
                                                 }
                                             @endphp
+                                        </td>
+                                        <td class="text-end fs-7 pb-1 pt-1">
                                             <span class="text-danger">
                                                 (-{{ $util->format_currency($discountPrice, 0, 'Rp. ') }})
                                             </span>
@@ -146,6 +146,32 @@
                         <!--end::Table-->
                     </div>
                     <!--end:Order summary-->
+
+                    <!--begin::Order details-->
+                    @if (optional($preorder->collector)->billing_notes || $preorder->notes)
+                        @if (optional($preorder->collector)->billing_notes)
+                            <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                                <div class="flex-root d-flex flex-column">
+                                    <h4>Catatan</h4>
+                                    <span class="fs-8">
+                                        {!! html_entity_decode(optional($preorder->collector)->billing_notes ?? '') !!}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($preorder->notes)
+                            <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                                <div class="flex-root d-flex flex-column">
+                                    <h4>Catatan Penjualan</h4>
+                                    <span class="fs-8">
+                                        {!! html_entity_decode($preorder->notes) !!}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                    <!--end::Order details-->
                 </div>
                 <!--end::Wrapper-->
             </div>

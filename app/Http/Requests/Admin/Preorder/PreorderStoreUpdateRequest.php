@@ -72,6 +72,11 @@ class PreorderStoreUpdateRequest extends FormRequest
                     StatusPaymentEnum::DP,
                 ]),
             ],
+            'preorder_paid_at' => [
+                'nullable',
+                'date_format:"Y-m-d"',
+                Rule::requiredIf($this->get('preorder_status_payment') == StatusPaymentEnum::PAID),
+            ],
             'preorder_method_payment' => [
                 'required',
                 Rule::in([
@@ -201,6 +206,7 @@ class PreorderStoreUpdateRequest extends FormRequest
             'preorder_details.*.product_id' => 'Detail Produk',
             'preorder_details.*.qty' => 'Detail Product Kuantitas',
             'preorder_details.*.price' => 'Detail Product Harga',
+            'preorder_paid_at' => 'Tanggal Pelunasan',
         ];
     }
 }

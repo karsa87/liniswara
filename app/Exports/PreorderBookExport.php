@@ -31,6 +31,8 @@ class PreorderBookExport implements FromCollection, WithHeadings, WithMapping
         return [
             $product->code,
             $product->name,
+            ((int) $product->stock),
+            ((int) $product->stock_need),
             ((int) $product->stock_need - $product->stock),
         ];
     }
@@ -40,7 +42,9 @@ class PreorderBookExport implements FromCollection, WithHeadings, WithMapping
         return [
             'Kode',
             'Produk',
-            'Jumlah',
+            'Stok Tersedia',
+            'Stok Yang Diorder',
+            'Stok Kosong',
         ];
     }
 }

@@ -44,6 +44,11 @@ class PreorderUpdateStatusRequest extends FormRequest
                     StatusPaymentEnum::DP,
                 ]),
             ],
+            'preorder_paid_at' => [
+                'nullable',
+                'date_format:"Y-m-d"',
+                Rule::requiredIf($this->get('preorder_status_payment') == StatusPaymentEnum::PAID),
+            ],
             'preorder_method_payment' => [
                 'required',
                 Rule::in([
@@ -61,6 +66,14 @@ class PreorderUpdateStatusRequest extends FormRequest
                     MarketingEnum::WRITING,
                 ]),
             ],
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'preorder_expedition_id' => 'Ekspedisi',
+            'preorder_paid_at' => 'Tanggal Pelunasan',
         ];
     }
 }

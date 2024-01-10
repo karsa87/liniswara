@@ -50,11 +50,29 @@ var KTUsersPreorderBooksList = function () {
             columns: [
                 { data: 'product.code', orderable: false },
                 { data: 'product.name', orderable: false },
+                { data: 'stock' },
+                { data: 'stock_need' },
                 { data: 'total_qty' },
             ],
             columnDefs: [
                 {
                     targets: 2,
+                    orderable: false,
+                    className: 'text-end',
+                    render: function (data, type, row) {
+                        return row.stock.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    },
+                },
+                {
+                    targets: 3,
+                    orderable: false,
+                    className: 'text-end',
+                    render: function (data, type, row) {
+                        return row.stock_need.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    },
+                },
+                {
+                    targets: 4,
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {

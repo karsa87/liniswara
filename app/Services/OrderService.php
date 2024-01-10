@@ -78,6 +78,18 @@ class OrderService
             $query->where('method_payment', $methodPayment);
         }
 
+        $filterColumn = $params['order'][0]['column'] ?? '';
+        if (is_numeric($filterColumn)) {
+            $columnData = $params['columns'][$filterColumn]['data'];
+            $sorting = $params['order'][0]['dir'];
+
+            if ($sorting == 'desc') {
+                $query->orderBy($columnData, 'DESC');
+            } else {
+                $query->orderBy($columnData, 'ASC');
+            }
+        }
+
         $totalAll = (clone $query)->count();
         $orders = $query->offset(($params['start'] ?? 0))
             ->limit($params['length'] ?? 10)

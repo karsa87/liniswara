@@ -375,6 +375,19 @@
                             <!--end::Input group-->
                         </div>
 
+                        <div class="d-flex flex-column flex-md-row gap-5 mb-2 d-none" id="div-paid-at">
+                            <!--begin::Input group-->
+                            <div class="fv-row flex-row-fluid">
+                                <!--begin::Label-->
+                                <label class="required form-label">Tanggal Pelunasan</label>
+                                <!--end::Label-->
+                                <!--begin::Select2-->
+                                <input id="kt_ecommerce_edit_preorder_paid_at" name="preorder_paid_at" placeholder="Select a date" class="form-control mb-2" value="" />
+                                <!--end::Select2-->
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+
                         <div class="d-flex flex-column flex-md-row gap-5 mb-2">
                             <!--begin::Input group-->
                             <div class="fv-row flex-row-fluid">

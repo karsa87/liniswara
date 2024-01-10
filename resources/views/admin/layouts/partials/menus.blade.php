@@ -31,7 +31,7 @@
 
                 @if (auth()->user()->hasPermission(['preorder-view', 'order-view', 'order_sent-view', 'order_arsip-view' ]))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['preorder.', 'order.', 'order_sent.', 'order_arsip.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -45,7 +45,7 @@
                     </span>
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion {{ str(request()->route()->getName())->startsWith(['preorder.', 'order.', 'order_sent.', 'order_arsip.']) ? 'hover show' : '' }}">
+                    <div class="menu-sub menu-sub-accordion">
                         @hasPermission('preorder-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">

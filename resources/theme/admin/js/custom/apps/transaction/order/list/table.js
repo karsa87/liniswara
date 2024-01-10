@@ -81,7 +81,7 @@ var KTPreordersList = function () {
                 { data: null },
                 { data: null },
                 { data: 'marketing' },
-                { data: 'status_order' },
+                { data: 'status' },
                 { data: 'method_payment' },
                 { data: 'total_amount' },
                 { data: null },

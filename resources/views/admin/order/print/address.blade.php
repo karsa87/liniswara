@@ -13,7 +13,7 @@
             <!-- begin::Header-->
             <div class="d-flex justify-content-between flex-column flex-sm-row border p-5">
                 <span class="d-block ms-sm-auto w-75">
-                    <img alt="Liniswara" src="{{ mix('assets/media/logos/logo-liniswara.png') }}" class="mw-50">
+                    <img alt="Liniswara" src="{{ mix('assets/media/logos/logo-liniswara.png') }}" class="mw-25">
                 </span>
                 <!--end::Logo-->
                 <div class="text-sm-end w-50">
@@ -27,7 +27,7 @@
                         )
                             <img alt="{{ $order->shipping->expedition->name }}" src="{{ $order->shipping->expedition->logo->full_url }}" class="w-50">
                         @else
-                            <img alt="Ekspedisi" src="{{ mix('assets/media/logos/expedition-default.png') }}" class="w-50">
+                            <img alt="Ekspedisi" src="{{ mix('assets/media/logos/expedition-default.png') }}" class="w-25">
                         @endif
                     </span>
                     <!--end::Text-->
@@ -41,8 +41,8 @@
                     <!--begin::Order details-->
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                         <div class="flex-root d-flex flex-column text-center">
-                            <span class="fs-1">No Faktur : {{ $order->invoice_number }}</span>
-                            <span class="fs-5 text-muted">
+                            <span class="fs-2">No Faktur : {{ $order->invoice_number }}</span>
+                            <span class="fs-7 text-muted">
                                 {{ $carbon->now()->locale('id')->format('l : d-m-Y H:i') }}
                             </span>
                         </div>
@@ -55,8 +55,8 @@
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                         <div class="flex-root d-flex flex-column">
                             <span class="text-muted">Dari</span>
-                            <span class="fs-5">CV. SUARA PENDIDIKAN NUSANTARA</span>
-                            <span class="fs-6 text-gray-600 fw-medium">
+                            <span class="fs-2">CV. SUARA PENDIDIKAN NUSANTARA</span>
+                            <span class="fs-8 text-gray-600 fw-medium">
                                 <br />{{ str('Jl. Kyai Raden Santri, RT/RW, 02/01, Dukuhan Gunungpring')->upper() }}
                                 <br />{{ str('Kec. Muntilan Magelang')->upper() }}
                                 <br />JAWA TENGAH
@@ -69,8 +69,8 @@
                                 $customerAddress = $order->customer_address;
                             @endphp
                             <span class="text-muted">Kepada</span>
-                            <span class="fs-5">{{ optional($customerAddress)->name }}</span>
-                            <span class="fs-6 text-gray-600 fw-medium">
+                            <span class="fs-2">{{ optional($customerAddress)->name }}</span>
+                            <span class="fs-8 text-gray-600 fw-medium">
                                 <br />{{ str(optional($customerAddress)->address ?? '')->upper() }}, {{ str(optional($customerAddress)->village->name ?? '')->upper() }}
                                 <br />Kec. {{ str(optional($customerAddress)->district->name ?? '')->upper() }}, {{ str(optional($customerAddress)->regency->name ?? '')->upper() }}
                                 <br />{{ str(optional($customerAddress)->province->name ?? '')->upper() }},

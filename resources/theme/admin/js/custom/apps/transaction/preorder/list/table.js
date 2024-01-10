@@ -4,9 +4,17 @@ var KTPreordersList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_preorders');
     var datatable;
+    var datePaidAt;
 
     // Private functions
     var initPreorderTable = function () {
+        // Init flatpickr
+        datePaidAt = $('#kt_ecommerce_edit_preorder_paid_at').flatpickr({
+            altInput: true,
+            altFormat: "d F, Y",
+            dateFormat: "Y-m-d",
+        });
+
         $('.select-filter-preorder').each(function () {
             $(this).select2({
                 dropdownParent: $('#data-kt-menu-filter-preorder'),
@@ -75,7 +83,7 @@ var KTPreordersList = function () {
                 { data: null },
                 // { data: null },
                 { data: 'marketing' },
-                { data: 'status_order' },
+                { data: 'status' },
                 { data: 'method_payment' },
                 { data: 'total_amount' },
                 { data: null },
@@ -218,7 +226,7 @@ var KTPreordersList = function () {
                         if (row.status_payment == 1 || row.status_payment == "1") {
                             status +=`<span class="badge badge-danger">Belum Terbayar</span>`;
                         } else if (row.status_payment == 2 || row.status_payment == "2") {
-                            status +=`<span class="badge badge-success">Lunas</span>`;
+                            status +=`<span class="badge badge-success">Lunas : ${row.paid_at}</span>`;
                         } else if (row.status_payment == 3 || row.status_payment == "3") {
                             status +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
                         }
@@ -623,6 +631,9 @@ var KTPreordersList = function () {
                         $('#form-select-status-status').change();
                         $('#form-select-status-status_payment').val(preorder.status_payment).trigger('change');
                         $('#form-select-status-status_payment').change();
+                        if (preorder.status_payment == 2) {
+                            datePaidAt.setDate(new Date(preorder.paid_at));
+                        }
                         $('#form-select-status-method_payment').val(preorder.method_payment).trigger('change');
                         $('#form-select-status-method_payment').change();
                     } else {
