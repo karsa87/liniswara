@@ -502,6 +502,9 @@ var KTPreordersList = function () {
                         $('#form-select-status-status').change();
                         $('#form-select-status-status_payment').val(order.status_payment).trigger('change');
                         $('#form-select-status-status_payment').change();
+                        if (order.status_payment == 2) {
+                            datePaidAt.setDate(new Date(order.paid_at));
+                        }
                         $('#form-select-status-method_payment').val(order.method_payment).trigger('change');
                         $('#form-select-status-method_payment').change();
 
