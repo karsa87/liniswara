@@ -70,6 +70,7 @@ class OrderController extends Controller
         $order->preorder_id = $preorder->id;
         $order->invoice_number = Order::nextNoInvoice($preorder->id);
         $order->date = date('Y-m-d');
+        $order->paid_at = $preorder->paid_at;
         $order->collector_id = $preorder->collector_id;
         $order->branch_id = $preorder->branch_id;
         $order->customer_id = $preorder->customer_id;
