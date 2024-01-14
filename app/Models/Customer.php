@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Preorder\StatusPaymentEnum;
 use App\Models\Scopes\ScopeLike;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,5 +47,21 @@ class Customer extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * The user that belong to the preorders.
+     */
+    public function preorders(): HasMany
+    {
+        return $this->hasMany(Preorder::class, 'customer_id');
+    }
+
+    /**
+     * The user that belong to the preorders paid.
+     */
+    public function paid_preorders(): HasMany
+    {
+        return $this->hasMany(Preorder::class, 'customer_id')->where('status_payment', StatusPaymentEnum::PAID);
     }
 }

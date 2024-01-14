@@ -22,6 +22,14 @@ class Preorder extends Model
     /**
      * The data that belong to the file.
      */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'preorder_id');
+    }
+
+    /**
+     * The data that belong to the file.
+     */
     public function shipping(): HasOne
     {
         return $this->hasOne(PreorderShipping::class, 'preorder_id');

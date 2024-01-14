@@ -21,29 +21,35 @@ Route::get('/dashboard', [
     DashboardController::class, 'index',
 ])->name('dashboard');
 
-Route::get('payment/transaction', [
-    PaymentController::class, 'transaction',
-])->name('payment.transaction');
-Route::get('payment/agent', [
-    PaymentController::class, 'agent',
-])->name('payment.agent');
-Route::get('payment/agent/{id?}', [
-    PaymentController::class, 'detail_agent',
-])->name('payment.detail_agent');
+Route::name('payment.')->prefix('payment/')->group(function () {
+    Route::get('transaction', [
+        PaymentController::class, 'transaction',
+    ])->name('transaction');
+    Route::get('agent', [
+        PaymentController::class, 'agent',
+    ])->name('agent');
+    Route::get('agent/{id?}', [
+        PaymentController::class, 'detail_agent',
+    ])->name('detail_agent');
+});
 
-Route::get('transaction', [
-    TransactionController::class, 'index',
-])->name('transaction.index');
-Route::get('transaction/{id?}', [
-    TransactionController::class, 'detail',
-])->name('transaction.detail');
+Route::name('transaction.')->prefix('transaction/')->group(function () {
+    Route::get('/', [
+        TransactionController::class, 'index',
+    ])->name('index');
+    Route::get('{id?}', [
+        TransactionController::class, 'detail',
+    ])->name('detail');
+});
 
-Route::get('stock', [
-    StockController::class, 'index',
-])->name('stock.index');
-Route::post('stock/store', [
-    StockController::class, 'storeStock',
-])->name('stock.store');
-Route::get('download/stock/excel', [
-    StockController::class, 'downloadExcel',
-])->name('stock.download.excel');
+Route::name('stock.')->prefix('stock/')->group(function () {
+    Route::get('/', [
+        StockController::class, 'index',
+    ])->name('index');
+    Route::post('store', [
+        StockController::class, 'storeStock',
+    ])->name('store');
+    Route::get('download/excel', [
+        StockController::class, 'downloadExcel',
+    ])->name('download.excel');
+});

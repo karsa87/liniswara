@@ -1,6 +1,7 @@
 @extends('marketing.layouts.marketing')
 
 @inject('util', 'App\Utils\Util')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
 <div class="row g-5 gx-xl-10">
@@ -25,7 +26,7 @@
                             <div class="d-flex flex-column">
                                 <!--begin::Name-->
                                 <div class="d-flex align-items-center mb-2">
-                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">CV Widya</a>
+                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ optional($preorder->collector)->name }}</a>
                                     <a href="#">
                                         <i class="ki-duotone ki-verify fs-1 text-primary">
                                             <span class="path1"></span>
@@ -46,15 +47,20 @@
                                 <div class="d-flex flex-wrap">
                                     <!--begin::Stat-->
                                     <div class="border border-gray-300 border-dashed rounded w-25 py-3 px-4 me-6 mb-3">
-                                        Jl. Saptorenggo Sigub Mangliawan - Malang - Jawa TImur - Indonesia
+                                        {{ optional($preorder->collector)->full_address }}
                                     </div>
                                     <!--end::Stat-->
                                     <!--begin::Stat-->
                                     <div class="border border-gray-300 border-dashed rounded  w-20 py-3 px-4 me-6 mb-3">
                                         <!--begin::Number-->
                                         <div class="d-flex justify-content-start flex-column">
-                                            <spam class="text-gray-800 fw-bold mb-1 fs-4">27 Oktober 2023</span>
-                                            <span class="text-gray-700 fw-semibold d-block fs-6">INV-271023-0023</span>
+                                            <spam class="text-gray-800 fw-bold mb-1 fs-4">
+                                                {{ $carbon->parse($preorder->date)->locale('id')->format('l,') }}
+                                            </span>
+                                            <spam class="text-gray-800 fw-bold d-block mb-1 fs-4">
+                                                {{ $carbon->parse($preorder->date)->locale('id')->format('j F Y') }}
+                                            </span>
+                                            <span class="text-gray-700 fw-semibold d-block fs-6">{{ $preorder->invoice_number }}</span>
                                         </div>
                                         <!--end::Number-->
                                     </div>
@@ -64,7 +70,7 @@
                                         <!--begin::Number-->
                                         <div class="d-flex justify-content-start flex-column">
                                             <spam class="text-gray-800 fw-bold mb-1 fs-4">Total Transaksi</span>
-                                            <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency(mt_rand(10000, 100000000)) }}</span>
+                                            <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($preorder->total_amount) }}</span>
                                         </div>
                                         <!--end::Number-->
                                     </div>
@@ -72,8 +78,12 @@
                                     <!--begin::Stat-->
                                     <div class="border border-gray-300 border-dashed rounded  w-25 py-3 px-4 me-6 mb-3">
                                         <!--begin::Number-->
-                                        <span class="badge badge-success mb-2">10 Transaksi Selesai</span>
-                                        <span class="badge badge-danger">2 Transaksi Belum Selesai</span>
+                                        @if ($preorder->count_order_done > 0)
+                                            <span class="badge badge-success mb-2">{{ $preorder->count_order_done }} Transaksi Selesai</span>
+                                        @endif
+                                        @if ($preorder->count_order_not_done > 0)
+                                            <span class="badge badge-danger">{{ $preorder->count_order_not_done }} Transaksi Belum Selesai</span>
+                                        @endif
                                         <!--end::Number-->
                                     </div>
                                     <!--end::Stat-->
@@ -113,7 +123,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(500, 10000) }}
+                            {{ $preorder->count_order_paid }}
                             <i class="ki-duotone ki-directbox-default fs-2qx text-gray-500">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
@@ -126,7 +136,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($preorder->total_order_paid) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -153,7 +163,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(500, 10000) }}
+                            {{ $preorder->count_order_not_done }}
 
                             <i class="ki-duotone ki-arrows-circle fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -167,7 +177,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($preorder->total_order_not_done) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -194,7 +204,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(100, 1000) }}
+                            {{ $preorder->count_order_not_paid }}
 
                             <i class="ki-duotone ki-information fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -207,7 +217,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($preorder->total_order_not_paid) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -234,7 +244,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(100, 1000) }}
+                            {{ $preorder->count_order_dp }}
 
                             <i class="ki-duotone ki-wallet fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -248,7 +258,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($preorder->total_order_dp) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -291,15 +301,13 @@
                                 <div class="text-gray-400 fs-7 me-2">Bulan</div>
                                 <!--end::Label-->
                                 <!--begin::Select-->
-                                <select class="form-select form-select-transparent text-graY-800 fs-base lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Pilih Bulan">
+                                <select class="form-select form-select-transparent text-graY-800 fs-base lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Pilih Bulan" id="filter-month">
                                     <option value="" selected="selected">Semua</option>
-                                    <option>Jan</option>
-                                    <option>Feb</option>
-                                    <option>Mar</option>
-                                    <option>Apr</option>
-                                    <option>Mei</option>
-                                    <option>Jun</option>
-                                    <option>Jul</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}">
+                                            {{ $carbon->createFromDate(null, $i)->locale('id')->format('F') }}
+                                        </option>
+                                    @endfor
                                 </select>
                                 <!--end::Select-->
                             </div>
@@ -312,9 +320,9 @@
                 <!--begin::Body-->
                 <div class="card-body pt-6">
                     <!--begin::Table container-->
-                    <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
+                    <div class="hover-scroll-overlay-y pe-6 me-n6">
                         <!--begin::Table-->
-                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="kt_transaction_table" data-url="{{ route('marketing.transaction.detail', $preorder->id) }}">
                             <thead>
                                 <tr>
                                     <th>Tanggal</th>
@@ -326,7 +334,7 @@
                             </thead>
                             <!--begin::Table body-->
                             <tbody>
-                                @for ($i = 1; $i < 10; $i++)
+                                {{-- @for ($i = 1; $i < 10; $i++)
                                 <tr>
                                     <td>27 Oktober 2023</td>
                                     <td>INV-271023-0023</td>
@@ -348,7 +356,7 @@
                                     <td><span class="badge badge-light-warning fs-base">Sebagian Terbayar</span></td>
                                     <td>{{ $util->format_currency(mt_rand(10000000, 100000000)) }}</td>
                                 </tr>
-                                @endfor
+                                @endfor --}}
                             </tbody>
                             <!--end::Table body-->
                         </table>
@@ -364,3 +372,15 @@
     <!--end::Row-->
 @endsection
 
+
+@push('css-plugin')
+<link href="{{ mix('marketing/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
+@push('js-plugin')
+<script src="{{ mix('marketing/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+@endpush
+
+@push('js')
+    <script src="{{ mix('marketing/assets/js/custom/pages/transaction/detail.js') }}"></script>
+@endpush

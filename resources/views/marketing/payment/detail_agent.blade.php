@@ -1,6 +1,7 @@
 @extends('marketing.layouts.marketing')
 
 @inject('util', 'App\Utils\Util')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
 <div class="row g-5 gx-xl-10">
@@ -12,7 +13,11 @@
                     <!--begin: Pic-->
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                            <img src="{{ mix('marketing/assets/media/avatars/blank.png') }}" alt="image" />
+                            @if (optional($agent->user)->profile_photo)
+                                <img src="{{ optional($agent->user)->profile_photo->full_url }}" alt="{{ optional($agent->user)->name }}" />
+                            @else
+                                <img src="{{ mix('marketing/assets/media/avatars/blank.png') }}" alt="{{ optional($agent->user)->name }}" />
+                            @endif
                             <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                         </div>
                     </div>
@@ -25,7 +30,7 @@
                             <div class="d-flex flex-column">
                                 <!--begin::Name-->
                                 <div class="d-flex align-items-center mb-2">
-                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Agus Indra</a>
+                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ optional($agent->user)->name }}</a>
                                     <a href="#">
                                         <i class="ki-duotone ki-verify fs-1 text-primary">
                                             <span class="path1"></span>
@@ -46,7 +51,7 @@
                                 <div class="d-flex flex-wrap">
                                     <!--begin::Stat-->
                                     <div class="border border-gray-300 border-dashed rounded w-25 py-3 px-4 me-6 mb-3">
-                                        Jl. Saptorenggo Sigub Mangliawan - Malang - Jawa TImur - Indonesia
+                                        {{ optional($agent->address)->full_address }}
                                     </div>
                                     <!--end::Stat-->
                                     <!--begin::Stat-->
@@ -57,7 +62,7 @@
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                             </i>
-                                            087654987657
+                                            {{ optional($agent->user)->phone_number }}
                                         </div>
                                         <!--end::Number-->
                                     </div>
@@ -70,7 +75,7 @@
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                             </i>
-                                            indra@gmail.com
+                                            {{ optional($agent->user)->email }}
                                         </div>
                                         <!--end::Number-->
                                     </div>
@@ -88,7 +93,7 @@
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
                                                 <spam class="text-gray-800 fw-bold mb-1 fs-4">Total Penjualan</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency(mt_rand(10000, 100000000)) }}</span>
+                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->total_preorder) }}</span>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center">
@@ -101,7 +106,7 @@
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
                                                 <spam class="text-gray-800 fw-bold mb-1 fs-4">Total Terbayar</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency(mt_rand(10000, 100000000)) }}</span>
+                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->total_paid_preorder) }}</span>
                                             </div>
                                         </div>
                                         <!--end::Number-->
@@ -143,7 +148,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(500, 10000) }}
+                            {{ $count['paid'] }}
                             <i class="ki-duotone ki-directbox-default fs-2qx text-gray-500">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
@@ -156,7 +161,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -183,7 +188,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(500, 10000) }}
+                            {{ $count['process'] }}
 
                             <i class="ki-duotone ki-arrows-circle fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -197,7 +202,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['process']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -224,7 +229,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(100, 1000) }}
+                            {{ $count['not_paid'] }}
 
                             <i class="ki-duotone ki-information fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -237,7 +242,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['not_paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -264,7 +269,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(100, 1000) }}
+                            {{ $count['dp'] }}
 
                             <i class="ki-duotone ki-wallet fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -278,7 +283,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['dp']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -321,15 +326,13 @@
                                 <div class="text-gray-400 fs-7 me-2">Bulan</div>
                                 <!--end::Label-->
                                 <!--begin::Select-->
-                                <select class="form-select form-select-transparent text-graY-800 fs-base lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Pilih Bulan">
+                                <select class="form-select form-select-transparent text-graY-800 fs-base lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Pilih Bulan" id="filter-month">
                                     <option value="" selected="selected">Semua</option>
-                                    <option>Jan</option>
-                                    <option>Feb</option>
-                                    <option>Mar</option>
-                                    <option>Apr</option>
-                                    <option>Mei</option>
-                                    <option>Jun</option>
-                                    <option>Jul</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}">
+                                            {{ $carbon->createFromDate(null, $i)->locale('id')->format('F') }}
+                                        </option>
+                                    @endfor
                                 </select>
                                 <!--end::Select-->
                             </div>
@@ -342,9 +345,9 @@
                 <!--begin::Body-->
                 <div class="card-body pt-6">
                     <!--begin::Table container-->
-                    <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
+                    <div class="hover-scroll-overlay-y pe-6 me-n6">
                         <!--begin::Table-->
-                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="kt_transaction_agent_table" data-url="{{ route('marketing.payment.detail_agent', $agent->id) }}">
                             <thead>
                                 <tr>
                                     <th>Tanggal</th>
@@ -356,29 +359,6 @@
                             </thead>
                             <!--begin::Table body-->
                             <tbody>
-                                @for ($i = 1; $i < 10; $i++)
-                                <tr>
-                                    <td>27 Oktober 2023</td>
-                                    <td>INV-271023-0023</td>
-                                    <td><span class="badge badge-light-success fs-base">Seleasi</span></td>
-                                    <td><span class="badge badge-light-success fs-base">Lunas</span></td>
-                                    <td>{{ $util->format_currency(mt_rand(10000000, 100000000)) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>27 Oktober 2023</td>
-                                    <td>INV-271023-0023</td>
-                                    <td><span class="badge badge-light-success fs-base">Seleasi</span></td>
-                                    <td><span class="badge badge-light-danger fs-base">Belum Lunas</span></td>
-                                    <td>{{ $util->format_currency(mt_rand(10000000, 100000000)) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>27 Oktober 2023</td>
-                                    <td>INV-271023-0023</td>
-                                    <td><span class="badge badge-light-success fs-base">Seleasi</span></td>
-                                    <td><span class="badge badge-light-warning fs-base">Sebagian Terbayar</span></td>
-                                    <td>{{ $util->format_currency(mt_rand(10000000, 100000000)) }}</td>
-                                </tr>
-                                @endfor
                             </tbody>
                             <!--end::Table body-->
                         </table>
@@ -394,3 +374,14 @@
     <!--end::Row-->
 @endsection
 
+@push('css-plugin')
+<link href="{{ mix('marketing/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
+@push('js-plugin')
+<script src="{{ mix('marketing/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+@endpush
+
+@push('js')
+    <script src="{{ mix('marketing/assets/js/custom/pages/payment/detail_agent.js') }}"></script>
+@endpush

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\Preorder\StatusPaymentEnum;
 use App\Models\Scopes\ScopeLike;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Collector extends Model
 {
@@ -51,5 +54,50 @@ class Collector extends Model
     public function signin_file(): BelongsTo
     {
         return $this->belongsTo(File::class, 'signin_file_id');
+    }
+
+    /**
+     * The user that belong to the preorders.
+     */
+    public function preorders(): HasMany
+    {
+        return $this->hasMany(Preorder::class, 'collector_id');
+    }
+
+    /**
+     * The user that belong to the preorders paid.
+     */
+    public function paid_preorders(): HasMany
+    {
+        return $this->hasMany(Preorder::class, 'collector_id')->where('status_payment', StatusPaymentEnum::PAID);
+    }
+
+    /**
+     * Get the full address.
+     */
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $address = $attributes['address'];
+                if ($this->village) {
+                    $address .= ' Desa '.$this->village->name;
+                }
+
+                if ($this->district) {
+                    $address .= ', Kec. '.$this->district->name;
+                }
+
+                if ($this->regency) {
+                    $address .= ', Kota/Kab '.$this->regency->name;
+                }
+
+                if ($this->province) {
+                    $address .= ' - '.$this->province->name;
+                }
+
+                return $address;
+            },
+        );
     }
 }

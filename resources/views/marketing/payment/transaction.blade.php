@@ -1,6 +1,7 @@
 @extends('marketing.layouts.marketing')
 
 @inject('util', 'App\Utils\Util')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
     <!--begin::Row-->
@@ -24,7 +25,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(500, 10000) }}
+                            {{ $count['paid'] }}
                             <i class="ki-duotone ki-directbox-default fs-2qx text-gray-500">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
@@ -37,7 +38,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -64,7 +65,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(500, 10000) }}
+                            {{ $count['process'] }}
 
                             <i class="ki-duotone ki-arrows-circle fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -78,7 +79,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['process']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -105,7 +106,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(100, 1000) }}
+                            {{ $count['not_paid'] }}
 
                             <i class="ki-duotone ki-information fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -118,7 +119,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['not_paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -145,7 +146,7 @@
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
                         <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ mt_rand(100, 1000) }}
+                            {{ $count['dp'] }}
 
                             <i class="ki-duotone ki-wallet fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -159,7 +160,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency(mt_rand(10000000, 1000000000)) }}</span>
+                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['dp']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -210,34 +211,38 @@
                 <div class="card-body">
                     <!--begin::Scroll-->
                     <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
-                        @for ($i = 0; $i < 10; $i++)
-                            <!--begin::Item-->
-                            <div class="border border-dashed border-gray-300 rounded px-7 py-3 mb-6 bg-hover-light-primary">
-                                <a href="{{ route('marketing.payment.detail_agent', 1) }}">
-                                <!--begin::Info-->
-                                <div class="d-flex flex-stack mb-3">
-                                    <!--begin::Wrapper-->
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-circle symbol-40px me-3">
+                        @foreach ($rankingAgents as $agent)
+                        <!--begin::Item-->
+                        <div class="border border-dashed border-gray-300 rounded px-7 py-3 mb-6 bg-hover-light-primary">
+                            <a href="{{ route('marketing.payment.detail_agent', $agent->id) }}">
+                            <!--begin::Info-->
+                            <div class="d-flex flex-stack mb-3">
+                                <!--begin::Wrapper-->
+                                <div class="d-flex align-items-center">
+                                    <div class="symbol symbol-circle symbol-40px me-3">
+                                        @if (optional($agent->user)->profile_photo)
+                                            <img src="{{ optional($agent->user)->profile_photo->full_url }}" alt="image" />
+                                        @else
                                             <i class="ki-duotone ki-user-square fs-5x">
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                                 <span class="path3"></span>
                                             </i>
-                                        </div>
-                                        <div class="d-flex justify-content-start flex-column">
-                                            <spam class="text-gray-800 fw-bold mb-1 fs-4">Brooklyn Simmons</span>
-                                            <span class="text-gray-400 fw-semibold d-block fs-7">Transaksi : {{ mt_rand(100, 10000) }}</span>
-                                            <span class="text-gray-700 fw-semibold d-block fs-6">Nilai : {{ $util->format_currency(mt_rand(10000, 100000000)) }}</span>
-                                        </div>
+                                        @endif
                                     </div>
-                                    <!--end::Wrapper-->
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <spam class="text-gray-800 fw-bold mb-1 fs-4">{{ optional($agent->user)->name }}</span>
+                                        <span class="text-gray-400 fw-semibold d-block fs-7">Transaksi : {{ $agent->preorders_count }}</span>
+                                        <span class="text-gray-700 fw-semibold d-block fs-6">Nilai : {{ $util->format_currency($agent->preorders_sum_total_amount) }}</span>
+                                    </div>
                                 </div>
-                                <!--end::Info-->
-                                </a>
+                                <!--end::Wrapper-->
                             </div>
-                            <!--end::Item-->
-                        @endfor
+                            <!--end::Info-->
+                            </a>
+                        </div>
+                        <!--end::Item-->
+                        @endforeach
                     </div>
                     <!--end::Scroll-->
                 </div>
@@ -277,15 +282,13 @@
                                 <div class="text-gray-400 fs-7 me-2">Bulan</div>
                                 <!--end::Label-->
                                 <!--begin::Select-->
-                                <select class="form-select form-select-transparent text-graY-800 fs-base lh-1 fw-bold py-0 ps-3 w-auto" data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Pilih Bulan">
+                                <select class="form-select form-select-transparent text-graY-800 fs-base lh-1 fw-bold py-0 ps-3 w-auto" data-hide-search="true" data-dropdown-css-class="w-150px" data-placeholder="Pilih Bulan" id="filter-month">
                                     <option value="" selected="selected">Semua</option>
-                                    <option>Jan</option>
-                                    <option>Feb</option>
-                                    <option>Mar</option>
-                                    <option>Apr</option>
-                                    <option>Mei</option>
-                                    <option>Jun</option>
-                                    <option>Jul</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}" {{ request('regency_month_id') == $i ? 'selected' : '' }}>
+                                            {{ $carbon->createFromDate(null, $i)->locale('id')->format('F') }}
+                                        </option>
+                                    @endfor
                                 </select>
                                 <!--end::Select-->
                             </div>
@@ -303,6 +306,7 @@
                         <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
                             <!--begin::Table body-->
                             <tbody>
+                                @foreach ($rankingRegency as $regency)
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -315,120 +319,13 @@
                                                 </span>
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kota Malang : {{ $util->format_currency(mt_rand(80000000, 100000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Jane Cooper</span>
+                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">{{ str($regency->name)->title() }} : {{ $util->format_currency($regency->preorders_sum_total_amount) }}</a>
+                                                <span class="text-gray-400 fw-semibold d-block fs-3">Transaksi : {{ $regency->preorders_count }}</span>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-5">
-                                                <span class="badge badge-light-success fs-base">
-                                                    <i class="ki-duotone ki-briefcase text-success fs-2hx">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kab. Lumajang : {{ $util->format_currency(mt_rand(70000000, 80000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Esther Howard</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-5">
-                                                <span class="badge badge-light-success fs-base">
-                                                    <i class="ki-duotone ki-briefcase text-success fs-2hx">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kab. Pasuruan : {{ $util->format_currency(mt_rand(60000000, 70000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Jenny Wilson</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-5">
-                                                <span class="badge badge-light-success fs-base">
-                                                    <i class="ki-duotone ki-briefcase text-success fs-2hx">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kab. Tuban : {{ $util->format_currency(mt_rand(50000000, 60000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Cody Fisher</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-5">
-                                                <span class="badge badge-light-success fs-base">
-                                                    <i class="ki-duotone ki-briefcase text-success fs-2hx">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kab. Blitar : {{ $util->format_currency(mt_rand(10000000, 50000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Savannah Nguyen</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-5">
-                                                <span class="badge badge-light-success fs-base">
-                                                    <i class="ki-duotone ki-briefcase text-success fs-2hx">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kab. Mojokerto : {{ $util->format_currency(mt_rand(10000000, 50000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Savannah Nguyen</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-5">
-                                                <span class="badge badge-light-success fs-base">
-                                                    <i class="ki-duotone ki-briefcase text-success fs-2hx">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-1">Kab. Malang : {{ $util->format_currency(mt_rand(10000000, 50000000)) }}</a>
-                                                <span class="text-gray-400 fw-semibold d-block fs-3">Nama Agen : Savannah Nguyen</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                             <!--end::Table body-->
                         </table>
@@ -444,3 +341,6 @@
     <!--end::Row-->
 @endsection
 
+@push('js')
+    <script src="{{ mix('marketing/assets/js/custom/pages/payment/transaction.js') }}"></script>
+@endpush

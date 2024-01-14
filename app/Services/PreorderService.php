@@ -3,16 +3,23 @@
 namespace App\Services;
 
 use App\Models\Preorder;
+use App\Models\Regency;
+use Illuminate\Database\Eloquent\Collection;
 
 class PreorderService
 {
     /**
      * Get info total preorder by status payment
      *
-     * @param  array  $statusPayment status payment
+     * @param  string  $statusPayment status payment
+     * @param  int  $customerId Customer unique ID
+     * @param  int  $collectorId Customer unique ID
+     *
      * **/
     public function getSummaryByStatusPayment(
-        $statusPayment = null
+        $statusPayment = null,
+        $customerId = null,
+        $collectorId = null,
     ): array {
         $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count');
 
@@ -22,6 +29,14 @@ class PreorderService
             } else {
                 $query->where('status_payment', $statusPayment);
             }
+        }
+
+        if ($customerId) {
+            $query->where('customer_id', $customerId);
+        }
+
+        if ($collectorId) {
+            $query->where('collector_id', $customerId);
         }
 
         $summary = $query->get()->first();
@@ -35,10 +50,15 @@ class PreorderService
     /**
      * Get info total preorder by status order
      *
-     * @param  array  $statusPayment status payment
+     * @param  string  $statusPayment status payment
+     * @param  int  $customerId Customer unique ID
+     * @param  int  $collectorId Customer unique ID
+     *
      * **/
     public function getSummaryByStatusOrder(
-        $statusOrder = null
+        $statusOrder = null,
+        $customerId = null,
+        $collectorId = null,
     ): array {
         $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count');
 
@@ -50,11 +70,54 @@ class PreorderService
             }
         }
 
+        if ($customerId) {
+            $query->where('customer_id', $customerId);
+        }
+
+        if ($collectorId) {
+            $query->where('collector_id', $customerId);
+        }
+
         $summary = $query->get()->first();
 
         return [
             'total' => optional($summary)->total ?? 0,
             'count' => optional($summary)->count ?? 0,
         ];
+    }
+
+    /**
+     * Get top ranking of agen by total amount transaction
+     *
+     * @param  int  $limit limit to get ranking
+     * @param  int  $month month preorder
+     *
+     * **/
+    public function rankingByRegency(
+        $limit = null,
+        $month = null
+    ): Collection {
+        $query = Regency::withCount([
+            'preorders' => function ($qPreorder) use ($month) {
+                if ($month) {
+                    $qPreorder->whereMonth('date', $month);
+                }
+            },
+        ])
+            ->withSum([
+                'preorders' => function ($qPreorder) use ($month) {
+                    if ($month) {
+                        $qPreorder->whereMonth('date', $month);
+                    }
+                },
+            ], 'total_amount')
+            ->havingRaw('preorders_sum_total_amount > 0')
+            ->orderBy('preorders_sum_total_amount', 'DESC');
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 }
