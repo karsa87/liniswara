@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = User::with('role:id,name');
+            $query = User::with('role:id,name')->doesntHave('customer');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qUser) use ($q) {

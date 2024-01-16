@@ -120,6 +120,18 @@
                                         </div>
                                         <!--end::Input group-->
                                     </div>
+                                    <div>
+                                        <!--begin::Input group-->
+                                        <div class="fv-row flex-row-fluid">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Target</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="numeric" name="customer_target" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
 
                                     <div class="d-flex flex-column flex-md-row gap-5">
                                         <!--begin::Input group-->
@@ -328,7 +340,7 @@
                     <th class="min-w-125px">Nama</th>
                     <th class="min-w-125px">Email</th>
                     <th class="min-w-125px">Phone</th>
-                    <th class="min-w-125px">Grup Konsumen</th>
+                    <th class="min-w-125px">Target</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>

@@ -338,14 +338,35 @@ var KTSuppliersList = function () {
                         form.querySelector("input[name='product_company']").value = product.company;
                         form.querySelector("input[name='product_phone_number']").value = product.phone_number;
                         form.querySelector("select[name='product_type']").value = product.type;
-                        form.querySelector("input[name='product_province_id']").value = product.province.id;
-                        form.querySelector("input[name='product_regency_id']").value = product.regency.id;
-                        form.querySelector("input[name='product_district_id']").value = product.district.id;
-                        form.querySelector("input[name='product_village_id']").value = product.village.id;
+
+                        let detailAddress = '';
+                        form.querySelector("input[name='product_village_id']").value = '';
+                        if (product.village) {
+                            form.querySelector("input[name='product_village_id']").value = product.village.id;
+                            detailAddress += `${product.village.name}`;
+                        }
+
+                        form.querySelector("input[name='product_district_id']").value = '';
+                        if (product.district) {
+                            form.querySelector("input[name='product_district_id']").value = product.district.id;
+                            detailAddress += `, Kec. ${product.district.name}`;
+                        }
+
+                        form.querySelector("input[name='product_regency_id']").value = '';
+                        if (product.regency) {
+                            form.querySelector("input[name='product_regency_id']").value = product.regency.id;
+                            detailAddress += `<br/> ${product.regency.name}`;
+                        }
+
+                        form.querySelector("input[name='product_province_id']").value = '';
+                        if (product.province) {
+                            form.querySelector("input[name='product_province_id']").value = product.province.id;
+                            detailAddress += ` - ${product.province.name}`;
+                        }
+
                         form.querySelector("textarea[name='product_address']").value = product.address;
 
-                        form.querySelector(`[data-kt-region="product_region_description"]`).value = `${product.village.name}, Kec. ${product.district.name} <br/> ${product.regency.name} - ${product.province.name}`;
-
+                        form.querySelector(`[data-kt-region="product_region_description"]`).value = detailAddress;
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({

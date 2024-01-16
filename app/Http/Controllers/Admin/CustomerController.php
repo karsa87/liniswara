@@ -95,6 +95,7 @@ class CustomerController extends Controller
                 $customer->fill([
                     'type' => $request->input('customer_type'),
                     'user_id' => $user->id,
+                    'target' => $request->input('customer_target') ?? 0,
                 ]);
 
                 if (
@@ -176,6 +177,7 @@ class CustomerController extends Controller
                 $customer->fill([
                     'type' => $request->input('customer_type'),
                     'user_id' => $user->id,
+                    'target' => $request->input('customer_target') ?? 0,
                 ]);
 
                 if (

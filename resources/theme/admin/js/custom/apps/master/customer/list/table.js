@@ -43,7 +43,7 @@ var KTSuppliersList = function () {
                 { data: 'name' },
                 { data: 'email' },
                 { data: 'phone_number', orderable: false },
-                { data: 'type_label', orderable: false },
+                { data: 'target' },
                 { data: null },
             ],
             columnDefs: [
@@ -55,6 +55,17 @@ var KTSuppliersList = function () {
                         }
 
                         return '';
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, row) {
+                        let target = 0;
+                        if (typeof row.target == 'number') {
+                            target = row.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+
+                        return target;
                     }
                 },
                 {
@@ -245,14 +256,36 @@ var KTSuppliersList = function () {
                         form.querySelector("input[name='customer_email']").value = customer.email;
                         form.querySelector("input[name='customer_company']").value = customer.company;
                         form.querySelector("input[name='customer_phone_number']").value = customer.phone_number;
+                        form.querySelector("input[name='customer_target']").value = customer.target;
                         // form.querySelector("select[name='customer_type']").value = customer.type;
-                        form.querySelector("input[name='customer_province_id']").value = customer.province.id;
-                        form.querySelector("input[name='customer_regency_id']").value = customer.regency.id;
-                        form.querySelector("input[name='customer_district_id']").value = customer.district.id;
-                        form.querySelector("input[name='customer_village_id']").value = customer.village.id;
+
+                        let detailAddress = '';
+                        form.querySelector("input[name='customer_village_id']").value = '';
+                        if (customer.village) {
+                            form.querySelector("input[name='customer_village_id']").value = customer.village.id;
+                            detailAddress += `${customer.village.name}`;
+                        }
+
+                        form.querySelector("input[name='customer_district_id']").value = '';
+                        if (customer.district) {
+                            form.querySelector("input[name='customer_district_id']").value = customer.district.id;
+                            detailAddress += `, Kec. ${customer.district.name}`;
+                        }
+
+                        form.querySelector("input[name='customer_regency_id']").value = '';
+                        if (customer.regency) {
+                            form.querySelector("input[name='customer_regency_id']").value = customer.regency.id;
+                            detailAddress += `<br/> ${customer.regency.name}`;
+                        }
+
+                        form.querySelector("input[name='customer_province_id']").value = '';
+                        if (customer.province) {
+                            form.querySelector("input[name='customer_province_id']").value = customer.province.id;
+                            detailAddress += ` - ${customer.province.name}`;
+                        }
                         form.querySelector("textarea[name='customer_address']").value = customer.address;
 
-                        form.querySelector(`[data-kt-region="customer_region_description"]`).value = `${customer.village.name}, Kec. ${customer.district.name} <br/> ${customer.regency.name} - ${customer.province.name}`;
+                        form.querySelector(`[data-kt-region="customer_region_description"]`).value = detailAddress;
 
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -267,6 +300,7 @@ var KTSuppliersList = function () {
                         });
                     }
                 }).catch(function (error) {
+                    console.log(error);
                     let msg = "Sorry, looks like there are some errors detected, please try again.";
                     if (
                         error.response && error.response.data

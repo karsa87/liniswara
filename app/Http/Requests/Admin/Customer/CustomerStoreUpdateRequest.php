@@ -92,6 +92,11 @@ class CustomerStoreUpdateRequest extends FormRequest
                 'nullable',
                 Rule::exists((new Village())->getTable(), 'id'),
             ],
+            'customer_target' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
         ];
     }
 

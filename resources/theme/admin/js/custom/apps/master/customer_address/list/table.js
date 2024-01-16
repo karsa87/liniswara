@@ -237,10 +237,33 @@ var KTSuppliersList = function () {
                         form.querySelector("input[name='customer_address_id']").value = customer.id;
                         form.querySelector("input[name='customer_address_name']").value = customer.name;
                         form.querySelector("input[name='customer_address_phone_number']").value = customer.phone_number;
-                        form.querySelector("input[name='customer_address_province_id']").value = customer.province.id;
-                        form.querySelector("input[name='customer_address_regency_id']").value = customer.regency.id;
-                        form.querySelector("input[name='customer_address_district_id']").value = customer.district.id;
-                        form.querySelector("input[name='customer_address_village_id']").value = customer.village.id;
+
+
+                        let detailAddress = '';
+                        form.querySelector("input[name='customer_address_village_id']").value = '';
+                        if (customer.village) {
+                            form.querySelector("input[name='customer_address_village_id']").value = customer.village.id;
+                            detailAddress += `${customer.village.name}`;
+                        }
+
+                        form.querySelector("input[name='customer_address_district_id']").value = '';
+                        if (customer.district) {
+                            form.querySelector("input[name='customer_address_district_id']").value = customer.district.id;
+                            detailAddress += `, Kec. ${customer.district.name}`;
+                        }
+
+                        form.querySelector("input[name='customer_address_regency_id']").value = '';
+                        if (customer.regency) {
+                            form.querySelector("input[name='customer_address_regency_id']").value = customer.regency.id;
+                            detailAddress += `<br/> ${customer.regency.name}`;
+                        }
+
+                        form.querySelector("input[name='customer_address_province_id']").value = '';
+                        if (customer.province) {
+                            form.querySelector("input[name='customer_address_province_id']").value = customer.province.id;
+                            detailAddress += ` - ${customer.province.name}`;
+                        }
+
                         form.querySelector("textarea[name='customer_address_address']").value = customer.address;
 
                         if (customer.is_default) {
@@ -249,7 +272,7 @@ var KTSuppliersList = function () {
                             form.querySelector("input[name='customer_address_is_default']").checked = false;
                         }
 
-                        form.querySelector(`[data-kt-region="customer_address_region_description"]`).value = `${customer.village.name}, Kec. ${customer.district.name} <br/> ${customer.regency.name} - ${customer.province.name}`;
+                        form.querySelector(`[data-kt-region="customer_address_region_description"]`).value = detailAddress;
 
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/

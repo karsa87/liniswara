@@ -51,13 +51,29 @@ var KTSuppliersList = function () {
                     targets: 4,
                     className: 'd-flex align-items-center',
                     render: function (data, type, row) {
-                        return `
+                        var result = `
                             <div class="d-flex flex-column">
                                 <span class="text-gray-800 text-hover-primary mb-1">${row.address}</span>
-                                <span>${row.village.name} - ${row.district.name}</span>
-                                <span>${row.regency.name} - ${row.province.name}</span>
-                            </div>
                         `;
+
+                        if (row.village) {
+                            result += `${row.village.name}`;
+                        }
+
+                        if (row.district) {
+                            result += `- ${row.district.name}`;
+                        }
+
+                        if (row.regency) {
+                            result += `<br> ${row.regency.name}`;
+                        }
+
+                        if (row.province) {
+                            result += `- ${row.province.name}`;
+                        }
+
+                        result += `</div>`;
+                        return result;
                     },
                 },
                 {
@@ -286,13 +302,34 @@ var KTSuppliersList = function () {
                         form.querySelector("input[name='supplier_email']").value = supplier.email;
                         form.querySelector("input[name='supplier_company']").value = supplier.company;
                         form.querySelector("input[name='supplier_phone_number']").value = supplier.phone;
-                        form.querySelector("input[name='supplier_province_id']").value = supplier.province.id;
-                        form.querySelector("input[name='supplier_regency_id']").value = supplier.regency.id;
-                        form.querySelector("input[name='supplier_district_id']").value = supplier.district.id;
-                        form.querySelector("input[name='supplier_village_id']").value = supplier.village.id;
+
+                        let detailAddress = '';
+                        form.querySelector("input[name='supplier_village_id']").value = '';
+                        if (supplier.village) {
+                            form.querySelector("input[name='supplier_village_id']").value = supplier.village.id;
+                            detailAddress += `${supplier.village.name}`;
+                        }
+
+                        form.querySelector("input[name='supplier_district_id']").value = '';
+                        if (supplier.district) {
+                            form.querySelector("input[name='supplier_district_id']").value = supplier.district.id;
+                            detailAddress += `, Kec. ${supplier.district.name}`;
+                        }
+
+                        form.querySelector("input[name='supplier_regency_id']").value = '';
+                        if (supplier.regency) {
+                            form.querySelector("input[name='supplier_regency_id']").value = supplier.regency.id;
+                            detailAddress += `<br/> ${supplier.regency.name}`;
+                        }
+
+                        form.querySelector("input[name='supplier_province_id']").value = '';
+                        if (supplier.province) {
+                            form.querySelector("input[name='supplier_province_id']").value = supplier.province.id;
+                            detailAddress += ` - ${supplier.province.name}`;
+                        }
                         form.querySelector("textarea[name='supplier_address']").value = supplier.address;
 
-                        form.querySelector(`[data-kt-region="supplier_region_description"]`).innerHTML = `${supplier.village.name}, Kec. ${supplier.district.name} <br/> ${supplier.regency.name} - ${supplier.province.name}`;
+                        form.querySelector(`[data-kt-region="supplier_region_description"]`).innerHTML = detailAddress;
 
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/

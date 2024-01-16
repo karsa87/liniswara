@@ -51,13 +51,29 @@ var KTCollectorsList = function () {
                     targets: 4,
                     className: 'd-flex align-items-center',
                     render: function (data, type, row) {
-                        return `
+                        var result = `
                             <div class="d-flex flex-column">
                                 <span class="text-gray-800 text-hover-primary mb-1">${row.address}</span>
-                                <span>${row.village.name} - ${row.district.name}</span>
-                                <span>${row.regency.name} - ${row.province.name}</span>
-                            </div>
                         `;
+
+                        if (row.village) {
+                            result += `${row.village.name}`;
+                        }
+
+                        if (row.district) {
+                            result += `- ${row.district.name}`;
+                        }
+
+                        if (row.regency) {
+                            result += `<br> ${row.regency.name}`;
+                        }
+
+                        if (row.province) {
+                            result += `- ${row.province.name}`;
+                        }
+
+                        result += `</div>`;
+                        return result;
                     },
                 },
                 {
@@ -256,15 +272,33 @@ var KTCollectorsList = function () {
                         form.querySelector("input[name='collector_phone_number']").value = collector.phone_number;
                         form.querySelector("input[name='collector_npwp']").value = collector.npwp;
                         form.querySelector("input[name='collector_gst']").value = collector.gst;
-                        form.querySelector("input[name='collector_province_id']").value = collector.province.id;
-                        form.querySelector("input[name='collector_regency_id']").value = collector.regency.id;
-                        form.querySelector("input[name='collector_district_id']").value = collector.district.id;
-                        form.querySelector("input[name='collector_village_id']").value = collector.village.id;
+
+                        let addressDetail = '';
+                        if (collector.village) {
+                            form.querySelector("input[name='collector_village_id']").value = collector.village.id;
+                            addressDetail += `${collector.village.name}`;
+                        }
+
+                        if (collector.district) {
+                            form.querySelector("input[name='collector_district_id']").value = collector.district.id;
+                            addressDetail += `, Kec. ${collector.district.name}`;
+                        }
+
+                        if (collector.regency) {
+                            form.querySelector("input[name='collector_regency_id']").value = collector.regency.id;
+                            addressDetail += `<br/> ${collector.regency.name}`;
+                        }
+
+                        if (collector.province) {
+                            form.querySelector("input[name='collector_province_id']").value = collector.province.id;
+                            addressDetail += ` - ${collector.province.name}`;
+                        }
+
                         form.querySelector("textarea[name='collector_address']").value = collector.address;
                         form.querySelector("textarea[name='collector_footer']").value = collector.footer;
                         form.querySelector("textarea[name='collector_billing_notes']").value = collector.billing_notes;
 
-                        form.querySelector(`[data-kt-region="collector_region_description"]`).innerHTML = `${collector.village.name}, Kec. ${collector.district.name} <br/> ${collector.regency.name} - ${collector.province.name}`;
+                        form.querySelector(`[data-kt-region="collector_region_description"]`).innerHTML = addressDetail;
 
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
