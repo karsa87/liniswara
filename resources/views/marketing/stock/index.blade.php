@@ -185,6 +185,15 @@
                     <div class="card-toolbar">
                         <!--begin::Filters-->
                         <div class="d-flex flex-stack flex-wrap gap-4">
+                            <a href="{{ route('marketing.stock.clear') }}" class="btn btn-danger">
+                                <i class="ki-duotone ki-trash fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i>Clear
+                            </a>
                             <a href="javascript:void(0)" class="btn btn-primary" id="kt_ecommerce_stock_submit_excel">
                                 <i class="ki-duotone ki-tablet-text-up fs-2">
                                     <span class="path1"></span>

@@ -92,7 +92,10 @@
                                             <td class="fs-8 pb-1 pt-1 text-center">{{ $i+1 }}</td>
                                             <td class="fs-8 pb-1 pt-1">{{ $detail->product->code }}</td>
                                             <td class="fs-8 pb-1 pt-1">{{ $detail->product->name }}</td>
-                                            <td class="text-end fs-8 pb-1 pt-1 text-center">{{ $detail->qty }}</td>
+                                            <td class="text-end fs-8 pb-1 pt-1 text-center">
+                                                {{ $detail->qty }}
+                                                <span class="fs-9 text-danger d-block">({{ $detail->qty - $detail->qty_order }})</span>
+                                            </td>
                                             <td class="text-end fs-8 pb-1 pt-1">{{ $util->format_currency($detail->price, 0, 'Rp. ') }}</td>
                                             {{-- <td class="text-end fs-8 pb-1 pt-1">
                                                 {{ $util->format_currency($detail->discount, 0, 'Rp. ') }}

@@ -398,13 +398,15 @@
                                                     <!--begin::Title-->
                                                     <div>
                                                         <a href="javascript:void(0)" class="fw-bold text-gray-600 text-hover-primary">{{ optional($detail->product)->name }}</a>
-                                                        {{-- <div class="fs-7 text-muted">Delivery Date: 19/07/2023</div> --}}
                                                     </div>
                                                     <!--end::Title-->
                                                 </div>
                                             </td>
                                             <td class="text-end">{{ optional($detail->product)->code }}</td>
-                                            <td class="text-end">{{ $detail->qty }}</td>
+                                            <td class="text-end">
+                                                {{ $detail->qty }}
+                                                <span class="fs-6 text-danger d-block">({{ $detail->qty - $detail->qty_order }})</span>
+                                            </td>
                                             <td class="text-end">{{ $util->format_currency($detail->price, 0, 'Rp. ') }}</td>
                                             <td class="text-end">
                                                 {{ $util->format_currency($detail->discount, 0, 'Rp. ') }}

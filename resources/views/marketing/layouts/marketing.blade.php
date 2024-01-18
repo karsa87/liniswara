@@ -267,6 +267,26 @@
 											<div class="separator my-2"></div>
 											<!--end::Menu separator-->
 											<!--begin::Menu item-->
+                                            @foreach ([
+                                                \App\Enums\Preorder\MarketingEnum::TEAM_A,
+                                                \App\Enums\Preorder\MarketingEnum::TEAM_B,
+                                            ] as $team)
+                                                @php
+                                                    if ($team == session(config('session.app.selected_marketing_tim'))->value) {
+                                                        continue;
+                                                    }
+                                                @endphp
+                                                <div class="menu-item px-5">
+                                                    <a href="{{ route('marketing.switch_marketing', $team) }}" class="menu-link px-5">
+                                                        Switch {{ \App\Enums\Preorder\MarketingEnum::fromValue($team)->getLabel() }}
+                                                    </a>
+                                                </div>
+                                            @endforeach
+											<!--end::Menu item-->
+											<!--begin::Menu separator-->
+											<div class="separator my-2"></div>
+											<!--end::Menu separator-->
+											<!--begin::Menu item-->
 											<div class="menu-item px-5">
 												<a href="{{ route('auth.logout') }}" class="menu-link px-5">Keluar</a>
 											</div>

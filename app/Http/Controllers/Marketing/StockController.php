@@ -94,4 +94,11 @@ class StockController extends Controller
 
         return Excel::download(new StockProductExport($record['details']), 'Stock Produk.xlsx');
     }
+
+    public function clear()
+    {
+        Cache::flush(self::CACHE_DOWNLOAD_EXCEL_STOCK);
+
+        return redirect()->route('marketing.stock.index');
+    }
 }

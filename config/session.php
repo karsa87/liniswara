@@ -198,4 +198,7 @@ return [
 
     'same_site' => 'lax',
 
+    'app' => [
+        'selected_marketing_tim' => 'selected-marketing-tim',
+    ],
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enums\Preorder\MarketingEnum;
 use App\Events\UserLogin;
 use App\Models\Permission;
 use App\Models\Role;
@@ -36,6 +37,7 @@ class UserRoleListener
         \Artisan::call('view:clear');
         //SAVE SESSION
         \Session::put('user-permission', $permissions->pluck('name', 'key'));
+        \Session::put(config('session.app.selected_marketing_tim'), MarketingEnum::TEAM_A());
         \Session::save();
     }
 }

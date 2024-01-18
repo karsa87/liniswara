@@ -21,6 +21,20 @@ Route::get('/dashboard', [
     DashboardController::class, 'index',
 ])->name('dashboard');
 
+Route::get('/dashboard/widget/preorder', [
+    DashboardController::class, 'widget_preorder',
+])->name('dashboard.widget.preorder');
+Route::get('/dashboard/widget/order', [
+    DashboardController::class, 'widget_order',
+])->name('dashboard.widget.order');
+Route::get('/dashboard/widget/zone', [
+    DashboardController::class, 'widget_zone',
+])->name('dashboard.widget.zone');
+
+Route::get('/switch-marketing/{marketing}', [
+    DashboardController::class, 'switch_marketing',
+])->name('switch_marketing');
+
 Route::name('payment.')->prefix('payment/')->group(function () {
     Route::get('transaction', [
         PaymentController::class, 'transaction',
@@ -49,6 +63,9 @@ Route::name('stock.')->prefix('stock/')->group(function () {
     Route::post('store', [
         StockController::class, 'storeStock',
     ])->name('store');
+    Route::get('clear', [
+        StockController::class, 'clear',
+    ])->name('clear');
     Route::get('download/excel', [
         StockController::class, 'downloadExcel',
     ])->name('download.excel');

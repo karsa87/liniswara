@@ -11,20 +11,27 @@
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
             </div>
-            <div class="menu-item me-0 me-lg-2 menu-lg-down-accordion {{ str(request()->route()->getName())->contains(['marketing.payment']) ? 'here show menu-here-bg' : '' }}">
+            {{-- <div class="menu-item me-0 me-lg-2 menu-lg-down-accordion {{ str(request()->route()->getName())->contains(['marketing.payment']) ? 'here show menu-here-bg' : '' }}">
                 <!--begin:Menu link-->
                 <a href="{{ route('marketing.payment.transaction') }}" class="menu-link py-3">
                     <span class="menu-title">Pembayaran</span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
+            </div> --}}
+            <div class="menu-item me-0 me-lg-2 menu-lg-down-accordion {{ str(request()->route()->getName())->contains(['marketing.payment']) ? 'here show menu-here-bg' : '' }}">
+                <!--begin:Menu link-->
+                <a href="{{ route('marketing.payment.agent') }}" class="menu-link py-3">
+                    <span class="menu-title">List Agent</span>
+                    <span class="menu-arrow d-lg-none"></span>
+                </a>
             </div>
-            <div class="menu-item me-0 me-lg-2 menu-lg-down-accordion {{ str(request()->route()->getName())->contains(['marketing.transaction']) ? 'here show menu-here-bg' : '' }}">
+            {{-- <div class="menu-item me-0 me-lg-2 menu-lg-down-accordion {{ str(request()->route()->getName())->contains(['marketing.transaction']) ? 'here show menu-here-bg' : '' }}">
                 <!--begin:Menu link-->
                 <a href="{{ route('marketing.transaction.index') }}" class="menu-link py-3">
                     <span class="menu-title">Status Transaksi</span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
-            </div>
+            </div> --}}
             <div class="menu-item me-0 me-lg-2 menu-lg-down-accordion {{ str(request()->route()->getName())->contains(['marketing.stock']) ? 'here show menu-here-bg' : '' }}">
                 <!--begin:Menu link-->
                 <a href="{{ route('marketing.stock.index') }}" class="menu-link py-3">
