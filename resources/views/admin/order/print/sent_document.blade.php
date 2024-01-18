@@ -134,10 +134,18 @@
                         Disetujui Oleh:
                         <!--begin::Logo-->
                         <span class="d-block mw-150px ms-sm-auto mt-4 mb-4">
-                            <img alt="Logo" src="{{ mix('assets/media/liniswara_sign_in.png') }}" class="w-100" />
+                            @if (optional($order->collector)->signin_file)
+                                <img alt="Logo" src="{{ optional($order->collector)->signin_file->full_url }}" class="w-100" />
+                            @else
+                                <br>
+                                <br>
+                                <br>
+                            @endif
                         </span>
                         <!--end::Logo-->
-                        <div>CV. SUARA PENDIDIKAN NUSANTARA</div>
+                        <div>
+                            {{ $order->collector ? $order->collector->name : '.......................' }}
+                        </div>
                     </div>
                     <!--end::Text-->
                 </div>
