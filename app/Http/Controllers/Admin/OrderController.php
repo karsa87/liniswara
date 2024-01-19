@@ -90,18 +90,18 @@ class OrderController extends Controller
 
         $details = collect();
         foreach ($preorder->details as $detail) {
-            $stockReady = $detail->product->stock;
+            $stockReady = $detail->product->stock; // 211
             if ($stockReady == 0) {
                 continue;
             }
 
             $stockSent = $detail->qty_order ?: 0;
-            $stockNeedSent = $detail->qty - $stockSent;
+            $stockNeedSent = $detail->qty - $stockSent; // 325
             if ($stockNeedSent <= 0) {
                 continue;
             }
 
-            $stockCanSent = $stockNeedSent <= $stockReady ? $stockNeedSent : ($stockNeedSent - $stockReady);
+            $stockCanSent = $stockNeedSent <= $stockReady ? $stockNeedSent : ($stockReady - $stockNeedSent);
 
             $orderDetail = new OrderDetail();
             $orderDetail->preorder_detail_id = $detail->id;
