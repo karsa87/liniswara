@@ -39,7 +39,7 @@ class DashboardController extends Controller
         }
 
         $settingTargetTeam = Setting::where('key', $settingKey)->first();
-        $summary = $this->preorderService->getSummary([
+        $summary = $this->preorderService->getSummaryAll([
             'marketing' => $marketingTeam->value,
         ]);
 
