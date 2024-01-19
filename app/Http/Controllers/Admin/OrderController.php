@@ -101,7 +101,10 @@ class OrderController extends Controller
                 continue;
             }
 
-            $stockCanSent = $stockNeedSent <= $stockReady ? $stockNeedSent : ($stockReady - $stockNeedSent);
+            $stockCanSent = $stockNeedSent;
+            if ($stockReady <= $stockNeedSent) {
+                $stockCanSent = $stockReady;
+            }
 
             $orderDetail = new OrderDetail();
             $orderDetail->preorder_detail_id = $detail->id;
