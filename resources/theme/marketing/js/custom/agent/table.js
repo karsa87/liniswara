@@ -53,7 +53,7 @@ var KTCustomersList = function () {
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 2,
                     render: function (data) {
                         if (data) {
                             return `<a href="https://wa.me/${data}" class="badge badge-light-success fs-7 m-1">${data}</a>`;
@@ -63,7 +63,7 @@ var KTCustomersList = function () {
                     }
                 },
                 {
-                    targets: 4,
+                    targets: 3,
                     render: function (data, type, row) {
                         let target = 0;
                         if (typeof row.target == 'number') {
