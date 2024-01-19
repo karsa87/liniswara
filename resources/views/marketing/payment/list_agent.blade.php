@@ -90,8 +90,7 @@
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_customers">
                     <thead>
                         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                            <th class="min-w-125px">Nama</th>
-                            <th class="min-w-125px">Perusahaan</th>
+                            <th class="min-w-125px" data-show="{{ route('marketing.payment.detail_agent', 99999999999) }}">Nama</th>
                             <th class="min-w-125px">Email</th>
                             <th class="min-w-125px">Phone</th>
                             <th class="min-w-125px">Target</th>

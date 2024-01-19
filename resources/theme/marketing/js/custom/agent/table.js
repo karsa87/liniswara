@@ -40,13 +40,18 @@ var KTCustomersList = function () {
             },
             columns: [
                 { data: 'name', orderable: false },
-                { data: 'company', orderable: false },
                 { data: 'email', orderable: false },
                 { data: 'phone_number', orderable: false },
                 { data: 'target' },
                 { data: 'total_achieved' },
             ],
             columnDefs: [
+                {
+                    targets: 0,
+                    render: function (data, type, row) {
+                        return `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>`;
+                    }
+                },
                 {
                     targets: 3,
                     render: function (data) {

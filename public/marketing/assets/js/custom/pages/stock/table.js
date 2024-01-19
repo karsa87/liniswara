@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceSaveProduct = function () {
+var KTAppStock = function () {
     const calculateTotal = () => {
         KTApp.showPageLoading();
         let totalAmountDetail = 0;
@@ -45,7 +45,7 @@ var KTAppEcommerceSaveProduct = function () {
     // Init condition select2
     const initConditionsProductSelect2 = () => {
         // Tnit new repeating condition types
-        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-product="product_option"]');
+        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-product="product_stock_option"]');
         allConditionTypes.forEach(type => {
             if ($(type).hasClass("select2-hidden-accessible")) {
                 return;
@@ -72,20 +72,19 @@ var KTAppEcommerceSaveProduct = function () {
                                     results: data.items
                                 };
                             },
-
-                            // I set `staff_constant` field here
-                            templateSelection: function (data, container) {
-                                $(data.element).attr('data-price', data.price);
-                                $(data.element).attr('data-discount_description', data.discount_description);
-                                $(data.element).attr('data-discount', data.discount);
-                                $(data.element).attr('data-price_zone_2', data.price_zone_2);
-                                $(data.element).attr('data-discount_zone_2', data.discount_zone_2);
-                                $(data.element).attr('data-code', data.code);
-                                $(data.element).attr('data-stock', data.stock);
-                                return data.text;
-                            },
                             cache: true
-                        }
+                        },
+                        // I set `staff_constant` field here
+                        templateSelection: function (data, container) {
+                            $(data.element).attr('data-price', data.price);
+                            $(data.element).attr('data-discount_description', data.discount_description);
+                            $(data.element).attr('data-discount', data.discount);
+                            $(data.element).attr('data-price_zone_2', data.price_zone_2);
+                            $(data.element).attr('data-discount_zone_2', data.discount_zone_2);
+                            $(data.element).attr('data-code', data.code);
+                            $(data.element).attr('data-stock', data.stock);
+                            return data.text.substring(0, 20);
+                        },
                     });
 
                     $(type).on("change", function (e) {
@@ -267,7 +266,7 @@ var KTAppEcommerceSaveProduct = function () {
         });
 
         $('#form-select-zone').on("change", function (e) {
-            const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-product="product_option"]');
+            const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-product="product_stock_option"]');
             allConditionTypes.forEach(type => {
                 KTApp.showPageLoading();
                 $(type).val($(type).val()).trigger('change');
@@ -322,5 +321,5 @@ var KTAppEcommerceSaveProduct = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceSaveProduct.init();
+    KTAppStock.init();
 });

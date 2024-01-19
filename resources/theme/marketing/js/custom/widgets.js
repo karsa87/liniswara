@@ -40,7 +40,7 @@ var KTWidgets = function () {
                 plotOptions: {
                     bar: {
                         horizontal: false,
-                        columnWidth: ['30%'],
+                        columnWidth: ['80%'],
                         borderRadius: [6]
                     },
                 },
@@ -341,7 +341,7 @@ var KTWidgets = function () {
 
                 document.getElementById('widget-order-total').innerHTML = (data.total.paid + data.total.dp + data.total.not_paid).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
-                initChart(data.total.paid, data.total.paid, data.total.not_paid);
+                initChart(data.total.dp, data.total.paid, data.total.not_paid);
             } else {
                 // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                 Swal.fire({

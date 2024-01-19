@@ -222,7 +222,7 @@
                 <!--begin::Body-->
                 <div class="card-body pt-6">
                     <!--begin::Table container-->
-                    <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
+                    <div class="hover-scroll-overlay-y pe-6 me-n6 table-responsive" style="height: 415px">
                         <!--begin::Table-->
                         <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="product_details">
                             <thead>
@@ -289,7 +289,7 @@
                                 @else
                                 <tr data-repeater-item="" data-id="1">
                                     <td>
-                                        <select class="form-select mb-2 stock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-product="product_option" name="stock_details[1][product_id]">
+                                        <select class="form-select mb-2 stock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-product="product_stock_option" name="stock_details[1][product_id]">
                                             <option></option>
                                         </select>
                                     </td>

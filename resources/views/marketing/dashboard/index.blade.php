@@ -14,7 +14,7 @@
                 <!--begin::Title-->
                 <h3 class="card-title align-items-start flex-column">
                     <!--begin::Amount-->
-                    <span class="badge badge-primary">Target {{ session(config('session.app.selected_marketing_tim'))->getLabel() }}</span>
+                    <span class="badge badge-primary"> {{ str('Target' . session(config('session.app.selected_marketing_tim'))->getLabel())->upper() }}</span>
                     <!--end::Amount-->
                 </h3>
                 <!--end::Title-->
@@ -49,7 +49,7 @@
                 <!--begin::Title-->
                 <h3 class="card-title align-items-start flex-column">
                     <!--begin::Amount-->
-                    <span class="badge badge-warning">Target Pencapaian</span>
+                    <span class="badge badge-warning">{{ str('Target Pencapaian')->upper() }}</span>
                     <!--end::Amount-->
                 </h3>
                 <!--end::Title-->
@@ -79,7 +79,7 @@
                 <!--begin::Title-->
                 <h3 class="card-title align-items-start flex-column">
                     <!--begin::Amount-->
-                    <span class="badge badge-success">Tercapai</span>
+                    <span class="badge badge-success">{{ str('Tercapai')->upper() }}</span>
                     <!--end::Amount-->
                 </h3>
                 <!--end::Title-->
@@ -105,7 +105,7 @@
                 <!--begin::Title-->
                 <h3 class="card-title align-items-start flex-column">
                     <!--begin::Amount-->
-                    <span class="badge badge-danger">Belum Tercapai</span>
+                    <span class="badge badge-danger">{{ str('Belum Tercapai')->upper() }}</span>
                     <!--end::Amount-->
                 </h3>
                 <!--end::Title-->
