@@ -598,6 +598,9 @@ class PreorderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'details' => function ($qDetail) {
+                $qDetail->whereRaw('qty != qty_order');
+            },
             'details.product',
         ])->find($id);
 
@@ -619,6 +622,9 @@ class PreorderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'details' => function ($qDetail) {
+                $qDetail->whereRaw('qty != qty_order');
+            },
             'details.product',
         ])->find($id);
 

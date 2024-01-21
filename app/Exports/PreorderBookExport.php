@@ -33,7 +33,8 @@ class PreorderBookExport implements FromCollection, WithHeadings, WithMapping
             $product->name,
             ((int) $product->stock),
             ((int) $product->stock_need),
-            ((int) $product->stock_need - $product->stock),
+            ((int) $product->total_stock_need <= 0 ? 0 : $product->total_stock_need),
+            ((int) $product->total_stock_more <= 0 ? 0 : $product->total_stock_more),
         ];
     }
 
@@ -45,6 +46,7 @@ class PreorderBookExport implements FromCollection, WithHeadings, WithMapping
             'Stok Tersedia',
             'Stok Yang Diorder',
             'Stok Kosong',
+            'Stok Yang Belum Diorder',
         ];
     }
 }

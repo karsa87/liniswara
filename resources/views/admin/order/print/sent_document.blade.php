@@ -103,13 +103,31 @@
 
                     <!--begin::Order details-->
                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                        {{-- <div class="flex-root d-flex flex-column">
-                            <h2>Catatan</h2>
-                            <span class="fs-5">
-                                {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
-                            </span>
+                        <div class="flex-root d-flex flex-column">
+                            @if (optional($order->collector)->billing_notes || $order->notes)
+                                @if (optional($order->collector)->billing_notes)
+                                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                                        <div class="flex-root d-flex flex-column">
+                                            <h4>Catatan</h4>
+                                            <span class="fs-8">
+                                                {!! html_entity_decode(optional($order->collector)->billing_notes ?? '') !!}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if ($order->notes)
+                                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold mt-5">
+                                        <div class="flex-root d-flex flex-column">
+                                            <h4>Catatan Penjualan</h4>
+                                            <span class="fs-8">
+                                                {!! html_entity_decode($order->notes) !!}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
-                         --}}
                         <div class="fs-8 flex-root d-flex flex-column">
                             <h4>Perhatian</h4>
                             <ul>

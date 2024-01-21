@@ -106,9 +106,12 @@
                                     @endforeach
                                 </tbody>
                                 <tbody>
+                                    @php
+                                        $subtotal = $preorder->details->sum('total');
+                                    @endphp
                                     <tr>
                                         <td colspan="5" class="text-end fs-7 pb-1 pt-1">Subtotal</td>
-                                        <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($preorder->subtotal, 0, 'Rp. ') }}</td>
+                                        <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($subtotal, 0, 'Rp. ') }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="5" class="text-end fs-7 pb-1 pt-1">
@@ -116,7 +119,7 @@
                                             @php
                                                 $discountPrice = $preorder->discount_price;
                                                 if ($preorder->discount_type == \App\Enums\Preorder\DiscountTypeEnum::DISCOUNT_PERCENTAGE) {
-                                                    $discountPrice = $preorder->subtotal * ($preorder->discount_percentage / 100);
+                                                    $discountPrice = $subtotal * ($preorder->discount_percentage / 100);
                                                     echo '<br>' . $preorder->discount_percentage . '% ';
                                                 }
                                             @endphp
@@ -140,7 +143,7 @@
                                     <tr>
                                         <td colspan="5" class="text-dark fw-bolder text-end fs-5 pb-1 pt-1">Total</td>
                                         <td class="text-dark fw-bolder text-end fs-5 pb-1 pt-1">
-                                            {{ $util->format_currency($preorder->total_amount + $preorder->tax_amount + $preorder->shipping_price, 0, 'Rp. ') }}
+                                            {{ $util->format_currency($subtotal - $discountPrice + $preorder->tax_amount + $preorder->shipping_price, 0, 'Rp. ') }}
                                         </td>
                                     </tr>
                                 </tbody>

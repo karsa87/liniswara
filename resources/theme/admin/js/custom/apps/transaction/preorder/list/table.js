@@ -64,8 +64,7 @@ var KTPreordersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'asc']],
-            stateSave: true,
+            order: [[0, 'desc']],
             ajax: {
                 url: table.dataset.url,
                 "data": function ( d ) {

@@ -28,18 +28,40 @@ class PreorderBookController extends Controller
                 // Key is the alias, value is the sub-select
                 'stock_need' => PreorderDetail::query()
                     // You can use eloquent methods here
-                    ->selectRaw('(sum(qty) - sum(qty_order))')
+                    ->selectRaw('(sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0)))')
                     ->whereColumn('product_id', 'products.id')
-                    ->whereRaw('qty != qty_order')
-                    ->groupBy('product_id'),
-            ])
-                ->havingRaw('stock < stock_need');
+                    ->whereRaw('qty != qty_order'),
+                'total_stock_need' => PreorderDetail::query()
+                    // You can use eloquent methods here
+                    ->selectRaw('((sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))) - IFNULL(products.stock, 0))')
+                    ->whereColumn('product_id', 'products.id')
+                    ->whereRaw('qty != qty_order'),
+                'total_stock_more' => PreorderDetail::query()
+                    // You can use eloquent methods here
+                    ->selectRaw('(IFNULL(products.stock, 0) - (sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))))')
+                    ->whereColumn('product_id', 'products.id')
+                    ->whereRaw('qty != qty_order'),
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qProduct) use ($q) {
                     $qProduct->whereLike('name', $q)
                         ->orWhereLike('code', $q);
                 });
+            }
+
+            if (is_numeric($request->input('order.0.column'))) {
+                $column = $request->input('order.0.column');
+                $columnData = $request->input("columns.$column.data");
+                $sorting = $request->input('order.0.dir');
+
+                if ($sorting == 'desc') {
+                    $query->orderBy($columnData, 'DESC');
+                } else {
+                    $query->orderBy($columnData, 'ASC');
+                }
+            } else {
+                $query->orderBy('total_stock_need', 'DESC');
             }
 
             $totalAll = (clone $query)->count();
@@ -67,12 +89,20 @@ class PreorderBookController extends Controller
             // Key is the alias, value is the sub-select
             'stock_need' => PreorderDetail::query()
                 // You can use eloquent methods here
-                ->selectRaw('(sum(qty) - sum(qty_order))')
+                ->selectRaw('(sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0)))')
                 ->whereColumn('product_id', 'products.id')
-                ->whereRaw('qty != qty_order')
-                ->groupBy('product_id'),
-        ])
-            ->havingRaw('stock < stock_need');
+                ->whereRaw('qty != qty_order'),
+            'total_stock_need' => PreorderDetail::query()
+                // You can use eloquent methods here
+                ->selectRaw('((sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))) - IFNULL(products.stock, 0))')
+                ->whereColumn('product_id', 'products.id')
+                ->whereRaw('qty != qty_order'),
+            'total_stock_more' => PreorderDetail::query()
+                // You can use eloquent methods here
+                ->selectRaw('(IFNULL(products.stock, 0) - (sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))))')
+                ->whereColumn('product_id', 'products.id')
+                ->whereRaw('qty != qty_order'),
+        ])->orderBy('total_stock_need', 'DESC');
 
         if ($request->product_id) {
             $query->where('id', $request->product_id);
@@ -80,6 +110,8 @@ class PreorderBookController extends Controller
 
         $preorders = $query->get();
 
-        return Excel::download(new PreorderBookExport($preorders), 'preorder_book.xlsx');
+        $now = date('d-m-Y-H-i');
+
+        return Excel::download(new PreorderBookExport($preorders), "Preorder Book - $now.xlsx");
     }
 }

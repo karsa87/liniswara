@@ -42,7 +42,7 @@ var KTUsersPreorderBooksList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'desc']],
+            order: [[4, 'desc']],
             stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -52,7 +52,8 @@ var KTUsersPreorderBooksList = function () {
                 { data: 'product.name', orderable: false },
                 { data: 'stock' },
                 { data: 'stock_need' },
-                { data: 'total_qty' },
+                { data: 'total_stock_need' },
+                { data: 'total_stock_more' },
             ],
             columnDefs: [
                 {
@@ -76,7 +77,15 @@ var KTUsersPreorderBooksList = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        return row.total_qty.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        return row.total_stock_need.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    },
+                },
+                {
+                    targets: 5,
+                    orderable: false,
+                    className: 'text-end',
+                    render: function (data, type, row) {
+                        return row.total_stock_more.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                     },
                 },
             ],
