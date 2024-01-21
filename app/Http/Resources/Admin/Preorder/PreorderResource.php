@@ -184,6 +184,7 @@ class PreorderResource extends JsonResource
             'details' => $details,
             'created_by' => $createdBy,
             'updated_by' => $updatedBy,
+            'total_details' => $this->total_details ?? 0,
         ];
     }
 }

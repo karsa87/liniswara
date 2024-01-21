@@ -83,7 +83,7 @@ var KTPreordersList = function () {
                 // { data: null },
                 { data: 'marketing' },
                 { data: 'status' },
-                { data: 'method_payment' },
+                { data: 'total_details', orderable: false },
                 { data: 'total_amount' },
                 { data: null },
             ],
@@ -201,16 +201,11 @@ var KTPreordersList = function () {
                 {
                     targets: 4,
                     render: function (data, type, row) {
-                        let result = '';
-                        if (row.method_payment == 1 || row.method_payment == "1") {
-                            result +=`<span class="badge badge-success">Cash</span>`;
-                        } else if (row.method_payment == 2 || row.method_payment == "2") {
-                            result +=`<span class="badge badge-danger">Hutang</span>`;
-                        } else if (row.method_payment == 3 || row.method_payment == "3") {
-                            result +=`<span class="badge badge-info">Freelance</span>`;
+                        let total_amount = 0;
+                        if (typeof row.total_details == 'number') {
+                            total_amount = row.total_details.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                         }
-
-                        return result;
+                        return `<span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span>`;
                     }
                 },
                 {
@@ -230,7 +225,16 @@ var KTPreordersList = function () {
                             status +=`<span class="badge badge-primary">Sebagian Terbayar</span>`;
                         }
 
-                        return `<span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span><br>${status}`;
+                        let method_payment = '';
+                        if (row.method_payment == 1 || row.method_payment == "1") {
+                            method_payment +=`<span class="badge badge-success">Cash</span>`;
+                        } else if (row.method_payment == 2 || row.method_payment == "2") {
+                            method_payment +=`<span class="badge badge-danger">Hutang</span>`;
+                        } else if (row.method_payment == 3 || row.method_payment == "3") {
+                            method_payment +=`<span class="badge badge-info">Freelance</span>`;
+                        }
+
+                        return `<span class="fw-bold text-gray-600 text-hover-primary">${total_amount}</span><br>${status}<br>${method_payment}`;
                     }
                 },
                 {

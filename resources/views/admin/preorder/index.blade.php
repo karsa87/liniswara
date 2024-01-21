@@ -180,8 +180,8 @@
                     <th class="min-w-125px">Customer</th>
                     <th class="min-w-50px">Input <br> Marketing</th>
                     <th class="min-w-75px">Status Order</th>
-                    <th class="min-w-75px">Method <br> Pembayaran</th>
-                    <th class="min-w-100px">Total</th>
+                    <th class="min-w-100px">Total <br> Sisa</th>
+                    <th class="min-w-100px">Total <br> Semua</th>
                     <th class="text-end min-w-50px">Actions</th>
                 </tr>
             </thead>
