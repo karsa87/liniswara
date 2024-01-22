@@ -153,6 +153,14 @@ class PreorderResource extends JsonResource
             }
         }
 
+        $totalDetails = 0;
+        foreach ($this->details as $detail) {
+            $totalPrice = ($detail->qty - $detail->qty_order) * $detail->price;
+            $totalDiscount = ($detail->qty - $detail->qty_order) * $detail->discount;
+
+            $totalDetails += $totalPrice - $totalDiscount;
+        }
+
         return [
             'id' => $this->id,
             'date' => Carbon::parse($this->date)->toDateString(),
@@ -184,7 +192,7 @@ class PreorderResource extends JsonResource
             'details' => $details,
             'created_by' => $createdBy,
             'updated_by' => $updatedBy,
-            'total_details' => $this->total_details ?? 0,
+            'total_details' => $totalDetails,
         ];
     }
 }

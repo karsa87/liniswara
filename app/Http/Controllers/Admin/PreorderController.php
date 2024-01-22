@@ -41,13 +41,11 @@ class PreorderController extends Controller
                 'updatedBy',
                 'customer.user',
                 'branch',
+                'details' => function ($qDetail) {
+                    $qDetail->whereRaw('qty != qty_order');
+                },
                 'shipping',
             ])
-                ->withSum([
-                    'details as total_details' => function ($qDetail) {
-                        $qDetail->whereRaw('qty != qty_order');
-                    },
-                ], 'total')
                 ->whereHas('details', function ($qDetail) {
                     $qDetail->whereRaw('qty != qty_order');
                 });

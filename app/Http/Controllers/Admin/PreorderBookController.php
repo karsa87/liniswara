@@ -41,7 +41,7 @@ class PreorderBookController extends Controller
                     ->selectRaw('(IFNULL(products.stock, 0) - (sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))))')
                     ->whereColumn('product_id', 'products.id')
                     ->whereRaw('qty != qty_order'),
-            ]);
+            ])->has('preorder_details');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qProduct) use ($q) {
@@ -102,7 +102,7 @@ class PreorderBookController extends Controller
                 ->selectRaw('(IFNULL(products.stock, 0) - (sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))))')
                 ->whereColumn('product_id', 'products.id')
                 ->whereRaw('qty != qty_order'),
-        ])->orderBy('total_stock_need', 'DESC');
+        ])->orderBy('total_stock_need', 'DESC')->has('preorder_details');
 
         if ($request->product_id) {
             $query->where('id', $request->product_id);

@@ -87,28 +87,34 @@
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
+                                    @php
+                                        $subtotal = 0;
+                                    @endphp
                                     @foreach ($preorder->details as $i => $detail)
+                                    @php
+                                        $totalNeed = $detail->qty - $detail->qty_order;
+                                        $totalDetail = ($totalNeed * $detail->price) - ($totalNeed * $detail->dicount);
+                                        $subtotal += $totalDetail;
+                                    @endphp
                                         <tr>
                                             <td class="fs-8 pb-1 pt-1 text-center">{{ $i+1 }}</td>
                                             <td class="fs-8 pb-1 pt-1">{{ $detail->product->code }}</td>
                                             <td class="fs-8 pb-1 pt-1">{{ $detail->product->name }}</td>
                                             <td class="text-end fs-8 pb-1 pt-1 text-center">
-                                                {{ $detail->qty }}
-                                                <span class="fs-9 text-danger d-block">({{ $detail->qty - $detail->qty_order }})</span>
+                                                {{ $totalNeed }}
+                                                {{-- {{ $detail->qty }} --}}
+                                                {{-- <span class="fs-9 text-danger d-block">({{ $totalNeed }})</span> --}}
                                             </td>
                                             <td class="text-end fs-8 pb-1 pt-1">{{ $util->format_currency($detail->price, 0, 'Rp. ') }}</td>
                                             {{-- <td class="text-end fs-8 pb-1 pt-1">
                                                 {{ $util->format_currency($detail->discount, 0, 'Rp. ') }}
                                                 <div class="fs-7 text-muted">{{ $detail->discount_description }}</div>
                                             </td> --}}
-                                            <td class="text-end fs-8 pb-1 pt-1">{{ $util->format_currency($detail->total, 0, 'Rp. ') }}</td>
+                                            <td class="text-end fs-8 pb-1 pt-1">{{ $util->format_currency($totalDetail, 0, 'Rp. ') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tbody>
-                                    @php
-                                        $subtotal = $preorder->details->sum('total');
-                                    @endphp
                                     <tr>
                                         <td colspan="5" class="text-end fs-7 pb-1 pt-1">Subtotal</td>
                                         <td class="text-end fs-7 pb-1 pt-1">{{ $util->format_currency($subtotal, 0, 'Rp. ') }}</td>
