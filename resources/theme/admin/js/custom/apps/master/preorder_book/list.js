@@ -53,7 +53,7 @@ var KTUsersPreorderBooksList = function () {
                 { data: 'stock' },
                 { data: 'stock_need' },
                 { data: 'total_stock_need' },
-                { data: 'total_stock_more' },
+                // { data: 'total_stock_more' },
             ],
             columnDefs: [
                 {
@@ -80,14 +80,14 @@ var KTUsersPreorderBooksList = function () {
                         return row.total_stock_need.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                     },
                 },
-                {
-                    targets: 5,
-                    orderable: false,
-                    className: 'text-end',
-                    render: function (data, type, row) {
-                        return row.total_stock_more.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                    },
-                },
+                // {
+                //     targets: 5,
+                //     orderable: false,
+                //     className: 'text-end',
+                //     render: function (data, type, row) {
+                //         return row.total_stock_more.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                //     },
+                // },
             ],
         });
 

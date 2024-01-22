@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\Order\StatusEnum;
+use App\Enums\Preorder\StatusPaymentEnum;
 use App\Http\Resources\Admin\Order\OrderResource;
 use App\Models\Order;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -30,11 +32,24 @@ class OrderService
         ]);
 
         if ($statusOrder) {
-            if (is_array($statusOrder)) {
-                $query->whereIn('status', $statusOrder);
+            if (
+                in_array(StatusEnum::PACKING, $statusOrder)
+                && in_array(StatusEnum::SENT, $statusOrder)
+            ) {
+                $query->where(function ($qOrder) use ($statusOrder) {
+                    $qOrder->whereIn('status', $statusOrder)
+                        ->orWhere(function ($qOrder2) {
+                            $qOrder2->where('status', StatusEnum::DONE)->where('status_payment', '!=', StatusPaymentEnum::PAID);
+                        });
+                });
             } else {
-                $query->where('status', $statusOrder);
+                if (is_array($statusOrder)) {
+                    $query->whereIn('status', $statusOrder);
+                } else {
+                    $query->where('status', $statusOrder);
+                }
             }
+
         } else {
             $status = $params['search']['status'];
             if ($status) {

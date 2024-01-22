@@ -77,7 +77,7 @@
                     <th class="min-w-125px">Stok Tersedia</th>
                     <th class="min-w-125px">Stok Yang Diorder</th>
                     <th class="min-w-125px">Stok Kosong</th>
-                    <th class="min-w-125px">Stok Belum Diorder</th>
+                    {{-- <th class="min-w-125px">Stok Belum Diorder</th> --}}
                 </tr>
             </thead>
             <tbody class="fw-semibold text-gray-600">
