@@ -89,15 +89,16 @@
                                 <tbody class="fw-semibold text-gray-600">
                                     @php
                                         $subtotal = 0;
+                                        $i = 1;
                                     @endphp
-                                    @foreach ($preorder->details as $i => $detail)
+                                    @foreach ($preorder->details->sortBy('product.code') as $detail)
                                     @php
                                         $totalNeed = $detail->qty - $detail->qty_order;
                                         $totalDetail = ($totalNeed * $detail->price) - ($totalNeed * $detail->dicount);
                                         $subtotal += $totalDetail;
                                     @endphp
                                         <tr>
-                                            <td class="fs-8 pb-1 pt-1 text-center">{{ $i+1 }}</td>
+                                            <td class="fs-8 pb-1 pt-1 text-center">{{ $i++ }}</td>
                                             <td class="fs-8 pb-1 pt-1">{{ $detail->product->code }}</td>
                                             <td class="fs-8 pb-1 pt-1">{{ $detail->product->name }}</td>
                                             <td class="text-end fs-8 pb-1 pt-1 text-center">

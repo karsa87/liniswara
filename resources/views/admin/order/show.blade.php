@@ -378,9 +378,12 @@
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                    @foreach ($order->details as $i => $detail)
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($order->details->sortBy('product.code') as $detail)
                                         <tr>
-                                            <td class="text-center">{{ $i+1 }}</td>
+                                            <td class="text-center">{{ $i++ }}</td>
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     @if (optional($detail->product)->thumbnail)
