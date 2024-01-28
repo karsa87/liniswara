@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CollectorController;
 use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\Log\HistoryController;
@@ -51,9 +52,24 @@ Route::middleware(['web'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('admin.layouts.admin');
-    })->name('dashboard');
+    Route::get('/', [
+        DashboardController::class, 'index',
+    ])->name('dashboard');
+    Route::get('/dashboard/widget/preorder', [
+        DashboardController::class, 'widget_preorder',
+    ])->name('dashboard.widget.preorder');
+    Route::get('/dashboard/widget/order', [
+        DashboardController::class, 'widget_order',
+    ])->name('dashboard.widget.order');
+    Route::get('/dashboard/widget/zone', [
+        DashboardController::class, 'widget_zone',
+    ])->name('dashboard.widget.zone');
+    Route::get('/dashboard/widget/sales', [
+        DashboardController::class, 'widget_sales',
+    ])->name('dashboard.widget.sales');
+    Route::get('/dashboard/widget/product', [
+        DashboardController::class, 'widget_product',
+    ])->name('dashboard.widget.product');
 
     Route::name('permission.')->prefix('permission/')->group(function () {
         Route::get('/', [
