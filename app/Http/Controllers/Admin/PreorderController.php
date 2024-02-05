@@ -94,6 +94,8 @@ class PreorderController extends Controller
                 } else {
                     $query->orderBy($columnData, 'ASC');
                 }
+            } else {
+                $query->orderBy('created_at', 'DESC');
             }
 
             $totalAll = (clone $query)->count();

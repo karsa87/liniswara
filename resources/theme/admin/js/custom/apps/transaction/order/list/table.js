@@ -76,7 +76,7 @@ var KTPreordersList = function () {
                 }
             },
             columns: [
-                { data: 'invoice_number' },
+                { data: 'id' },
                 { data: null },
                 { data: null },
                 { data: 'marketing' },
@@ -403,7 +403,6 @@ var KTPreordersList = function () {
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
-        filterSearch.dispatchEvent(new KeyboardEvent('keyup',  {'key':''}));
     }
 
     // Filter Datatable
