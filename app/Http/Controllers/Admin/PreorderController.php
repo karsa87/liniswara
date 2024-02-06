@@ -15,6 +15,7 @@ use App\Models\Preorder;
 use App\Models\PreorderDetail;
 use App\Models\PreorderShipping;
 use App\Services\TrackExpeditionService;
+use App\Services\WhatsappService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -227,6 +228,11 @@ class PreorderController extends Controller
             $preorder->save();
 
             DB::commit();
+
+            app()->make(WhatsappService::class)->sentCreatedPreorderMessage(
+                $preorder->customer->user->phone_number ?? '',
+                $preorder
+            );
         } catch (\Throwable $th) {
             DB::rollBack();
 

@@ -133,6 +133,13 @@ return [
             'level' => 'info',
             'replace_placeholders' => true,
         ],
+
+        'whatsapp' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/whatsapp.log'),
+            'level' => 'info',
+            'replace_placeholders' => true,
+        ],
     ],
 
 ];

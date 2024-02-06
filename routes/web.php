@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,14 @@ Route::middleware(['web'])->group(function () {
     Route::get('logout', [
         AuthController::class, 'logout',
     ])->name('auth.logout');
+
+    Route::get('/po-invoice/{encrypt}', [
+        InvoiceController::class, 'po_invoice',
+    ])->name('customer.po_invoice');
+
+    Route::get('/po-order/{encrypt}', [
+        InvoiceController::class, 'po_order',
+    ])->name('customer.po_order');
 });
 
 Route::middleware('auth')->group(function () {

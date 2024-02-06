@@ -21,6 +21,7 @@ use App\Models\Product;
 use App\Services\OrderService;
 use App\Services\StockHistoryLogService;
 use App\Services\TrackExpeditionService;
+use App\Services\WhatsappService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -263,6 +264,11 @@ class OrderController extends Controller
             $order->skipLog()->save();
 
             DB::commit();
+
+            app()->make(WhatsappService::class)->sentMigrationMessage(
+                $order->customer->user->phone_number ?? '',
+                $order
+            );
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -358,6 +364,7 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
+            $sentNotifResi = false;
             $input = [
                 'date' => Carbon::parse($request->input('order_date'))->toDateString(),
                 'paid_at' => $request->input('order_paid_at') ? Carbon::parse($request->input('order_paid_at'))->toDateString() : null,
@@ -486,6 +493,7 @@ class OrderController extends Controller
                         'customer_address',
                     ]);
                     $shipping = $order->shipping ?: new OrderShipping();
+                    $sentNotifResi = $shipping->exists ? false : true;
                     $shipping->fill([
                         'order_id' => $order->id,
                         'resi' => str($request->order_resi)->trim()->upper(),
@@ -529,6 +537,13 @@ class OrderController extends Controller
             $order->save();
 
             DB::commit();
+
+            if ($sentNotifResi) {
+                app()->make(WhatsappService::class)->sentInvoiceResiMessage(
+                    $order->customer->user->phone_number ?? '',
+                    $order
+                );
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -590,6 +605,7 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
+            $sentNotifResi = false;
             $order = Order::with('shipping', 'customer', 'customer_address')->find($id);
             if (empty($order)) {
                 return response()->json([
@@ -621,6 +637,7 @@ class OrderController extends Controller
                 ]);
 
                 $shipping = $order->shipping ? $order->shipping : new OrderShipping();
+                $sentNotifResi = $shipping->exists ? false : true;
                 $shipping->fill([
                     'order_id' => $order->id,
                     'resi' => str($request->order_resi)->trim()->upper(),
@@ -659,6 +676,13 @@ class OrderController extends Controller
             }
 
             DB::commit();
+
+            if ($sentNotifResi) {
+                app()->make(WhatsappService::class)->sentInvoiceResiMessage(
+                    $order->customer->user->phone_number ?? '',
+                    $order
+                );
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
 

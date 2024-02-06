@@ -13,6 +13,7 @@ use App\Models\PreorderDetail;
 use App\Models\Product;
 use App\Services\OrderService;
 use App\Services\PreorderService;
+use App\Services\WhatsappService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,6 +29,15 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        try {
+            app()->make(WhatsappService::class)->sentMigrationMessage(
+                '08989393664',
+                Order::find(143)
+            );
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+        dd('lolos');
         $statusOrder = [
             StatusEnum::SENT,
             StatusEnum::PACKING,
