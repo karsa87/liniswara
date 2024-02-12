@@ -56,7 +56,7 @@ class PreorderResource extends JsonResource
         }
 
         $customerAddress = null;
-        if ($this->customer) {
+        if ($this->customer_address) {
             $customerAddress = [
                 'id' => $this->customer_address->id,
                 'name' => $this->customer_address->name,
