@@ -26,7 +26,6 @@ class ListRequest extends FormRequest
             'q' => [
                 'nullable',
                 'string',
-                'alpha_num',
             ],
             'limit' => [
                 'nullable',
@@ -41,7 +40,12 @@ class ListRequest extends FormRequest
             'order_column' => [
                 'nullable',
                 'string',
-                'alpha_num',
+                Rule::in([
+                    'stock',
+                    'price',
+                    'price_zone_2',
+                    'name',
+                ]),
             ],
             'order_sort' => [
                 'nullable',

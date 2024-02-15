@@ -585,10 +585,14 @@ class PreorderController extends Controller
         $detailTrack = null;
         if (optional($preorder->shipping)->expedition) {
             $expedition = $preorder->shipping->expedition;
-            $detailTrack = $this->trackExpeditionService->track(
+            $track = $this->trackExpeditionService->track(
                 $expedition->courier,
                 $preorder->shipping->resi
-            )['data'];
+            );
+
+            if ($track) {
+                $detailTrack = $track['data'];
+            }
         }
 
         return view('admin.preorder.track', [

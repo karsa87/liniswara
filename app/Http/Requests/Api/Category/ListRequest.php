@@ -25,7 +25,6 @@ class ListRequest extends FormRequest
             'q' => [
                 'nullable',
                 'string',
-                'alpha_num',
             ],
         ];
     }

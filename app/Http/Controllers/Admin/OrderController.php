@@ -759,10 +759,14 @@ class OrderController extends Controller
         $detailTrack = null;
         if (optional($order->shipping)->expedition) {
             $expedition = $order->shipping->expedition;
-            $detailTrack = $this->trackExpeditionService->track(
+            $track = $this->trackExpeditionService->track(
                 $expedition->courier,
                 $order->shipping->resi
-            )['data'];
+            );
+
+            if ($track) {
+                $detailTrack = $track['data'];
+            }
         }
 
         return view('admin.order.track', [

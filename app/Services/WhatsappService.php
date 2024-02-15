@@ -66,7 +66,7 @@ class WhatsappService
             $response->throw()->json();
         } catch (\Throwable $th) {
             Log::stack(['whatsapp'])->error($th->getMessage(), $params);
-            throw new Exception($th->getMessage(), 1);
+            // throw new Exception($th->getMessage(), 1);
         }
     }
 
@@ -121,7 +121,7 @@ class WhatsappService
             $response->throw()->json();
         } catch (\Throwable $th) {
             Log::stack(['whatsapp'])->error($th->getMessage(), $params);
-            throw new Exception($th->getMessage(), 1);
+            // throw new Exception($th->getMessage(), 1);
         }
     }
 
@@ -176,7 +176,7 @@ class WhatsappService
             $response->throw()->json();
         } catch (\Throwable $th) {
             Log::stack(['whatsapp'])->error($th->getMessage(), $params);
-            throw new Exception($th->getMessage(), 1);
+            // throw new Exception($th->getMessage(), 1);
         }
     }
 
@@ -185,7 +185,7 @@ class WhatsappService
         $setting = Setting::where('key', SettingKeyEnum::WHATSAPP_API_KEY)->first();
         if (empty(optional($setting)->value)) {
             Log::stack(['whatsapp'])->warning("Whatsapp hasn't token");
-            throw new Exception("Whatsapp hasn't token", 1);
+            // throw new Exception("Whatsapp hasn't token", 1);
         }
 
         return $setting->value;
