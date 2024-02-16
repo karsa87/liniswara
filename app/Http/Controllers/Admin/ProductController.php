@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\ProductStoreUpdateRequest;
 use App\Http\Resources\Admin\Product\ProductResource;
 use App\Jobs\Import\ProductImportJob;
+use App\Models\Category;
 use App\Models\File;
 use App\Models\Import;
 use App\Models\Product;
@@ -46,9 +47,21 @@ class ProductController extends Controller
             }
 
             if ($categoryId = $request->input('search.category_id')) {
-                $query->whereHas('categories', function ($qCategory) use ($categoryId) {
-                    $qCategory->where('id', $categoryId);
-                });
+                // $query->whereHas('categories', function ($qCategory) use ($categoryId) {
+                //     $qCategory->where('id', $categoryId);
+                // });
+                $category = Category::with('child')->where('id', $categoryId)->first();
+                if ($category) {
+                    $allCategory = collect();
+                    $allCategory->push($category);
+                    if ($category->child) {
+                        $allCategory = $allCategory->merge($category->child);
+                    }
+
+                    $query->whereHas('categories', function ($qCategory) use ($allCategory) {
+                        $qCategory->whereIn('category_id', $allCategory->pluck('id'));
+                    });
+                }
             }
 
             if (is_numeric($request->input('order.0.column'))) {
@@ -370,10 +383,19 @@ class ProductController extends Controller
         ]);
 
         if ($request->search_category_id) {
-            $qCategoryId = $request->search_category_id;
-            $query->whereHas('categories', function ($qCategory) use ($qCategoryId) {
-                $qCategory->where('category_id', $qCategoryId);
-            });
+            $categoryId = $request->search_category_id;
+            $category = Category::with('child')->where('id', $categoryId)->first();
+            if ($category) {
+                $allCategory = collect();
+                $allCategory->push($category);
+                if ($category->child) {
+                    $allCategory = $allCategory->merge($category->child);
+                }
+
+                $query->whereHas('categories', function ($qCategory) use ($allCategory) {
+                    $qCategory->whereIn('category_id', $allCategory->pluck('id'));
+                });
+            }
         }
 
         if ($q = $request->input('q')) {
