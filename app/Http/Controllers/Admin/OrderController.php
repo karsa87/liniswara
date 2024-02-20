@@ -493,7 +493,7 @@ class OrderController extends Controller
                         'customer_address',
                     ]);
                     $shipping = $order->shipping ?: new OrderShipping();
-                    $sentNotifResi = $shipping->exists ? false : true;
+                    $sentNotifResi = true;
                     $shipping->fill([
                         'order_id' => $order->id,
                         'resi' => str($request->order_resi)->trim()->upper(),
@@ -637,7 +637,7 @@ class OrderController extends Controller
                 ]);
 
                 $shipping = $order->shipping ? $order->shipping : new OrderShipping();
-                $sentNotifResi = $shipping->exists ? false : true;
+                $sentNotifResi = true;
                 $shipping->fill([
                     'order_id' => $order->id,
                     'resi' => str($request->order_resi)->trim()->upper(),

@@ -64,6 +64,8 @@ class WhatsappService
 
         try {
             $response->throw()->json();
+
+            Log::stack(['whatsapp'])->info('Success send notif WA create preorder : '.$preorder->invoice_number);
         } catch (\Throwable $th) {
             Log::stack(['whatsapp'])->error($th->getMessage(), $params);
             // throw new Exception($th->getMessage(), 1);
@@ -119,6 +121,8 @@ class WhatsappService
 
         try {
             $response->throw()->json();
+
+            Log::stack(['whatsapp'])->info('Success send notif WA migrasi ready : '.$order->invoice_number);
         } catch (\Throwable $th) {
             Log::stack(['whatsapp'])->error($th->getMessage(), $params);
             // throw new Exception($th->getMessage(), 1);
@@ -174,6 +178,8 @@ class WhatsappService
 
         try {
             $response->throw()->json();
+
+            Log::stack(['whatsapp'])->info('Success send notif WA send resi : '.$order->invoice_number);
         } catch (\Throwable $th) {
             Log::stack(['whatsapp'])->error($th->getMessage(), $params);
             // throw new Exception($th->getMessage(), 1);
