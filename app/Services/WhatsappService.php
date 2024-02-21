@@ -152,7 +152,7 @@ class WhatsappService
             .'untuk pesanan %s '
             .'*DOWNLOAD FAKTUR*  <br>'
             .'%s  <br>'
-            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $order->customer_address->name, $order->shipping->resi, $order->shipping->expedition->name, $order->invoice_number, html_entity_decode($order->notes), route('customer.po_order', [
+            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $order->customer_address->name, $order->invoice_number, $order->shipping->resi, $order->shipping->expedition->name, html_entity_decode($order->notes), route('customer.po_order', [
                 'encrypt' => $key,
             ])
         );
