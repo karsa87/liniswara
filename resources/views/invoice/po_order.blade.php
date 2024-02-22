@@ -212,6 +212,7 @@
                 <!-- begin::Actions-->
                 <div class="my-1 me-5">
                     <!-- begin::Pint-->
+                    <a href="{{ route('customer.po_order.track', [$key]) }}" class="btn btn-primary my-1 me-12">Tracking</a>
                     <button type="button" class="btn btn-success my-1 me-12 float-right" onclick="printArticle();">Print Invoice</button>
                     <!-- end::Pint-->
                 </div>

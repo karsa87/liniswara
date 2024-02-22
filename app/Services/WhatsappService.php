@@ -31,14 +31,18 @@ class WhatsappService
         $key = Str::ulid();
         Cache::put('user-invoice:'.$key, Crypt::encrypt($preorder->id));
 
+        $notes = strip_tags(html_entity_decode($preorder->notes), '<p>');
+        $notes = preg_replace('/<p[^>]*?>/', '', $notes);
+        $notes = preg_replace('/<\/p>/', '<br>', $notes);
+
         $message = sprintf(
             '*PESANAN DIBUAT* <br>'
             .'Hallo %s,  <br>'
             .'Pesanan anda dengan no faktur *%s* diproses untuk pengiriman. '
-            .'untuk pesanan %s '
+            .'untuk pesanan : <p>%s</p>'
             .'*DOWNLOAD FAKTUR*  <br>'
             .'%s  <br>'
-            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $preorder->customer_address->name, $preorder->invoice_number, html_entity_decode($preorder->notes), route('customer.po_invoice', [
+            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $preorder->customer_address->name, $preorder->invoice_number, $notes, route('customer.po_invoice', [
                 'encrypt' => $key,
             ])
         );
@@ -88,14 +92,18 @@ class WhatsappService
         $key = Str::ulid();
         Cache::put('user-invoice:'.$key, Crypt::encrypt($order->id));
 
+        $notes = strip_tags(html_entity_decode($order->notes), '<p>');
+        $notes = preg_replace('/<p[^>]*?>/', '', $notes);
+        $notes = preg_replace('/<\/p>/', '<br>', $notes);
+
         $message = sprintf(
             '*PESANAN DIPROSES UNTUK PENGIRIMAN* <br>'
             .'Hallo %s,  <br>'
             .'Pesanan anda dengan no faktur *%s* diproses untuk pengiriman. '
-            .'untuk pesanan %s '
+            .'untuk pesanan : <p>%s</p>'
             .'*DOWNLOAD FAKTUR*  <br>'
             .'%s  <br>'
-            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $order->customer_address->name, $order->invoice_number, html_entity_decode($order->notes), route('customer.po_order', [
+            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $order->customer_address->name, $order->invoice_number, $notes, route('customer.po_order', [
                 'encrypt' => $key,
             ])
         );
@@ -145,14 +153,18 @@ class WhatsappService
         $key = Str::ulid();
         Cache::put('user-invoice:'.$key, Crypt::encrypt($order->id));
 
+        $notes = strip_tags(html_entity_decode($order->notes), '<p>');
+        $notes = preg_replace('/<p[^>]*?>/', '', $notes);
+        $notes = preg_replace('/<\/p>/', '<br>', $notes);
+
         $message = sprintf(
             '*RESI DI KIRIM* <br>'
             .'Hallo %s,  <br>'
             .'Pesanan anda dengan no faktur *%s* telah dikirim dengan resi: %s melalui %s. '
-            .'untuk pesanan %s '
-            .'*DOWNLOAD FAKTUR*  <br>'
+            .'untuk pesanan : <p>%s</p>'
+            .'*DOWNLOAD FAKTUR & TRACKING*  <br>'
             .'%s  <br>'
-            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $order->customer_address->name, $order->invoice_number, $order->shipping->resi, $order->shipping->expedition->name, html_entity_decode($order->notes), route('customer.po_order', [
+            .'_(Pesan ini otomatis dikirim oleh sistem)_ ', $order->customer_address->name, $order->invoice_number, $order->shipping->resi, $order->shipping->expedition->name, $notes, route('customer.po_order', [
                 'encrypt' => $key,
             ])
         );

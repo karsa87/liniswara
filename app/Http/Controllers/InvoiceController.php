@@ -78,6 +78,45 @@ class InvoiceController extends Controller
 
         return view('invoice.po_order', [
             'order' => $order,
+            'key' => $key,
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function po_order_track(string $key)
+    {
+        $encrypt = Cache::get('user-invoice:'.$key);
+        if (empty($encrypt)) {
+            abort(404);
+        }
+
+        $id = Crypt::decrypt($encrypt);
+        $order = Order::with([
+            'shipping.expedition',
+        ])->find($id);
+
+        if (is_null($order)) {
+            return abort(404);
+        }
+
+        $detailTrack = null;
+        if (optional($order->shipping)->expedition) {
+            $expedition = $order->shipping->expedition;
+            $track = $this->trackExpeditionService->track(
+                $expedition->courier,
+                $order->shipping->resi
+            );
+
+            if ($track) {
+                $detailTrack = $track['data'];
+            }
+        }
+
+        return view('invoice.po_order_track', [
+            'order' => $order,
+            'detailTrack' => $detailTrack,
         ]);
     }
 }

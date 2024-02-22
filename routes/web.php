@@ -58,6 +58,10 @@ Route::middleware(['web'])->group(function () {
     Route::get('/po-order/{encrypt}', [
         InvoiceController::class, 'po_order',
     ])->name('customer.po_order');
+
+    Route::get('/po-order/{encrypt}/track', [
+        InvoiceController::class, 'po_order_track',
+    ])->name('customer.po_order.track');
 });
 
 Route::middleware('auth')->group(function () {
