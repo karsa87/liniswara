@@ -7,7 +7,7 @@
 <div class="d-flex flex-column gap-7 gap-lg-10">
     <div class="d-flex flex-wrap flex-stack gap-5 gap-lg-10">
         <!--begin::Button-->
-        <a href="{{ route('order.index') }}" class="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
+        <a href="{{ route('customer.po_order', [$key]) }}" class="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
             <i class="ki-duotone ki-left fs-2"></i>
         </a>
         <!--end::Button-->
