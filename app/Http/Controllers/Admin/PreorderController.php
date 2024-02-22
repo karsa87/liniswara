@@ -583,7 +583,7 @@ class PreorderController extends Controller
         }
 
         $detailTrack = null;
-        if (optional($preorder->shipping)->expedition) {
+        if (optional($preorder->shipping)->expedition && optional($preorder->shipping)->expedition->courier) {
             $expedition = $preorder->shipping->expedition;
             $track = $this->trackExpeditionService->track(
                 $expedition->courier,

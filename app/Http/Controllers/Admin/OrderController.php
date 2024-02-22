@@ -757,7 +757,7 @@ class OrderController extends Controller
         }
 
         $detailTrack = null;
-        if (optional($order->shipping)->expedition) {
+        if (optional($order->shipping)->expedition && optional($order->shipping)->expedition->courier) {
             $expedition = $order->shipping->expedition;
             $track = $this->trackExpeditionService->track(
                 $expedition->courier,
