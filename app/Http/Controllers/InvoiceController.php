@@ -117,6 +117,7 @@ class InvoiceController extends Controller
         return view('invoice.po_order_track', [
             'order' => $order,
             'detailTrack' => $detailTrack,
+            'key' => $key,
         ]);
     }
 }
