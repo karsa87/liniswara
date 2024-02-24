@@ -31,7 +31,10 @@ class WhatsappService
         $key = Str::ulid();
         Cache::put('user-invoice:'.$key, Crypt::encrypt($preorder->id));
 
-        $notes = strip_tags(html_entity_decode($preorder->notes), '<p>');
+        $notes = html_entity_decode($preorder->notes);
+        $notes = preg_replace('/&nbsp;/', '', $notes);
+        $notes = strip_tags($notes, '<p>');
+        $notes = preg_replace('/<p[^>]*?>/', '', $notes);
         $notes = preg_replace('/<p[^>]*?>/', '', $notes);
         $notes = preg_replace('/<\/p>/', '<br>', $notes);
 
@@ -92,7 +95,10 @@ class WhatsappService
         $key = Str::ulid();
         Cache::put('user-invoice:'.$key, Crypt::encrypt($order->id));
 
-        $notes = strip_tags(html_entity_decode($order->notes), '<p>');
+        $notes = html_entity_decode($order->notes);
+        $notes = preg_replace('/&nbsp;/', '', $notes);
+        $notes = strip_tags($notes, '<p>');
+        $notes = preg_replace('/<p[^>]*?>/', '', $notes);
         $notes = preg_replace('/<p[^>]*?>/', '', $notes);
         $notes = preg_replace('/<\/p>/', '<br>', $notes);
 
@@ -153,7 +159,10 @@ class WhatsappService
         $key = Str::ulid();
         Cache::put('user-invoice:'.$key, Crypt::encrypt($order->id));
 
-        $notes = strip_tags(html_entity_decode($order->notes), '<p>');
+        $notes = html_entity_decode($order->notes);
+        $notes = preg_replace('/&nbsp;/', '', $notes);
+        $notes = strip_tags($notes, '<p>');
+        $notes = preg_replace('/<p[^>]*?>/', '', $notes);
         $notes = preg_replace('/<p[^>]*?>/', '', $notes);
         $notes = preg_replace('/<\/p>/', '<br>', $notes);
 
