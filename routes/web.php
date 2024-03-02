@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -145,6 +146,30 @@ Route::middleware('auth')->group(function () {
             ->name('delete');
         Route::put('update/{id?}', [
             UserController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('area.')->prefix('area/')->group(function () {
+        Route::get('/', [
+            AreaController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            AreaController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            AreaController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            AreaController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            AreaController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            AreaController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
     });

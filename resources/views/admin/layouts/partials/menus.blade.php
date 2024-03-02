@@ -233,7 +233,7 @@
                 <!--end:Menu item-->
                 @endif
 
-                @if (auth()->user()->hasPermission(['branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
+                @if (auth()->user()->hasPermission(['area-view', 'branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
                 <!--begin:Menu item-->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['branch.', 'supplier.', 'expedition.', 'collector.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
@@ -303,6 +303,21 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Gudang</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        @endhasPermission
+
+                        @hasPermission('area-view')
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['area.']) ? 'active here' : '' }}" href="{{ route('area.index') }}"">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Area</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

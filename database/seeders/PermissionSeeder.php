@@ -20,6 +20,7 @@ class PermissionSeeder extends Seeder
         $this->createPermissionRole();
         $this->createPermissionUser();
         $this->createPermissionBranch();
+        $this->createPermissionArea();
         $this->createPermissionSetting();
         $this->createPermissionSupplier();
         $this->createPermissionCollector();
@@ -149,6 +150,46 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Gudang - Delete',
                 'key' => 'branch-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionArea()
+    {
+        $permissions = [
+            [
+                'name' => 'Area - Tambah',
+                'key' => 'area-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Area - Edit',
+                'key' => 'area-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Area - View',
+                'key' => 'area-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Area - Delete',
+                'key' => 'area-delete',
                 'role-slug' => [
                     'developer',
                     'super-admin',

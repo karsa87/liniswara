@@ -23,9 +23,6 @@
         <!--begin::Button-->
         <a href="{{ route('order.edit', $order->id) }}" class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
         <!--end::Button-->
-        <!--begin::Button-->
-        {{-- <a href="../../demo14/dist/apps/ecommerce/sales/add-order.html" class="btn btn-primary btn-sm">Add New Order</a> --}}
-        <!--end::Button-->
     </div>
     <!--begin::Order summary-->
     <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
