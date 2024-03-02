@@ -45,6 +45,7 @@ class PreorderController extends Controller
                 'details' => function ($qDetail) {
                     $qDetail->whereRaw('qty != qty_order');
                 },
+                'details.product',
                 'shipping',
             ])
                 ->whereHas('details', function ($qDetail) {

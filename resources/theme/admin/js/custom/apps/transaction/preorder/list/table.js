@@ -138,6 +138,9 @@ var KTPreordersList = function () {
                         }
 
                         result += `<br><span class="fs-7 text-muted">${row.notes}</span>`;
+                        result += `<br>Total Judul : <span class="badge badge-info">${row.details_count}</span>`;
+                        result += `<br>Ready : <span class="badge badge-success">${row.product_ready_count}</span>`;
+                        result += `<br>Not Ready : <span class="badge badge-warning">${row.product_not_ready_count}</span>`;
 
                         return result;
                     }

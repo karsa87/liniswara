@@ -161,6 +161,14 @@ class PreorderResource extends JsonResource
             $totalDetails += $totalPrice - $totalDiscount;
         }
 
+        $ready = $this->details->filter(function ($detail) {
+            return $detail->product->stock >= ($detail->qty - $detail->qty_order);
+        })->count();
+
+        $notReady = $this->details->filter(function ($detail) {
+            return $detail->product->stock < ($detail->qty - $detail->qty_order);
+        })->count();
+
         return [
             'id' => $this->id,
             'date' => Carbon::parse($this->date)->toDateString(),
@@ -193,6 +201,9 @@ class PreorderResource extends JsonResource
             'created_by' => $createdBy,
             'updated_by' => $updatedBy,
             'total_details' => $totalDetails,
+            'details_count' => $this->details->count(),
+            'product_ready_count' => $ready,
+            'product_not_ready_count' => $notReady,
         ];
     }
 }
