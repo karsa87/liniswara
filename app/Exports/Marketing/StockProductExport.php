@@ -13,6 +13,8 @@ class StockProductExport implements FromCollection, ShouldAutoSize, WithColumnFo
 {
     protected $products;
 
+    protected $no = 1;
+
     public function __construct($products)
     {
         $this->products = $products;
@@ -32,6 +34,7 @@ class StockProductExport implements FromCollection, ShouldAutoSize, WithColumnFo
     public function map($product): array
     {
         return [
+            $this->no++,
             $product['name'],
             $product['code'],
             $product['qty'],
@@ -45,6 +48,7 @@ class StockProductExport implements FromCollection, ShouldAutoSize, WithColumnFo
     public function headings(): array
     {
         return [
+            'No',
             'Nama Produk',
             'Kode Produk',
             'Jumlah Produk',

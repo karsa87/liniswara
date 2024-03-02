@@ -5,12 +5,16 @@ var KTAppStock = function () {
     const calculateTotal = () => {
         KTApp.showPageLoading();
         let totalAmountDetail = 0;
-        $('.amount_detail').each(function () {
-            let amount = $(this).text();
+        let no = 1;
+        $('[data-repeater-item]').each(function () {
+            let amount = $(this).find('.amount_detail').text();
             amount = amount.replace(/[^0-9]/g, "");
             amount = parseInt(amount);
             amount = isNaN(amount) ? 0 : amount;
             totalAmountDetail += amount;
+
+            $(this).find('.number_detail').text(no);
+            no++;
         });
 
         totalAmountDetail = typeof totalAmountDetail == 'number' ? totalAmountDetail : 0;
@@ -33,10 +37,12 @@ var KTAppStock = function () {
                 // Init select2 on new repeated items
                 initConditionsProductSelect2();
                 initConditionsQuantity();
+                calculateTotal();
             },
 
             hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
+                deleteElement();
+
                 calculateTotal();
             },
         });
@@ -97,10 +103,9 @@ var KTAppStock = function () {
                                 data = data[0];
                             }
 
-                            $(type).closest("tr").children()[1].innerHTML = data.code;
+                            $(type).closest("tr").children()[2].innerHTML = data.code;
 
-                            // $(type).closest("tr").children()[2].querySelector('input.stock_detail_qty').value = 1;
-                            $(type).closest("tr").children()[3].querySelector('span').innerHTML = data.stock;
+                            $(type).closest("tr").children()[4].querySelector('span').innerHTML = data.stock;
 
                             let price = data.price;
                             let discount = data.discount;
@@ -109,25 +114,25 @@ var KTAppStock = function () {
                                 discount = data.discount_zone_2;
                             }
 
-                            $(type).closest("tr").children()[4].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                            $(type).closest("tr").children()[4].querySelector('input.stock_details_price').value = price;
+                            $(type).closest("tr").children()[5].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[5].querySelector('input.stock_details_price').value = price;
 
                             let total = (price * 1);
-                            $(type).closest("tr").children()[5].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
                             $(this).closest("tr").find('input.stock_detail_qty').removeAttr('disabled');
                             $(this).closest("tr").find('input.kt_ecommerce_stock_estimation_date').removeAttr('disabled');
                             calculateTotal();
                         } else {
-                            $(type).closest("tr").children()[1].innerHTML = '-';
-                            $(type).closest("tr").children()[2].querySelector('input.stock_detail_qty').value = 0;
-
-                            $(type).closest("tr").children()[3].querySelector('span').innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[2].innerHTML = '-';
+                            $(type).closest("tr").children()[3].querySelector('input.stock_detail_qty').value = 0;
 
                             $(type).closest("tr").children()[4].querySelector('span').innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                            $(type).closest("tr").children()[4].querySelector('input.stock_details_price').value = 0;
 
-                            $(type).closest("tr").children()[5].innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[5].querySelector('span').innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[5].querySelector('input.stock_details_price').value = 0;
+
+                            $(type).closest("tr").children()[6].innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
                             $(this).closest("tr").find('input.stock_detail_qty').attr('disabled');
                             $(this).closest("tr").find('input.kt_ecommerce_stock_estimation_date').attr('disabled');
@@ -165,7 +170,7 @@ var KTAppStock = function () {
             }
 
             let total = (price * qty) - (discount * qty);
-            $(this).closest("tr").children()[5].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            $(this).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
             calculateTotal();
         });
@@ -278,8 +283,8 @@ var KTAppStock = function () {
                         data = data[0];
                     }
 
-                    $(type).closest("tr").children()[1].innerHTML = data.code;
-                    $(type).closest("tr").children()[3].querySelector('span').innerHTML = data.stock;
+                    $(type).closest("tr").children()[2].innerHTML = data.code;
+                    $(type).closest("tr").children()[4].querySelector('span').innerHTML = data.stock;
 
                     let price = data.price;
                     let discount = data.discount;
@@ -288,14 +293,14 @@ var KTAppStock = function () {
                         discount = data.discount_zone_2;
                     }
 
-                    $(type).closest("tr").children()[4].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                    $(type).closest("tr").children()[4].querySelector('input.stock_details_price').value = price;
+                    $(type).closest("tr").children()[5].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    $(type).closest("tr").children()[5].querySelector('input.stock_details_price').value = price;
 
-                    let qty = $(type).closest("tr").children()[2].querySelector('input.stock_detail_qty').value;
+                    let qty = $(type).closest("tr").children()[3].querySelector('input.stock_detail_qty').value;
 
                     let total = (price * 1) * qty;
 
-                    $(type).closest("tr").children()[5].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    $(type).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                 }
 
                 KTApp.hidePageLoading();

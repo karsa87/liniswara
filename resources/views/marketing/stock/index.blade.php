@@ -227,6 +227,7 @@
                         <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="product_details">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Judul Buku</th>
                                     <th>Kode Buku</th>
                                     <th>Jumlah</th>
@@ -242,6 +243,7 @@
                                 @if ($cache && isset($cache['details']) && $cache['details']->count() > 0)
                                     @foreach ($cache['details'] as $detail)
                                     <tr data-repeater-item="" data-id="1">
+                                        <td class="number_detail">1</td>
                                         <td>
                                             <select class="form-select mb-2 stock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-product="product_option" name="stock_details[1][product_id]">
                                                 <option></option>
@@ -288,6 +290,7 @@
                                     @endforeach
                                 @else
                                 <tr data-repeater-item="" data-id="1">
+                                    <td class="number_detail">1</td>
                                     <td>
                                         <select class="form-select mb-2 stock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-product="product_stock_option" name="stock_details[1][product_id]">
                                             <option></option>
