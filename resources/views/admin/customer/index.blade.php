@@ -120,7 +120,22 @@
                                         </div>
                                         <!--end::Input group-->
                                     </div>
-                                    <div>
+
+                                    <div class="d-flex flex-column flex-md-row gap-5">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row flex-row-fluid">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Marketing</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select class="form-select form-control form-control-solid" data-placeholder="Select Marketing" data-allow-clear="true" name="customer_marketing" data-kt-ecommerce-catalog-add-customer="customer_option">
+                                                @foreach (\App\Enums\Preorder\MarketingEnum::MAP_LABEL as $key => $name)
+                                                    <option value="{{ $key }}">{{ $name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
@@ -128,6 +143,21 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="numeric" name="customer_target" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+
+                                    <div>
+                                        <!--begin::Input group-->
+                                        <div class="fv-row flex-row-fluid">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Area</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select class="form-select mb-2" data-placeholder="Select area" data-allow-clear="true" multiple="multiple" name="customer_area_id[]"  data-url="{{ route('ajax.area.list') }}" data-kt-ecommerce-catalog-add-customer="customer_option" id="add-customer_area_id">
+                                                <option></option>
+                                            </select>
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->

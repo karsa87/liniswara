@@ -7,6 +7,8 @@ use App\Enums\Preorder\StatusPaymentEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Customer\MarketingCustomerListResource;
 use App\Http\Resources\Admin\Preorder\PreorderResource;
+use App\Http\Resources\Marketing\RegionListResource;
+use App\Models\Area;
 use App\Models\Customer;
 use App\Models\Preorder;
 use App\Services\CustomerService;
@@ -182,5 +184,49 @@ class PaymentController extends Controller
                 'process' => $preorderProcess['count'],
             ],
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function region(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = Area::with([
+                'preorders',
+            ])
+                ->where('target', '>', 0)
+                ->withCount('preorders')
+                ->withSum('preorders as total_achieved', 'total_amount');
+
+            if ($q = $request->input('search.value')) {
+                $query->whereLike('name', $q);
+            }
+
+            if (is_numeric($request->input('order.0.column'))) {
+                $column = $request->input('order.0.column');
+                $columnData = $request->input("columns.$column.data");
+                $sorting = $request->input('order.0.dir');
+
+                if ($sorting == 'desc') {
+                    $query->orderBy($columnData, 'DESC');
+                } else {
+                    $query->orderBy($columnData, 'ASC');
+                }
+            }
+
+            $totalAll = (clone $query)->count();
+
+            $customers = $query->offset($request->get('start', 0))
+                ->limit($request->get('length', 10))
+                ->get();
+
+            return RegionListResource::collection($customers)->additional([
+                'recordsTotal' => $totalAll,
+                'recordsFiltered' => $totalAll,
+            ]);
+        }
+
+        return view('marketing.payment.list_region');
     }
 }

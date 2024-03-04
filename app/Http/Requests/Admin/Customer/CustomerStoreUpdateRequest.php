@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Admin\Customer;
 
 use App\Enums\CustomerTypeEnum;
+use App\Enums\Preorder\MarketingEnum;
+use App\Models\Area;
 use App\Models\Customer;
 use App\Models\District;
 use App\Models\Province;
@@ -96,6 +98,21 @@ class CustomerStoreUpdateRequest extends FormRequest
                 'nullable',
                 'numeric',
                 'min:0',
+            ],
+            'customer_area_id' => [
+                'nullable',
+            ],
+            'customer_area_id.*' => [
+                Rule::exists((new Area())->getTable(), 'id'),
+            ],
+            'customer_marketing' => [
+                'nullable',
+                Rule::in([
+                    MarketingEnum::TEAM_A,
+                    MarketingEnum::TEAM_B,
+                    MarketingEnum::RETAIL,
+                    MarketingEnum::WRITING,
+                ]),
             ],
         ];
     }

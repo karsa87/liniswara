@@ -87,6 +87,14 @@ var KTAppEcommerceSaveProduct = function () {
                     && selectedData.addresses.length > 0
                 ) {
                     $('#form-select-customer-address').html('').select2({data: selectedData.addresses});
+                    $('#form-select-area').html('').select2({data: selectedData.areas});
+                }
+
+                if (
+                    selectedData.areas != null
+                    && selectedData.areas.length > 0
+                ) {
+                    $('#form-select-area').html('').select2({data: selectedData.areas});
                 }
             }
         });

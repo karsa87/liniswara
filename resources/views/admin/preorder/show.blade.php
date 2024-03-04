@@ -221,6 +221,16 @@
                                 </td>
                                 <td class="fw-bold text-end">{{ optional(optional($preorder->customer_address)->province)->name }}</td>
                             </tr>
+                            <tr>
+                                <td class="text-muted">
+                                    <div class="d-flex align-items-center">
+                                    <i class="ki-duotone ki-geolocation-home fs-2 me-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>Area</div>
+                                </td>
+                                <td class="fw-bold text-end">{{ optional($preorder->area)->name }}</td>
+                            </tr>
                         </tbody>
                     </table>
                     <!--end::Table-->

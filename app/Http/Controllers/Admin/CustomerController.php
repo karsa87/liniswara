@@ -31,6 +31,7 @@ class CustomerController extends Controller
         if ($request->ajax()) {
             $query = User::with([
                 'customer',
+                'customer.areas',
                 'customer.address.province:id,name',
                 'customer.address.regency:id,name',
                 'customer.address.district:id,name',
@@ -96,6 +97,7 @@ class CustomerController extends Controller
                     'type' => $request->input('customer_type'),
                     'user_id' => $user->id,
                     'target' => $request->input('customer_target') ?? 0,
+                    'marketing' => $request->input('customer_marketing'),
                 ]);
 
                 if (
@@ -114,6 +116,11 @@ class CustomerController extends Controller
                         'is_default' => true,
                     ]);
                     $address->save();
+
+                    $areas = $request->input('customer_area_id');
+                    if ($areas) {
+                        $customer->areas()->sync(array_unique($areas));
+                    }
                 }
             }
 
@@ -135,7 +142,13 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::with([
+            'areas',
+            'address.province:id,name',
+            'address.regency:id,name',
+            'address.district:id,name',
+            'address.village:id,name',
+        ])->find($id);
 
         if (is_null($customer)) {
             return response()->json([
@@ -178,24 +191,31 @@ class CustomerController extends Controller
                     'type' => $request->input('customer_type'),
                     'user_id' => $user->id,
                     'target' => $request->input('customer_target') ?? 0,
+                    'marketing' => $request->input('customer_marketing'),
                 ]);
 
                 if (
                     $customer->save()
-                    && $request->input('customer_address')
                 ) {
-                    $customer->loadMissing('address');
-                    $address = $customer->address;
-                    $address->fill([
-                        'customer_id' => $customer->id,
-                        'address' => $request->input('customer_address'),
-                        'province_id' => $request->input('customer_province_id'),
-                        'regency_id' => $request->input('customer_regency_id'),
-                        'district_id' => $request->input('customer_district_id'),
-                        'village_id' => $request->input('customer_village_id'),
-                        'is_default' => true,
-                    ]);
-                    $address->save();
+                    if ($request->input('customer_address')) {
+                        $customer->loadMissing('address');
+                        $address = $customer->address;
+                        $address->fill([
+                            'customer_id' => $customer->id,
+                            'address' => $request->input('customer_address'),
+                            'province_id' => $request->input('customer_province_id'),
+                            'regency_id' => $request->input('customer_regency_id'),
+                            'district_id' => $request->input('customer_district_id'),
+                            'village_id' => $request->input('customer_village_id'),
+                            'is_default' => true,
+                        ]);
+                        $address->save();
+                    }
+
+                    $areas = $request->input('customer_area_id');
+                    if ($areas) {
+                        $customer->areas()->sync(array_unique($areas));
+                    }
                 }
             }
 
@@ -272,10 +292,19 @@ class CustomerController extends Controller
                     'text' => $address->summary_address,
                 ];
             }
+            $areas = [];
+            foreach ($customer->areas as $area) {
+                $areas[] = [
+                    'id' => $area->id,
+                    'text' => $area->name,
+                ];
+            }
+
             $list[] = [
                 'id' => $customer->id,
                 'text' => optional($customer->user)->name,
                 'addresses' => $addresses,
+                'areas' => $areas,
             ];
         }
 

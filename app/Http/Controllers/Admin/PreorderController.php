@@ -42,6 +42,7 @@ class PreorderController extends Controller
                 'updatedBy',
                 'customer.user',
                 'branch',
+                'area',
                 'details' => function ($qDetail) {
                     $qDetail->whereRaw('qty != qty_order');
                 },
@@ -137,6 +138,7 @@ class PreorderController extends Controller
                 'collector_id' => $request->input('preorder_collector_id'),
                 'customer_id' => $request->input('preorder_customer_id'),
                 'customer_address_id' => $request->input('preorder_customer_address_id'),
+                'area_id' => $request->input('preorder_area_id'),
                 'status' => $request->input('preorder_status'),
                 'status_payment' => $request->input('preorder_status_payment'),
                 'method_payment' => $request->input('preorder_method_payment'),
@@ -253,6 +255,7 @@ class PreorderController extends Controller
     {
         $preorder = Preorder::with([
             'customer_address',
+            'area',
             'collector',
             'createdBy',
             'updatedBy',
@@ -278,6 +281,7 @@ class PreorderController extends Controller
     public function detail(string $id)
     {
         $preorder = Preorder::with([
+            'area',
             'customer_address',
             'collector',
             'createdBy',
@@ -303,6 +307,7 @@ class PreorderController extends Controller
     public function edit(string $id)
     {
         $preorder = Preorder::with([
+            'area',
             'customer_address',
             'collector',
             'createdBy',
@@ -336,6 +341,7 @@ class PreorderController extends Controller
                 'collector_id' => $request->input('preorder_collector_id'),
                 'customer_id' => $request->input('preorder_customer_id'),
                 'customer_address_id' => $request->input('preorder_customer_address_id'),
+                'area_id' => $request->input('preorder_area_id'),
                 'status' => $request->input('preorder_status'),
                 'status_payment' => $request->input('preorder_status_payment'),
                 'method_payment' => $request->input('preorder_method_payment'),

@@ -403,7 +403,7 @@
                                             </span>
                                         </div>
                                         <div class="d-flex justify-content-start flex-column">
-                                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str($regency->name)->title() }} : {{ $util->format_currency($regency->preorders_sum_total_amount) }}</a>
+                                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str(optional($regency->area)->name ?? 'Non Area')->title() }} : {{ $util->format_currency($regency->preorders_total) }}</a>
                                             <span class="text-muted fw-bold">Transaksi : {{ $regency->preorders_count }}</span>
                                         </div>
                                     </div>

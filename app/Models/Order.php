@@ -69,6 +69,14 @@ class Order extends Model
     /**
      * The data that belong to the file.
      */
+    public function area(): BelongsTo
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    /**
+     * The data that belong to the file.
+     */
     public function details(): HasMany
     {
         return $this->hasMany(OrderDetail::class, 'order_id');

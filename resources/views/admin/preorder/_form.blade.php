@@ -213,8 +213,33 @@
                                 @if ($preorder->customer_address)
                                     <option value="{{ $preorder->customer_address->id }}" selected>{{ $preorder->customer_address->summary_address }}</option>
 
+                                @endif
+
+                                @if ($preorder->customer)
                                     @foreach ($preorder->customer->addresses->where('id', '!=', $preorder->customer_address->id) as $address)
                                         <option value="{{ $address->id }}">{{ $address->summary_address }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <!--end::Input-->
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-5">
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="form-label">Area</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <select class="form-select mb-2" data-placeholder="Select Area" data-allow-clear="true" name="preorder_area_id" data-kt-ecommerce-catalog-add-preorder="preorder_option" id="form-select-area">
+                                <option></option>
+                                @if ($preorder->area)
+                                    <option value="{{ $preorder->area->id }}" selected>{{ $preorder->area->name }}</option>
+
+                                @endif
+
+                                @if ($preorder->customer)
+                                    @foreach ($preorder->customer->areas->where('id', '!=', optional($preorder->area)->id) as $area)
+                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
                                     @endforeach
                                 @endif
                             </select>

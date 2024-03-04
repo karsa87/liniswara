@@ -39,6 +39,14 @@ class PreorderResource extends JsonResource
             ];
         }
 
+        $area = null;
+        if ($this->area) {
+            $area = [
+                'id' => $this->area->id,
+                'name' => $this->area->name,
+            ];
+        }
+
         $collector = null;
         if ($this->collector) {
             $collector = [
@@ -196,6 +204,7 @@ class PreorderResource extends JsonResource
             'collector' => $collector,
             'customer' => $customer,
             'customer_address' => $customerAddress,
+            'area' => $area,
             'shipping' => $shipping,
             'details' => $details,
             'created_by' => $createdBy,

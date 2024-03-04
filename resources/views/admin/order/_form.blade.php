@@ -222,6 +222,28 @@
                             <!--end::Input-->
                         </div>
                     </div>
+                    <div class="d-flex flex-wrap gap-5">
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="form-label">Area</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <select class="form-select mb-2" data-placeholder="Select Area" data-allow-clear="true" name="order_area_id" data-kt-ecommerce-catalog-add-order="order_option" id="form-select-area">
+                                <option></option>
+                                @if ($order->area)
+                                    <option value="{{ $order->area->id }}" selected>{{ $order->area->name }}</option>
+
+                                @endif
+
+                                @if ($order->customer)
+                                    @foreach ($order->customer->areas->where('id', '!=', optional($order->area)->id) as $area)
+                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <!--end::Input-->
+                        </div>
+                    </div>
                     <!--end::Input group-->
                 </div>
             </div>

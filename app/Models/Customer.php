@@ -7,6 +7,7 @@ use App\Models\Scopes\ScopeLike;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -63,5 +64,18 @@ class Customer extends Model
     public function paid_preorders(): HasMany
     {
         return $this->hasMany(Preorder::class, 'customer_id')->where('status_payment', StatusPaymentEnum::PAID);
+    }
+
+    /**
+     * The relation to area.
+     */
+    public function areas(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Area::class,
+            'customer_area',
+            'customer_id',
+            'area_id'
+        );
     }
 }

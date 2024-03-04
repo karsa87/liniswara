@@ -76,6 +76,7 @@ class OrderController extends Controller
         $order->branch_id = $preorder->branch_id;
         $order->customer_id = $preorder->customer_id;
         $order->customer_address_id = $preorder->customer_address_id;
+        $order->area_id = $preorder->area_id;
         $order->status = StatusEnum::PROCESS;
         $order->status_payment = $preorder->status_payment;
         $order->method_payment = $preorder->method_payment;
@@ -149,6 +150,7 @@ class OrderController extends Controller
                 'collector_id' => $request->input('order_collector_id'),
                 'customer_id' => $request->input('order_customer_id'),
                 'customer_address_id' => $request->input('order_customer_address_id'),
+                'area_id' => $request->input('order_area_id'),
                 'status' => StatusEnum::PROCESS,
                 'status_payment' => $request->input('order_status_payment'),
                 'method_payment' => $request->input('order_method_payment'),
@@ -288,6 +290,7 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
+            'area',
             'collector',
             'createdBy',
             'customer.user',
@@ -313,6 +316,7 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
+            'area',
             'collector',
             'createdBy',
             'customer.user',
@@ -338,6 +342,7 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'customer_address',
+            'area',
             'collector',
             'createdBy',
             'customer.user',
@@ -372,6 +377,7 @@ class OrderController extends Controller
                 'collector_id' => $request->input('order_collector_id'),
                 'customer_id' => $request->input('order_customer_id'),
                 'customer_address_id' => $request->input('order_customer_address_id'),
+                'area_id' => $request->input('order_area_id'),
                 'status' => $request->input('order_status'),
                 'status_payment' => $request->input('order_status_payment'),
                 'method_payment' => $request->input('order_method_payment'),

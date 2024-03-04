@@ -1,6 +1,6 @@
 "use strict";
 
-var KTCustomersList = function () {
+var KTRegionsList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_customers');
     var datatable;
@@ -12,7 +12,7 @@ var KTCustomersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[4, 'desc']],
+            order: [[3, 'desc']],
             // stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -40,8 +40,7 @@ var KTCustomersList = function () {
             },
             columns: [
                 { data: 'name', orderable: false },
-                { data: 'email', orderable: false },
-                { data: 'phone_number', orderable: false },
+                { data: 'total_transaction', orderable: false },
                 { data: 'target' },
                 { data: 'total_achieved' },
             ],
@@ -49,21 +48,22 @@ var KTCustomersList = function () {
                 {
                     targets: 0,
                     render: function (data, type, row) {
-                        return `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>`;
+                        return row.name;
+                    }
+                },
+                {
+                    targets: 1,
+                    render: function (data, type, row) {
+                        let total_transaction = 0;
+                        if (typeof row.total_transaction == 'number') {
+                            total_transaction = row.total_transaction.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+
+                        return total_transaction;
                     }
                 },
                 {
                     targets: 2,
-                    render: function (data) {
-                        if (data) {
-                            return `<a href="https://wa.me/${data}" class="badge badge-light-success fs-7 m-1">${data}</a>`;
-                        }
-
-                        return '';
-                    }
-                },
-                {
-                    targets: 3,
                     render: function (data, type, row) {
                         let target = 0;
                         if (typeof row.target == 'number') {
@@ -81,8 +81,8 @@ var KTCustomersList = function () {
                     render: function (data, type, row) {
                         var total_achieved = row.total_achieved.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
-                        var percent_show = Math.round((row.total_achieved / row.target) * 100);
                         var percent = row.total_achieved >= row.target ? 100 : Math.round((row.total_achieved / row.target) * 100);
+                        var percent_show = Math.round((row.total_achieved / row.target) * 100);
                         return `
                         <div class="d-flex align-items-center flex-column mt-3 w-100">
                             <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
@@ -132,5 +132,5 @@ var KTCustomersList = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTCustomersList.init();
+    KTRegionsList.init();
 });

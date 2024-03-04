@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Preorder;
-use App\Models\Regency;
 use Illuminate\Database\Eloquent\Collection;
 
 class PreorderService
@@ -156,22 +155,15 @@ class PreorderService
         $limit = null,
         $month = null
     ): Collection {
-        $query = Regency::withCount([
-            'preorders' => function ($qPreorder) use ($month) {
-                if ($month) {
-                    $qPreorder->whereMonth('date', $month);
-                }
-            },
-        ])
-            ->withSum([
-                'preorders' => function ($qPreorder) use ($month) {
-                    if ($month) {
-                        $qPreorder->whereMonth('date', $month);
-                    }
-                },
-            ], 'total_amount')
-            ->havingRaw('preorders_sum_total_amount > 0')
-            ->orderBy('preorders_sum_total_amount', 'DESC');
+        $query = Preorder::selectRaw('SUM(total_amount) as preorders_total, count(id) as preorders_count, area_id')
+            ->with('area')
+            ->groupBy('area_id')
+            ->orderBy('preorders_total', 'desc')
+            ->limit(10);
+
+        if ($month) {
+            $query->whereMonth('date', $month);
+        }
 
         if ($limit) {
             $query->limit($limit);

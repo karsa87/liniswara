@@ -697,5 +697,9 @@ Route::middleware('auth')->group(function () {
             UserController::class,
             'ajax_list_user',
         ])->name('user.list');
+        Route::get('area', [
+            AreaController::class,
+            'ajax_list_area',
+        ])->name('area.list');
     });
 });

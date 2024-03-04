@@ -12,8 +12,7 @@ var KTSuppliersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'asc']],
-            stateSave: true,
+            order: [[1, 'asc']],
             ajax: {
                 url: table.dataset.url,
                 "data": function ( d ) {
@@ -287,6 +286,23 @@ var KTSuppliersList = function () {
 
                         form.querySelector(`[data-kt-region="customer_region_description"]`).value = detailAddress;
 
+                        // $("#add-customer_area_id").select2('data', null);
+                        $("#add-customer_area_id").val([]).trigger('change');
+                        if (customer.area) {
+                            var areasId = [];
+                            customer.areas.forEach(area => {
+                                areasId.push(area.id);
+                                if ($("#add-customer_area_id").find("option[value=" + area.id + "]").length) {
+                                } else {
+                                    // Create the DOM option that is pre-selected by default
+                                    var newState = new Option(area.name, area.id, true, true);
+                                    // Append it to the select
+                                    $("#add-customer_area_id").append(newState);
+                                }
+                            });
+
+                            $("#add-customer_area_id").val(areasId).trigger('change');
+                        }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
@@ -330,6 +346,43 @@ var KTSuppliersList = function () {
         });
     }
 
+    // Init condition select2
+    const initConditionsSelect2 = () => {
+        // Tnit new repeating condition types
+        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-customer="customer_option"]');
+        allConditionTypes.forEach(type => {
+            if ($(type).hasClass("select2-hidden-accessible")) {
+                return;
+            } else {
+                if ($(type).data('url')) {
+                    $(type).select2({
+                        minimumInputLength: -1,
+                        ajax: {
+                            url: $(type).data('url'),
+                            dataType: 'json',
+                            data: function (params) {
+                                return {
+                                    q: $.trim(params.term)
+                                };
+                            },
+                            processResults: function(data) {
+                                // Transforms the top-level key of the response object from 'items' to 'results'
+                                return {
+                                    results: data.items
+                                };
+                            },
+                            cache: true
+                        }
+                    });
+                } else {
+                    $(type).select2({
+                        minimumResultsForSearch: -1
+                    });
+                }
+            }
+        });
+    }
+
     return {
         // Public functions
         init: function () {
@@ -341,6 +394,7 @@ var KTSuppliersList = function () {
             handleSearchDatatable();
             handleDeleteRows();
             handleEditRows();
+            initConditionsSelect2();
         },
         refresh: function() {
             datatable.ajax.reload(null, false); // customer paging is not reset on reload

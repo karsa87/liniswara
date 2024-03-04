@@ -9,6 +9,7 @@ use App\Enums\Preorder\MethodPaymentEnum;
 use App\Enums\Preorder\StatusPaymentEnum;
 use App\Enums\Preorder\TaxEnum;
 use App\Enums\Preorder\ZoneEnum;
+use App\Models\Area;
 use App\Models\Branch;
 use App\Models\Collector;
 use App\Models\Customer;
@@ -61,6 +62,10 @@ class OrderStoreUpdateRequest extends FormRequest
             'order_customer_address_id' => [
                 'required',
                 Rule::exists((new CustomerAddress())->getTable(), 'id'),
+            ],
+            'order_area_id' => [
+                'required',
+                Rule::exists((new Area())->getTable(), 'id'),
             ],
             'order_status' => [
                 'required',

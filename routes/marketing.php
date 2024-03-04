@@ -45,6 +45,9 @@ Route::name('payment.')->prefix('payment/')->group(function () {
     Route::get('agent/{id?}', [
         PaymentController::class, 'detail_agent',
     ])->name('detail_agent');
+    Route::get('region', [
+        PaymentController::class, 'region',
+    ])->name('region');
 });
 
 Route::name('transaction.')->prefix('transaction/')->group(function () {
