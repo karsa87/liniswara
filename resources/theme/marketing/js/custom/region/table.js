@@ -56,7 +56,7 @@ var KTRegionsList = function () {
                     render: function (data, type, row) {
                         let total_transaction = 0;
                         if (typeof row.total_transaction == 'number') {
-                            total_transaction = row.total_transaction.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            total_transaction = row.total_transaction;
                         }
 
                         return total_transaction;
