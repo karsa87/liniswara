@@ -57,7 +57,7 @@ class PreorderStoreUpdateRequest extends FormRequest
                 Rule::exists((new CustomerAddress())->getTable(), 'id'),
             ],
             'preorder_area_id' => [
-                'required',
+                'nullable',
                 Rule::exists((new Area())->getTable(), 'id'),
             ],
             'preorder_status' => [

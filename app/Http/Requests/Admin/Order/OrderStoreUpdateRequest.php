@@ -64,7 +64,7 @@ class OrderStoreUpdateRequest extends FormRequest
                 Rule::exists((new CustomerAddress())->getTable(), 'id'),
             ],
             'order_area_id' => [
-                'required',
+                'nullable',
                 Rule::exists((new Area())->getTable(), 'id'),
             ],
             'order_status' => [
