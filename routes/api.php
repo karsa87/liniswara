@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('client')->group(function () {
     Route::get('category', [CategoryController::class, 'index'])->name('category');
     Route::get('product', [ProductController::class, 'index'])->name('product');
+    Route::get('product/{id}', [ProductController::class, 'show'])->name('product.detail');
 });

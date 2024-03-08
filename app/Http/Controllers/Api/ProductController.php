@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Product\ListRequest;
 use App\Http\Resources\Api\Product\ProductResource;
 use App\Models\Product;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -47,5 +48,22 @@ class ProductController extends Controller
         $products = $query->paginate($request->get('limit', 15));
 
         return ProductResource::collection($products);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function show(int $id)
+    {
+        $product = Product::with([
+            'thumbnail',
+            'categories.parent',
+        ])->find($id);
+
+        if (! $product instanceof Product) {
+            return response()->json([], Response::HTTP_NOT_FOUND);
+        }
+
+        return new ProductResource($product);
     }
 }
