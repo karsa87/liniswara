@@ -210,7 +210,8 @@ class PreorderResource extends JsonResource
             'created_by' => $createdBy,
             'updated_by' => $updatedBy,
             'total_details' => $totalDetails,
-            'details_count' => $this->details->count(),
+            'all_details_count' => $this->details->count(),
+            'details_count' => $this->details_count ?? 0,
             'product_ready_count' => $ready,
             'product_not_ready_count' => $notReady,
         ];

@@ -49,6 +49,7 @@ class PreorderController extends Controller
                 'details.product',
                 'shipping',
             ])
+                ->withCount('details')
                 ->whereHas('details', function ($qDetail) {
                     $qDetail->whereRaw('qty != qty_order');
                 });
@@ -290,7 +291,9 @@ class PreorderController extends Controller
             'branch',
             'shipping',
             'details.product',
-        ])->find($id);
+        ])
+            ->withCount('details')
+            ->find($id);
 
         if (is_null($preorder)) {
             return response()->json([
