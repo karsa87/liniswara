@@ -54,7 +54,7 @@
                         <!--begin::Modal header-->
                         <div class="modal-header" id="kt_modal_add_customer_header">
                             <!--begin::Modal title-->
-                            <h2 class="fw-bold">Tambah Agen</h2>
+                            <h2 class="fw-bold">Form Agen</h2>
                             <!--end::Modal title-->
                             <!--begin::Close-->
                             <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-customers-modal-action="close">

@@ -200,6 +200,11 @@ class CustomerController extends Controller
                     if ($request->input('customer_address')) {
                         $customer->loadMissing('address');
                         $address = $customer->address;
+                        if (is_null($address)) {
+                            $address = new CustomerAddress();
+                            $address->name = $user->name;
+                        }
+
                         $address->fill([
                             'customer_id' => $customer->id,
                             'address' => $request->input('customer_address'),
