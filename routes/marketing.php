@@ -30,6 +30,9 @@ Route::get('/dashboard/widget/order', [
 Route::get('/dashboard/widget/zone', [
     DashboardController::class, 'widget_zone',
 ])->name('dashboard.widget.zone');
+Route::get('/dashboard/widget/transaction-by-marketing', [
+    DashboardController::class, 'widget_transaction_by_marketing',
+])->name('dashboard.widget.transaction_by_marketing');
 
 Route::get('/switch-marketing/{marketing}', [
     DashboardController::class, 'switch_marketing',

@@ -129,7 +129,7 @@
 </div>
 <!--end::Row-->
 
-<div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+<div class="row g-5 gx-xl-10 mb-5 mb-xl-10" style="display: none;">
     <!--begin::Col-->
     <div class="col-xxl-6">
         <!--begin::Card widget 4-->
@@ -405,6 +405,125 @@
                                         <div class="d-flex justify-content-start flex-column">
                                             <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str(optional($regency->area)->name ?? 'Non Area')->title() }} : {{ $util->format_currency($regency->preorders_total) }}</a>
                                             <span class="text-muted fw-bold">Transaksi : {{ $regency->preorders_count }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                </div>
+                <!--end::Table-->
+            </div>
+            <!--end: Card Body-->
+        </div>
+        <!--end::Table widget 14-->
+    </div>
+    <!--end::Col-->
+</div>
+<!--end::Row-->
+
+<!--begin::Row-->
+<div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+    <!--begin::Col-->
+    <div class="col-xxl-6 mb-5 mb-xl-10">
+        <!--begin::Chart widget 8-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-5">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold d-flex align-items-center">
+                        Transaksi Tim A
+                    </span>
+                    <span class="text-muted mt-1 fw-semibold fs-7">
+                        5 Terbaik Bulan ini
+                    </span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-6 text-center">
+                <!--begin::Table container-->
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <!--begin::Table body-->
+                        <tbody>
+                            @foreach ($rangkingByMarketingTeamB as $preorder)
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-50px me-5">
+                                            <span class="badge badge-light-success fs-base">
+                                                <i class="ki-duotone ki-briefcase text-success fs-2hx">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str(optional($preorder->customer->user)->name)->title() }} : {{ $preorder->invoice_number }}</a>
+                                            <span class="text-muted fw-bold">Total : {{ $util->format_currency($preorder->total_amount) }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                </div>
+                <!--end::Table-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Chart widget 8-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xxl-6 mb-5 mb-xl-10">
+        <!--begin::Table widget 14-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-5">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold d-flex align-items-center">
+                        Transaksi Tim B
+                    </span>
+                    <span class="text-muted mt-1 fw-semibold fs-7">
+                        5 Terbaik Bulan ini
+                    </span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-6">
+                <!--begin::Table container-->
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <!--begin::Table body-->
+                        <tbody>
+                            @foreach ($rangkingByMarketingTeamB as $preorder)
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-50px me-5">
+                                            <span class="badge badge-light-success fs-base">
+                                                <i class="ki-duotone ki-briefcase text-success fs-2hx">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str(optional($preorder->customer->user)->name)->title() }} : {{ $preorder->invoice_number }}</a>
+                                            <span class="text-muted fw-bold">Total : {{ $util->format_currency($preorder->total_amount) }}</span>
                                         </div>
                                     </div>
                                 </td>

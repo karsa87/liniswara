@@ -171,4 +171,32 @@ class PreorderService
 
         return $query->get();
     }
+
+    /**
+     * Get top ranking of agen by total amount transaction
+     *
+     * @param  sstring  $team marketing team
+     * @param  int  $month month preorder
+     * @param  int  $limit limit to get ranking
+     *
+     * **/
+    public function rankingByMarketingTeam(
+        $marketingTeam,
+        $month,
+        $limit = 5,
+    ): Collection {
+        $query = Preorder::with('customer.user')->orderBy('total_amount', 'desc')
+            ->where('marketing', $marketingTeam)
+            ->limit(10);
+
+        if ($month) {
+            $query->whereMonth('date', $month);
+        }
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }
