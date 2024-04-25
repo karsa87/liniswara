@@ -196,6 +196,10 @@ class OrderStoreUpdateRequest extends FormRequest
                 'nullable',
                 'numeric',
             ],
+            'order_is_exclude_target' => [
+                'nullable',
+                'boolean',
+            ],
         ];
     }
 

@@ -130,10 +130,12 @@ class DashboardController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             $zone1 = Preorder::where('zone', ZoneEnum::ZONE_1)
                 ->where('marketing', $marketingTeam->value)
+                ->where('is_exclude_target', false)
                 ->whereMonth('date', $i)
                 ->sum('total_amount');
             $zone2 = Preorder::where('zone', ZoneEnum::ZONE_2)
                 ->where('marketing', $marketingTeam->value)
+                ->where('is_exclude_target', false)
                 ->whereMonth('date', $i)
                 ->sum('total_amount');
 

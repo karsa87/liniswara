@@ -163,6 +163,17 @@
                         <!--end::Select2-->
                     </div>
                     <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="fv-row">
+                        <!--begin::Checkbox-->
+                        <label class="form-check form-check-xl form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="1" name="preorder_is_exclude_target" {{ $preorder->is_exclude_target ? 'checked' : '' }} />
+                            <span class="form-check-label">Exclude Perhitungan Target</span>
+                        </label>
+                        <!--end::Checkbox-->
+                    </div>
+                    <!--end::Input group-->
                 </div>
             </div>
             <!--end::Card body-->

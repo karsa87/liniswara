@@ -111,6 +111,20 @@
                                 </td>
                                 <td class="fw-bold text-end">{!! html_entity_decode($preorder->notes) !!}</td>
                             </tr>
+                            <tr>
+                                <td class="text-muted">
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-duotone ki-shield-cross fs-2 me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>Exclude Perhitungan Target
+                                    </div>
+                                </td>
+                                <td class="fw-bold text-end">
+                                    <span class="badge {{ $preorder->is_exclude_target ? 'badge-success' : 'badge-danger' }}">{{ $preorder->is_exclude_target ? 'Ya' : 'Tidak' }}</span>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <!--end::Table-->

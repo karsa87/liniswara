@@ -152,6 +152,7 @@ class PreorderController extends Controller
                 'discount_type' => $request->input('preorder_discount_type', DiscountTypeEnum::DISCOUNT_NO),
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
+                'is_exclude_target' => $request->input('preorder_is_exclude_target', false),
             ];
 
             if ($input['status_payment'] != StatusPaymentEnum::PAID) {
@@ -357,6 +358,7 @@ class PreorderController extends Controller
                 'discount_type' => $request->input('preorder_discount_type', DiscountTypeEnum::DISCOUNT_NO),
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
+                'is_exclude_target' => $request->input('preorder_is_exclude_target', false),
             ];
 
             if ($input['status_payment'] != StatusPaymentEnum::PAID) {

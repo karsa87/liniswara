@@ -1,0 +1,38 @@
+<?php
+
+use App\Models\Order;
+use App\Models\Preorder;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table((new Preorder())->getTable(), function (Blueprint $table) {
+            $table->boolean('is_exclude_target')->default(false);
+        });
+
+        Schema::table((new Order())->getTable(), function (Blueprint $table) {
+            $table->boolean('is_exclude_target')->default(false);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table((new Preorder())->getTable(), function (Blueprint $table) {
+            $table->dropColumn('is_exclude_target');
+        });
+
+        Schema::table((new Order())->getTable(), function (Blueprint $table) {
+            $table->dropColumn('is_exclude_target');
+        });
+    }
+};

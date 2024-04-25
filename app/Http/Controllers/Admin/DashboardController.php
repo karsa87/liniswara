@@ -113,9 +113,11 @@ class DashboardController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             $zone1 = Preorder::where('zone', ZoneEnum::ZONE_1)
                 ->whereMonth('date', $i)
+                ->where('is_exclude_target', false)
                 ->sum('total_amount');
             $zone2 = Preorder::where('zone', ZoneEnum::ZONE_2)
                 ->whereMonth('date', $i)
+                ->where('is_exclude_target', false)
                 ->sum('total_amount');
 
             $zones['zone_1'][] = $zone1;
@@ -136,6 +138,7 @@ class DashboardController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             $sales = Preorder::selectRaw('sum(total_amount) as total_amount, marketing')
                 ->where('zone', ZoneEnum::ZONE_1)
+                ->where('is_exclude_target', false)
                 ->whereMonth('date', $i)
                 ->groupBy('marketing')
                 ->get();

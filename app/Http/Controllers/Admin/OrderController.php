@@ -89,6 +89,7 @@ class OrderController extends Controller
         $order->discount_type = $preorder->discount_type;
         $order->discount_percentage = $preorder->discount_percentage;
         $order->discount_price = $preorder->discount_price;
+        $order->is_exclude_target = $preorder->is_exclude_target;
 
         $details = collect();
         foreach ($preorder->details as $detail) {
@@ -164,6 +165,7 @@ class OrderController extends Controller
                 'discount_percentage' => $request->input('order_discount_percentage') ?: 0,
                 'discount_price' => $request->input('order_discount_price') ?: 0,
                 'preorder_id' => $preorderId,
+                'is_exclude_target' => $request->input('order_is_exclude_target', false),
             ];
 
             if ($input['status_payment'] != StatusPaymentEnum::PAID) {
@@ -390,6 +392,7 @@ class OrderController extends Controller
                 'discount_type' => $request->input('order_discount_type', DiscountTypeEnum::DISCOUNT_NO),
                 'discount_percentage' => $request->input('order_discount_percentage') ?: 0,
                 'discount_price' => $request->input('order_discount_price') ?: 0,
+                'is_exclude_target' => $request->input('order_is_exclude_target', false),
             ];
 
             if ($input['status_payment'] != StatusPaymentEnum::PAID) {

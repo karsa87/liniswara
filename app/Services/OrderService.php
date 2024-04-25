@@ -126,7 +126,8 @@ class OrderService
      * **/
     public function getSummary($params): array
     {
-        $query = Order::selectRaw('SUM(total_amount) as total, count(id) as count');
+        $query = Order::selectRaw('SUM(total_amount) as total, count(id) as count')
+            ->where('is_exclude_target', false);
 
         if (isset($params['marketing']) && $params['marketing']) {
             $query->where('marketing', $params['marketing']);

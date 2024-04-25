@@ -183,6 +183,10 @@ class PreorderStoreUpdateRequest extends FormRequest
                 'nullable',
                 'numeric',
             ],
+            'preorder_is_exclude_target' => [
+                'nullable',
+                'boolean',
+            ],
         ];
     }
 

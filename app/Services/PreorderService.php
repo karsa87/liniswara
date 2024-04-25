@@ -58,7 +58,8 @@ class PreorderService
         $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count')
             ->whereHas('details', function ($qDetail) {
                 $qDetail->whereRaw('qty != qty_order');
-            });
+            })
+            ->where('is_exclude_target', false);
 
         if (isset($params['marketing']) && $params['marketing']) {
             $query->where('marketing', $params['marketing']);
@@ -105,7 +106,8 @@ class PreorderService
      * **/
     public function getSummaryAll($params): array
     {
-        $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count');
+        $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count')
+            ->where('is_exclude_target', false);
 
         if (isset($params['marketing']) && $params['marketing']) {
             $query->where('marketing', $params['marketing']);
