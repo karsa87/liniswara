@@ -72,6 +72,21 @@ var KTWidgets = function () {
                 },
                 yaxis: {
                     labels: {
+                        formatter: function(value) {
+                            var val = Math.abs(value);
+
+                            if (val >= 1000 && val < 1000000) {
+                                val = (val / 1000).toFixed(0) + 'Rb'
+                            } else if (val >= 1000000 && val < 1000000000) {
+                                val = (val / 1000000).toFixed(0) + 'Jt'
+                            } else if (val >= 1000000000) {
+                                val = (val / 1000000000).toFixed(0) + 'M'
+                            } else {
+                                val = val;
+                            }
+
+                            return val;
+                        },
                         style: {
                             colors: labelColor,
                             fontSize: '12px'
@@ -252,6 +267,21 @@ var KTWidgets = function () {
                 },
                 yaxis: {
                     labels: {
+                        formatter: function(value) {
+                            var val = Math.abs(value);
+
+                            if (val >= 1000 && val < 1000000) {
+                                val = (val / 1000).toFixed(0) + 'Rb'
+                            } else if (val >= 1000000 && val < 1000000000) {
+                                val = (val / 1000000).toFixed(0) + 'Jt'
+                            } else if (val >= 1000000000) {
+                                val = (val / 1000000000).toFixed(0) + 'M'
+                            } else {
+                                val = val;
+                            }
+
+                            return val;
+                        },
                         style: {
                             colors: labelColor,
                             fontSize: '12px'
