@@ -58,53 +58,55 @@ class PaymentController extends Controller
      */
     public function agent(Request $request)
     {
-        if ($request->ajax()) {
-            $query = Customer::with([
-                'user:id,name,email,phone_number,profile_photo_id',
-                'user.profile_photo',
-                'address.village',
-                'address.district',
-                'address.regency',
-                'address.province',
-            ])
-                ->where('target', '>', 0)
-                ->withCount('preorders')
-                ->withSum('preorders as total_achieved', 'total_amount');
+        // if ($request->ajax()) {
+        $query = Customer::with([
+            'user:id,name,email,phone_number,profile_photo_id',
+            'user.profile_photo',
+            'address.village',
+            'address.district',
+            'address.regency',
+            'address.province',
+        ])
+            ->where('target', '>', 0)
+            ->withCount('preorders')
+            ->withSum('preorders as total_achieved', 'total_amount');
 
-            if ($q = $request->input('search.value')) {
-                $query->whereHas('user', function ($qUser) use ($q) {
-                    $qUser->whereLike('name', $q)
+        if ($q = $request->input('search.value')) {
+            $query->whereHas('user', function ($qUser) use ($q) {
+                $qUser->where(function ($qUser1) use ($q) {
+                    $qUser1->whereLike('name', $q)
                         ->orWhereLike('company', $q)
                         ->orWhereLike('phone_number', $q)
                         ->orWhereLike('email', $q);
                 });
-            }
-
-            if (is_numeric($request->input('order.0.column'))) {
-                $column = $request->input('order.0.column');
-                $columnData = $request->input("columns.$column.data");
-                $sorting = $request->input('order.0.dir');
-
-                if ($sorting == 'desc') {
-                    $query->orderBy($columnData, 'DESC');
-                } else {
-                    $query->orderBy($columnData, 'ASC');
-                }
-            }
-
-            $totalAll = (clone $query)->count();
-
-            $customers = $query->offset($request->get('start', 0))
-                ->limit($request->get('length', 10))
-                ->get();
-
-            return MarketingCustomerListResource::collection($customers)->additional([
-                'recordsTotal' => $totalAll,
-                'recordsFiltered' => $totalAll,
-            ]);
+            });
         }
 
-        return view('marketing.payment.list_agent');
+        if (is_numeric($request->input('order.0.column'))) {
+            $column = $request->input('order.0.column');
+            $columnData = $request->input("columns.$column.data");
+            $sorting = $request->input('order.0.dir');
+
+            if ($sorting == 'desc') {
+                $query->orderBy($columnData, 'DESC');
+            } else {
+                $query->orderBy($columnData, 'ASC');
+            }
+        }
+
+        $totalAll = (clone $query)->count();
+
+        $customers = $query->offset($request->get('start', 0))
+            ->limit($request->get('length', 10))
+            ->get();
+
+        return MarketingCustomerListResource::collection($customers)->additional([
+            'recordsTotal' => $totalAll,
+            'recordsFiltered' => $totalAll,
+        ]);
+        // }
+
+        // return view('marketing.payment.list_agent');
     }
 
     /**

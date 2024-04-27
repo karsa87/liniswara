@@ -41,10 +41,12 @@ class CustomerController extends Controller
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qUser) use ($q) {
-                    $qUser->whereLike('name', $q)
-                        ->orWhereLike('company', $q)
-                        ->orWhereLike('phone_number', $q)
-                        ->orWhereLike('email', $q);
+                    $qUser->where(function ($qUser1) use ($q) {
+                        $qUser1->whereLike('name', $q)
+                            ->orWhereLike('company', $q)
+                            ->orWhereLike('phone_number', $q)
+                            ->orWhereLike('email', $q);
+                    });
                 });
             }
 
