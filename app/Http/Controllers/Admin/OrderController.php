@@ -511,10 +511,10 @@ class OrderController extends Controller
                         'email' => $order->customer->user->email ?? '',
                         'phone' => $order->customer->user->phone ?? '',
                         'address' => $order->customer->user->address ?? '',
-                        'province_id' => $order->customer_address->province_id,
-                        'regency_id' => $order->customer_address->regency_id,
-                        'district_id' => $order->customer_address->district_id,
-                        'village_id' => $order->customer_address->village_id,
+                        'province_id' => optional($order->customer_address)->province_id,
+                        'regency_id' => optional($order->customer_address)->regency_id,
+                        'district_id' => optional($order->customer_address)->district_id,
+                        'village_id' => optional($order->customer_address)->village_id,
                         'shipping_price' => $order->shipping_price,
                     ]);
                     $shipping->save();
@@ -655,10 +655,10 @@ class OrderController extends Controller
                     'email' => $order->customer->user->email ?? '',
                     'phone' => $order->customer->user->phone ?? '',
                     'address' => $order->customer->user->address ?? '',
-                    'province_id' => $order->customer_address->province_id,
-                    'regency_id' => $order->customer_address->regency_id,
-                    'district_id' => $order->customer_address->district_id,
-                    'village_id' => $order->customer_address->village_id,
+                    'province_id' => optional($order->customer_address)->province_id,
+                    'regency_id' => optional($order->customer_address)->regency_id,
+                    'district_id' => optional($order->customer_address)->district_id,
+                    'village_id' => optional($order->customer_address)->village_id,
                     'shipping_price' => $order->shipping_price,
                 ]);
                 $shipping->save();
