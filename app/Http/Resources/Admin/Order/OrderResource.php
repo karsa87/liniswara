@@ -109,7 +109,7 @@ class OrderResource extends JsonResource
             }
 
             $shipping = [
-                'id' => $this->customer_address->id,
+                'id' => $this->shipping->id,
                 'resi' => $this->shipping->resi,
                 'name' => $this->shipping->name,
                 'email' => $this->shipping->email,
