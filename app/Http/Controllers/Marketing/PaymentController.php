@@ -191,6 +191,16 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function transaction_rank_regency(Request $request, $id)
+    {
+        $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id);
+
+        return response()->json($rankingRegency);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function region(Request $request)
     {
         if ($request->ajax()) {

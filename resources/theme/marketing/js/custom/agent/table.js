@@ -16,54 +16,37 @@ var KTCustomersList = function () {
             // stateSave: true,
             ajax: {
                 url: table.dataset.url,
-                "data": function ( d ) {
-                    // // Select filter options
-                    // const filterForm = document.querySelector('[data-kt-customer-table-filter="form"]');
-                    // const selectOptions = filterForm.querySelectorAll('select');
-
-                    // // Filter datatable on submit
-                    // var filterString = '';
-
-                    // // Get filter values
-                    // selectOptions.forEach((item, index) => {
-                    //     if (item.value && item.value !== '') {
-                    //         if (index !== 0) {
-                    //             filterString += ' ';
-                    //         }
-
-                    //         // Build filter value options
-                    //         filterString += item.value;
-                    //     }
-                    // });
-                    // d.search.role_id = filterString;
-                }
             },
             columns: [
+                {
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: ''
+                },
                 { data: 'name', orderable: false },
-                { data: 'email', orderable: false },
-                { data: 'phone_number', orderable: false },
                 { data: 'target' },
+                { data: 'achievement' },
                 { data: 'total_achieved' },
             ],
             columnDefs: [
                 {
-                    targets: 0,
+                    targets: 1,
                     render: function (data, type, row) {
-                        return `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>`;
+                        var result = `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>
+                            <br>
+                            <span class="text-muted">${row.email}</span>
+                        `;
+
+                        if (row.phone_number) {
+                            result += `<br><a href="https://wa.me/${row.phone_number}" class="badge badge-light-success fs-7 m-1">${row.phone_number}</a>`;
+                        }
+
+                        return result;
                     }
                 },
                 {
                     targets: 2,
-                    render: function (data) {
-                        if (data) {
-                            return `<a href="https://wa.me/${data}" class="badge badge-light-success fs-7 m-1">${data}</a>`;
-                        }
-
-                        return '';
-                    }
-                },
-                {
-                    targets: 3,
                     render: function (data, type, row) {
                         let target = 0;
                         if (typeof row.target == 'number') {
@@ -71,6 +54,17 @@ var KTCustomersList = function () {
                         }
 
                         return target;
+                    }
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, row) {
+                        let total_achieved = 0;
+                        if (typeof row.total_achieved == 'number') {
+                            total_achieved = row.total_achieved.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+
+                        return total_achieved;
                     }
                 },
                 {
@@ -86,7 +80,6 @@ var KTCustomersList = function () {
                         return `
                         <div class="d-flex align-items-center flex-column mt-3 w-100">
                             <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
-                                <span>${total_achieved}</span>
                                 <span>${percent_show}%</span>
                             </div>
                             <div class="h-8px mx-3 w-100 bg-light-success rounded">
@@ -103,6 +96,109 @@ var KTCustomersList = function () {
         datatable.on('draw', function () {
             KTMenu.createInstances();
         });
+
+        // Add event listener for opening and closing details
+        datatable.on('click', 'td.dt-control', function (e) {
+            let tr = e.target.closest('tr');
+            let row = datatable.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+            }
+            else {
+                // Open this row
+                row.child(format(e, row.data())).show();
+            }
+        });
+    }
+
+    // Formatting function for row details - modify as you need
+    var format = (element, data) => {
+        var urlRankRegency = element.target.closest('table').dataset.rankRegency.replace('REPLACE', data.id);
+
+        var result = '<h6>Target dan Pencapaian per Wilayah</h6>';
+        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-agent-${data.id}">
+            <thead>
+                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-325px text-center">Kota</th>
+                    <th class="min-w-125px">Target</th>
+                    <th class="min-w-125px">Pencapaian</th>
+                    <th class="min-w-125px">Persentase</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>`;
+
+        KTApp.showPageLoading();
+        // Init chart
+        axios.get(urlRankRegency).then(function (response) {
+            if (response && response.data) {
+                response.data.forEach(dataPreorder => {
+                    var preorders_total = dataPreorder.preorders_total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+                    var percent_show = 0;
+                    var percent = 0;
+                    var areaName = '-';
+                    var targetArea = 0;
+                    if (dataPreorder.area) {
+                        targetArea = dataPreorder.area.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+                        areaName = dataPreorder.area.name;
+                        percent_show = Math.round((dataPreorder.preorders_total / dataPreorder.area.target) * 100);
+                        percent = dataPreorder.preorders_total >= dataPreorder.area.target ? 100 : Math.round((dataPreorder.preorders_total / dataPreorder.area.target) * 100);
+                    }
+
+                    var resultTr = `<tr>
+                        <td>${areaName}</td>
+                        <td>${targetArea}</td>
+                        <td>${preorders_total}</td>
+                        <td>
+                        <div class="d-flex align-items-center flex-column mt-3 w-100">
+                            <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
+                                <span>${percent_show}%</span>
+                            </div>
+                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
+                                <div class="bg-success rounded h-8px" role="progressbar" style="width: ${percent}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>`;
+
+                    $(`#table-transaction-agent-${data.id} tbody`).append(resultTr);
+                });
+            } else {
+                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                    text: "Sorry, looks like there are some errors detected, please try again.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        }).catch(function (error) {
+            console.log(error);
+            let msg = "Gagal load data.";
+
+            Swal.fire({
+                title: "Failed load data",
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+        }).then(() => {
+            // Hide loading indication
+            KTApp.hidePageLoading();
+        });
+
+        return result;
     }
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()

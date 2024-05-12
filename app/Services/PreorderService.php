@@ -201,4 +201,34 @@ class PreorderService
 
         return $query->get();
     }
+
+    /**
+     * Get top ranking of agen by total amount transaction
+     *
+     * @param  int  $limit limit to get ranking
+     * @param  int  $month month preorder
+     *
+     * **/
+    public function rankingByRegencySpecificAgent(
+        $agentId,
+        $limit = null,
+        $month = null,
+    ): Collection {
+        $query = Preorder::selectRaw('SUM(total_amount) as preorders_total, count(id) as preorders_count, area_id')
+            ->with('area')
+            ->where('customer_id', $agentId)
+            ->groupBy('area_id')
+            ->orderBy('preorders_total', 'desc')
+            ->limit(10);
+
+        if ($month) {
+            $query->whereMonth('date', $month);
+        }
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }
