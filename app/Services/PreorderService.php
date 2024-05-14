@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
 use App\Models\Preorder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -210,25 +211,15 @@ class PreorderService
      *
      * **/
     public function rankingByRegencySpecificAgent(
-        $agentId,
-        $limit = null,
-        $month = null,
+        $agentId
     ): Collection {
-        $query = Preorder::selectRaw('SUM(total_amount) as preorders_total, count(id) as preorders_count, area_id')
-            ->with('area')
-            ->where('customer_id', $agentId)
-            ->groupBy('area_id')
-            ->orderBy('preorders_total', 'desc')
-            ->limit(10);
+        $agent = Customer::with([
+            'areas' => function ($qArea) {
+                $qArea->withSum('preorders as preorders_total', 'total_amount')
+                    ->withCount('preorders');
+            },
+        ])->whereId($agentId)->first();
 
-        if ($month) {
-            $query->whereMonth('date', $month);
-        }
-
-        if ($limit) {
-            $query->limit($limit);
-        }
-
-        return $query->get();
+        return $agent->areas;
     }
 }

@@ -134,25 +134,24 @@ var KTCustomersList = function () {
         // Init chart
         axios.get(urlRankRegency).then(function (response) {
             if (response && response.data) {
-                response.data.forEach(dataPreorder => {
-                    var preorders_total = dataPreorder.preorders_total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                response.data.forEach(dataArea => {
+                    var preordersTotal = dataArea.preorders_total ?? 0;
+                    var preordersTotalFormatted = '-';
+                    if (preordersTotal != null && preordersTotal != undefined) {
+                        preordersTotalFormatted = preordersTotal.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    }
 
                     var percent_show = 0;
                     var percent = 0;
-                    var areaName = '-';
-                    var targetArea = 0;
-                    if (dataPreorder.area) {
-                        targetArea = dataPreorder.area.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-
-                        areaName = dataPreorder.area.name;
-                        percent_show = Math.round((dataPreorder.preorders_total / dataPreorder.area.target) * 100);
-                        percent = dataPreorder.preorders_total >= dataPreorder.area.target ? 100 : Math.round((dataPreorder.preorders_total / dataPreorder.area.target) * 100);
-                    }
+                    var areaName = dataArea.name;
+                    var targetArea = dataArea.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    percent_show = Math.round((preordersTotal / dataArea.target) * 100);
+                    percent = preordersTotal >= dataArea.target ? 100 : Math.round((preordersTotal / dataArea.target) * 100);
 
                     var resultTr = `<tr>
                         <td>${areaName}</td>
                         <td>${targetArea}</td>
-                        <td>${preorders_total}</td>
+                        <td>${preordersTotalFormatted}</td>
                         <td>
                         <div class="d-flex align-items-center flex-column mt-3 w-100">
                             <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
