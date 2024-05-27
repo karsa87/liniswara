@@ -213,10 +213,21 @@ class PreorderService
     public function rankingByRegencySpecificAgent(
         $agentId
     ): Collection {
+        $marketingTeam = session(config('session.app.selected_marketing_tim'));
+
         $agent = Customer::with([
-            'areas' => function ($qArea) {
-                $qArea->withSum('preorders as preorders_total', 'total_amount')
-                    ->withCount('preorders');
+            'areas' => function ($qArea) use ($marketingTeam) {
+                $qArea->withSum([
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketingTeam) {
+                        $qPreorder->where('marketing', $marketingTeam->value);
+                    },
+                ], 'total_amount')
+                    ->withCount([
+                        'preorders' => function ($qPreorder) use ($marketingTeam) {
+                            $qPreorder->where('marketing', $marketingTeam->value);
+                        },
+                    ])
+                    ->orderBy('preorders_total', 'DESC');
             },
         ])->whereId($agentId)->first();
 

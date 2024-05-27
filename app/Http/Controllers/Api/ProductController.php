@@ -53,7 +53,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function show(int $id)
+    public function show($id)
     {
         $product = Product::with([
             'thumbnail',

@@ -204,12 +204,22 @@ class PaymentController extends Controller
     public function region(Request $request)
     {
         if ($request->ajax()) {
+            $marketingTeam = session(config('session.app.selected_marketing_tim'));
+
             $query = Area::with([
                 'preorders',
             ])
                 ->where('target', '>', 0)
-                ->withCount('preorders')
-                ->withSum('preorders as total_achieved', 'total_amount');
+                ->withCount([
+                    'preorders' => function ($qPreorder) use ($marketingTeam) {
+                        $qPreorder->where('marketing', $marketingTeam->value);
+                    },
+                ])
+                ->withSum([
+                    'preorders as total_achieved' => function ($qPreorder) use ($marketingTeam) {
+                        $qPreorder->where('marketing', $marketingTeam->value);
+                    },
+                ], 'total_amount');
 
             if ($q = $request->input('search.value')) {
                 $query->whereLike('name', $q);

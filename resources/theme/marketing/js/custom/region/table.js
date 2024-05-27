@@ -41,8 +41,9 @@ var KTRegionsList = function () {
             columns: [
                 { data: 'name', orderable: false },
                 { data: 'total_transaction', orderable: false },
-                { data: 'target' },
-                { data: 'total_achieved' },
+                { data: 'target', orderable: false },
+                { data: 'total_achieved', orderable: false },
+                { data: null, orderable: false },
             ],
             columnDefs: [
                 {
@@ -74,6 +75,17 @@ var KTRegionsList = function () {
                     }
                 },
                 {
+                    targets: 3,
+                    render: function (data, type, row) {
+                        let total_achieved = 0;
+                        if (typeof row.total_achieved == 'number') {
+                            total_achieved = row.total_achieved.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+
+                        return total_achieved;
+                    }
+                },
+                {
                     targets: -1,
                     data: null,
                     orderable: false,
@@ -86,7 +98,6 @@ var KTRegionsList = function () {
                         return `
                         <div class="d-flex align-items-center flex-column mt-3 w-100">
                             <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
-                                <span>${total_achieved}</span>
                                 <span>${percent_show}%</span>
                             </div>
                             <div class="h-8px mx-3 w-100 bg-light-success rounded">

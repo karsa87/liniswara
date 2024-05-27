@@ -34,6 +34,7 @@
                             <th class="min-w-125px">Area</th>
                             <th class="min-w-125px">Total Transaksi</th>
                             <th class="min-w-125px">Target</th>
+                            <th class="min-w-125px">Pencapaian</th>
                             <th class="min-w-125px">Tercapai</th>
                         </tr>
                     </thead>

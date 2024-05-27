@@ -12,7 +12,7 @@ var KTCustomersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[4, 'desc']],
+            order: [[3, 'desc']],
             // stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -24,16 +24,20 @@ var KTCustomersList = function () {
                     data: null,
                     defaultContent: ''
                 },
-                { data: 'name', orderable: false },
+                { data: 'name' },
                 { data: 'target' },
-                { data: 'achievement' },
-                { data: 'total_achieved' },
+                { data: 'total_achieved', orderable: false },
+                { data: null, orderable: false },
             ],
             columnDefs: [
                 {
                     targets: 1,
                     render: function (data, type, row) {
-                        var result = `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>
+                        // var result = `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>
+                        //     <br>
+                        //     <span class="text-muted">${row.email}</span>
+                        // `;
+                        var result = `<span class="text-dark text-hover-primary fs-6 fw-bold">${data}</span>
                             <br>
                             <span class="text-muted">${row.email}</span>
                         `;

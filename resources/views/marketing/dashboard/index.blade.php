@@ -452,7 +452,7 @@
                     <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
                         <!--begin::Table body-->
                         <tbody>
-                            @foreach ($rangkingByMarketingTeamB as $preorder)
+                            @foreach ($rangkingByMarketingTeamA as $preorder)
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
