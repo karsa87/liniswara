@@ -44,7 +44,7 @@ class DashboardController extends Controller
             'marketing' => $marketingTeam->value,
         ]);
 
-        $rankingRegency = $this->preorderService->rankingByRegency(5, $request->get('regency_month_id'));
+        $rankingRegency = $this->preorderService->rankingByRegency(5, $request->get('regency_month_id'), $marketingTeam->value);
 
         $rangkingByMarketingTeamA = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_A, Carbon::now()->month);
         $rangkingByMarketingTeamB = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_B, Carbon::now()->month);

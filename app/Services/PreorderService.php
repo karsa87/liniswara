@@ -156,7 +156,8 @@ class PreorderService
      * **/
     public function rankingByRegency(
         $limit = null,
-        $month = null
+        $month = null,
+        $marketing = null
     ): Collection {
         $query = Preorder::selectRaw('SUM(total_amount) as preorders_total, count(id) as preorders_count, area_id')
             ->with('area')
@@ -170,6 +171,10 @@ class PreorderService
 
         if ($limit) {
             $query->limit($limit);
+        }
+
+        if ($marketing) {
+            $query->where('marketing', $marketing);
         }
 
         return $query->get();
@@ -211,20 +216,23 @@ class PreorderService
      *
      * **/
     public function rankingByRegencySpecificAgent(
-        $agentId
+        $agentId,
+        $marketing = null
     ): Collection {
-        $marketingTeam = session(config('session.app.selected_marketing_tim'));
-
         $agent = Customer::with([
-            'areas' => function ($qArea) use ($marketingTeam) {
+            'areas' => function ($qArea) use ($marketing) {
                 $qArea->withSum([
-                    'preorders as preorders_total' => function ($qPreorder) use ($marketingTeam) {
-                        $qPreorder->where('marketing', $marketingTeam->value);
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
+                        if ($marketing) {
+                            $qPreorder->where('marketing', $marketing);
+                        }
                     },
                 ], 'total_amount')
                     ->withCount([
-                        'preorders' => function ($qPreorder) use ($marketingTeam) {
-                            $qPreorder->where('marketing', $marketingTeam->value);
+                        'preorders' => function ($qPreorder) use ($marketing) {
+                            if ($marketing) {
+                                $qPreorder->where('marketing', $marketing);
+                            }
                         },
                     ])
                     ->orderBy('preorders_total', 'DESC');

@@ -193,7 +193,8 @@ class PaymentController extends Controller
      */
     public function transaction_rank_regency(Request $request, $id)
     {
-        $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id);
+        $marketingTeam = session(config('session.app.selected_marketing_tim'));
+        $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id, optional($marketingTeam)->value);
 
         return response()->json($rankingRegency);
     }
