@@ -286,7 +286,7 @@
                                     <option value="" selected="selected">Semua</option>
                                     @for ($i = 1; $i <= 12; $i++)
                                         <option value="{{ $i }}" {{ request('regency_month_id') == $i ? 'selected' : '' }}>
-                                            {{ $carbon->createFromDate(null, $i)->locale('id')->format('F') }}
+                                            {{ $carbon->createFromDate(null, $i)->isoFormat('MMMM') }}
                                         </option>
                                     @endfor
                                 </select>

@@ -43,7 +43,7 @@
                         <div class="flex-root d-flex flex-column text-center">
                             <span class="fs-2">No Faktur : {{ $order->invoice_number }}</span>
                             <span class="fs-7 text-muted">
-                                {{ $carbon->now()->locale('id')->format('l : d-m-Y H:i') }}
+                                {{ $carbon->now()->isoFormat('dddd, D MMMM Y H:m') }}
                             </span>
                         </div>
                     </div>

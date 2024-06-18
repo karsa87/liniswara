@@ -451,7 +451,7 @@
                                         <div class="d-flex align-items-center mt-1 fs-6">
                                             <!--begin::Info-->
                                             <div class="text-muted me-2 fs-7">
-                                                {{ $carbon->parse($track['date'])->locale('id')->format('l, j F Y H:i') }}
+                                                {{ $carbon->parse($track['date'])->isoFormat('dddd, D MMMM Y H:m') }}
                                             </div>
                                             <!--end::Info-->
                                         </div>

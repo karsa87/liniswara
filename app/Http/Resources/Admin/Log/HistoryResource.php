@@ -27,7 +27,7 @@ class HistoryResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'datetime' => Carbon::parse($this->log_datetime)->locale('id')->format('l, j F Y H:i'),
+            'datetime' => Carbon::parse($this->log_datetime)->isoFormat('dddd, D MMMM Y H:m'),
             'user' => $user,
             'information' => $this->information,
             'source' => $this->source,

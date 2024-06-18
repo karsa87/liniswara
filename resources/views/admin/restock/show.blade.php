@@ -30,7 +30,7 @@
                     <div class="mb-0">
                         <!--begin::Price-->
                         <span class="fw-semibold text-gray-600">
-                            {{ $carbon->parse($restock->date)->locale('id')->format('l, j F Y H:i') }}
+                            {{ $carbon->parse($restock->date)->isoFormat('dddd, D MMMM Y H:m') }}
                         </span>
                         <!--end::Price-->
                     </div>

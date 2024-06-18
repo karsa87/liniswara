@@ -305,7 +305,7 @@
                             <tbody class="fw-semibold text-gray-600">
                                 @foreach ($product->stock_histories as $history)
                                     <tr>
-                                        <td>{{ $carbon->parse($history->created_at)->locale('id')->format('l, j F Y H:i') }}</td>
+                                        <td>{{ $carbon->parse($history->created_at)->isoFormat('dddd, D MMMM Y H:m') }}</td>
                                         <td>{{ $history->stock_old }}</td>
                                         <td>{{ $history->stock_in }}</td>
                                         <td>{{ $history->stock_out }}</td>

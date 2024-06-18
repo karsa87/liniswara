@@ -30,7 +30,7 @@
                     <!--begin::Separator-->
                     <div class="d-flex flex-column gap-2">
                         <span class="fw-medium fs-6 pe-5 text-end">
-                            {{ $carbon->now()->locale('id')->format('j F Y') }}
+                            {{ $carbon->now()->isoFormat('D MMMM Y') }}
                         </span>
                     </div>
                     <!--begin::Billing & shipping-->

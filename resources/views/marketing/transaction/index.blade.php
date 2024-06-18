@@ -236,10 +236,10 @@
                                                 <!--begin::Number-->
                                                 <div class="d-flex justify-content-start flex-column">
                                                     <spam class="text-gray-800 fw-bold mb-1 fs-4">
-                                                        {{ $carbon->parse($preorder->date)->locale('id')->format('l,') }}
+                                                        {{ $carbon->parse($preorder->date)->isoFormat('dddd,') }}
                                                     </span>
                                                     <spam class="text-gray-800 fw-bold d-block mb-1 fs-4">
-                                                        {{ $carbon->parse($preorder->date)->locale('id')->format('j F Y') }}
+                                                        {{ $carbon->parse($preorder->date)->isoFormat('D MMMM Y') }}
                                                     </span>
                                                     <span class="text-gray-700 fw-semibold d-block fs-6">{{ $preorder->invoice_number }}</span>
                                                 </div>

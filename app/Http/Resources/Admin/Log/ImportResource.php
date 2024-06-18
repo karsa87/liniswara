@@ -36,7 +36,7 @@ class ImportResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'date' => Carbon::parse($this->created_at)->locale('id')->format('l, j F Y H:i'),
+            'date' => Carbon::parse($this->created_at)->isoFormat('dddd, D MMMM Y H:m'),
             'user' => $user,
             'name' => $this->name,
             'total_failed' => $this->total_failed,
