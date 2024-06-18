@@ -14,7 +14,13 @@
                 <!--begin::Title-->
                 <h3 class="card-title align-items-start flex-column">
                     <!--begin::Amount-->
-                    <span class="badge badge-primary"> {{ str('Target' . session(config('session.app.selected_marketing_tim'))->getLabel())->upper() }}</span>
+                    <span class="badge badge-primary">
+                        @if (session(config('session.app.selected_marketing_tim')))
+                        {{ str('Target' . session(config('session.app.selected_marketing_tim'))->getLabel())->upper() }}
+                        @else
+                        {{ str('Target')->upper() }}
+                        @endif
+                    </span>
                     <!--end::Amount-->
                 </h3>
                 <!--end::Title-->
@@ -312,7 +318,12 @@
                         Grafik Penjualan
                     </span>
                     <span class="text-muted mt-1 fw-semibold fs-7">
-                        {{ session(config('session.app.selected_marketing_tim'))->getLabel() }} {{ date('Y') }}
+                        @if (session(config('session.app.selected_marketing_tim')))
+                        {{ session(config('session.app.selected_marketing_tim'))->getLabel() }}
+                        @else
+                            All
+                        @endif
+                        {{ date('Y') }}
                     </span>
                 </h3>
                 <!--end::Title-->

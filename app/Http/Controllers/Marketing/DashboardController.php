@@ -29,22 +29,26 @@ class DashboardController extends Controller
     {
         $marketingTeam = session(config('session.app.selected_marketing_tim'));
         $settingKey = SettingKeyEnum::MARKETING_TARGET_TIM_A;
-        switch ($marketingTeam->value) {
+        switch (optional($marketingTeam)->value) {
             case MarketingEnum::TEAM_B:
                 $settingKey = SettingKeyEnum::MARKETING_TARGET_TIM_B;
                 break;
 
+            case MarketingEnum::TEAM_A:
+                $settingKey = SettingKeyEnum::MARKETING_TARGET_TIM_A;
+                break;
+
             default:
-                // code...
+                $marketingTeam = null;
                 break;
         }
 
         $settingTargetTeam = Setting::where('key', $settingKey)->first();
         $summary = $this->preorderService->getSummaryAll([
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
 
-        $rankingRegency = $this->preorderService->rankingByRegency(5, $request->get('regency_month_id'), $marketingTeam->value);
+        $rankingRegency = $this->preorderService->rankingByRegency(5, $request->get('regency_month_id'), optional($marketingTeam)->value);
 
         $rangkingByMarketingTeamA = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_A, Carbon::now()->month);
         $rangkingByMarketingTeamB = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_B, Carbon::now()->month);
@@ -74,15 +78,15 @@ class DashboardController extends Controller
         $marketingTeam = session(config('session.app.selected_marketing_tim'));
         $preorderPaid = $this->preorderService->getSummary([
             'status_payment' => StatusPaymentEnum::PAID,
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
         $preorderNotPaid = $this->preorderService->getSummary([
             'status_payment' => StatusPaymentEnum::NOT_PAID,
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
         $preorderDp = $this->preorderService->getSummary([
             'status_payment' => StatusPaymentEnum::DP,
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
 
         return response()->json([
@@ -99,15 +103,15 @@ class DashboardController extends Controller
         $marketingTeam = session(config('session.app.selected_marketing_tim'));
         $orderPaid = $this->orderService->getSummary([
             'status_payment' => StatusPaymentEnum::PAID,
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
         $orderNotPaid = $this->orderService->getSummary([
             'status_payment' => StatusPaymentEnum::NOT_PAID,
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
         $orderDp = $this->orderService->getSummary([
             'status_payment' => StatusPaymentEnum::DP,
-            'marketing' => $marketingTeam->value,
+            'marketing' => optional($marketingTeam)->value,
         ]);
 
         return response()->json([
@@ -129,15 +133,20 @@ class DashboardController extends Controller
         ];
         for ($i = 1; $i <= 12; $i++) {
             $zone1 = Preorder::where('zone', ZoneEnum::ZONE_1)
-                ->where('marketing', $marketingTeam->value)
                 ->where('is_exclude_target', false)
-                ->whereMonth('date', $i)
-                ->sum('total_amount');
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $zone1->where('marketing', $marketingTeam->value);
+            }
+            $zone1 = $zone1->sum('total_amount');
+
             $zone2 = Preorder::where('zone', ZoneEnum::ZONE_2)
-                ->where('marketing', $marketingTeam->value)
                 ->where('is_exclude_target', false)
-                ->whereMonth('date', $i)
-                ->sum('total_amount');
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $zone2->where('marketing', $marketingTeam->value);
+            }
+            $zone2 = $zone2->sum('total_amount');
 
             $zones['zone_1'][] = $zone1;
             $zones['zone_2'][] = $zone2;

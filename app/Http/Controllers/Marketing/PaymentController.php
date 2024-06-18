@@ -59,6 +59,7 @@ class PaymentController extends Controller
     public function agent(Request $request)
     {
         if ($request->ajax()) {
+            $marketingTeam = session(config('session.app.selected_marketing_tim'));
             $query = Customer::with([
                 'user:id,name,email,phone_number,profile_photo_id',
                 'user.profile_photo',
@@ -70,6 +71,10 @@ class PaymentController extends Controller
                 ->where('target', '>', 0)
                 ->withCount('preorders')
                 ->withSum('preorders as total_achieved', 'total_amount');
+
+            if ($marketingTeam && $marketingTeam->value) {
+                $query->where('marketing', $marketingTeam->value);
+            }
 
             if ($q = $request->input('search.value')) {
                 $query->whereHas('user', function ($qUser) use ($q) {
@@ -213,12 +218,16 @@ class PaymentController extends Controller
                 ->where('target', '>', 0)
                 ->withCount([
                     'preorders' => function ($qPreorder) use ($marketingTeam) {
-                        $qPreorder->where('marketing', $marketingTeam->value);
+                        if (optional($marketingTeam)->value) {
+                            $qPreorder->where('marketing', $marketingTeam->value);
+                        }
                     },
                 ])
                 ->withSum([
                     'preorders as total_achieved' => function ($qPreorder) use ($marketingTeam) {
-                        $qPreorder->where('marketing', $marketingTeam->value);
+                        if (optional($marketingTeam)->value) {
+                            $qPreorder->where('marketing', $marketingTeam->value);
+                        }
                     },
                 ], 'total_amount');
 
