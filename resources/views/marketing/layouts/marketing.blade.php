@@ -269,15 +269,6 @@
 											<!--begin::Menu item-->
 
                                             @if (session(config('session.app.selected_marketing_tim')))
-                                                @php
-                                                    $team = \App\Enums\Preorder\MarketingEnum::TEAM_A;
-                                                @endphp
-                                                <div class="menu-item px-5">
-                                                    <a href="{{ route('marketing.switch_marketing', $team) }}" class="menu-link px-5">
-                                                        Switch {{ \App\Enums\Preorder\MarketingEnum::fromValue($team)->getLabel() }}
-                                                    </a>
-                                                </div>
-                                            @else
                                                 @foreach ([
                                                     \App\Enums\Preorder\MarketingEnum::TEAM_A,
                                                     \App\Enums\Preorder\MarketingEnum::TEAM_B,
@@ -293,6 +284,15 @@
                                                         </a>
                                                     </div>
                                                 @endforeach
+                                            @else
+                                                @php
+                                                    $team = \App\Enums\Preorder\MarketingEnum::TEAM_A;
+                                                @endphp
+                                                <div class="menu-item px-5">
+                                                    <a href="{{ route('marketing.switch_marketing', $team) }}" class="menu-link px-5">
+                                                        Switch {{ \App\Enums\Preorder\MarketingEnum::fromValue($team)->getLabel() }}
+                                                    </a>
+                                                </div>
                                             @endif
 
 											<!--end::Menu item-->
