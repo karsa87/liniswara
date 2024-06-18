@@ -310,6 +310,7 @@ class CustomerController extends Controller
             $list[] = [
                 'id' => $customer->id,
                 'text' => optional($customer->user)->name,
+                'marketing' => $customer->marketing,
                 'addresses' => $addresses,
                 'areas' => $areas,
             ];

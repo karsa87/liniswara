@@ -96,6 +96,15 @@ var KTAppEcommerceSaveProduct = function () {
                 ) {
                     $('#form-select-area').html('').select2({data: selectedData.areas});
                 }
+
+                if (
+                    selectedData.marketing != null
+                ) {
+                    $('#marketing-option').val(selectedData.marketing).change();
+                    $('#marketing-option').attr('disabled', 'disabled');
+                } else {
+                    $('#marketing-option').removeAttr('disabled');
+                }
             }
         });
 

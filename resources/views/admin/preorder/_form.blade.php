@@ -81,7 +81,7 @@
                             <label class="form-label">Marketing</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select class="form-select mb-2" data-placeholder="Select Alamat" data-allow-clear="true" name="preorder_marketing" data-kt-ecommerce-catalog-add-preorder="preorder_option">
+                            <select class="form-select mb-2" data-placeholder="Select Alamat" data-allow-clear="true" name="preorder_marketing" id="marketing-option" disabled>
                                 @foreach (\App\Enums\Preorder\MarketingEnum::MAP_LABEL as $key => $name)
                                     <option value="{{ $key }}" {{ $preorder->marketing == $key ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
