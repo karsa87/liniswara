@@ -138,10 +138,10 @@ var KTPreordersList = function () {
                         }
 
                         result += `<br><span class="fs-7 text-muted">${row.notes}</span>`;
-                        result += `TOTAL JUDUL : <span class="badge badge-info">${row.all_details_count}</span> `;
-                        result += `SISA : <span class="badge badge-info">${row.details_count}</span> `;
-                        result += `READY : <span class="badge badge-success">${row.product_ready_count}</span> `;
-                        result += `KOSONG : <span class="badge badge-warning">${row.product_not_ready_count}</span> `;
+                        result += `TOTAL JUDUL : <span class="badge badge-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Total judul buku">${row.all_details_count}</span> `;
+                        result += `SISA : <span class="badge badge-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Total judul buku yang belum dikirim secara keseluruhan">${row.details_count}</span> `;
+                        result += `READY : <span class="badge badge-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Total judul buku yang siap dikirim">${row.product_ready_count}</span> `;
+                        result += `KOSONG : <span class="badge badge-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Total judul buku yang kosong">${row.product_not_ready_count}</span> `;
 
                         return result;
                     }
@@ -392,6 +392,8 @@ var KTPreordersList = function () {
             handleEditDiscountRows();
             handleEditStatusRows();
             KTMenu.createInstances();
+
+            $('[data-bs-toggle="tooltip"]').tooltip();
         });
     }
 
