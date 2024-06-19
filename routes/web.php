@@ -66,6 +66,10 @@ Route::middleware(['web'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('maintanance', [
+        DashboardController::class, 'maintanance',
+    ])->name('maintanance');
+
     Route::get('/', [
         DashboardController::class, 'index',
     ])->name('dashboard');

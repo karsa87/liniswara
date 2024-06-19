@@ -427,14 +427,25 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="#">
+                    <a class="menu-link" href="{{ route('maintanance') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-chart-line fs-2 text-info">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Laporan</span>
+                        <span class="menu-title">Laporan Admin</span>
+                    </a>
+                    <!--end:Menu link-->
+                    <!--begin:Menu link-->
+                    <a class="menu-link" href="{{ route('maintanance') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-chart-line fs-2 text-info">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Laporan Gudang</span>
                     </a>
                     <!--end:Menu link-->
                     @if (auth()->guard('marketing')->check())

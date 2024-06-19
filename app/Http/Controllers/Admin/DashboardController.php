@@ -197,4 +197,9 @@ class DashboardController extends Controller
             'total_count' => Product::count(),
         ]);
     }
+
+    public function maintanance()
+    {
+        return view('admin.maintanance');
+    }
 }
