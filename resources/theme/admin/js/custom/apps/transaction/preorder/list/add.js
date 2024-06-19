@@ -402,6 +402,7 @@ var KTAppEcommerceSaveProduct = function () {
             if (validator) {
                 validator.validate().then(function (status) {
                     if (status == 'Valid') {
+                        $('#marketing-option').removeAttr('disabled');
                         submitButton.setAttribute('data-kt-indicator', 'on');
 
                         // Disable submit button whilst loading
@@ -468,6 +469,7 @@ var KTAppEcommerceSaveProduct = function () {
                                 });
                             }
                         }).catch(function (error) {
+                            $('#marketing-option').attr('disabled', 'disabled');
                             let msg = "Sorry, looks like there are some errors detected, please try again.";
                             if (
                                 error.response && error.response.data
@@ -490,6 +492,7 @@ var KTAppEcommerceSaveProduct = function () {
                                 }
                             });
                         }).then(() => {
+                            $('#marketing-option').attr('disabled', 'disabled');
                             // Hide loading indication
                             submitButton.removeAttribute('data-kt-indicator');
 
@@ -498,6 +501,7 @@ var KTAppEcommerceSaveProduct = function () {
                             KTApp.hidePageLoading();
                         });
                     } else {
+                        $('#marketing-option').attr('disabled', 'disabled');
                         Swal.fire({
                             html: "Sorry, looks like there are some errors detected, please try again. <br/><br/>Please note that there may be errors in the <strong>General</strong> or <strong>Advanced</strong> tabs",
                             icon: "error",
