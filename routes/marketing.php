@@ -34,7 +34,7 @@ Route::get('/dashboard/widget/transaction-by-marketing', [
     DashboardController::class, 'widget_transaction_by_marketing',
 ])->name('dashboard.widget.transaction_by_marketing');
 
-Route::get('/switch-marketing/{marketing}', [
+Route::get('/switch-marketing/{marketing?}', [
     DashboardController::class, 'switch_marketing',
 ])->name('switch_marketing');
 

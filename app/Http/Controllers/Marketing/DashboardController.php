@@ -62,11 +62,32 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function switch_marketing(int $marketing)
+    public function switch_marketing($marketing = null)
     {
         try {
-            $marketingValue = MarketingEnum::fromValue($marketing);
-            \Session::put(config('session.app.selected_marketing_tim'), $marketingValue);
+            \Session::forget(config('session.app.selected_marketing_tim'));
+            if ($marketing) {
+                switch ($marketing) {
+                    case MarketingEnum::TEAM_A:
+                        $marketingValue = MarketingEnum::TEAM_A();
+                        break;
+                    case MarketingEnum::TEAM_B:
+                        $marketingValue = MarketingEnum::TEAM_B();
+                        break;
+                    case MarketingEnum::RETAIL:
+                        $marketingValue = MarketingEnum::RETAIL();
+                        break;
+                    case MarketingEnum::WRITING:
+                        $marketingValue = MarketingEnum::WRITING();
+                        break;
+
+                    default:
+                        // code...
+                        break;
+                }
+                \Session::put(config('session.app.selected_marketing_tim'), $marketingValue);
+            }
+
         } catch (\Throwable $th) {
         }
 
