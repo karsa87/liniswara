@@ -260,8 +260,8 @@
         document.getElementById("kt_header").remove();
         document.getElementById("kt_footer").remove();
         document.getElementById("kt_aside").remove();
-        // document.getElementById("kt_wrapper").style.paddingTop = '0px';
-        // document.getElementById("kt_wrapper").style.paddingLeft = '0px';
+        document.getElementById("kt_wrapper").style.paddingTop = '250px';
+        document.getElementById("kt_wrapper").style.paddingLeft = '0px';
 
         var afterPrint = function() {
             window.location.reload();
