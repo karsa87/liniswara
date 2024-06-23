@@ -57,6 +57,9 @@ Route::name('payment.')->prefix('payment/')->group(function () {
     Route::get('region', [
         PaymentController::class, 'region',
     ])->name('region');
+    Route::get('region/transaction-rank-agent/{id?}', [
+        PaymentController::class, 'transaction_rank_agent',
+    ])->name('transaction_rank_agent');
 });
 
 Route::name('transaction.')->prefix('transaction/')->group(function () {

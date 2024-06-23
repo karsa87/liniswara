@@ -28,14 +28,15 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_customers" data-url="{{ route('marketing.payment.region') }}">
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_customers" data-url="{{ route('marketing.payment.region') }}" data-rank-agent="{{ route('marketing.payment.transaction_rank_agent', 'REPLACE') }}">
                     <thead>
                         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                            <th class="min-w-25px"></th>
                             <th class="min-w-125px">Area</th>
-                            <th class="min-w-125px">Total Transaksi</th>
-                            <th class="min-w-125px">Target</th>
-                            <th class="min-w-125px">Pencapaian</th>
-                            <th class="min-w-125px">Tercapai</th>
+                            <th class="min-w-50px">Total Transaksi</th>
+                            <th class="min-w-100px">Target</th>
+                            <th class="min-w-100px">Pencapaian</th>
+                            <th class="min-w-100px">Tercapai</th>
                         </tr>
                     </thead>
                 </table>

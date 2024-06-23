@@ -12,7 +12,7 @@ var KTRegionsList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[3, 'desc']],
+            order: [[4, 'desc']],
             // stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -39,6 +39,12 @@ var KTRegionsList = function () {
                 }
             },
             columns: [
+                {
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: ''
+                },
                 { data: 'name', orderable: false },
                 { data: 'total_transaction', orderable: false },
                 { data: 'target', orderable: false },
@@ -47,13 +53,13 @@ var KTRegionsList = function () {
             ],
             columnDefs: [
                 {
-                    targets: 0,
+                    targets: 1,
                     render: function (data, type, row) {
                         return row.name;
                     }
                 },
                 {
-                    targets: 1,
+                    targets: 2,
                     render: function (data, type, row) {
                         let total_transaction = 0;
                         if (typeof row.total_transaction == 'number') {
@@ -64,7 +70,7 @@ var KTRegionsList = function () {
                     }
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     render: function (data, type, row) {
                         let target = 0;
                         if (typeof row.target == 'number') {
@@ -75,7 +81,7 @@ var KTRegionsList = function () {
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     render: function (data, type, row) {
                         let total_achieved = 0;
                         if (typeof row.total_achieved == 'number') {
@@ -114,6 +120,108 @@ var KTRegionsList = function () {
         datatable.on('draw', function () {
             KTMenu.createInstances();
         });
+
+        // Add event listener for opening and closing details
+        datatable.on('click', 'td.dt-control', function (e) {
+            let tr = e.target.closest('tr');
+            let row = datatable.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+            }
+            else {
+                // Open this row
+                row.child(format(e, row.data())).show();
+            }
+        });
+    }
+
+    // Formatting function for row details - modify as you need
+    var format = (element, data) => {
+        var urlRankAgent = element.target.closest('table').dataset.rankAgent.replace('REPLACE', data.id);
+
+        var result = '<h6 class="text-center">Target dan Pencapaian per Agent</h6>';
+        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-agent-${data.id}">
+            <thead>
+                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-325px text-center">Agent</th>
+                    <th class="min-w-125px">Target</th>
+                    <th class="min-w-125px">Pencapaian</th>
+                    <th class="min-w-125px">Persentase</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>`;
+
+        KTApp.showPageLoading();
+        // Init chart
+        axios.get(urlRankAgent).then(function (response) {
+            if (response && response.data) {
+                response.data.forEach(dataAgent => {
+                    var preordersTotal = dataAgent.preorders_total ?? 0;
+                    var preordersTotalFormatted = '-';
+                    if (preordersTotal != null && preordersTotal != undefined) {
+                        preordersTotalFormatted = preordersTotal.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    }
+
+                    var percent_show = 0;
+                    var percent = 0;
+                    var nameAgent = dataAgent.user ? dataAgent.user.name : '-';
+                    var targetAgent = dataAgent.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    percent_show = Math.round((preordersTotal / dataAgent.target) * 100);
+                    percent = preordersTotal >= dataAgent.target ? 100 : Math.round((preordersTotal / dataAgent.target) * 100);
+
+                    var resultTr = `<tr>
+                        <td>${nameAgent}</td>
+                        <td>${targetAgent}</td>
+                        <td>${preordersTotalFormatted}</td>
+                        <td>
+                        <div class="d-flex align-items-center flex-column mt-3 w-100">
+                            <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
+                                <span>${percent_show}%</span>
+                            </div>
+                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
+                                <div class="bg-success rounded h-8px" role="progressbar" style="width: ${percent}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>`;
+
+                    $(`#table-transaction-agent-${data.id} tbody`).append(resultTr);
+                });
+            } else {
+                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                    text: "Sorry, looks like there are some errors detected, please try again.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        }).catch(function (error) {
+            console.log(error);
+            let msg = "Gagal load data.";
+
+            Swal.fire({
+                title: "Failed load data",
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+        }).then(() => {
+            // Hide loading indication
+            KTApp.hidePageLoading();
+        });
+
+        return result;
     }
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()

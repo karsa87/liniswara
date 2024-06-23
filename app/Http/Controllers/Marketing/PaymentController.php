@@ -261,4 +261,15 @@ class PaymentController extends Controller
 
         return view('marketing.payment.list_region');
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function transaction_rank_agent(Request $request, $id)
+    {
+        $marketingTeam = session(config('session.app.selected_marketing_tim'));
+        $rankingAgents = $this->customerService->rankingSpecificAgent($id, $marketingTeam);
+
+        return response()->json($rankingAgents);
+    }
 }

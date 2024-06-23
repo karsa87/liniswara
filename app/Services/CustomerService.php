@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Area;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -37,5 +38,40 @@ class CustomerService
         }
 
         return $query->get();
+    }
+
+    /**
+     * Get top ranking of agen by total amount transaction
+     *
+     * @param  int  $limit limit to get ranking
+     *
+     * **/
+    public function rankingSpecificAgent(
+        $id,
+        $marketing = null,
+    ): Collection {
+        $area = Area::with([
+            'customer.user:id,name',
+            'customer.address:id,customer_id,name',
+            'customer' => function ($qCustomer) use ($marketing) {
+                $qCustomer->withSum([
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
+                        if ($marketing) {
+                            $qPreorder->where('marketing', $marketing);
+                        }
+                    },
+                ], 'total_amount')
+                    ->withCount([
+                        'preorders' => function ($qPreorder) use ($marketing) {
+                            if ($marketing) {
+                                $qPreorder->where('marketing', $marketing);
+                            }
+                        },
+                    ])
+                    ->orderBy('preorders_total', 'DESC');
+            },
+        ])->whereId($id)->first();
+
+        return $area->customer;
     }
 }

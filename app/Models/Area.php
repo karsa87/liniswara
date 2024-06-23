@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\ScopeLike;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Area extends Model
@@ -53,5 +54,18 @@ class Area extends Model
     public function village(): BelongsTo
     {
         return $this->belongsTo(Village::class, 'village_id');
+    }
+
+    /**
+     * The relation to area.
+     */
+    public function customer(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Customer::class,
+            'customer_area',
+            'area_id',
+            'customer_id',
+        );
     }
 }
