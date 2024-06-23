@@ -30,22 +30,26 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $marketingTeam = session(config('session.app.selected_marketing_tim'));
-        $settingKey = SettingKeyEnum::MARKETING_TARGET_TIM_A;
+        $settingKey = [];
         switch (optional($marketingTeam)->value) {
             case MarketingEnum::TEAM_B:
-                $settingKey = SettingKeyEnum::MARKETING_TARGET_TIM_B;
+                $settingKey = [SettingKeyEnum::MARKETING_TARGET_TIM_B];
                 break;
 
             case MarketingEnum::TEAM_A:
-                $settingKey = SettingKeyEnum::MARKETING_TARGET_TIM_A;
+                $settingKey = [SettingKeyEnum::MARKETING_TARGET_TIM_A];
                 break;
 
             default:
                 $marketingTeam = null;
+                $settingKey = [
+                    SettingKeyEnum::MARKETING_TARGET_TIM_B,
+                    SettingKeyEnum::MARKETING_TARGET_TIM_A,
+                ];
                 break;
         }
 
-        $settingTargetTeam = Setting::where('key', $settingKey)->first();
+        $targetTeam = Setting::whereIn('key', $settingKey)->sum('value');
         $summary = $this->preorderService->getSummaryAll([
             'marketing' => optional($marketingTeam)->value,
         ]);
@@ -57,7 +61,7 @@ class DashboardController extends Controller
         $rangkingByMarketingTeamB = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_B, Carbon::now()->month);
 
         return view('marketing.dashboard.index', [
-            'targetTeam' => $settingTargetTeam->value,
+            'targetTeam' => $targetTeam,
             'targetAchieved' => $summary['total'],
             'rankingRegency' => $rankingRegency,
             'rankingAgent' => $rankingAgent,

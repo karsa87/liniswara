@@ -132,7 +132,7 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7" style="display: none;">
                         <!--begin::Label-->
                         <label class="fs-5 fw-semibold mb-2">Kota/Kabupaten</label>
                         <!--end::Label-->
@@ -143,7 +143,7 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7" style="display: none;">
                         <!--begin::Label-->
                         <label class="fs-5 fw-semibold mb-2">Kecamatan</label>
                         <!--end::Label-->
@@ -154,7 +154,7 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7" style="display: none;">
                         <!--begin::Label-->
                         <label class="fs-5 fw-semibold mb-2">Desa</label>
                         <!--end::Label-->
@@ -284,7 +284,7 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7" style="display: none;">
                         <!--begin::Label-->
                         <label class="fs-5 fw-semibold mb-2">Kota/Kabupaten</label>
                         <!--end::Label-->
@@ -295,7 +295,7 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7" style="display: none;">
                         <!--begin::Label-->
                         <label class="fs-5 fw-semibold mb-2">Kecamatan</label>
                         <!--end::Label-->
@@ -306,7 +306,7 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7" style="display: none;">
                         <!--begin::Label-->
                         <label class="fs-5 fw-semibold mb-2">Desa</label>
                         <!--end::Label-->
