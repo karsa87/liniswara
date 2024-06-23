@@ -28,12 +28,40 @@ var KTUsersBranchsList = function () {
             },
             columns: [
                 { data: 'name' },
+                { data: null },
                 { data: 'target' },
                 { data: null },
             ],
             columnDefs: [
                 {
                     targets: 1,
+                    render: function (data, type, row) {
+                        var result = `
+                            <div class="d-flex flex-column">
+                        `;
+
+                        if (row.village) {
+                            result += `<span class="text-gray-800 text-hover-primary mb-1">${row.village.name}</span>`;
+                        }
+
+                        if (row.district) {
+                            result += `${row.district.name}`;
+                        }
+
+                        if (row.regency) {
+                            result += `<br> ${row.regency.name}`;
+                        }
+
+                        if (row.province) {
+                            result += `<br> ${row.province.name}`;
+                        }
+
+                        result += `</div>`;
+                        return result;
+                    }
+                },
+                {
+                    targets: 2,
                     render: function (data, type, row) {
                         let target = 0;
                         if (typeof row.target == 'number') {
@@ -221,6 +249,43 @@ var KTUsersBranchsList = function () {
                         form.querySelector("input[name='area_id']").value = area.id;
                         form.querySelector("input[name='area_name']").value = area.name;
                         form.querySelector("input[name='area_target']").value = area.target;
+
+                        let detailAddress = '';
+                        $('#area_update_village_id').val('').trigger('change');
+                        if (area.village) {
+                            var stateEl = new Option(area.village.name, area.village.id, true, true);
+                            $('#area_update_village_id').append(stateEl);
+                            $('#area_update_village_id').val(area.village.id).trigger('change');
+
+                            detailAddress += `${area.village.name}`;
+                        }
+
+                        $('#area_update_district_id').val('').trigger('change');
+                        if (area.district) {
+                            var stateEl = new Option(area.district.name, area.district.id, true, true);
+                            $('#area_update_district_id').append(stateEl);
+                            $('#area_update_district_id').val(area.district.id).trigger('change');
+
+                            detailAddress += `, Kec. ${area.district.name}`;
+                        }
+
+                        $('#area_update_regency_id').val('').trigger('change');
+                        if (area.regency) {
+                            var stateEl = new Option(area.regency.name, area.regency.id, true, true);
+                            $('#area_update_regency_id').append(stateEl);
+                            $('#area_update_regency_id').val(area.regency.id).trigger('change');
+
+                            detailAddress += `<br/> ${area.regency.name}`;
+                        }
+
+                        $('#area_update_province_id').val('').trigger('change');
+                        if (area.province) {
+                            var stateEl = new Option(area.province.name, area.province.id, true, true);
+                            $('#area_update_province_id').append(stateEl);
+                            $('#area_update_province_id').val(area.province.id).trigger('change');
+
+                            detailAddress += ` - ${area.province.name}`;
+                        }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({

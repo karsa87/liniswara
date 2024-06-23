@@ -3,7 +3,12 @@
 namespace App\Http\Requests\Admin\Area;
 
 use App\Models\Area;
+use App\Models\District;
+use App\Models\Province;
+use App\Models\Regency;
+use App\Models\Village;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AreaStoreUpdateRequest extends FormRequest
 {
@@ -33,6 +38,22 @@ class AreaStoreUpdateRequest extends FormRequest
                 'numeric',
                 'min:0',
             ],
+            'area_province_id' => [
+                'nullable',
+                Rule::exists((new Province())->getTable(), 'id'),
+            ],
+            'area_regency_id' => [
+                'nullable',
+                Rule::exists((new Regency())->getTable(), 'id'),
+            ],
+            'area_district_id' => [
+                'nullable',
+                Rule::exists((new District())->getTable(), 'id'),
+            ],
+            'area_village_id' => [
+                'nullable',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
         ];
     }
 
@@ -45,6 +66,10 @@ class AreaStoreUpdateRequest extends FormRequest
     {
         return [
             'area_name.unique' => 'A area name is exists',
+            'area_province_id.exists' => 'Provinsi tidak ditemukan',
+            'area_regency_id.exists' => 'Kota / Kabupaten tidak ditemukan',
+            'area_district_id.exists' => 'Kecamatan tidak ditemukan',
+            'area_village_id.exists' => 'Desa / Kelurahan tidak ditemukan',
         ];
     }
 }

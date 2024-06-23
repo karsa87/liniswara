@@ -15,11 +15,47 @@ class AreaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $province = null;
+        if ($this->province) {
+            $province = [
+                'id' => optional($this->province)->id,
+                'name' => optional($this->province)->name,
+            ];
+        }
+
+        $regency = null;
+        if ($this->regency) {
+            $regency = [
+                'id' => optional($this->regency)->id,
+                'name' => optional($this->regency)->name,
+            ];
+        }
+
+        $district = null;
+        if ($this->district) {
+            $district = [
+                'id' => optional($this->district)->id,
+                'name' => optional($this->district)->name,
+            ];
+        }
+
+        $village = null;
+        if ($this->village) {
+            $village = [
+                'id' => optional($this->village)->id,
+                'name' => optional($this->village)->name,
+            ];
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'target' => $this->target,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
+            'province' => $province,
+            'regency' => $regency,
+            'district' => $district,
+            'village' => $village,
         ];
     }
 }

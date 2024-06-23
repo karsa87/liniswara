@@ -670,8 +670,16 @@ Route::middleware('auth')->group(function () {
             ])->name('province');
             Route::get('regency', [
                 RegionController::class,
-                'ajax_list_regency',
-            ])->name('regency.list');
+                'regency',
+            ])->name('regency');
+            Route::get('district', [
+                RegionController::class,
+                'district',
+            ])->name('district');
+            Route::get('village', [
+                RegionController::class,
+                'village',
+            ])->name('village');
         });
         Route::get('category', [
             CategoryController::class,

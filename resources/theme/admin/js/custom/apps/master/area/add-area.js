@@ -185,10 +185,98 @@ var KTUsersAddBranch = function () {
         });
     }
 
+    // Init condition select2
+    const initConditionsSelect2 = () => {
+        $('#area_add_province_id').select2({
+            dropdownParent: $('#kt_modal_add_area'),
+            minimumInputLength: -1,
+            ajax: {
+                url: $('#area_add_province_id').data('url'),
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term),
+                    };
+                },
+                processResults: function(data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            }
+        });
+        $('#area_add_regency_id').select2({
+            dropdownParent: $('#kt_modal_add_area'),
+            minimumInputLength: -1,
+            ajax: {
+                url: $('#area_add_regency_id').data('url'),
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term),
+                        province_id: $('#area_add_province_id').val(),
+                    };
+                },
+                processResults: function(data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            }
+        });
+        $('#area_add_district_id').select2({
+            dropdownParent: $('#kt_modal_add_area'),
+            minimumInputLength: -1,
+            ajax: {
+                url: $('#area_add_district_id').data('url'),
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term),
+                        regency_id: $('#area_add_regency_id').val(),
+                    };
+                },
+                processResults: function(data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            }
+        });
+        $('#area_add_village_id').select2({
+            dropdownParent: $('#kt_modal_add_area'),
+            minimumInputLength: -1,
+            ajax: {
+                url: $('#area_add_village_id').data('url'),
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term),
+                        district_id: $('#area_add_district_id').val(),
+                    };
+                },
+                processResults: function(data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
     return {
         // Public functions
         init: function () {
             initAddBranch();
+            initConditionsSelect2();
         }
     };
 }();

@@ -17,7 +17,12 @@ class AreaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Area::query();
+            $query = Area::with([
+                'province',
+                'regency',
+                'district',
+                'village',
+            ]);
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qArea) use ($q) {
@@ -56,7 +61,12 @@ class AreaController extends Controller
      */
     public function show(string $id)
     {
-        $area = Area::find($id);
+        $area = Area::with([
+            'province',
+            'regency',
+            'district',
+            'village',
+        ])->find($id);
 
         if (is_null($area)) {
             return response()->json([
@@ -77,6 +87,10 @@ class AreaController extends Controller
             $area->fill([
                 'name' => $request->validated('area_name'),
                 'target' => $request->validated('area_target'),
+                'province_id' => $request->validated('area_province_id'),
+                'regency_id' => $request->validated('area_regency_id'),
+                'district_id' => $request->validated('area_district_id'),
+                'village_id' => $request->validated('area_village_id'),
             ]);
             $area->save();
         } catch (\Throwable $th) {
@@ -106,6 +120,10 @@ class AreaController extends Controller
             $area->fill([
                 'name' => $request->validated('area_name'),
                 'target' => $request->validated('area_target'),
+                'province_id' => $request->validated('area_province_id'),
+                'regency_id' => $request->validated('area_regency_id'),
+                'district_id' => $request->validated('area_district_id'),
+                'village_id' => $request->validated('area_village_id'),
             ]);
             $area->save();
         } catch (\Throwable $th) {

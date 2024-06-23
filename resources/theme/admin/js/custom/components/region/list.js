@@ -110,13 +110,26 @@ var KTRegionSearchModal = function () {
                 var villageId = parent.querySelectorAll('td')[3].getElementsByTagName('span')[0].dataset.id;
 
                 let target = table.dataset.targetElement ?? '';
-                document.querySelector(`[data-kt-region="${target}region_description"]`).innerHTML = `${village}, Kec. ${district} <br/> ${regency} - ${province}`;
-                document.querySelector(`[data-kt-region="${target}region_description"]`).value = `${village}, Kec. ${district} \r \n ${regency} - ${province}`;
+                document.querySelectorAll(`[data-kt-region="${target}region_description"]`).forEach(el => {
+                    el.innerHTML = `${village}, Kec. ${district} <br/> ${regency} - ${province}`;
+                    el.value = `${village}, Kec. ${district} \r \n ${regency} - ${province}`;
+                });
 
-                document.querySelector(`[data-kt-region="${target}province_id"]`).value = provinceId;
-                document.querySelector(`[data-kt-region="${target}regency_id"]`).value = regencyId;
-                document.querySelector(`[data-kt-region="${target}district_id"]`).value = districtId;
-                document.querySelector(`[data-kt-region="${target}village_id"]`).value = villageId;
+                document.querySelectorAll(`[data-kt-region="${target}province_id"]`).forEach(el => {
+                    el.value = provinceId;
+                });
+
+                document.querySelectorAll(`[data-kt-region="${target}regency_id"]`).forEach(el => {
+                    el.value = regencyId;
+                });
+
+                document.querySelectorAll(`[data-kt-region="${target}district_id"]`).forEach(el => {
+                    el.value = districtId;
+                });
+
+                document.querySelectorAll(`[data-kt-region="${target}village_id"]`).forEach(el => {
+                    el.value = villageId;
+                });
 
                 document.getElementById('kt_modal_search_region_btn_close').click();
             })

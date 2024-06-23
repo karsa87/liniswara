@@ -46,7 +46,7 @@
                             <!--begin::Input group-->
                             <div class="mb-10">
                                 <label class="form-label fs-6 fw-semibold">Kota/Kabupaten</label>
-                                <select class="form-select form-select-solid fw-bold select-export-preorder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_regency_id" data-url="{{ route('ajax.region.regency.list') }}">
+                                <select class="form-select form-select-solid fw-bold select-export-preorder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-preorder-table-filter="preorder" name="search_regency_id" data-url="{{ route('ajax.region.regency') }}">
                                     <option value="" selected></option>
                                 </select>
                             </div>

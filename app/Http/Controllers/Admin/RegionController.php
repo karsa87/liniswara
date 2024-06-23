@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Components\Region\ListResource;
+use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\Village;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class RegionController extends Controller
 {
@@ -33,16 +33,14 @@ class RegionController extends Controller
             });
         }
 
-        // DB::enableQueryLog();
         $qNotLimit = clone $query;
         $villages = $query->offset($request->get('start', 0))->limit($request->get('length', 10))->get();
-        // dd(DB::getQueryLog());
         $count = Village::count();
         $countFilter = $qNotLimit->count();
 
         return ListResource::collection($villages)->additional([
             'recordsTotal' => $count,
-            'recordsFiltered' => $count,
+            'recordsFiltered' => $countFilter,
         ]);
     }
 
@@ -51,41 +49,90 @@ class RegionController extends Controller
      */
     public function province(Request $request)
     {
-        return response()->json(
-            Province::select('name', 'id')->get()
-        );
-    }
+        $query = Province::select('id', 'name as text')->orderBy('name');
 
-    public function ajax_list_regency(Request $request)
-    {
-        $params = request()->all();
-
-        $query = Regency::with([
-            'province',
-            // 'districts',
-        ]);
-
-        $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
+        $q = $request->get('query') ? $request->get('query') : ($request->get('q') ? $request->get('q') : '');
         if ($q) {
-            $query->where(function ($qRegency) use ($q) {
-                $qRegency->whereLike('name', $q);
-                // ->orWhereHas('districts', function ($qDistrict) use ($q) {
-                //     $qDistrict->whereLike('name', $q);
-                // });
-            });
+            $query->whereLike('name', $q);
         }
 
-        $regencies = [];
-        foreach ($query->limit(50)->get() as $regency) {
-            $regencies[] = [
-                'id' => $regency->id,
-                'text' => $regency->name,
-            ];
-        }
+        $lists = $query->limit(20)->get()->toArray();
 
         return response()->json([
-            'items' => $regencies,
-            'count' => count($regencies),
+            'items' => $lists,
+            'count' => count($lists),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function regency(Request $request)
+    {
+        $query = Regency::select('id', 'name as text')->orderBy('name');
+
+        $q = $request->get('query') ? $request->get('query') : ($request->get('q') ? $request->get('q') : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        if ($request->get('province_id')) {
+            $query->where('province_id', $request->get('province_id'));
+        }
+
+        $lists = $query->limit(20)->get()->toArray();
+
+        return response()->json([
+            'items' => $lists,
+            'count' => count($lists),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function district(Request $request)
+    {
+        $query = District::select('id', 'name as text')->orderBy('name');
+
+        $q = $request->get('query') ? $request->get('query') : ($request->get('q') ? $request->get('q') : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        if ($request->get('regency_id')) {
+            $query->where('regency_id', $request->get('regency_id'));
+        }
+
+        $lists = $query->limit(20)->get()->toArray();
+
+        return response()->json([
+            'items' => $lists,
+            'count' => count($lists),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function village(Request $request)
+    {
+        $query = Village::select('id', 'name as text')->orderBy('name');
+
+        $q = $request->get('query') ? $request->get('query') : ($request->get('q') ? $request->get('q') : '');
+        if ($q) {
+            $query->whereLike('name', $q);
+        }
+
+        if ($request->get('district_id')) {
+            $query->where('district_id', $request->get('district_id'));
+        }
+
+        $lists = $query->limit(20)->get()->toArray();
+
+        return response()->json([
+            'items' => $lists,
+            'count' => count($lists),
         ]);
     }
 }

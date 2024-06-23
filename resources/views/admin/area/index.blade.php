@@ -42,7 +42,8 @@
             <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Name</th>
-                    <th class="min-w-125px">Target</th>
+                    <th class="min-w-125px">Detail Lokasi Area</th>
+                    <th class="min-w-50px">Target</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>
@@ -116,6 +117,50 @@
                         <!--end::Label-->
                         <!--begin::Input-->
                         <input type="numeric" class="form-control form-control-solid" placeholder="Enter a area target" name="area_target" />
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Provinsi</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_province_id" id="area_add_province_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.province') }}">
+                        </select>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Kota/Kabupaten</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_regency_id" id="area_add_regency_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.regency') }}">
+                        </select>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Kecamatan</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_district_id" id="area_add_district_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.district') }}">
+                        </select>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Desa</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_village_id" id="area_add_village_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.village') }}">
+                        </select>
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->
@@ -224,6 +269,50 @@
                         <!--end::Label-->
                         <!--begin::Input-->
                         <input type="numeric" class="form-control form-control-solid" placeholder="Enter a area target" name="area_target" />
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Provinsi</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_province_id" id="area_update_province_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.province') }}">
+                        </select>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Kota/Kabupaten</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_regency_id" id="area_update_regency_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.regency') }}">
+                        </select>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Kecamatan</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_district_id" id="area_update_district_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.district') }}">
+                        </select>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2">Desa</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select name="area_village_id" id="area_update_village_id" data-placeholder="Pilih" class="form-select form-select-solid" data-url="{{ route('ajax.region.village') }}">
+                        </select>
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->
