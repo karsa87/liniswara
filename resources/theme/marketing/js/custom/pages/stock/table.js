@@ -38,6 +38,10 @@ var KTAppStock = function () {
                 initConditionsProductSelect2();
                 initConditionsQuantity();
                 calculateTotal();
+
+                $(this).closest("tr").find('input.kt_ecommerce_stock_estimation_date.input').remove();
+                $(this).closest("tr").find('input.kt_ecommerce_stock_estimation_date').removeClass('flatpickr-input');
+                initDate();
             },
 
             hide: function (deleteElement) {
@@ -263,13 +267,16 @@ var KTAppStock = function () {
         })
     }
 
-    const initForm = () => {
+    const initDate = (el) => {
         $('.kt_ecommerce_stock_estimation_date').flatpickr({
             altInput: true,
             altFormat: "d F, Y",
             dateFormat: "Y-m-d",
         });
+    }
 
+    const initForm = () => {
+        initDate();
         $('#form-select-zone').on("change", function (e) {
             const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-product="product_stock_option"]');
             allConditionTypes.forEach(type => {
@@ -320,6 +327,7 @@ var KTAppStock = function () {
             // Handle forms
             handleSubmit();
             calculateTotal();
+            initDate();
         }
     };
 }();
