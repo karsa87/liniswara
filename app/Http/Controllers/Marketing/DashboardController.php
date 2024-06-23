@@ -9,6 +9,7 @@ use App\Enums\SettingKeyEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Preorder;
 use App\Models\Setting;
+use App\Services\CustomerService;
 use App\Services\OrderService;
 use App\Services\PreorderService;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class DashboardController extends Controller
     public function __construct(
         private PreorderService $preorderService,
         private OrderService $orderService,
+        private CustomerService $customerService,
     ) {
     }
 
@@ -49,6 +51,7 @@ class DashboardController extends Controller
         ]);
 
         $rankingRegency = $this->preorderService->rankingByRegency(5, $request->get('regency_month_id'), optional($marketingTeam)->value);
+        $rankingAgent = $this->customerService->rankingAgents(5, optional($marketingTeam)->value);
 
         $rangkingByMarketingTeamA = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_A, Carbon::now()->month);
         $rangkingByMarketingTeamB = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_B, Carbon::now()->month);
@@ -57,6 +60,7 @@ class DashboardController extends Controller
             'targetTeam' => $settingTargetTeam->value,
             'targetAchieved' => $summary['total'],
             'rankingRegency' => $rankingRegency,
+            'rankingAgent' => $rankingAgent,
             'rangkingByMarketingTeamA' => $rangkingByMarketingTeamA,
             'rangkingByMarketingTeamB' => $rangkingByMarketingTeamB,
         ]);
@@ -174,5 +178,25 @@ class DashboardController extends Controller
         }
 
         return response()->json($zones);
+    }
+
+    public function widget_transaction_all()
+    {
+        $marketingTeam = session(config('session.app.selected_marketing_tim'));
+
+        $result = [
+            'transactions' => [],
+        ];
+        for ($i = 1; $i <= 12; $i++) {
+            $transaction = Preorder::where('is_exclude_target', false)
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $transaction->where('marketing', $marketingTeam->value);
+            }
+
+            $result['transactions'][] = $transaction->sum('total_amount');
+        }
+
+        return response()->json($result);
     }
 }

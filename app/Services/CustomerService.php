@@ -14,14 +14,21 @@ class CustomerService
      *
      * **/
     public function rankingAgents(
-        $limit = null
+        $limit = null,
+        $marketing = null,
     ): Collection {
         $query = Customer::with([
             'user:id,name,email,phone_number,profile_photo_id',
             'user.profile_photo',
         ])
             ->withCount('preorders')
-            ->withSum('preorders', 'total_amount')
+            ->withSum([
+                'preorders' => function ($qOrder) use ($marketing) {
+                    if ($marketing) {
+                        $qOrder->where('marketing', $marketing);
+                    }
+                },
+            ], 'total_amount')
             ->havingRaw('preorders_sum_total_amount > 0')
             ->orderBy('preorders_sum_total_amount', 'DESC');
 

@@ -365,6 +365,41 @@
     <!--end::Col-->
     <!--begin::Col-->
     <div class="col-xxl-6 mb-5 mb-xl-10">
+        <!--begin::Chart widget 8-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-5">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold d-flex align-items-center">
+                        Grafik Penjualan
+                    </span>
+                    <span class="text-muted mt-1 fw-semibold fs-7">
+                        @if (session(config('session.app.selected_marketing_tim')))
+                        {{ session(config('session.app.selected_marketing_tim'))->getLabel() }}
+                        @else
+                            All
+                        @endif
+                        {{ date('Y') }}
+                    </span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-6 text-center">
+                <span class="spinner-border spinner-border-xxl align-middle ms-2" id="widget-transaction-all-loader"></span>
+                <!--begin::Chart-->
+                <div id="kt_charts_transaction_all" class="min-h-auto ps-4 pe-6" style="height: 350px" data-url="{{ route('marketing.dashboard.widget.transaction_all') }}"></div>
+                <!--end::Chart-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Chart widget 8-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xxl-6 mb-5 mb-xl-10">
         <!--begin::Table widget 14-->
         <div class="card card-flush h-xl-100">
             <!--begin::Header-->
@@ -416,6 +451,63 @@
                                         <div class="d-flex justify-content-start flex-column">
                                             <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str(optional($regency->area)->name ?? 'Non Area')->title() }} : {{ $util->format_currency($regency->preorders_total) }}</a>
                                             <span class="text-muted fw-bold">Transaksi : {{ $regency->preorders_count }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                </div>
+                <!--end::Table-->
+            </div>
+            <!--end: Card Body-->
+        </div>
+        <!--end::Table widget 14-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xxl-6 mb-5 mb-xl-10">
+        <!--begin::Table widget 14-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-5">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold d-flex align-items-center">
+                        Transaksi
+                    </span>
+                    <span class="text-muted mt-1 fw-semibold fs-7">
+                        5 Agen dengan transaksi terbanyak
+                    </span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-6">
+                <!--begin::Table container-->
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <!--begin::Table body-->
+                        <tbody>
+                            @foreach ($rankingAgent as $agent)
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-50px me-5">
+                                            <span class="badge badge-light-success fs-base">
+                                                <i class="ki-duotone ki-briefcase text-success fs-2hx">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{ str(optional($agent->user)->name ?? 'Non Area')->title() }} : {{ $util->format_currency($agent->preorders_sum_total_amount) }}</a>
+                                            <span class="text-muted fw-bold">Transaksi : {{ $agent->preorders_count }}</span>
                                         </div>
                                     </div>
                                 </td>
