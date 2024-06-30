@@ -64,18 +64,45 @@
                                             </i>
                                             {{ optional($agent->user)->phone_number }}
                                         </div>
+                                        {{-- <div class="d-flex align-items-center">
+                                            <i class="ki-duotone ki-sms fs-3 me-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            {{ optional($agent->user)->email }}
+                                        </div> --}}
                                         <!--end::Number-->
                                     </div>
                                     <!--end::Stat-->
                                     <!--begin::Stat-->
                                     <div class="border border-gray-300 border-dashed rounded  w-25 py-3 px-4 me-6 mb-3">
                                         <!--begin::Number-->
+
                                         <div class="d-flex align-items-center">
-                                            <i class="ki-duotone ki-sms fs-3 me-2">
-                                                <span class="path1"></span>
-                                                <span class="path2"></span>
-                                            </i>
-                                            {{ optional($agent->user)->email }}
+                                            <div class="symbol symbol-circle symbol-40px me-3">
+                                                <i class="ki-duotone ki-wallet fs-3x">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Target</span>
+                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->target) }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-circle symbol-40px me-3">
+                                                <i class="ki-duotone ki-wallet fs-3x">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Realisasi</span>
+                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->total_preorder) }}</span>
+                                            </div>
                                         </div>
                                         <!--end::Number-->
                                     </div>
@@ -92,8 +119,21 @@
                                                 </i>
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
-                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Total Penjualan</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->total_preorder) }}</span>
+                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Persentase Realisasi</span>
+                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $agent->target > 0 ? round(($agent->total_preorder / $agent->target) * 100, 2) : 0 }}%</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-circle symbol-40px me-3">
+                                                <i class="ki-duotone ki-wallet fs-3x">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Kekurangan</span>
+                                                    <span class="text-gray-700 fw-semibold d-block fs-6">{{ $agent->total_preorder < $agent->target ? $util->format_currency($agent->target - $agent->total_preorder) : 0 }}</span>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center">
