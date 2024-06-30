@@ -19,6 +19,7 @@ var KTDetailAgent = function () {
                 url: table.dataset.url,
                 "data": function ( d ) {
                     d.search.month = $('#filter-month').val();
+                    d.search.area_id = $('#filter-area-id').val();
                 }
             },
             columns: [
@@ -89,6 +90,203 @@ var KTDetailAgent = function () {
         });
     }
 
+    var initChartsWidgetTransactionAll = function() {
+        var element = document.getElementById("kt_charts_transaction_all");
+
+        if ( !element ) {
+            return;
+        }
+
+        var chart = {
+            self: null,
+            rendered: false
+        };
+
+        var  initChart = function(transaction) {
+            var height = parseInt(KTUtil.css(element, 'height'));
+            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+            var baseColor = KTUtil.getCssVariableValue('--bs-primary');
+            var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');
+
+            var options = {
+                series: [{
+                    name: 'Transaction',
+                    data: transaction
+                }],
+                chart: {
+                    fontFamily: 'inherit',
+                    type: 'bar',
+                    height: height,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: ['80%'],
+                        borderRadius: [6]
+                    },
+                },
+                legend: {
+                    show: true
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 0.1,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'],
+                    axisBorder: {
+                        show: false,
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    labels: {
+                        style: {
+                            colors: labelColor,
+                            fontSize: '12px'
+                        }
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function(value) {
+                            var val = Math.abs(value);
+
+                            if (val >= 1000 && val < 1000000) {
+                                val = (val / 1000).toFixed(0) + 'Rb'
+                            } else if (val >= 1000000 && val < 1000000000) {
+                                val = (val / 1000000).toFixed(0) + 'Jt'
+                            } else if (val >= 1000000000) {
+                                val = (val / 1000000000).toFixed(0) + 'M'
+                            } else {
+                                val = val;
+                            }
+
+                            return val;
+                        },
+                        style: {
+                            colors: labelColor,
+                            fontSize: '12px'
+                        }
+                    }
+                },
+                fill: {
+                    opacity: 5
+                },
+                states: {
+                    normal: {
+                        filter: {
+                            type: 'none',
+                            value: 0
+                        }
+                    },
+                    hover: {
+                        filter: {
+                            type: 'none',
+                            value: 0
+                        }
+                    },
+                    active: {
+                        allowMultipleDataPointsSelection: false,
+                        filter: {
+                            type: 'none',
+                            value: 0
+                        }
+                    }
+                },
+                tooltip: {
+                    style: {
+                        fontSize: '12px'
+                    },
+                    y: {
+                        formatter: function (val) {
+                            return (val).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+                    }
+                },
+                colors: [baseColor, secondaryColor],
+                grid: {
+                    borderColor: borderColor,
+                    strokeDashArray: 4,
+                    yaxis: {
+                        lines: {
+                            show: true
+                        }
+                    }
+                }
+            };
+
+            chart.self = new ApexCharts(element, options);
+            chart.self.render();
+            chart.rendered = true;
+        }
+
+        // Init chart
+        axios.get(element.getAttribute('data-url')).then(function (response) {
+            if (response && response.data) {
+                let data = response.data;
+                initChart(data.transactions);
+            } else {
+                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                    text: "Sorry, looks like there are some errors detected, please try again.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        }).catch(function (error) {
+            let msg = "Gagal load data zona.";
+
+            Swal.fire({
+                title: "Failed load data",
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+        }).then(() => {
+            // Hide loading indication
+            document.getElementById('widget-transaction-all-loader').classList.add('d-none');
+        });
+
+        // Update chart on theme mode change
+        KTThemeMode.on("kt.thememode.change", function() {
+            if (chart.rendered) {
+                chart.self.destroy();
+            }
+
+            initChart();
+        });
+    }
+
+    var handleFilterArea = function() {
+        var elements = document.querySelectorAll('[data-filter="area_id"]');
+        elements.forEach(d => {
+            // Update button on click
+            d.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                $('#filter-area-id').val(d.dataset.areaId);
+                datatable.ajax.reload(null, false); // user paging is not reset on reload
+            });
+        });
+    }
+
     return {
         // Public functions
         init: function () {
@@ -100,6 +298,8 @@ var KTDetailAgent = function () {
 
             initTransactionAgentsList();
             handleSearchDatatable();
+            initChartsWidgetTransactionAll();
+            handleFilterArea();
         },
         refresh: function() {
             datatable.ajax.reload(null, false); // user paging is not reset on reload

@@ -14,7 +14,6 @@ use App\Models\Preorder;
 use App\Services\CustomerService;
 use App\Services\PreorderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -135,6 +134,10 @@ class PaymentController extends Controller
                 $query->whereMonth('date', $month);
             }
 
+            if ($areaId = $request->input('search.area_id')) {
+                $query->where('area_id', $areaId);
+            }
+
             if (is_numeric($request->input('order.0.column'))) {
                 $column = $request->input('order.0.column');
                 $columnData = $request->input("columns.$column.data");
@@ -157,7 +160,7 @@ class PaymentController extends Controller
                 'recordsFiltered' => $total,
             ]);
         }
-        // DB::enableQueryLog();
+
         $customer = Customer::with([
             'user:id,name,email,phone_number,profile_photo_id',
             'user.profile_photo',
@@ -171,14 +174,16 @@ class PaymentController extends Controller
             ->withSum('paid_preorders as total_paid_preorder', 'total_amount')
             ->where('id', $id)
             ->first();
-        // dd(DB::getQueryLog());
+
         $preorderPaid = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::PAID, $id);
         $preorderNotPaid = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::NOT_PAID, $id);
         $preorderDp = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::DP, $id);
         $preorderProcess = $this->preorderService->getSummaryByStatusOrder(StatusEnum::PROCESS, $id);
+        $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id);
 
         return view('marketing.payment.detail_agent', [
             'agent' => $customer,
+            'rankingRegency' => $rankingRegency,
             'total' => [
                 'paid' => $preorderPaid['total'],
                 'not_paid' => $preorderNotPaid['total'],
@@ -203,6 +208,22 @@ class PaymentController extends Controller
         $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id, optional($marketingTeam)->value);
 
         return response()->json($rankingRegency);
+    }
+
+    public function transaction_per_month_agent($id)
+    {
+        $result = [
+            'transactions' => [],
+        ];
+        for ($i = 1; $i <= 12; $i++) {
+            $transaction = Preorder::where('is_exclude_target', false)
+                ->whereMonth('date', $i)
+                ->where('customer_id', $id);
+
+            $result['transactions'][] = $transaction->sum('total_amount');
+        }
+
+        return response()->json($result);
     }
 
     /**

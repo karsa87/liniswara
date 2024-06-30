@@ -229,6 +229,7 @@ class PreorderService
     ): Collection {
         $agent = Customer::with([
             'areas' => function ($qArea) use ($marketing) {
+                $qArea->with('province:id,name');
                 $qArea->withSum([
                     'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
                         if ($marketing) {

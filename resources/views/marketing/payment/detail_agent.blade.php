@@ -294,7 +294,88 @@
     </div>
     <!--end::Row-->
     <!--begin::Row-->
+    <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+        <!--begin::Col-->
+        <div class="col-xxl-12 mb-5 mb-xl-12">
+            <!--begin::Chart widget 8-->
+            <div class="card card-flush h-xl-100">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold d-flex align-items-center">
+                            Grafik Penjualan
+                        </span>
+                    </h3>
+                    <!--end::Title-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body pt-6 text-center">
+                    <span class="spinner-border spinner-border-xxl align-middle ms-2" id="widget-transaction-all-loader"></span>
+                    <!--begin::Chart-->
+                    <div id="kt_charts_transaction_all" class="min-h-auto ps-4 pe-6" style="height: 350px" data-url="{{ route('marketing.payment.transaction_per_month_agent', $agent->id) }}"></div>
+                    <!--end::Chart-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Chart widget 8-->
+        </div>
+        <!--end::Col-->
+    </div>
+    <!--begin::Row-->
     <div class="row gx-5 gx-xl-10">
+        <!--begin::Col-->
+        <div class="col-xl-12 mb-5 mb-xl-10">
+            <!--begin::Table widget 14-->
+            <div class="card card-flush h-md-100">
+                <!--begin::Header-->
+                <div class="card-header pt-7">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold text-gray-800 d-flex align-items-center">
+                            <i class="ki-duotone ki-tablet-text-down fs-2hx">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                                <span class="path5"></span>
+                                <span class="path6"></span>
+                            </i>
+                            Wilayah dan Target
+                        </span>
+                    </h3>
+                    <!--end::Title-->
+                </div>
+                <div class="card-body">
+                    <!--begin::Table-->
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <thead>
+                            <tr>
+                                <th>Provinsi</th>
+                                <th>Area</th>
+                                <th>Target</th>
+                                <th>Realisasi</th>
+                                <th>Persentase</th>
+                            </tr>
+                        </thead>
+                        <!--begin::Table body-->
+                        <tbody>
+                            @foreach ($rankingRegency as $area)
+                                <tr role="button" class="text-dark text-hover-primary fs-6 fw-bold" data-area-id="{{ $area->id }}" data-filter="area_id">
+                                    <td>{{ optional($area->province)->name ?? '-' }}</td>
+                                    <td>{{ $area->name }}</td>
+                                    <td>{{ $util->format_currency($area->target) }}</td>
+                                    <td>{{ $util->format_currency($area->preorders_total ?? 0) }}</td>
+                                    <td>{{ $area->target > 0 ? round(($area->preorders_total/$area->target) * 100, 0) : 0 }}%</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                </div>
+            </div>
+        </div>
         <!--begin::Col-->
         <div class="col-xl-12 mb-5 mb-xl-10">
             <!--begin::Table widget 14-->
@@ -320,6 +401,7 @@
                     <div class="card-toolbar">
                         <!--begin::Filters-->
                         <div class="d-flex flex-stack flex-wrap gap-4">
+                            <input type="hidden" id="filter-area-id" />
                             <!--begin::Destination-->
                             <div class="d-flex align-items-center fw-bold">
                                 <!--begin::Label-->
