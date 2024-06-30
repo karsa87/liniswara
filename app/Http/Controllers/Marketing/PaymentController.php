@@ -14,6 +14,7 @@ use App\Models\Preorder;
 use App\Services\CustomerService;
 use App\Services\PreorderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -156,7 +157,7 @@ class PaymentController extends Controller
                 'recordsFiltered' => $total,
             ]);
         }
-
+        // DB::enableQueryLog();
         $customer = Customer::with([
             'user:id,name,email,phone_number,profile_photo_id',
             'user.profile_photo',
@@ -170,7 +171,7 @@ class PaymentController extends Controller
             ->withSum('paid_preorders as total_paid_preorder', 'total_amount')
             ->where('id', $id)
             ->first();
-
+        // dd(DB::getQueryLog());
         $preorderPaid = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::PAID, $id);
         $preorderNotPaid = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::NOT_PAID, $id);
         $preorderDp = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::DP, $id);

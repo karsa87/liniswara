@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Enums\Preorder\StatusEnum;
 use App\Models\Customer;
 use App\Models\Preorder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class PreorderService
 {
@@ -56,11 +58,16 @@ class PreorderService
      * **/
     public function getSummary($params): array
     {
-        $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count')
-            ->whereHas('details', function ($qDetail) {
+        $query = Preorder::where('is_exclude_target', false);
+
+        if (
+            isset($params['status_order'])
+            && $params['status_order'] == StatusEnum::PROCESS
+        ) {
+            $query->whereHas('details', function ($qDetail) {
                 $qDetail->whereRaw('qty != qty_order');
-            })
-            ->where('is_exclude_target', false);
+            });
+        }
 
         if (isset($params['marketing']) && $params['marketing']) {
             $query->where('marketing', $params['marketing']);
@@ -91,11 +98,13 @@ class PreorderService
             $query->where('collector_id', $params['collector_id']);
         }
 
-        $summary = $query->get()->first();
+        // DB::enableQueryLog();
+        $preorders = $query->get();
+        // dd(DB::getQueryLog());
 
         return [
-            'total' => optional($summary)->total ?? 0,
-            'count' => optional($summary)->count ?? 0,
+            'total' => optional($preorders)->sum('total_amount') ?? 0,
+            'count' => optional($preorders)->count() ?? 0,
         ];
     }
 
@@ -107,8 +116,7 @@ class PreorderService
      * **/
     public function getSummaryAll($params): array
     {
-        $query = Preorder::selectRaw('SUM(total_amount) as total, count(id) as count')
-            ->where('is_exclude_target', false);
+        $query = Preorder::where('is_exclude_target', false);
 
         if (isset($params['marketing']) && $params['marketing']) {
             $query->where('marketing', $params['marketing']);
@@ -139,11 +147,11 @@ class PreorderService
             $query->where('collector_id', $params['collector_id']);
         }
 
-        $summary = $query->get()->first();
+        $preorders = $query->get();
 
         return [
-            'total' => optional($summary)->total ?? 0,
-            'count' => optional($summary)->count ?? 0,
+            'total' => optional($preorders)->sum('total_amount') ?? 0,
+            'count' => optional($preorders)->count() ?? 0,
         ];
     }
 

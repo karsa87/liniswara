@@ -161,7 +161,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['paid']) }}</span>
+                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -202,7 +202,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['process']) }}</span>
+                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['process']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -242,7 +242,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['not_paid']) }}</span>
+                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['not_paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
@@ -283,7 +283,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2x fw-bold me-6 text-dark">{{ $util->format_currency($total['dp']) }}</span>
+                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['dp']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->

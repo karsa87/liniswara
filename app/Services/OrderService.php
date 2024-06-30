@@ -126,8 +126,7 @@ class OrderService
      * **/
     public function getSummary($params): array
     {
-        $query = Order::selectRaw('SUM(total_amount) as total, count(id) as count')
-            ->where('is_exclude_target', false);
+        $query = Order::where('is_exclude_target', false);
 
         if (isset($params['marketing']) && $params['marketing']) {
             $query->where('marketing', $params['marketing']);
@@ -158,11 +157,11 @@ class OrderService
             $query->where('collector_id', $params['collector_id']);
         }
 
-        $summary = $query->get()->first();
+        $orders = $query->get();
 
         return [
-            'total' => optional($summary)->total ?? 0,
-            'count' => optional($summary)->count ?? 0,
+            'total' => optional($orders)->sum('total_amount') ?? 0,
+            'count' => optional($orders)->count() ?? 0,
         ];
     }
 }

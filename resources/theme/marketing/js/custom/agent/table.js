@@ -33,14 +33,14 @@ var KTCustomersList = function () {
                 {
                     targets: 1,
                     render: function (data, type, row) {
-                        // var result = `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>
-                        //     <br>
-                        //     <span class="text-muted">${row.email}</span>
-                        // `;
-                        var result = `<span class="text-dark text-hover-primary fs-6 fw-bold">${data}</span>
+                        var result = `<a href="${window.location.origin}/marketing/payment/agent/${row.id}" class="text-dark text-hover-primary fs-6 fw-bold">${data}</a>
                             <br>
                             <span class="text-muted">${row.email}</span>
                         `;
+                        // var result = `<span class="text-dark text-hover-primary fs-6 fw-bold">${data}</span>
+                        //     <br>
+                        //     <span class="text-muted">${row.email}</span>
+                        // `;
 
                         if (row.phone_number) {
                             result += `<br><a href="https://wa.me/${row.phone_number}" class="badge badge-light-success fs-7 m-1">${row.phone_number}</a>`;
