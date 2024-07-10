@@ -13,7 +13,7 @@ var KTDetailAgent = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'desc']],
+            order: [[1, 'desc']],
             stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -23,47 +23,19 @@ var KTDetailAgent = function () {
                 }
             },
             columns: [
+                {
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: ''
+                },
                 { data: 'date' },
                 { data: 'invoice_number' },
-                { data: 'status' },
-                { data: 'status_payment' },
                 { data: 'total_amount' },
             ],
             columnDefs: [
                 {
-                    targets: 2,
-                    render: function (data, type, row) {
-                        let result = '';
-                        if (row.status == 1 || row.status == "1") {
-                            result +=`<span class="badge badge-light-warning fs-base">Validasi Admin</span>`;
-                        } else if (row.status == 2 || row.status == "2") {
-                            result +=`<span class="badge badge-light-primary fs-base">Proses</span>`;
-                        } else if (row.status == 3 || row.status == "3") {
-                            result +=`<span class="badge badge-light-info fs-base">Kirim</span>`;
-                        } else if (row.status == 4 || row.status == "4") {
-                            result +=`<span class="badge badge-light-success fs-base">Selesai</span>`;
-                        }
-
-                        return result;
-                    }
-                },
-                {
                     targets: 3,
-                    render: function (data, type, row) {
-                        let result = '';
-                        if (row.status_payment == 1 || row.status_payment == "1") {
-                            result +=`<span class="badge badge-light-danger fs-base">Belum Terbayar</span>`;
-                        } else if (row.status_payment == 2 || row.status_payment == "2") {
-                            result +=`<span class="badge badge-light-primary fs-base">Lunas</span>`;
-                        } else if (row.status_payment == 3 || row.status_payment == "3") {
-                            result +=`<span class="badge badge-light-secondary fs-base">Terbayar Sebagian</span>`;
-                        }
-
-                        return result;
-                    }
-                },
-                {
-                    targets: 4,
                     render: function (data, type, row) {
                         let total_amount = 0;
                         if (typeof row.total_amount == 'number') {
@@ -81,6 +53,110 @@ var KTDetailAgent = function () {
             handleSearchDatatable();
             KTMenu.createInstances();
         });
+
+        // Add event listener for opening and closing details
+        datatable.on('click', 'td.dt-control', function (e) {
+            let tr = e.target.closest('tr');
+            let row = datatable.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+            }
+            else {
+                // Open this row
+                row.child(format(e, row.data())).show();
+            }
+        });
+    }
+
+    // Formatting function for row details - modify as you need
+    var format = (element, data) => {
+        var urlDetailOrder = element.target.closest('table').dataset.detailOrderUrl.replace('REPLACE', data.id);
+
+        var result = '<h6 class="text-center">Target dan Pencapaian per Wilayah</h6>';
+        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-order-agent-${data.id}">
+            <thead>
+                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-75px text-center">Tanggal</th>
+                    <th class="min-w-125px">No Faktur</th>
+                    <th class="min-w-100px">Status Order</th>
+                    <th class="min-w-100px">Status Pembayaran</th>
+                    <th class="min-w-125px">Nominal</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>`;
+
+        KTApp.showPageLoading();
+        // Init chart
+        axios.get(urlDetailOrder).then(function (response) {
+            if (response && response.data) {
+                response.data.orders.forEach(dataOrder => {
+                    let statusOrder = '';
+                    if (dataOrder.status == 1 || dataOrder.status == "1") {
+                        statusOrder =`<span class="badge badge-light-warning fs-base">Validasi Admin</span>`;
+                    } else if (dataOrder.status == 2 || dataOrder.status == "2") {
+                        statusOrder =`<span class="badge badge-light-primary fs-base">Proses</span>`;
+                    } else if (dataOrder.status == 3 || dataOrder.status == "3") {
+                        statusOrder =`<span class="badge badge-light-info fs-base">Kirim</span>`;
+                    } else if (dataOrder.status == 4 || dataOrder.status == "4") {
+                        statusOrder =`<span class="badge badge-light-success fs-base">Selesai</span>`;
+                    }
+
+                    let statusPayment = '';
+                    if (dataOrder.status_payment == 1 || dataOrder.status_payment == "1") {
+                        statusPayment +=`<span class="badge badge-light-danger fs-base">Belum Terbayar</span>`;
+                    } else if (dataOrder.status_payment == 2 || dataOrder.status_payment == "2") {
+                        statusPayment +=`<span class="badge badge-light-primary fs-base">Lunas</span>`;
+                    } else if (dataOrder.status_payment == 3 || dataOrder.status_payment == "3") {
+                        statusPayment +=`<span class="badge badge-light-secondary fs-base">Terbayar Sebagian</span>`;
+                    }
+
+                    var total_amount = dataOrder.total_amount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+                    var resultTr = `<tr>
+                        <td>${dataOrder.date}</td>
+                        <td>${dataOrder.invoice_number}</td>
+                        <td>${statusOrder}</td>
+                        <td>${statusPayment}</td>
+                        <td>${total_amount}</td>
+                    </tr>`;
+
+                    $(`#table-transaction-order-agent-${data.id} tbody`).append(resultTr);
+                });
+            } else {
+                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                    text: "Sorry, looks like there are some errors detected, please try again.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        }).catch(function (error) {
+            console.log(error);
+            let msg = "Gagal load data.";
+
+            Swal.fire({
+                title: "Failed load data",
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+        }).then(() => {
+            // Hide loading indication
+            KTApp.hidePageLoading();
+        });
+
+        return result;
     }
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()

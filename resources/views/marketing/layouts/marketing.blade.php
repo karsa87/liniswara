@@ -60,7 +60,11 @@
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
-	<body id="kt_body" style="background-image: url('{{ mix('marketing/assets/media/misc/page-bg.jpg') }}')" class="page-bg header-fixed header-tablet-and-mobile-fixed aside-enabled">
+	<body
+        id="kt_body"
+        {{-- style="background-image: url('{{ mix('marketing/assets/media/misc/page-bg.jpg') }}')" --}}
+        class="page-bg header-fixed header-tablet-and-mobile-fixed aside-enabled"
+    >
 		<!--begin::Theme mode setup on page load-->
 		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
 		<!--end::Theme mode setup on page load-->

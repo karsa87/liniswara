@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Preorder\PreorderResource;
 use App\Http\Resources\Marketing\RegionListResource;
 use App\Models\Area;
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Preorder;
 use App\Services\CustomerService;
 use App\Services\PreorderService;
@@ -196,6 +197,30 @@ class PaymentController extends Controller
                 'dp' => $preorderDp['count'],
                 'process' => $preorderProcess['count'],
             ],
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function transaction_order_agent($id)
+    {
+        $orders = Order::where('preorder_id', $id)->orderBy('id', 'desc')->get();
+
+        $listOrders = collect();
+        foreach ($orders as $order) {
+            $listOrders->push([
+                'id' => $order->id,
+                'date' => $order->date,
+                'invoice_number' => $order->invoice_number,
+                'status' => $order->status,
+                'status_payment' => $order->status_payment,
+                'total_amount' => $order->total_amount,
+            ]);
+        }
+
+        return response()->json([
+            'orders' => $listOrders,
         ]);
     }
 

@@ -183,7 +183,6 @@ var KTCustomersList = function () {
                 });
             }
         }).catch(function (error) {
-            console.log(error);
             let msg = "Gagal load data.";
 
             Swal.fire({

@@ -469,13 +469,15 @@
                     <!--begin::Table container-->
                     <div class="hover-scroll-overlay-y pe-6 me-n6">
                         <!--begin::Table-->
-                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="kt_transaction_agent_table" data-url="{{ route('marketing.payment.detail_agent', $agent->id) }}">
+                        <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="kt_transaction_agent_table"
+                            data-url="{{ route('marketing.payment.detail_agent', $agent->id) }}"
+                            data-detail-order-url="{{ route('marketing.payment.transaction_order_agent', 'REPLACE') }}"
+                        >
                             <thead>
                                 <tr>
+                                    <th class="min-w-25px"></th>
                                     <th>Tanggal</th>
                                     <th>No Faktur</th>
-                                    <th>Status Order</th>
-                                    <th>Status Terbayar</th>
                                     <th>Nominal</th>
                                 </tr>
                             </thead>
