@@ -205,13 +205,14 @@ class PaymentController extends Controller
      */
     public function transaction_order_agent($id)
     {
-        $orders = Order::where('preorder_id', $id)->orderBy('id', 'desc')->get();
+        $orders = Order::with('customer_address')->where('preorder_id', $id)->orderBy('id', 'desc')->get();
 
         $listOrders = collect();
         foreach ($orders as $order) {
             $listOrders->push([
                 'id' => $order->id,
                 'date' => $order->date,
+                'receiver_name' => optional($order->customer_address)->name,
                 'invoice_number' => $order->invoice_number,
                 'status' => $order->status,
                 'status_payment' => $order->status_payment,

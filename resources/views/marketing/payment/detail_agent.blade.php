@@ -477,6 +477,7 @@
                                 <tr>
                                     <th class="min-w-25px"></th>
                                     <th>Tanggal</th>
+                                    <th>Penerima</th>
                                     <th>No Faktur</th>
                                     <th>Nominal</th>
                                 </tr>

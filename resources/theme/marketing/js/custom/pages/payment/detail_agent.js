@@ -30,12 +30,19 @@ var KTDetailAgent = function () {
                     defaultContent: ''
                 },
                 { data: 'date' },
+                { data: null, orderable: false },
                 { data: 'invoice_number' },
                 { data: 'total_amount' },
             ],
             columnDefs: [
                 {
-                    targets: 3,
+                    targets: 2,
+                    render: function (data, type, row) {
+                        return row.customer_address != undefined ? row.customer_address.name : '-';
+                    }
+                },
+                {
+                    targets: 4,
                     render: function (data, type, row) {
                         let total_amount = 0;
                         if (typeof row.total_amount == 'number') {
@@ -79,7 +86,8 @@ var KTDetailAgent = function () {
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-75px text-center">Tanggal</th>
-                    <th class="min-w-125px">No Faktur</th>
+                    <th class="min-w-125px">Penerima</th>
+                    <th class="min-w-75px">No Faktur</th>
                     <th class="min-w-100px">Status Order</th>
                     <th class="min-w-100px">Status Pembayaran</th>
                     <th class="min-w-125px">Nominal</th>
@@ -95,13 +103,15 @@ var KTDetailAgent = function () {
                 response.data.orders.forEach(dataOrder => {
                     let statusOrder = '';
                     if (dataOrder.status == 1 || dataOrder.status == "1") {
-                        statusOrder =`<span class="badge badge-light-warning fs-base">Validasi Admin</span>`;
+                        statusOrder =`<span class="badge badge-warning">Validasi Admin</span>`;
                     } else if (dataOrder.status == 2 || dataOrder.status == "2") {
-                        statusOrder =`<span class="badge badge-light-primary fs-base">Proses</span>`;
+                        statusOrder =`<span class="badge badge-primary">Proses</span>`;
                     } else if (dataOrder.status == 3 || dataOrder.status == "3") {
-                        statusOrder =`<span class="badge badge-light-info fs-base">Kirim</span>`;
+                        statusOrder =`<span class="badge badge-info">Kirim</span>`;
                     } else if (dataOrder.status == 4 || dataOrder.status == "4") {
-                        statusOrder =`<span class="badge badge-light-success fs-base">Selesai</span>`;
+                        statusOrder =`<span class="badge badge-success">Selesai</span>`;
+                    } else if (dataOrder.status == 5 || dataOrder.status == "5") {
+                        statusOrder =`<span class="badge badge-info">Packing</span>`;
                     }
 
                     let statusPayment = '';
@@ -117,6 +127,7 @@ var KTDetailAgent = function () {
 
                     var resultTr = `<tr>
                         <td>${dataOrder.date}</td>
+                        <td>${dataOrder.receiver_name}</td>
                         <td>${dataOrder.invoice_number}</td>
                         <td>${statusOrder}</td>
                         <td>${statusPayment}</td>

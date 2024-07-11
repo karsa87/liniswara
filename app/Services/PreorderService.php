@@ -6,7 +6,6 @@ use App\Enums\Preorder\StatusEnum;
 use App\Models\Customer;
 use App\Models\Preorder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
 class PreorderService
 {
@@ -98,9 +97,7 @@ class PreorderService
             $query->where('collector_id', $params['collector_id']);
         }
 
-        // DB::enableQueryLog();
         $preorders = $query->get();
-        // dd(DB::getQueryLog());
 
         return [
             'total' => optional($preorders)->sum('total_amount') ?? 0,
