@@ -39,8 +39,40 @@
                                     </a>
                                 </div>
                                 <!--end::Name-->
+                                <!--begin::Info-->
+                                <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                        <i class="ki-duotone ki-whatsapp fs-3 text-success me-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>{{ optional($agent->user)->phone_number }}
+                                    </a>
+                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                        <i class="ki-duotone ki-sms fs-4 me-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        {{ optional($agent->user)->email }}
+                                    </a>
+                                </div>
+                                <!--end::Info-->
                             </div>
                             <!--end::User-->
+
+                            <!--begin::Actions-->
+                            {{-- <div class="d-flex my-4">
+                                <a href="#" class="btn btn-sm btn-success me-2">
+                                    <i class="ki-duotone ki-check fs-3 d-none"></i>
+                                    <!--begin::Indicator label-->
+                                    <span class="indicator-label">Download Transaksi</span>
+                                    <!--end::Indicator label-->
+                                    <!--begin::Indicator progress-->
+                                    <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <!--end::Indicator progress-->
+                                </a>
+                            </div> --}}
+                            <!--end::Actions-->
                         </div>
                         <!--end::Title-->
                         <!--begin::Stats-->
@@ -50,106 +82,61 @@
                                 <!--begin::Stats-->
                                 <div class="d-flex flex-wrap">
                                     <!--begin::Stat-->
-                                    <div class="border border-gray-300 border-dashed rounded w-25 py-3 px-4 me-6 mb-3">
-                                        {{ optional($agent->address)->full_address }}
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <!--begin::Number-->
+                                        <div class="d-flex align-items-center">
+                                            <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $agent->target }}" data-kt-countup-prefix="Rp.">0</div>
+                                        </div>
+                                        <!--end::Number-->
+                                        <!--begin::Label-->
+                                        <div class="fw-semibold fs-6 text-gray-400">Target</div>
+                                        <!--end::Label-->
                                     </div>
                                     <!--end::Stat-->
                                     <!--begin::Stat-->
-                                    <div class="border border-gray-300 border-dashed rounded  w-20 py-3 px-4 me-6 mb-3">
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <!--begin::Number-->
                                         <div class="d-flex align-items-center">
-                                            <i class="ki-duotone ki-whatsapp fs-3 text-success me-2">
+                                            @if ($agent->total_preorder > $agent->target)
+                                            <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                             </i>
-                                            {{ optional($agent->user)->phone_number }}
-                                        </div>
-                                        {{-- <div class="d-flex align-items-center">
-                                            <i class="ki-duotone ki-sms fs-3 me-2">
+                                            @else
+                                            <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                             </i>
-                                            {{ optional($agent->user)->email }}
-                                        </div> --}}
+                                            @endif
+                                            <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $agent->total_preorder }}" data-kt-countup-prefix="Rp.">0</div>
+                                        </div>
                                         <!--end::Number-->
+                                        <!--begin::Label-->
+                                        <div class="fw-semibold fs-6 text-gray-400">Realisasi</div>
+                                        <!--end::Label-->
                                     </div>
                                     <!--end::Stat-->
                                     <!--begin::Stat-->
-                                    <div class="border border-gray-300 border-dashed rounded  w-25 py-3 px-4 me-6 mb-3">
-                                        <!--begin::Number-->
-
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-circle symbol-40px me-3">
-                                                <i class="ki-duotone ki-wallet fs-3x">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                </i>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Target</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->target) }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-circle symbol-40px me-3">
-                                                <i class="ki-duotone ki-wallet fs-3x">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                </i>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Realisasi</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->total_preorder) }}</span>
-                                            </div>
-                                        </div>
-                                        <!--end::Number-->
-                                    </div>
-                                    <!--end::Stat-->
-                                    <!--begin::Stat-->
-                                    <div class="border border-gray-300 border-dashed rounded  w-25 py-3 px-4 me-6 mb-3">
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <!--begin::Number-->
                                         <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-circle symbol-40px me-3">
-                                                <i class="ki-duotone ki-wallet fs-3x">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                </i>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Persentase Realisasi</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $agent->target > 0 ? round(($agent->total_preorder / $agent->target) * 100, 2) : 0 }}%</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-circle symbol-40px me-3">
-                                                <i class="ki-duotone ki-wallet fs-3x">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                </i>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Kekurangan</span>
-                                                    <span class="text-gray-700 fw-semibold d-block fs-6">{{ $agent->total_preorder < $agent->target ? $util->format_currency($agent->target - $agent->total_preorder) : 0 }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-circle symbol-40px me-3">
-                                                <i class="ki-duotone ki-bill fs-3x">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                </i>
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <spam class="text-gray-800 fw-bold mb-1 fs-4">Total Terbayar</span>
-                                                <span class="text-gray-700 fw-semibold d-block fs-6">{{ $util->format_currency($agent->total_paid_preorder) }}</span>
-                                            </div>
+                                            @if ($agent->total_paid_preorder > $agent->total_preorder)
+                                            <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            @else
+                                            <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            @endif
+                                            <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $agent->total_paid_preorder }}" data-kt-countup-prefix="Rp.">0</div>
                                         </div>
                                         <!--end::Number-->
+                                        <!--begin::Label-->
+                                        <div class="fw-semibold fs-6 text-gray-400">Total Terbayar</div>
+                                        <!--end::Label-->
                                     </div>
                                     <!--end::Stat-->
                                 </div>
@@ -178,7 +165,7 @@
                     <!--begin::Title-->
                     <h3 class="card-title align-items-start flex-column">
                         <!--begin::Amount-->
-                        <span class="badge badge-primary">Lunas</span>
+                        <span class="badge badge-primary">Capaian Target</span>
                         <!--end::Amount-->
                     </h3>
                     <!--end::Title-->
@@ -187,7 +174,48 @@
                 <!--begin::Card body-->
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
-                        <span class="fs-3hx fw-bold me-6 text-dark">
+                        <span class="fs-2hx fw-bold me-6 text-dark">
+                            {{ $agent->target > 0 ? round(($agent->total_preorder / $agent->target) * 100, 2) : 0 }}%
+
+                            <i class="ki-duotone ki-arrows-circle fs-2qx text-gray-500">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                            </i>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="fs-1hx me-6 text-muted">Kekurangan</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="fs-2 fw-bold me-6 text-dark">{{ $agent->total_preorder < $agent->target ? $util->format_currency($agent->target - $agent->total_preorder) : 0 }}</span>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card widget 20-->
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 mb-md-5 mb-xl-10">
+            <!--begin::Card widget 20-->
+            <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <!--begin::Amount-->
+                        <span class="badge badge-success">Lunas</span>
+                        <!--end::Amount-->
+                    </h3>
+                    <!--end::Title-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Card body-->
+                <div class="card-body align-items-end pt-0">
+                    <div class="d-flex align-items-center">
+                        <span class="fs-2hx fw-bold me-6 text-dark">
                             {{ $count['paid'] }}
                             <i class="ki-duotone ki-directbox-default fs-2qx text-gray-500">
                                 <span class="path1"></span>
@@ -218,47 +246,6 @@
                     <!--begin::Title-->
                     <h3 class="card-title align-items-start flex-column">
                         <!--begin::Amount-->
-                        <span class="badge badge-warning">Proses</span>
-                        <!--end::Amount-->
-                    </h3>
-                    <!--end::Title-->
-                </div>
-                <!--end::Header-->
-                <!--begin::Card body-->
-                <div class="card-body align-items-end pt-0">
-                    <div class="d-flex align-items-center">
-                        <span class="fs-3hx fw-bold me-6 text-dark">
-                            {{ $count['process'] }}
-
-                            <i class="ki-duotone ki-arrows-circle fs-2qx text-gray-500">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                            </i>
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="fs-1hx me-6 text-muted">Transaksi</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['process']) }}</span>
-                    </div>
-                </div>
-                <!--end::Card body-->
-            </div>
-            <!--end::Card widget 20-->
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 mb-md-5 mb-xl-10">
-            <!--begin::Card widget 20-->
-            <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end">
-                <!--begin::Header-->
-                <div class="card-header pt-5">
-                    <!--begin::Title-->
-                    <h3 class="card-title align-items-start flex-column">
-                        <!--begin::Amount-->
                         <span class="badge badge-danger">Belum Terbayar</span>
                         <!--end::Amount-->
                     </h3>
@@ -268,7 +255,7 @@
                 <!--begin::Card body-->
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
-                        <span class="fs-3hx fw-bold me-6 text-dark">
+                        <span class="fs-2hx fw-bold me-6 text-dark">
                             {{ $count['not_paid'] }}
 
                             <i class="ki-duotone ki-information fs-2qx text-gray-500">
@@ -308,7 +295,7 @@
                 <!--begin::Card body-->
                 <div class="card-body align-items-end pt-0">
                     <div class="d-flex align-items-center">
-                        <span class="fs-3hx fw-bold me-6 text-dark">
+                        <span class="fs-2hx fw-bold me-6 text-dark">
                             {{ $count['dp'] }}
 
                             <i class="ki-duotone ki-wallet fs-2qx text-gray-500">
