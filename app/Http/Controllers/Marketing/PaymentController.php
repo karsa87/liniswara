@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Marketing;
 
 use App\Enums\Preorder\StatusEnum;
 use App\Enums\Preorder\StatusPaymentEnum;
+use App\Exports\Marketing\AgentOrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Customer\MarketingCustomerListResource;
 use App\Http\Resources\Admin\Preorder\PreorderResource;
@@ -15,6 +16,7 @@ use App\Models\Preorder;
 use App\Services\CustomerService;
 use App\Services\PreorderService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
@@ -223,6 +225,53 @@ class PaymentController extends Controller
         return response()->json([
             'orders' => $listOrders,
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function download_transaction_order_agent($id)
+    {
+        $preorders = Preorder::with([
+            'orders' => function ($qOrder) {
+                return $qOrder->with('customer_address')->orderBy('id', 'desc');
+            },
+        ])
+            ->where('customer_id', $id)
+            ->get();
+
+        $listOrders = collect();
+        foreach ($preorders as $preorder) {
+            $listOrders->push([
+                'preorder_id' => $preorder->id,
+                'preorder_date' => $preorder->date,
+                'preorder_receiver_name' => optional($preorder->customer_address)->name,
+                'preorder_invoice_number' => $preorder->invoice_number,
+                'preorder_total_amount' => $preorder->total_amount,
+            ]);
+            if ($preorder->orders->count() > 0) {
+                foreach ($preorder->orders as $order) {
+                    $listOrders->push([
+                        'id' => $order->id,
+                        'date' => $order->date,
+                        'receiver_name' => optional($order->customer_address)->name,
+                        'invoice_number' => $order->invoice_number,
+                        'status' => $order->status,
+                        'status_payment' => $order->status_payment,
+                        'total_amount' => $order->total_amount,
+
+                        'preorder_id' => $preorder->id,
+                        'preorder_date' => $preorder->date,
+                        'preorder_receiver_name' => optional($preorder->customer_address)->name,
+                        'preorder_invoice_number' => $preorder->invoice_number,
+                        'preorder_total_amount' => $preorder->total_amount,
+                    ]);
+                }
+            }
+
+        }
+
+        return Excel::download(new AgentOrderExport($listOrders), 'Agent Detail Order.xlsx');
     }
 
     /**
