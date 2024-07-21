@@ -14,6 +14,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Preorder;
 use App\Services\CustomerService;
+use App\Services\OrderService;
 use App\Services\PreorderService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,6 +24,7 @@ class PaymentController extends Controller
     public function __construct(
         private PreorderService $preorderService,
         private CustomerService $customerService,
+        private OrderService $orderService,
     ) {
     }
 
@@ -178,9 +180,17 @@ class PaymentController extends Controller
             ->where('id', $id)
             ->first();
 
+        $preorderAll = $this->preorderService->getSummary([
+            'customer_id' => $id,
+        ]);
         $preorderPaid = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::PAID, $id);
         $preorderNotPaid = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::NOT_PAID, $id);
         $preorderDp = $this->preorderService->getSummaryByStatusPayment(StatusPaymentEnum::DP, $id);
+
+        $orderPaid = $this->orderService->getSummary([
+            'status_payment' => StatusPaymentEnum::PAID,
+            'customer_id' => $id,
+        ]);
         $preorderProcess = $this->preorderService->getSummaryByStatusOrder(StatusEnum::PROCESS, $id);
         $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id);
 
@@ -188,13 +198,15 @@ class PaymentController extends Controller
             'agent' => $customer,
             'rankingRegency' => $rankingRegency,
             'total' => [
-                'paid' => $preorderPaid['total'],
+                'preorder_all' => $preorderAll['total'],
+                'paid' => $orderPaid['total'],
                 'not_paid' => $preorderNotPaid['total'],
                 'dp' => $preorderDp['total'],
                 'process' => $preorderProcess['total'],
             ],
             'count' => [
-                'paid' => $preorderPaid['count'],
+                'preorder_all' => $preorderAll['count'],
+                'paid' => $orderPaid['count'],
                 'not_paid' => $preorderNotPaid['count'],
                 'dp' => $preorderDp['count'],
                 'process' => $preorderProcess['count'],

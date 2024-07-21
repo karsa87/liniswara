@@ -279,7 +279,7 @@
                         <span class="fs-1hx me-6 text-muted">Transaksi</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['not_paid']) }}</span>
+                        <span class="fs-2 fw-bold me-6 text-dark">{{ $util->format_currency($total['preorder_all'] - $total['paid']) }}</span>
                     </div>
                 </div>
                 <!--end::Card body-->
