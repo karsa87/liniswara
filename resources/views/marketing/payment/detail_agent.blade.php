@@ -30,30 +30,30 @@
                             <div class="d-flex flex-column">
                                 <!--begin::Name-->
                                 <div class="d-flex align-items-center mb-2">
-                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ optional($agent->user)->name }}</a>
-                                    <a href="#">
+                                    <span class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ optional($agent->user)->name }}</span>
+                                    <span>
                                         <i class="ki-duotone ki-verify fs-1 text-primary">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                         </i>
-                                    </a>
+                                    </span>
                                 </div>
                                 <!--end::Name-->
                                 <!--begin::Info-->
                                 <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                    <span class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                         <i class="ki-duotone ki-whatsapp fs-3 text-success me-2">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                         </i>{{ optional($agent->user)->phone_number }}
-                                    </a>
-                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                    </span>
+                                    <span class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                         <i class="ki-duotone ki-sms fs-4 me-1">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                         </i>
                                         {{ optional($agent->user)->email }}
-                                    </a>
+                                    </span>
                                 </div>
                                 <!--end::Info-->
                             </div>
@@ -61,6 +61,16 @@
 
                             <!--begin::Actions-->
                             <div class="d-flex my-4">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success me-2" onclick="printArticle();">
+                                    <i class="ki-duotone ki-check fs-3 d-none"></i>
+                                    <!--begin::Indicator label-->
+                                    <span class="indicator-label">Download Pdf</span>
+                                    <!--end::Indicator label-->
+                                    <!--begin::Indicator progress-->
+                                    <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <!--end::Indicator progress-->
+                                </a>
                                 <a href="{{ route('marketing.payment.download_transaction_order_agent', $agent->id) }}" class="btn btn-sm btn-success me-2" target="_blank">
                                     <i class="ki-duotone ki-check fs-3 d-none"></i>
                                     <!--begin::Indicator label-->
@@ -404,7 +414,7 @@
             </div>
         </div>
         <!--begin::Col-->
-        <div class="col-xl-12 mb-5 mb-xl-10">
+        <div class="col-xl-12 mb-5 mb-xl-10" id="div-list-transaction">
             <!--begin::Table widget 14-->
             <div class="card card-flush h-md-100">
                 <!--begin::Header-->
@@ -496,4 +506,25 @@
 
 @push('js')
     <script src="{{ mix('marketing/assets/js/custom/pages/payment/detail_agent.js') }}"></script>
+    <script>
+        function printArticle() {
+            document.querySelectorAll('button')
+                .forEach(button => button.remove());
+            document.querySelectorAll('a')
+                .forEach(button => button.remove());
+            document.getElementById("kt_header").remove();
+            document.getElementById("kt_footer").remove();
+            document.getElementById("div-list-transaction").remove();
+            document.getElementById("kt_wrapper").style.paddingTop = '0px';
+            document.getElementById("kt_wrapper").style.paddingLeft = '0px';
+
+            var afterPrint = function() {
+                window.location.reload();
+            };
+
+            window.onafterprint = afterPrint;
+
+            window.print();
+        }
+    </script>
 @endpush
