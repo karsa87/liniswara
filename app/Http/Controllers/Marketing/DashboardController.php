@@ -12,7 +12,6 @@ use App\Models\Setting;
 use App\Services\CustomerService;
 use App\Services\OrderService;
 use App\Services\PreorderService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -57,8 +56,8 @@ class DashboardController extends Controller
         $rankingRegency = $this->preorderService->rankingByRegency(5, $request->get('regency_month_id'), optional($marketingTeam)->value);
         $rankingAgent = $this->customerService->rankingAgents(5, optional($marketingTeam)->value);
 
-        $rangkingByMarketingTeamA = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_A, Carbon::now()->month);
-        $rangkingByMarketingTeamB = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_B, Carbon::now()->month);
+        $rangkingByMarketingTeamA = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_A, false);
+        $rangkingByMarketingTeamB = $this->preorderService->rankingByMarketingTeam(MarketingEnum::TEAM_B, false);
 
         return view('marketing.dashboard.index', [
             'targetTeam' => $targetTeam,

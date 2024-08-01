@@ -541,7 +541,7 @@
                         Transaksi Tim A
                     </span>
                     <span class="text-muted mt-1 fw-semibold fs-7">
-                        5 Terbaik Bulan ini
+                        5 Terbanyak
                     </span>
                 </h3>
                 <!--end::Title-->
@@ -598,7 +598,7 @@
                         Transaksi Tim B
                     </span>
                     <span class="text-muted mt-1 fw-semibold fs-7">
-                        5 Terbaik Bulan ini
+                        5 Terbanyak
                     </span>
                 </h3>
                 <!--end::Title-->

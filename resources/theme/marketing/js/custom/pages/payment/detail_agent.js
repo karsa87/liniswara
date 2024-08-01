@@ -213,14 +213,37 @@ var KTDetailAgent = function () {
                     bar: {
                         horizontal: false,
                         columnWidth: ['80%'],
-                        borderRadius: [6]
+                        borderRadius: [6],
+                        dataLabels: {
+                            position: 'top', // top, center, bottom
+                        },
                     },
                 },
                 legend: {
                     show: true
                 },
                 dataLabels: {
-                    enabled: false
+                    enabled: true,
+                    formatter: function (value) {
+                        var val = Math.abs(value);
+
+                        if (val >= 1000 && val < 1000000) {
+                            val = (val / 1000).toFixed(0) + 'Rb'
+                        } else if (val >= 1000000 && val < 1000000000) {
+                            val = (val / 1000000).toFixed(0) + 'Jt'
+                        } else if (val >= 1000000000) {
+                            val = (val / 1000000000).toFixed(0) + 'M'
+                        } else {
+                            val = val;
+                        }
+
+                        return val;
+                    },
+                    offsetY: -20,
+                    style: {
+                        fontSize: '12px',
+                        colors: ["#304758"]
+                    }
                 },
                 stroke: {
                     show: true,
