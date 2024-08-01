@@ -12,7 +12,7 @@ var KTCustomersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[3, 'desc']],
+            order: [[4, 'desc']],
             // stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -26,8 +26,8 @@ var KTCustomersList = function () {
                 },
                 { data: 'name' },
                 { data: 'target' },
-                { data: 'total_achieved', orderable: false },
-                { data: null, orderable: false },
+                { data: 'total_achieved' },
+                { data: null },
             ],
             columnDefs: [
                 {
@@ -74,7 +74,7 @@ var KTCustomersList = function () {
                 {
                     targets: -1,
                     data: null,
-                    orderable: false,
+
                     className: 'text-end',
                     render: function (data, type, row) {
                         var total_achieved = row.total_achieved.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });

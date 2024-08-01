@@ -17,6 +17,7 @@ use App\Services\CustomerService;
 use App\Services\OrderService;
 use App\Services\PreorderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
@@ -94,13 +95,19 @@ class PaymentController extends Controller
 
             if (is_numeric($request->input('order.0.column'))) {
                 $column = $request->input('order.0.column');
-                $columnData = $request->input("columns.$column.data");
+
+                $columnData = match ($column) {
+                    '3' => 'total_achieved',
+                    '4' => '(total_achieved / target)',
+                    default => $request->input("columns.$column.data")
+                };
+
                 $sorting = $request->input('order.0.dir');
 
                 if ($sorting == 'desc') {
-                    $query->orderBy($columnData, 'DESC');
+                    $query->orderBy(DB::raw($columnData), 'DESC');
                 } else {
-                    $query->orderBy($columnData, 'ASC');
+                    $query->orderBy(DB::raw($columnData), 'ASC');
                 }
             }
 
