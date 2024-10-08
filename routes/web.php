@@ -42,6 +42,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['web'])->group(function () {
+    Route::get('login-redirect', function () {
+        return redirect()->route('auth.login');
+    })->name('login');
     Route::get('login', [
         AuthController::class, 'login',
     ])->name('auth.login');
