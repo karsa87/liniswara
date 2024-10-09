@@ -733,8 +733,10 @@ class OrderController extends Controller
                     $removeDetail->qty
                 );
 
-                $removeDetail->preorder_detail->qty_order = ($removeDetail->preorder_detail->qty_order ?: 0) - $removeDetail->qty;
-                $removeDetail->preorder_detail->save();
+                if ($removeDetail->preorder_detail) {
+                    $removeDetail->preorder_detail->qty_order = ($removeDetail->preorder_detail->qty_order ?: 0) - $removeDetail->qty;
+                    $removeDetail->preorder_detail->save();
+                }
 
                 $removeDetail->delete();
             }
