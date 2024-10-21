@@ -336,14 +336,16 @@ class ProductController extends Controller
     {
         $params = $request->all();
         $excludeIds = collect(json_decode($request->get('exid', '[]')));
-        $excludeIds->unique()->filter();
+        $excludeIds = $excludeIds->unique()->filter();
 
         $query = Product::query();
 
         $q = array_key_exists('query', $params) ? $params['query'] : (array_key_exists('q', $params) ? $params['q'] : '');
         if ($q) {
-            $query->whereLike('name', $q)
-                ->orWhereLike('code', $q);
+            $query->where(function ($qProduct) use ($q) {
+                $qProduct->whereLike('name', $q)
+                    ->orWhereLike('code', $q);
+            });
         }
 
         if ($excludeIds->isNotEmpty()) {
