@@ -24,6 +24,7 @@ class PreorderBookResource extends JsonResource
             'stock' => (string) ((int) $this->stock ?? '0'),
             'total_stock_need' => (string) ($this->total_stock_need <= 0 ? '0' : $this->total_stock_need),
             'total_stock_more' => (string) ($this->total_stock_more <= 0 ? '0' : $this->total_stock_more),
+            'total_sale' => (string) ((int) $this->total_sale ?? '0'),
         ];
     }
 }

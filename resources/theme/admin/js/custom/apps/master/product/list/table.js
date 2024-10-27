@@ -86,6 +86,7 @@ var KTSuppliersList = function () {
                 { data: 'name' },
                 { data: 'code' },
                 { data: 'stock' },
+                { data: 'total_sale', orderable: false },
                 { data: 'category', orderable: false },
                 { data: null },
             ],
@@ -104,7 +105,7 @@ var KTSuppliersList = function () {
                     }
                 },
                 {
-                    targets: 4,
+                    targets: 5,
                     render: function (data, type, row) {
                         if (row.category != null && row.category.name != undefined && row.category.name != null) {
                             return row.category.name;

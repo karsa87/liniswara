@@ -37,7 +37,8 @@ class ProductController extends Controller
             $query = Product::with([
                 'thumbnail',
                 'categories.parent',
-            ]);
+            ])
+                ->withSum('order_details as total_sale', 'qty');
 
             if ($q = $request->input('search.value')) {
                 $query->where(function ($qProduct) use ($q) {

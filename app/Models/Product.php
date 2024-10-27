@@ -57,6 +57,14 @@ class Product extends Model
     }
 
     /**
+     * The data that belong to the stock history.
+     */
+    public function order_details(): HasMany
+    {
+        return $this->hasMany(OrderDetail::class, 'product_id');
+    }
+
+    /**
      * Get the price after discount.
      */
     protected function priceAfterDiscount(): Attribute

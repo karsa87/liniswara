@@ -227,8 +227,9 @@
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-25px">Gambar</th>
                     <th class="min-w-125px">Produk</th>
-                    <th class="min-w-75px">Kode</th>
-                    <th class="min-w-125px">Stok</th>
+                    <th class="min-w-50px">Kode</th>
+                    <th class="min-w-75px">Stok</th>
+                    <th class="min-w-75px">Total Terjual</th>
                     <th class="min-w-125px">Kategori</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>

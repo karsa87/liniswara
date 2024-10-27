@@ -74,6 +74,7 @@
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">Kode</th>
                     <th class="min-w-125px">Nama Produk</th>
+                    <th class="min-w-125px">Total Terjual</th>
                     <th class="min-w-125px">Stok Tersedia</th>
                     <th class="min-w-125px">Stok Yang Diorder</th>
                     <th class="min-w-125px">Stok Kosong</th>

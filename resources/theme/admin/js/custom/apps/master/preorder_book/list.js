@@ -50,6 +50,7 @@ var KTUsersPreorderBooksList = function () {
             columns: [
                 { data: 'product.code', orderable: false },
                 { data: 'product.name', orderable: false },
+                { data: 'total_sale', orderable: false },
                 { data: 'stock' },
                 { data: 'stock_need' },
                 { data: 'total_stock_need' },
@@ -61,7 +62,7 @@ var KTUsersPreorderBooksList = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        return row.stock.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        return row.total_sale.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                     },
                 },
                 {
@@ -69,11 +70,19 @@ var KTUsersPreorderBooksList = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        return row.stock_need.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        return row.stock.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                     },
                 },
                 {
                     targets: 4,
+                    orderable: false,
+                    className: 'text-end',
+                    render: function (data, type, row) {
+                        return row.stock_need.toLocaleString('in-ID', { style: 'currency', currency: '', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    },
+                },
+                {
+                    targets: 5,
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {

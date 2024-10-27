@@ -54,6 +54,7 @@ class ProductResource extends JsonResource
             'category' => $category,
             'categories' => $categories,
             'thumbnail' => $thumbnail,
+            'total_sale' => (int) ($this->total_sale ?? 0),
         ];
     }
 }
