@@ -8,7 +8,7 @@
     <input type="hidden" name="order_id" value="{{ $order->id }}" />
     <input type="hidden" name="order_preorder_id" value="{{ $order->preorder_id }}" />
     <!--begin::Aside column-->
-    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10 d-none">
         <!--begin::Category & tags-->
         <div class="card card-flush py-4">
             <!--begin::Card header-->
@@ -379,7 +379,7 @@
         <!--end::General options-->
         <!--end::Tab content-->
 
-        <div class="d-flex flex-column gap-5 gap-md-7">
+        <div class="d-flex flex-column gap-5 gap-md-7 d-none">
             <!--begin::Input group-->
             <div class="d-flex flex-wrap gap-5">
                 <div class="fv-row w-100 flex-md-root">

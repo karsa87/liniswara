@@ -436,21 +436,22 @@
         <!--end::General options-->
         <!--end::Tab content-->
 
-        <div class="d-flex flex-column gap-5 gap-md-7">
-            <!--begin::Input group-->
-            <div class="d-flex flex-wrap gap-5">
-                <div class="fv-row w-100 flex-md-root">
-                    <!--begin::General options-->
-                    <div class="card card-flush py-4">
-                        <!--begin::Card header-->
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h2>Catatan</h2>
-                            </div>
-                        </div>
-                        <!--end::Card header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-0">
+        <!--begin::General options-->
+        <div class="card card-flush py-4">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Catatan</h2>
+                </div>
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+
+                <div class="d-flex flex-column gap-5 gap-md-7">
+                    <!--begin::Input group-->
+                    <div class="d-flex flex-wrap gap-5">
+                        <div class="fv-row w-100 flex-md-root">
                             <!--begin::Input group-->
                             <div class="mb-2">
                                 <!--begin::Label-->
@@ -464,6 +465,8 @@
                                 <div class="text-muted fs-7">Tuliskan catatan dalam preorder.</div>
                                 <!--end::Description-->
                             </div>
+                        </div>
+                        <div class="fv-row w-100 flex-md-root">
                             <div class="mb-2">
                                 <!--begin::Label-->
                                 <label class="form-label">Catatan Staff</label>
@@ -478,136 +481,13 @@
                             </div>
                             <!--end::Input group-->
                         </div>
-                        <!--end::Card header-->
                     </div>
-                    <!--end::General options-->
-                </div>
-                <div class="fv-row w-100 flex-md-root">
-                    <!--begin::General options-->
-                    <div class="card card-flush py-4 mb-5">
-                        <!--begin::Card header-->
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h2>Pajak & Diskon</h2>
-                            </div>
-                        </div>
-                        <!--end::Card header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-0">
-                            <!--begin::Input group-->
-                            <div class="mb-2">
-                                <!--begin::Label-->
-                                <label class="form-label">Pajak penjualan</label>
-                                <!--end::Label-->
-                                <!--begin::Editor-->
-                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="preorder_tax" data-kt-ecommerce-catalog-add-preorder="preorder_option">
-                                    @foreach (\App\Enums\Preorder\TaxEnum::MAP_LABEL as $key => $name)
-                                        <option value="{{ $key }}" {{ $preorder->tax == $key ? 'selected' : '' }}>{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                                <!--end::Editor-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-2">
-                                <!--begin::Label-->
-                                <label class="form-label">Tipe Diskon</label>
-                                <!--end::Label-->
-                                <!--begin::Editor-->
-                                <select class="form-select mb-2" data-placeholder="Select Status" data-allow-clear="true" name="preorder_discount_type" data-kt-ecommerce-catalog-add-preorder="preorder_option" id="form-select-discount-type">
-                                    @foreach (\App\Enums\Preorder\DiscountTypeEnum::MAP_LABEL as $key => $name)
-                                        <option value="{{ $key }}" {{ $preorder->discount_type == $key ? 'selected' : '' }}>{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                                <!--end::Editor-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-2" style="display: none;" id="div-discount-percentage">
-                                <!--begin::Label-->
-                                <label class="required form-label">Diskon (%)</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="number" name="preorder_discount_percentage" class="form-control mb-2" placeholder="Harga Produk" value="{{ $preorder->discount_percentage }}" max="100" min="0" />
-                                <!--end::Input-->
-                                <!--begin::Description-->
-                                <div class="text-muted fs-7">Tetapkan diskon (%).</div>
-                                <!--end::Description-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-2" style="display: none;" id="div-discount-price">
-                                <!--begin::Label-->
-                                <label class="required form-label">Diskon (Rp.)</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="number" name="preorder_discount_price" class="form-control mb-2" placeholder="Harga Produk" value="{{ $preorder->discount_price }}" min="0" />
-                                <!--end::Input-->
-                                <!--begin::Description-->
-                                <div class="text-muted fs-7">Tetapkan diskon (Rp.).</div>
-                                <!--end::Description-->
-                            </div>
-                            <!--end::Input group-->
-                        </div>
-                        <!--end::Card header-->
-                    </div>
-                    <!--end::General options-->
-                    <!--begin::General options-->
-                    <div class="card card-flush py-4">
-                        <!--begin::Card header-->
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h2>Pengiriman</h2>
-                            </div>
-                        </div>
-                        <!--end::Card header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-0">
-                            <!--begin::Input group-->
-                            <div class="mb-2">
-                                <!--begin::Label-->
-                                <label class="form-label">Resi</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="text" name="preorder_resi" class="form-control mb-2" placeholder="Resi" value="{{ $preorder->shipping ? $preorder->shipping->resi : '' }}" />
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-2">
-                                <!--begin::Label-->
-                                <label class="form-label">Expedition</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <select class="form-select mb-2" data-placeholder="Select Agen" data-allow-clear="true" name="preorder_expedition_id"  data-url="{{ route('ajax.expedition.list') }}" data-kt-ecommerce-catalog-add-preorder="preorder_option">
-                                    <option></option>
-                                    @if ($preorder->shipping && $preorder->shipping->expedition)
-                                        <option value="{{ $preorder->shipping->expedition->id }}" selected>{{ $preorder->shipping->expedition->name }}</option>
-                                    @endif
-                                </select>
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-2">
-                                <!--begin::Label-->
-                                <label class="form-label">Ongkir</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="number" name="preorder_shipping_price" class="form-control mb-2" placeholder="Ongkir" value="{{ $preorder->shipping_price }}" min="0" />
-                                <!--end::Input-->
-                                <!--begin::Description-->
-                                <div class="text-muted fs-7">Biaya pengiriman (Rp.).</div>
-                                <!--end::Description-->
-                            </div>
-                            <!--end::Input group-->
-                        </div>
-                        <!--end::Card header-->
-                    </div>
-                    <!--end::General options-->
+                    <!--end::Input group-->
                 </div>
             </div>
+            <!--end::Card header-->
         </div>
+        <!--end::General options-->
 
         <div class="d-flex justify-content-end">
             <!--begin::Button-->

@@ -240,6 +240,7 @@ class PreorderController extends Controller
             );
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th);
 
             return response()->json([
                 'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],

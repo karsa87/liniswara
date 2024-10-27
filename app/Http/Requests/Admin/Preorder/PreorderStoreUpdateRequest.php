@@ -191,6 +191,16 @@ class PreorderStoreUpdateRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'preorder_tax' => TaxEnum::NO_TAX,
+        ]);
+    }
+
+    /**
      * Get the error messages for the defined validation rules.
      *
      * @return array<string, string>
