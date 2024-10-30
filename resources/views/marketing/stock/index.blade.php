@@ -254,8 +254,16 @@
                                                     data-stock="{{ $detail['product']->stock }}"
                                                     data-price="{{ $detail['product']->price }}"
                                                     data-price_zone_2="{{ $detail['product']->price_zone_2 }}"
+                                                    data-price_zone_3="{{ $detail['product']->price_zone_3 }}"
+                                                    data-price_zone_4="{{ $detail['product']->price_zone_4 }}"
+                                                    data-price_zone_5="{{ $detail['product']->price_zone_5 }}"
+                                                    data-price_zone_6="{{ $detail['product']->price_zone_6 }}"
                                                     data-discount="{{ $detail['product']->discount }}"
                                                     data-discount_zone_2="{{ $detail['product']->discount_zone_2 }}"
+                                                    data-discount_zone_3="{{ $detail['product']->discount_zone_3 }}"
+                                                    data-discount_zone_4="{{ $detail['product']->discount_zone_4 }}"
+                                                    data-discount_zone_5="{{ $detail['product']->discount_zone_5 }}"
+                                                    data-discount_zone_6="{{ $detail['product']->discount_zone_6 }}"
                                                     data-discount_description="{{ $detail['product']->discount_description }}"
                                                     selected>{{ $detail['product']->name }}</option>
                                                 @endif

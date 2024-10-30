@@ -247,32 +247,95 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body pt-0">
-                <!--begin::Input group-->
-                <div class="mb-10 fv-row">
-                    <!--begin::Label-->
-                    <label class="required form-label">Harga Zona 1</label>
-                    <!--end::Label-->
-                    <!--begin::Input-->
-                    <input type="text" name="product_price" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price }}" />
-                    <!--end::Input-->
-                    <!--begin::Description-->
-                    <div class="text-muted fs-7">Tetapkan harga produk.</div>
-                    <!--end::Description-->
+                <div class="d-flex flex-column gap-5 gap-md-7">
+                    <!--begin::Input group-->
+                    <div class="d-flex flex-wrap gap-5">
+                        <!--begin::Input group-->
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="required form-label">Harga Zona 1</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="product_price" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="required form-label">Harga Zona 2</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="product_price_zone_2" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_2 }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="required form-label">Harga Zona 3</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="product_price_zone_3" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_3 }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                    </div>
                 </div>
-                <!--end::Input group-->
-                <!--begin::Input group-->
-                <div class="mb-10 fv-row">
-                    <!--begin::Label-->
-                    <label class="required form-label">Harga Zona 2</label>
-                    <!--end::Label-->
-                    <!--begin::Input-->
-                    <input type="text" name="product_price_zone_2" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_2 }}" />
-                    <!--end::Input-->
-                    <!--begin::Description-->
-                    <div class="text-muted fs-7">Tetapkan harga produk.</div>
-                    <!--end::Description-->
+                <div class="d-flex flex-column gap-5 gap-md-7">
+                    <!--begin::Input group-->
+                    <div class="d-flex flex-wrap gap-5">
+                        <!--begin::Input group-->
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="required form-label">Harga Zona 4</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="product_price_zone_4" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_4 }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="required form-label">Harga Zona 5</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="product_price_zone_5" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_5 }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row w-100 flex-md-root">
+                            <!--begin::Label-->
+                            <label class="required form-label">Harga Zona 6</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="product_price_zone_6" class="form-control mb-2" placeholder="Harga Produk" value="{{ $product->price_zone_6 }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Tetapkan harga produk.</div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                    </div>
                 </div>
-                <!--end::Input group-->
                 <!--begin::Input group-->
                 <div class="fv-row mb-10">
                     <!--begin::Label-->

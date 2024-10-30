@@ -45,6 +45,10 @@ class ProductExport implements FromCollection, ShouldAutoSize, WithColumnFormatt
             $product->discount_description,
             $product->price,
             $product->price_zone_2,
+            $product->price_zone_3,
+            $product->price_zone_4,
+            $product->price_zone_5,
+            $product->price_zone_6,
         ];
     }
 
@@ -59,6 +63,10 @@ class ProductExport implements FromCollection, ShouldAutoSize, WithColumnFormatt
             'Keterangan Diskon',
             'Harga Zona 1',
             'Harga Zona 2',
+            'Harga Zona 3',
+            'Harga Zona 4',
+            'Harga Zona 5',
+            'Harga Zona 6',
         ];
     }
 
@@ -68,6 +76,10 @@ class ProductExport implements FromCollection, ShouldAutoSize, WithColumnFormatt
             'E' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
             'G' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
             'H' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'I' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'J' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'K' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'L' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
         ];
     }
 }

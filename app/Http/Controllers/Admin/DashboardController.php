@@ -109,6 +109,10 @@ class DashboardController extends Controller
         $zones = [
             'zone_1' => [],
             'zone_2' => [],
+            'zone_3' => [],
+            'zone_4' => [],
+            'zone_5' => [],
+            'zone_6' => [],
         ];
         for ($i = 1; $i <= 12; $i++) {
             $zone1 = Preorder::where('zone', ZoneEnum::ZONE_1)
@@ -119,9 +123,29 @@ class DashboardController extends Controller
                 ->whereMonth('date', $i)
                 ->where('is_exclude_target', false)
                 ->sum('total_amount');
+            $zone3 = Preorder::where('zone', ZoneEnum::ZONE_3)
+                ->whereMonth('date', $i)
+                ->where('is_exclude_target', false)
+                ->sum('total_amount');
+            $zone4 = Preorder::where('zone', ZoneEnum::ZONE_4)
+                ->whereMonth('date', $i)
+                ->where('is_exclude_target', false)
+                ->sum('total_amount');
+            $zone5 = Preorder::where('zone', ZoneEnum::ZONE_5)
+                ->whereMonth('date', $i)
+                ->where('is_exclude_target', false)
+                ->sum('total_amount');
+            $zone6 = Preorder::where('zone', ZoneEnum::ZONE_6)
+                ->whereMonth('date', $i)
+                ->where('is_exclude_target', false)
+                ->sum('total_amount');
 
             $zones['zone_1'][] = $zone1;
             $zones['zone_2'][] = $zone2;
+            $zones['zone_3'][] = $zone3;
+            $zones['zone_4'][] = $zone4;
+            $zones['zone_5'][] = $zone5;
+            $zones['zone_6'][] = $zone6;
         }
 
         return response()->json($zones);

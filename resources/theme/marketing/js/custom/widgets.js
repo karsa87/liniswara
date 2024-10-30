@@ -14,7 +14,7 @@ var KTWidgets = function () {
             rendered: false
         };
 
-        var  initChart = function(zone_1, zone_2) {
+        var  initChart = function(zone_1, zone_2, zone_3, zone_4, zone_5, zone_6) {
             var height = parseInt(KTUtil.css(element, 'height'));
             var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
             var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
@@ -28,6 +28,18 @@ var KTWidgets = function () {
                 }, {
                     name: 'Zona 2',
                     data: zone_2
+                }, {
+                    name: 'Zona 3',
+                    data: zone_3
+                }, {
+                    name: 'Zona 4',
+                    data: zone_4
+                }, {
+                    name: 'Zona 5',
+                    data: zone_5
+                }, {
+                    name: 'Zona 6',
+                    data: zone_6
                 }],
                 chart: {
                     fontFamily: 'inherit',
@@ -148,7 +160,7 @@ var KTWidgets = function () {
         axios.get(element.getAttribute('data-url')).then(function (response) {
             if (response && response.data) {
                 let data = response.data;
-                initChart(data.zone_1, data.zone_2);
+                initChart(data.zone_1, data.zone_2, data.zone_3, data.zone_4, data.zone_5, data.zone_6);
             } else {
                 // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                 Swal.fire({

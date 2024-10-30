@@ -22,6 +22,10 @@ class ProductImportExport implements FromCollection, ShouldAutoSize, WithHeading
                 'stock' => '1',
                 'price' => '200000',
                 'price_zone_2' => '200000',
+                'price_zone_3' => '200000',
+                'price_zone_4' => '200000',
+                'price_zone_5' => '200000',
+                'price_zone_6' => '200000',
                 'description' => 'Produk ini cocok untuk anak sekolah',
             ],
         ]);
@@ -39,6 +43,10 @@ class ProductImportExport implements FromCollection, ShouldAutoSize, WithHeading
             $product['stock'],
             $product['price'],
             $product['price_zone_2'],
+            $product['price_zone_3'],
+            $product['price_zone_4'],
+            $product['price_zone_5'],
+            $product['price_zone_6'],
             $product['description'],
         ];
     }

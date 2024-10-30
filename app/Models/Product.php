@@ -129,7 +129,7 @@ class Product extends Model
     }
 
     /**
-     * Get the discount.
+     * Get the discount price zone 2.
      */
     protected function discountZone2(): Attribute
     {
@@ -138,6 +138,90 @@ class Product extends Model
                 $discountPrice = 0;
                 if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PERCENTAGE) {
                     $discountPrice = $attributes['price_zone_2'] * ($attributes['discount_percentage'] / 100);
+                }
+
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PRICE) {
+                    $discountPrice = $attributes['discount_price'];
+                }
+
+                return $discountPrice;
+            },
+        );
+    }
+
+    /**
+     * Get the discount price zone 3.
+     */
+    protected function discountZone3(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $discountPrice = 0;
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PERCENTAGE) {
+                    $discountPrice = $attributes['price_zone_3'] * ($attributes['discount_percentage'] / 100);
+                }
+
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PRICE) {
+                    $discountPrice = $attributes['discount_price'];
+                }
+
+                return $discountPrice;
+            },
+        );
+    }
+
+    /**
+     * Get the discount price zone 4.
+     */
+    protected function discountZone4(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $discountPrice = 0;
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PERCENTAGE) {
+                    $discountPrice = $attributes['price_zone_4'] * ($attributes['discount_percentage'] / 100);
+                }
+
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PRICE) {
+                    $discountPrice = $attributes['discount_price'];
+                }
+
+                return $discountPrice;
+            },
+        );
+    }
+
+    /**
+     * Get the discount price zone 5.
+     */
+    protected function discountZone5(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $discountPrice = 0;
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PERCENTAGE) {
+                    $discountPrice = $attributes['price_zone_5'] * ($attributes['discount_percentage'] / 100);
+                }
+
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PRICE) {
+                    $discountPrice = $attributes['discount_price'];
+                }
+
+                return $discountPrice;
+            },
+        );
+    }
+
+    /**
+     * Get the discount price zone 6.
+     */
+    protected function discountZone6(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $discountPrice = 0;
+                if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PERCENTAGE) {
+                    $discountPrice = $attributes['price_zone_6'] * ($attributes['discount_percentage'] / 100);
                 }
 
                 if ($attributes['discount_type'] == ProductDiscountTypeEnum::DISCOUNT_PRICE) {

@@ -122,6 +122,10 @@ class OrderStoreUpdateRequest extends FormRequest
                 Rule::in([
                     ZoneEnum::ZONE_1,
                     ZoneEnum::ZONE_2,
+                    ZoneEnum::ZONE_3,
+                    ZoneEnum::ZONE_4,
+                    ZoneEnum::ZONE_5,
+                    ZoneEnum::ZONE_6,
                 ]),
             ],
             'order_notes' => [

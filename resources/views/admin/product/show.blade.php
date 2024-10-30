@@ -240,6 +240,50 @@
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
+                                                <i class="ki-duotone ki-price-tag fs-2 me-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>Harga Zona 3</div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{ $util->format_currency($product->price_zone_3, 0, 'Rp. ') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                <i class="ki-duotone ki-price-tag fs-2 me-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>Harga Zona 4</div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{ $util->format_currency($product->price_zone_4, 0, 'Rp. ') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                <i class="ki-duotone ki-price-tag fs-2 me-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>Harga Zona 5</div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{ $util->format_currency($product->price_zone_5, 0, 'Rp. ') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                <i class="ki-duotone ki-price-tag fs-2 me-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>Harga Zona 6</div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{ $util->format_currency($product->price_zone_6, 0, 'Rp. ') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
                                                 <i class="ki-duotone ki-percentage fs-2 me-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>

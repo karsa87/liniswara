@@ -91,6 +91,14 @@ var KTAppStock = function () {
                             $(data.element).attr('data-discount', data.discount);
                             $(data.element).attr('data-price_zone_2', data.price_zone_2);
                             $(data.element).attr('data-discount_zone_2', data.discount_zone_2);
+                            $(data.element).attr('data-price_zone_3', data.price_zone_3);
+                            $(data.element).attr('data-discount_zone_3', data.discount_zone_3);
+                            $(data.element).attr('data-price_zone_4', data.price_zone_4);
+                            $(data.element).attr('data-discount_zone_4', data.discount_zone_4);
+                            $(data.element).attr('data-price_zone_5', data.price_zone_5);
+                            $(data.element).attr('data-discount_zone_5', data.discount_zone_5);
+                            $(data.element).attr('data-price_zone_6', data.price_zone_6);
+                            $(data.element).attr('data-discount_zone_6', data.discount_zone_6);
                             $(data.element).attr('data-code', data.code);
                             $(data.element).attr('data-stock', data.stock);
                             return data.text.substring(0, 20);
@@ -116,6 +124,18 @@ var KTAppStock = function () {
                             if ($('#form-select-zone').val() == 2) { //zone 2
                                 price = data.price_zone_2;
                                 discount = data.discount_zone_2;
+                            } else if ($('#form-select-zone').val() == 3) { //zone 3
+                                price = data.price_zone_3;
+                                discount = data.discount_zone_3;
+                            } else if ($('#form-select-zone').val() == 4) { //zone 4
+                                price = data.price_zone_4;
+                                discount = data.discount_zone_4;
+                            } else if ($('#form-select-zone').val() == 5) { //zone 5
+                                price = data.price_zone_5;
+                                discount = data.discount_zone_5;
+                            } else if ($('#form-select-zone').val() == 6) { //zone 6
+                                price = data.price_zone_6;
+                                discount = data.discount_zone_6;
                             }
 
                             $(type).closest("tr").children()[5].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -171,6 +191,18 @@ var KTAppStock = function () {
             if ($('#form-select-zone').val() == 2) { //zone 2
                 price = dataSelected.price_zone_2;
                 discount = dataSelected.discount_zone_2;
+            } else if ($('#form-select-zone').val() == 3) { //zone 3
+                price = dataSelected.price_zone_3;
+                discount = dataSelected.discount_zone_3;
+            } else if ($('#form-select-zone').val() == 4) { //zone 4
+                price = dataSelected.price_zone_4;
+                discount = dataSelected.discount_zone_4;
+            } else if ($('#form-select-zone').val() == 5) { //zone 5
+                price = dataSelected.price_zone_5;
+                discount = dataSelected.discount_zone_5;
+            } else if ($('#form-select-zone').val() == 6) { //zone 6
+                price = dataSelected.price_zone_6;
+                discount = dataSelected.discount_zone_6;
             }
 
             let total = (price * qty) - (discount * qty);
@@ -298,6 +330,18 @@ var KTAppStock = function () {
                     if ($('#form-select-zone').val() == 2) { //zone 2
                         price = data.price_zone_2;
                         discount = data.discount_zone_2;
+                    } else if ($('#form-select-zone').val() == 3) { //zone 3
+                        price = data.price_zone_3;
+                        discount = data.discount_zone_3;
+                    } else if ($('#form-select-zone').val() == 4) { //zone 4
+                        price = data.price_zone_4;
+                        discount = data.discount_zone_4;
+                    } else if ($('#form-select-zone').val() == 5) { //zone 5
+                        price = data.price_zone_5;
+                        discount = data.discount_zone_5;
+                    } else if ($('#form-select-zone').val() == 6) { //zone 6
+                        price = data.price_zone_6;
+                        discount = data.discount_zone_6;
                     }
 
                     $(type).closest("tr").children()[5].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });

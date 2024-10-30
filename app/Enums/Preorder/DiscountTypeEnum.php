@@ -7,8 +7,9 @@ namespace App\Enums\Preorder;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static ZONE_1()
- * @method static static ZONE_2()
+ * @method static static DISCOUNT_NO()
+ * @method static static DISCOUNT_PERCENTAGE()
+ * @method static static DISCOUNT_PRICE()
  */
 final class DiscountTypeEnum extends Enum
 {

@@ -166,6 +166,14 @@ var KTPreordersList = function () {
                         let zone = 'Zona 1';
                         if (row.zone == 2) {
                             zone = 'Zona 2';
+                        } else if (row.zone == 3) {
+                            zone = 'Zona 3';
+                        } else if (row.zone == 4) {
+                            zone = 'Zona 4';
+                        } else if (row.zone == 5) {
+                            zone = 'Zona 5';
+                        } else if (row.zone == 6) {
+                            zone = 'Zona 6';
                         }
 
                         return `${result}<br><span class="badge badge-dark">${zone}</span>`;

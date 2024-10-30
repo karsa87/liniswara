@@ -158,6 +158,10 @@ class DashboardController extends Controller
         $zones = [
             'zone_1' => [],
             'zone_2' => [],
+            'zone_3' => [],
+            'zone_4' => [],
+            'zone_5' => [],
+            'zone_6' => [],
         ];
         for ($i = 1; $i <= 12; $i++) {
             $zone1 = Preorder::where('zone', ZoneEnum::ZONE_1)
@@ -176,8 +180,44 @@ class DashboardController extends Controller
             }
             $zone2 = $zone2->sum('total_amount');
 
+            $zone3 = Preorder::where('zone', ZoneEnum::ZONE_3)
+                ->where('is_exclude_target', false)
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $zone3->where('marketing', $marketingTeam->value);
+            }
+            $zone3 = $zone3->sum('total_amount');
+
+            $zone4 = Preorder::where('zone', ZoneEnum::ZONE_4)
+                ->where('is_exclude_target', false)
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $zone4->where('marketing', $marketingTeam->value);
+            }
+            $zone4 = $zone4->sum('total_amount');
+
+            $zone5 = Preorder::where('zone', ZoneEnum::ZONE_5)
+                ->where('is_exclude_target', false)
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $zone5->where('marketing', $marketingTeam->value);
+            }
+            $zone5 = $zone5->sum('total_amount');
+
+            $zone6 = Preorder::where('zone', ZoneEnum::ZONE_6)
+                ->where('is_exclude_target', false)
+                ->whereMonth('date', $i);
+            if (optional($marketingTeam)->value) {
+                $zone6->where('marketing', $marketingTeam->value);
+            }
+            $zone6 = $zone6->sum('total_amount');
+
             $zones['zone_1'][] = $zone1;
             $zones['zone_2'][] = $zone2;
+            $zones['zone_3'][] = $zone3;
+            $zones['zone_4'][] = $zone4;
+            $zones['zone_5'][] = $zone5;
+            $zones['zone_6'][] = $zone6;
         }
 
         return response()->json($zones);
