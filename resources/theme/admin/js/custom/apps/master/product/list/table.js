@@ -96,7 +96,7 @@ var KTSuppliersList = function () {
                     orderable: false,
                     render: function (data, type, row) {
                         if (row.thumbnail != null && row.thumbnail.full_url != null && row.thumbnail.full_url != '' && row.thumbnail.full_url != undefined) {
-                            return `<a href="${row.url_detail}" class="symbol symbol-50px">
+                            return `<a href="${row.thumbnail.full_url}" class="symbol symbol-50px">
                                 <span class="symbol-label" style="background-image:url(${row.thumbnail.full_url});"></span>
                             </a>`;
                         }

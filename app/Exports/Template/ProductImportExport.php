@@ -27,6 +27,7 @@ class ProductImportExport implements FromCollection, ShouldAutoSize, WithHeading
                 'price_zone_5' => '200000',
                 'price_zone_6' => '200000',
                 'description' => 'Produk ini cocok untuk anak sekolah',
+                'image_url' => 'http://liniswara.test/storage/files/20241101/whatsapp-image-2024-10-25-at-19.59.04-1730473184.jpeg',
             ],
         ]);
     }
@@ -60,7 +61,12 @@ class ProductImportExport implements FromCollection, ShouldAutoSize, WithHeading
             'Stok Produk',
             'Harga Zona 1',
             'Harga Zona 2',
+            'Harga Zona 3',
+            'Harga Zona 4',
+            'Harga Zona 5',
+            'Harga Zona 6',
             'Deskripsi Produk',
+            'Image Url',
         ];
     }
 }

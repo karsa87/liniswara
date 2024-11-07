@@ -6,6 +6,7 @@ use App\Enums\Import\StatusEnum;
 use App\Enums\ProductDiscountTypeEnum;
 use App\Imports\ProductImport;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\ImportDetail;
 use App\Models\Product;
 use App\Services\StockHistoryLogService;
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -79,6 +81,7 @@ class ProductImportJob implements ShouldQueue
                         'price_zone_5' => $row[8],
                         'price_zone_6' => $row[9],
                         'description' => htmlentities($row[10]),
+                        'image_url' => $row[11],
                         'discount_type' => ProductDiscountTypeEnum::DISCOUNT_NO,
                         'discount_price' => null,
                         'discount_percentage' => null,
@@ -141,6 +144,10 @@ class ProductImportJob implements ShouldQueue
                             'numeric',
                             'min:0',
                         ],
+                        'image_url' => [
+                            'nullable',
+                            'url',
+                        ],
                     ], [], [
                         'category_id' => 'Kategori',
                         'code' => 'Nama Produk',
@@ -153,7 +160,23 @@ class ProductImportJob implements ShouldQueue
                         'price_zone_5' => 'Harga Zona 5',
                         'price_zone_6' => 'Harga Zona 6',
                         'description' => 'Deskripsi Produk',
+                        'image_url' => 'Image URL',
                     ]);
+
+                    $thumbnailUrl = $input['image_url'];
+                    if ($thumbnailUrl && ! Str::endsWith($thumbnailUrl, ['.jpg', '.jpeg', '.png', '.gif'])) {
+                        $logFailed[] = [
+                            'import_id' => $this->import->id,
+                            'description' => 'Gagal import '.$input['name'],
+                            'reason' => json_encode([
+                                'image_url' => 'Format gambar harus .jpg, .jpeg, .png, .gif',
+                            ]),
+                        ];
+
+                        $totalFailed++;
+
+                        continue;
+                    }
 
                     if ($validator->fails()) {
                         $reason = collect($validator->errors()->toArray() ?? [])->collapse();
@@ -184,8 +207,23 @@ class ProductImportJob implements ShouldQueue
                             break;
                     }
 
+                    if ($thumbnailUrl) {
+                        $file = new File([
+                            'name' => $input['name'],
+                        ]);
+                        if (Str::contains($thumbnailUrl, Storage::url('/'))) {
+                            $file->path = Str::remove(Storage::url('/'), $thumbnailUrl);
+                        } else {
+                            $file->url = $thumbnailUrl;
+                        }
+
+                        $file->save();
+                        $input['thumbnail_id'] = $file->id;
+                    }
+
                     $product = new Product();
                     unset($input['category_id']);
+                    unset($input['image_url']);
                     $input['slug'] = Str::slug($input['name']);
                     $product->fill($input);
 
