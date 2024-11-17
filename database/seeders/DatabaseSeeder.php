@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             VillageSeeder::class,
             SettingSeeder::class,
             ExpeditionSeeder::class,
+            SchoolSeeder::class,
         ]);
     }
 }

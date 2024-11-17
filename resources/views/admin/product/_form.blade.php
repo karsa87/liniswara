@@ -78,6 +78,23 @@
                 <!--end::Input group-->
             </div>
             <!--end::Card body-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <!--begin::Input group-->
+                <!--begin::Label-->
+                <label class="form-label">Sekolah</label>
+                <!--end::Label-->
+                <!--begin::Select2-->
+                <select class="form-select mb-2" data-placeholder="Select schools" data-allow-clear="true" multiple="multiple" name="product_school_id[]"  data-url="{{ route('ajax.school.list') }}" data-kt-ecommerce-catalog-add-product="product_option">
+                    <option></option>
+                    @foreach ($product->schools as $school)
+                        <option value="{{ $school->id }}" selected>{{ $school->name }}</option>
+                    @endforeach
+                </select>
+                <!--end::Select2-->
+                <!--end::Input group-->
+            </div>
+            <!--end::Card body-->
         </div>
         <!--end::Category & tags-->
         <!--begin::Category & tags-->

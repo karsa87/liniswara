@@ -148,12 +148,16 @@ class ProductController extends Controller
             $product = new Product();
             $product->fill($input);
 
-            $categories = $request->input('product_category_id');
-            if (
-                $product->save()
-                && $categories
-            ) {
-                $product->categories()->sync(array_unique($categories));
+            if ($product->save()) {
+                $categories = $request->input('product_category_id');
+                if ($categories) {
+                    $product->categories()->sync(array_unique($categories));
+                }
+
+                $schools = $request->input('product_school_id');
+                if ($schools) {
+                    $product->schools()->sync(array_unique($schools));
+                }
             }
 
             $this->stockLogService->logStockIn(
@@ -275,12 +279,16 @@ class ProductController extends Controller
             $oldStock = $product->stock;
             $product->fill($input);
 
-            $categories = $request->input('product_category_id');
-            if (
-                $product->save()
-                && $categories
-            ) {
-                $product->categories()->sync(array_unique($categories));
+            if ($product->save()) {
+                $categories = $request->input('product_category_id');
+                if ($categories) {
+                    $product->categories()->sync(array_unique($categories));
+                }
+
+                $schools = $request->input('product_school_id');
+                if ($schools) {
+                    $product->schools()->sync(array_unique($schools));
+                }
             }
 
             if ($oldStock > $product->stock) {
@@ -317,7 +325,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::with('thumbnail')->find($id);
+        $product = Product::with('thumbnail', 'categories', 'schools')->find($id);
 
         if (is_null($product)) {
             return response()->json([
@@ -328,6 +336,12 @@ class ProductController extends Controller
         try {
             if ($product->thumbnail) {
                 $product->thumbnail->delete();
+            }
+            if ($product->categories) {
+                $product->categories->delete();
+            }
+            if ($product->schools) {
+                $product->schools->delete();
             }
             $product->stock_histories()->delete();
             $product->delete();

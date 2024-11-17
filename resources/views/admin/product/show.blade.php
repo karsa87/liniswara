@@ -51,6 +51,19 @@
                     </div>
                     <!--end::Details-->
                 </div>
+
+                <div class="mb-7">
+                    <!--begin::Title-->
+                    <h5 class="mb-4">Sekolah</h5>
+                    <!--end::Title-->
+                    <!--begin::Details-->
+                    <div class="mb-0">
+                        @foreach ($product->schools as $school)
+                            <span class="badge badge-outline badge-primary">{{$school->name}}</span>
+                        @endforeach
+                    </div>
+                    <!--end::Details-->
+                </div>
                 <!--end::Section-->
                 <!--begin::Seperator-->
                 <div class="separator separator-dashed mb-7"></div>

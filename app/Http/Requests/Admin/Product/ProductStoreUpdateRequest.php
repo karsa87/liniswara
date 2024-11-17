@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Product;
 
 use App\Models\Category;
 use App\Models\File;
+use App\Models\School;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -111,6 +112,10 @@ class ProductStoreUpdateRequest extends FormRequest
             'product_category_id' => [
                 'nullable',
                 Rule::exists((new Category())->getTable(), 'id'),
+            ],
+            'product_school_id' => [
+                'nullable',
+                Rule::exists((new School())->getTable(), 'id'),
             ],
         ];
     }

@@ -64,6 +64,11 @@ class Product extends Model
         return $this->hasMany(OrderDetail::class, 'product_id');
     }
 
+    public function schools()
+    {
+        return $this->belongsToMany(School::class, 'product_schools', 'product_id', 'school_id');
+    }
+
     /**
      * Get the price after discount.
      */

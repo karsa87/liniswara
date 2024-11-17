@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RestockController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
@@ -716,5 +717,9 @@ Route::middleware('auth')->group(function () {
             AreaController::class,
             'ajax_list_area',
         ])->name('area.list');
+        Route::get('school', [
+            SchoolController::class,
+            'ajax_list_school',
+        ])->name('school.list');
     });
 });
