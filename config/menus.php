@@ -290,4 +290,19 @@ return [
             ],
         ],
     ],
+    'writer' => [
+        'index' => [
+            'title' => 'Penulis',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Penulis',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Penulis',
+                    'route' => 'writer.index',
+                ],
+            ],
+        ],
+    ],
 ];

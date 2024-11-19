@@ -69,6 +69,11 @@ class Product extends Model
         return $this->belongsToMany(School::class, 'product_schools', 'product_id', 'school_id');
     }
 
+    public function writers()
+    {
+        return $this->belongsToMany(Writer::class, 'product_writers', 'product_id', 'writer_id');
+    }
+
     /**
      * Get the price after discount.
      */

@@ -266,6 +266,20 @@
                         </div>
                         <!--end:Menu item-->
                         @endhasPermission
+                        @hasPermission('writer-view')
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['writer.']) ? 'active here' : '' }}" href="{{ route('writer.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Penulis</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        @endhasPermission
                         @hasPermission('collector-view')
                         <!--begin:Menu item-->
                         <div class="menu-item">

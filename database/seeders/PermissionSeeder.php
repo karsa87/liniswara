@@ -36,6 +36,7 @@ class PermissionSeeder extends Seeder
         $this->createPermissionOrder();
         $this->createPermissionOrderSent();
         $this->createPermissionOrderArsip();
+        $this->createPermissionWriter();
 
         $this->syncPermissionRole();
     }
@@ -462,6 +463,46 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Kategori - Delete',
                 'key' => 'category-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionWriter()
+    {
+        $permissions = [
+            [
+                'name' => 'Penulis - Tambah',
+                'key' => 'writer-add',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Penulis - Edit',
+                'key' => 'writer-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Penulis - View',
+                'key' => 'writer-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Penulis - Delete',
+                'key' => 'writer-delete',
                 'role-slug' => [
                     'developer',
                     'super-admin',

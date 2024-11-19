@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WriterController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -365,6 +366,30 @@ Route::middleware('auth')->group(function () {
             ->name('delete');
         Route::put('update/{id?}', [
             CategoryController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
+    Route::name('writer.')->prefix('writer')->group(function () {
+        Route::get('/', [
+            WriterController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            WriterController::class, 'index',
+        ])->name('index.list');
+        Route::get('/detail/{id?}', [
+            WriterController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::post('store', [
+            WriterController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            WriterController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            WriterController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
     });
