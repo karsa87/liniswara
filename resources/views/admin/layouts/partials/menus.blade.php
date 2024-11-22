@@ -152,9 +152,9 @@
                 </div>
                 <!--end:Menu item-->
 
-                @if (auth()->user()->hasPermission(['product-view', 'preorder_book-view', 'restock-view', 'category-view']))
+                @if (auth()->user()->hasPermission(['product-view', 'preorder_book-view', 'restock-view', 'prerestock-view', 'category-view']))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['category.','product.','restock.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['category.','product.','restock.','prerestock.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -194,6 +194,20 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Buku Preorder</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        @endhasPermission
+                        @hasPermission('prerestock-view')
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['prerestock.']) ? 'active here' : '' }}" href="{{ route('prerestock.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Pre Re-Stok</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

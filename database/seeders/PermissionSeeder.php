@@ -30,6 +30,7 @@ class PermissionSeeder extends Seeder
         $this->createPermissionCategory();
         $this->createPermissionProduct();
         $this->createPermissionRestock();
+        $this->createPermissionPrerestock();
         $this->createPermissionPreorder();
         $this->createPermissionPreorderBook();
         $this->createPermissionLogStock();
@@ -591,6 +592,62 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Restock - Delete',
                 'key' => 'restock-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionPrerestock()
+    {
+        $permissions = [
+            [
+                'name' => 'Prerestock - Tambah',
+                'key' => 'prerestock-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Prerestock - View',
+                'key' => 'prerestock-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Prerestock - Edit',
+                'key' => 'prerestock-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Prerestock - View Detail',
+                'key' => 'prerestock-view_detail',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Prerestock - Delete',
+                'key' => 'prerestock-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Prerestock - Migrate',
+                'key' => 'prerestock-migrate',
                 'role-slug' => [
                     'developer',
                     'super-admin',

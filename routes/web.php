@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\OrderSentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PreorderBookController;
 use App\Http\Controllers\Admin\PreorderController;
+use App\Http\Controllers\Admin\PrerestockController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RegionController;
@@ -463,6 +464,41 @@ Route::middleware('auth')->group(function () {
             RestockController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
+    });
+
+    Route::name('prerestock.')->prefix('prerestock/')->group(function () {
+        Route::get('/', [
+            PrerestockController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            PrerestockController::class, 'index',
+        ])->name('index.list');
+        Route::get('/create', [
+            PrerestockController::class, 'create',
+        ])->name('create');
+        Route::get('/detail/{id?}', [
+            PrerestockController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::get('/edit/{id?}', [
+            PrerestockController::class, 'edit',
+        ])->where('id', '[0-9]+')
+            ->name('edit');
+        Route::post('store', [
+            PrerestockController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            PrerestockController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            PrerestockController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+        Route::post('migrate/{id?}', [
+            PrerestockController::class, 'migrate',
+        ])->where('id', '[0-9]+')
+            ->name('migrate');
     });
 
     Route::name('preorder.')->prefix('preorder/')->group(function () {

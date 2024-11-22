@@ -12,6 +12,7 @@ use App\Jobs\Import\ProductImportJob;
 use App\Models\Category;
 use App\Models\File;
 use App\Models\Import;
+use App\Models\PreorderDetail;
 use App\Models\Product;
 use App\Services\StockHistoryLogService;
 use Carbon\Carbon;
@@ -375,6 +376,18 @@ class ProductController extends Controller
             $query->whereNotIn('id', $excludeIds);
         }
 
+        if ($request->get('type') == 'minus') {
+            $query->where('stock', '<=', 0);
+            $query->addSelect([
+                // Key is the alias, value is the sub-select
+                'total_stock_need' => PreorderDetail::query()
+                    // You can use eloquent methods here
+                    ->selectRaw('((sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))) - IFNULL(products.stock, 0))')
+                    ->whereColumn('product_id', 'products.id')
+                    ->whereRaw('qty != qty_order'),
+            ]);
+        }
+
         $products = $query->limit(20)->get();
         $list = [];
         foreach ($products as $product) {
@@ -397,6 +410,7 @@ class ProductController extends Controller
                 'price_zone_6' => $product->price_zone_6,
                 'discount_zone_6' => $product->discount_zone_6,
                 'discount_description' => $product->discount_description,
+                'total_stock_need' => $product->total_stock_need ?? 0,
             ];
         }
 
