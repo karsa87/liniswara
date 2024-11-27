@@ -220,6 +220,23 @@ var KTPreordersList = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
                         `;
 
+                        if ('order_sent-print_address' in userPermissions) {
+                            result += `
+                                <div class="menu-item px-3">
+                                    <a href="order/print/address/${row.id}" class="menu-link px-3">
+                                        <i class="ki-duotone ki-printer fs-2 me-2 text-info">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                            <span class="path5"></span>
+                                        </i>
+                                        Cetak Alamat
+                                    </a>
+                                </div>
+                            `;
+                        }
+
                         if ('order_arsip-print_po' in userPermissions) {
                             result += `
                                 <div class="menu-item px-3">
@@ -252,6 +269,33 @@ var KTPreordersList = function () {
                                 </div>
                             `;
                         }
+
+                        if ('order_sent-print_sent_letter' in userPermissions) {
+                            result += `
+                                <div class="menu-item px-3">
+                                    <a href="order/print/sent-document/${row.id}" class="menu-link px-3">
+                                        <i class="ki-duotone ki-delivery fs-2 me-2 text-info">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                            <span class="path5"></span>
+                                        </i>
+                                        Surat Jalan
+                                    </a>
+                                </div>
+                            `;
+                        }
+
+                        // if ('order_sent-print_sent_letter' in userPermissions) {
+                            result += `
+                                <div class="menu-item px-3">
+                                    <a href="maintanance" class="menu-link px-3">
+                                        Retur
+                                    </a>
+                                </div>
+                            `;
+                        // }
 
                         result += `</div>`;
                         return result;
