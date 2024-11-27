@@ -67,7 +67,7 @@ class PrerestockResource extends JsonResource
             }
         }
 
-        $isMigrateAll = $details->where('qty_left', '>', 0)->count() > 1 ? false : true;
+        $isMigrateAll = $details->where('qty_left', '>', 0)->count() >= 1 ? false : true;
 
         return [
             'id' => $this->id,

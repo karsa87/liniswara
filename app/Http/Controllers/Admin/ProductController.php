@@ -113,7 +113,7 @@ class ProductController extends Controller
                 'code' => $request->input('product_code'),
                 'description' => $request->input('product_description') ? htmlentities($request->input('product_description')) : null,
                 'slug' => $request->input('slug'),
-                'stock' => $request->input('product_stock'),
+                'stock' => $request->input('product_stock') ? $request->input('product_stock') : 0,
                 'price' => $request->input('product_price'),
                 'price_zone_2' => $request->input('product_price_zone_2'),
                 'price_zone_3' => $request->input('product_price_zone_3'),
