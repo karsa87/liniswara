@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard', [
     DashboardController::class, 'index',
 ])->name('dashboard');
+Route::get('maintanance', [
+    DashboardController::class, 'maintanance',
+])->name('maintanance');
 
 Route::get('/dashboard/widget/preorder', [
     DashboardController::class, 'widget_preorder',

@@ -46,6 +46,33 @@
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
             </div>
+
+            <!--begin:Menu item-->
+            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                <!--begin:Menu link-->
+                <span class="menu-link py-3">
+                    <span class="menu-title">Follow Up</span>
+                    <span class="menu-arrow d-lg-none"></span>
+                </span>
+                <!--end:Menu link-->
+                <!--begin:Menu sub-->
+                <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link py-3" href="{{ route('marketing.maintanance') }}" title="Menu setting pengingat pembayaran" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-title">Ingatkan Pembayaran</span>
+                        </a>
+                        <!--end:Menu link-->
+                        <!--begin:Menu link-->
+                        <a class="menu-link py-3" href="{{ route('marketing.maintanance') }}" title="Menu info progress agen" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-title">Progress Agen</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                </div>
+            </div>
         </div>
         <!--end::Menu-->
     </div>

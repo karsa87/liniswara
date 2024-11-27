@@ -69,8 +69,8 @@
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">User</th>
-                    <th class="min-w-125px">Gudang</th>
-                    <th class="min-w-125px">Catatan</th>
+                    <th class="min-w-125px">Label</th>
+                    <th class="min-w-125px">Tanggal Dibuat</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>

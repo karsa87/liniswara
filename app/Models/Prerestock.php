@@ -16,6 +16,11 @@ class Prerestock extends Model
 
     protected $guarded = [];
 
+    public function restocks(): HasMany
+    {
+        return $this->hasMany(Restock::class, 'prerestock_id');
+    }
+
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class, 'branch_id');

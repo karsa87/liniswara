@@ -31,7 +31,8 @@ class PrerestockResource extends JsonResource
             ];
         }
 
-        $details = null;
+        $isMigrate = false;
+        $details = collect();
         if (
             $this->whenLoaded('details')
             && $this->whenHas('details')
@@ -45,7 +46,14 @@ class PrerestockResource extends JsonResource
                     ];
                 }
 
-                $details[] = [
+                if (
+                    ! $isMigrate
+                    && $detail->qty_migrate > 0
+                ) {
+                    $isMigrate = true;
+                }
+
+                $details->push([
                     'id' => $detail->id,
                     'type' => [
                         'key' => $detail->type,
@@ -53,18 +61,24 @@ class PrerestockResource extends JsonResource
                     ],
                     'product' => $product,
                     'qty' => $detail->qty,
-                ];
+                    'qty_migrate' => $detail->qty_migrate,
+                    'qty_left' => $detail->qty - $detail->qty_migrate,
+                ]);
             }
         }
 
+        $isMigrateAll = $details->where('qty_left', '>', 0)->count() > 1 ? false : true;
+
         return [
             'id' => $this->id,
+            'label' => $this->label,
             'branch' => $branch,
             'notes' => html_entity_decode($this->notes),
             'details' => $details,
             'user' => $user,
-            'is_migrate' => $this->is_migrate,
-            'restock_id' => $this->restock_id,
+            'is_migrate' => $isMigrate,
+            'is_migrate_all' => $isMigrateAll,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

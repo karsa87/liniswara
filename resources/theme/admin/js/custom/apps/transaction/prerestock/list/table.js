@@ -60,8 +60,8 @@ var KTSuppliersList = function () {
             },
             columns: [
                 { data: 'user', orderable: false },
-                { data: 'branch', orderable: false },
-                { data: 'notes' },
+                { data: 'label' },
+                { data: 'created_at' },
                 { data: null },
             ],
             columnDefs: [
@@ -78,16 +78,16 @@ var KTSuppliersList = function () {
                         return '';
                     }
                 },
-                {
-                    targets: 1,
-                    render: function (data, type, row) {
-                        if (row.branch != null && row.branch.name != undefined && row.branch.name != null) {
-                            return row.branch.name;
-                        }
+                // {
+                //     targets: 1,
+                //     render: function (data, type, row) {
+                //         if (row.branch != null && row.branch.name != undefined && row.branch.name != null) {
+                //             return row.branch.name;
+                //         }
 
-                        return '';
-                    }
-                },
+                //         return '';
+                //     }
+                // },
                 {
                     targets: -1,
                     data: null,
@@ -118,10 +118,16 @@ var KTSuppliersList = function () {
                             `;
                         }
 
-                        if (!row.is_migrate && 'prerestock-migrate' in userPermissions) {
+                        if (!row.is_migrate_all && 'prerestock-migrate' in userPermissions) {
+                            // result += `
+                            //     <div class="menu-item px-3">
+                            //         <a href="#" class="menu-link px-3" data-kt-prerestocks-table-filter="migrate_row" data-id='${row.id}'>Migrate</a>
+                            //     </div>
+                            // `;
+
                             result += `
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-prerestocks-table-filter="migrate_row" data-id='${row.id}'>Migrate</a>
+                                    <a href="prerestock/migrate/${row.id}/" class="menu-link px-3">Migrate</a>
                                 </div>
                             `;
                         }
@@ -144,7 +150,7 @@ var KTSuppliersList = function () {
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
             handleDeleteRows();
-            handleMigrateRows();
+            // handleMigrateRows();
             KTMenu.createInstances();
         });
     }
@@ -392,7 +398,7 @@ var KTSuppliersList = function () {
             initSupplierTable();
             handleResetForm();
             handleDeleteRows();
-            handleMigrateRows();
+            // handleMigrateRows();
             handleFilterDatatable();
         },
         refresh: function() {

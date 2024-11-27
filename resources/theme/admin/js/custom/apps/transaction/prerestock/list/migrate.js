@@ -82,7 +82,7 @@ var KTAppEcommerceSaveProduct = function () {
     const initFormRepeater = () => {
         $('#prerestock_details').repeater({
             initEmpty: false,
-            isFirstItemUndeletable: true,
+            isFirstItemUndeletable: false,
 
             defaultValues: {
                 'text-input': 'foo'
@@ -249,35 +249,23 @@ var KTAppEcommerceSaveProduct = function () {
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
-                        // form.querySelector('textarea[name="prerestock_notes"]').value = quill.root.innerHTML;
-                        // form.querySelector('textarea[name="prerestock_notes"]').text = quill.root.innerHTML;
+                        form.querySelector('textarea[name="prerestock_notes"]').value = quill.root.innerHTML;
+                        form.querySelector('textarea[name="prerestock_notes"]').text = quill.root.innerHTML;
 
                         let param = new FormData(form);
                         // console.log(JSON.stringify(Object.fromEntries(param)));
                         let formSubmit = null;
-                        if (param.get('prerestock_id') != null && param.get('prerestock_id') != undefined  && param.get('prerestock_id') != '') {
-                            param.append('_method', 'PUT');
+                        param.append('_method', 'PUT');
 
-                            formSubmit = axios.post(
-                                submitButton.closest('form').getAttribute('action-update') + '/' + param.get('prerestock_id'),
-                                param,
-                                {
-                                    headers: {
-                                        "Content-Type": "multipart/form-data",
-                                    }
+                        formSubmit = axios.post(
+                            submitButton.closest('form').getAttribute('action') + '/' + param.get('prerestock_id'),
+                            param,
+                            {
+                                headers: {
+                                    "Content-Type": "multipart/form-data",
                                 }
-                            )
-                        } else {
-                            formSubmit = axios.post(
-                                submitButton.closest('form').getAttribute('action'),
-                                param,
-                                {
-                                    headers: {
-                                        "Content-Type": "multipart/form-data",
-                                    }
-                                }
-                            );
-                        }
+                            }
+                        )
 
                         formSubmit.then(function (response) {
                             if (response) {
@@ -369,7 +357,7 @@ var KTAppEcommerceSaveProduct = function () {
         init: function () {
             // Init forms
             initForm();
-            // initQuill();
+            initQuill();
             initConditionsSelect2();
             initFormRepeater();
             initConditionsProductSelect2();

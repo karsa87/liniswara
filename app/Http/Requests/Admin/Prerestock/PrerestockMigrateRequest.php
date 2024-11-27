@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests\Admin\Prerestock;
 
-use App\Enums\PrerestockTypeEnum;
-use App\Models\Branch;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class PrerestockStoreUpdateRequest extends FormRequest
+class PrerestockMigrateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +22,6 @@ class PrerestockStoreUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'prerestock_branch_id' => [
-                'required',
-                Rule::exists((new Branch())->getTable(), 'id'),
-            ],
             'prerestock_notes' => [
                 'nullable',
                 'not_regex:/<script[\s\S]*?>[\s\S]*?/i',
@@ -50,24 +43,7 @@ class PrerestockStoreUpdateRequest extends FormRequest
                 'required',
                 'numeric',
             ],
-            // 'prerestock_details.*.type' => [
-            //     'required',
-            //     Rule::in([
-            //         PrerestockTypeEnum::STOCK_ADD,
-            //         PrerestockTypeEnum::STOCK_MINUS,
-            //     ]),
-            // ],
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'prerestock_branch_id' => Branch::first()->id,
-        ]);
     }
 
     /**

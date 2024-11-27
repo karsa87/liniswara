@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PrerestockTypeEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Prerestock\PrerestockMigrateRequest;
 use App\Http\Requests\Admin\Prerestock\PrerestockStoreUpdateRequest;
 use App\Http\Resources\Admin\Prerestock\PrerestockResource;
 use App\Models\PreorderDetail;
@@ -32,6 +34,7 @@ class PrerestockController extends Controller
             $query = Prerestock::with([
                 'createdBy',
                 'branch',
+                'details',
             ]);
 
             if ($q = $request->input('search.value')) {
@@ -75,6 +78,7 @@ class PrerestockController extends Controller
         DB::beginTransaction();
         try {
             $input = [
+                'label' => $request->input('prerestock_label'),
                 'branch_id' => $request->input('prerestock_branch_id'),
                 'notes' => $request->input('prerestock_notes') ? htmlentities($request->input('prerestock_notes')) : null,
             ];
@@ -89,7 +93,7 @@ class PrerestockController extends Controller
                     $prerestockDetail->fill([
                         'prerestock_id' => $prerestock->id,
                         'product_id' => $detail['product_id'],
-                        'type' => $detail['type'],
+                        'type' => PrerestockTypeEnum::STOCK_ADD,
                         'qty' => $detail['qty'],
                     ]);
 
@@ -169,6 +173,7 @@ class PrerestockController extends Controller
         DB::beginTransaction();
         try {
             $input = [
+                'label' => $request->input('prerestock_label'),
                 'branch_id' => $request->input('prerestock_branch_id'),
                 'notes' => $request->input('prerestock_notes') ? htmlentities($request->input('prerestock_notes')) : null,
             ];
@@ -191,7 +196,7 @@ class PrerestockController extends Controller
                     ]);
 
                     $prerestockDetail->fill([
-                        'type' => $detail['type'],
+                        'type' => PrerestockTypeEnum::STOCK_ADD,
                         'qty' => $detail['qty'],
                     ]);
 
@@ -270,7 +275,39 @@ class PrerestockController extends Controller
     public function migrate($id)
     {
         $prerestock = Prerestock::with([
-            'details.product',
+            'createdBy',
+            'branch',
+            'details' => function ($q) {
+                $q->whereRaw('qty > qty_migrate');
+            },
+            'details.product' => function ($q) {
+                $q->addSelect([
+                    // Key is the alias, value is the sub-select
+                    'total_stock_need' => PreorderDetail::query()
+                        // You can use eloquent methods here
+                        ->selectRaw('((sum(IFNULL(qty, 0)) - sum(IFNULL(qty_order, 0))) - IFNULL(products.stock, 0))')
+                        ->whereColumn('product_id', 'products.id')
+                        ->whereRaw('qty != qty_order'),
+                ]);
+            },
+        ])->find($id);
+
+        if (is_null($prerestock)) {
+            return abort(404);
+        }
+
+        return view('admin.prerestock.migrate', [
+            'prerestock' => $prerestock,
+        ]);
+    }
+
+    public function submit_migrate(PrerestockMigrateRequest $request, $id)
+    {
+        $details = collect($request->get('prerestock_details') ?? []);
+        $prerestock = Prerestock::with([
+            'details' => function ($q) use ($details) {
+                $q->whereIn('product_id', $details->pluck('product_id'));
+            },
         ])->find($id);
 
         if (is_null($prerestock)) {
@@ -282,17 +319,27 @@ class PrerestockController extends Controller
             $restock = new Restock();
             $restock->branch_id = $prerestock->branch_id;
             $restock->created_by = auth()->user()->id;
-            $restock->notes = $prerestock->notes;
+            $restock->notes = $request->get('prerestock_notes');
+            $restock->prerestock_id = $prerestock->id;
             $restock->date = Carbon::now();
             if ($restock->save()) {
                 foreach ($prerestock->details as $prerestockDetail) {
+                    $detail = $details->firstWhere('product_id', $prerestockDetail->product_id);
+                    if (is_null($detail)) {
+                        continue;
+                    }
+
                     $restockDetail = new RestockDetail();
                     $restockDetail->restock_id = $restock->id;
                     $restockDetail->product_id = $prerestockDetail->product_id;
-                    $restockDetail->qty = $prerestockDetail->qty;
+                    $restockDetail->qty = $detail['qty'];
                     $restockDetail->type = $prerestockDetail->type;
+                    $restockDetail->prerestock_detail_id = $prerestockDetail->id;
 
                     if ($restockDetail->save()) {
+                        $prerestockDetail->qty_migrate = $prerestockDetail->qty_migrate + $restockDetail->qty;
+                        $prerestockDetail->save();
+
                         $product = $prerestockDetail->product;
                         $oldStock = $product->stock;
                         if ($restockDetail->is_stock_add) {
@@ -318,8 +365,6 @@ class PrerestockController extends Controller
                     }
                 }
 
-                $prerestock->is_migrate = true;
-                $prerestock->restock_id = $restock->id;
                 $prerestock->save();
 
                 DB::commit();

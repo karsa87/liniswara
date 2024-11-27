@@ -207,7 +207,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Pre Re-Stok</span>
+                                <span class="menu-title">Naik Stok</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

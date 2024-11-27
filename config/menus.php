@@ -159,6 +159,21 @@ return [
             ],
         ],
     ],
+    'prerestock' => [
+        'index' => [
+            'title' => 'Naik Cetak',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Naik Cetak',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Naik Cetak',
+                    'route' => 'prerestock.index',
+                ],
+            ],
+        ],
+    ],
     'preorder_book' => [
         'index' => [
             'title' => 'Buku Preorder',

@@ -24,6 +24,25 @@
                 <!--begin::Section-->
                 <div class="mb-7">
                     <!--begin::Title-->
+                    <h5 class="mb-4">Label</h5>
+                    <!--end::Title-->
+                    <!--begin::Details-->
+                    <div class="mb-0">
+                        <!--begin::Price-->
+                        <span class="fw-semibold text-gray-600">
+                            {{ $prerestock->label }}
+                        </span>
+                        <!--end::Price-->
+                    </div>
+                    <!--end::Details-->
+                </div>
+                <!--end::Section-->
+                <!--begin::Seperator-->
+                <div class="separator separator-dashed mb-7"></div>
+                <!--end::Seperator-->
+                <!--begin::Section-->
+                <div class="mb-7">
+                    <!--begin::Title-->
                     <h5 class="mb-4">Tanggal</h5>
                     <!--end::Title-->
                     <!--begin::Details-->

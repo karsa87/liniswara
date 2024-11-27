@@ -495,8 +495,12 @@ Route::middleware('auth')->group(function () {
             PrerestockController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
-        Route::post('migrate/{id?}', [
+        Route::get('migrate/{id?}', [
             PrerestockController::class, 'migrate',
+        ])->where('id', '[0-9]+')
+            ->name('migrate');
+        Route::put('migrate/{id?}', [
+            PrerestockController::class, 'submit_migrate',
         ])->where('id', '[0-9]+')
             ->name('migrate');
     });
