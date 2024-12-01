@@ -28,6 +28,10 @@ final class SourceLogEnum extends Enum
 
     const RESTOCK_DETAIL = 'restock_details';
 
+    const RETURN_ORDER = 'return_orders';
+
+    const RETURN_ORDER_DETAIL = 'return_order_details';
+
     const MAP_LABEL = [
         self::ORDER => 'Pesanan',
         self::ORDER_DETAIL => 'Item Pesanan',
@@ -37,6 +41,8 @@ final class SourceLogEnum extends Enum
         self::PREORDER_SHIPPING => 'Shipping Preorder',
         self::RESTOCK => 'Re-stock',
         self::RESTOCK_DETAIL => 'Item Re-stock',
+        self::RETURN_ORDER => 'Retur Order',
+        self::RETURN_ORDER_DETAIL => 'Item Retur Order',
     ];
 
     public function getLabel()
@@ -50,6 +56,8 @@ final class SourceLogEnum extends Enum
             self::PREORDER_SHIPPING => 'Shipping Preorder',
             self::RESTOCK => 'Re-stock',
             self::RESTOCK_DETAIL => 'Item Re-stock',
+            self::RETURN_ORDER => 'Retur Order',
+            self::RETURN_ORDER_DETAIL => 'Item Retur Order',
             default => ''
         };
     }

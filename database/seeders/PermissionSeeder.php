@@ -38,6 +38,7 @@ class PermissionSeeder extends Seeder
         $this->createPermissionOrderSent();
         $this->createPermissionOrderArsip();
         $this->createPermissionWriter();
+        $this->createPermissionReturnOrder();
 
         $this->syncPermissionRole();
     }
@@ -1016,6 +1017,62 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Arsip - Print Purchase Order',
                 'key' => 'order_arsip-print_po',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionReturnOrder()
+    {
+        $permissions = [
+            [
+                'name' => 'Return - Tambah',
+                'key' => 'return_order-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Return - Edit',
+                'key' => 'return_order-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Return - View',
+                'key' => 'return_order-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Return - View Detail',
+                'key' => 'return_order-view_detail',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Return - Delete',
+                'key' => 'return_order-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Return - Konfirmasi',
+                'key' => 'return_order-confirmation',
                 'role-slug' => [
                     'developer',
                     'super-admin',

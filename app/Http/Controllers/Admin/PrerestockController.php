@@ -319,7 +319,7 @@ class PrerestockController extends Controller
             $restock = new Restock();
             $restock->branch_id = $prerestock->branch_id;
             $restock->created_by = auth()->user()->id;
-            $restock->notes = $request->get('prerestock_notes');
+            $restock->notes = sprintf('%s - %s', $prerestock->label, $request->get('prerestock_notes'));
             $restock->prerestock_id = $prerestock->id;
             $restock->date = Carbon::now();
             if ($restock->save()) {

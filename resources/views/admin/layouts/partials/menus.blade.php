@@ -125,10 +125,11 @@
                 </div> --}}
                 <!--end:Menu item-->
 
+                @hasPermission('return_order-view')
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="#">
+                    <a class="menu-link" href="{{ route('return_order.index') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-delivery-3 fs-2 text-info">
                                 <span class="path1"></span>
@@ -141,6 +142,7 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+                @endhasPermission
 
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">

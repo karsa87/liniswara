@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\RestockController;
+use App\Http\Controllers\Admin\ReturnOrderController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\Admin\SettingController;
@@ -653,6 +654,45 @@ Route::middleware('auth')->group(function () {
         Route::get('/index/list', [
             OrderArsipController::class, 'index',
         ])->name('index.list');
+    });
+
+    Route::name('return_order.')->prefix('return-order/')->group(function () {
+        Route::get('/', [
+            ReturnOrderController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            ReturnOrderController::class, 'index',
+        ])->name('index.list');
+        Route::get('/create/{order_id?}', [
+            ReturnOrderController::class, 'create',
+        ])->name('create');
+        Route::get('/detail/{id?}', [
+            ReturnOrderController::class, 'show',
+        ])->where('id', '[0-9]+')
+            ->name('show');
+        Route::get('/detail-json/{id?}', [
+            ReturnOrderController::class, 'detail',
+        ])->where('id', '[0-9]+')
+            ->name('detail');
+        Route::get('/edit/{id?}', [
+            ReturnOrderController::class, 'edit',
+        ])->where('id', '[0-9]+')
+            ->name('edit');
+        Route::post('/store/{order_id?}', [
+            ReturnOrderController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            ReturnOrderController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            ReturnOrderController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+        Route::post('confirmation/{id?}', [
+            ReturnOrderController::class, 'confirmation',
+        ])->where('id', '[0-9]+')
+            ->name('confirmation');
     });
 
     Route::name('preorder_book.')->prefix('preorder-book/')->group(function () {

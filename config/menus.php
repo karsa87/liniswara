@@ -290,6 +290,21 @@ return [
             ],
         ],
     ],
+    'return_order' => [
+        'index' => [
+            'title' => 'Retur',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Transaksi',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Retur',
+                    'route' => 'return_order.index',
+                ],
+            ],
+        ],
+    ],
     'import' => [
         'index' => [
             'title' => 'Import',

@@ -290,7 +290,14 @@ var KTPreordersList = function () {
                         // if ('order_sent-print_sent_letter' in userPermissions) {
                             result += `
                                 <div class="menu-item px-3">
-                                    <a href="maintanance" class="menu-link px-3">
+                                    <a href="return-order/create/${row.id}" class="menu-link px-3">
+                                        <i class="ki-duotone ki-double-left fs-2 me-2 text-info">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+
                                         Retur
                                     </a>
                                 </div>
