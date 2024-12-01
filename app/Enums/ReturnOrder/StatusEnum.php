@@ -23,7 +23,7 @@ final class StatusEnum extends Enum
     public function getLabel()
     {
         return match ($this->value) {
-            self::NEW => 'Baru',
+            self::NEW => 'Menunggu Konfirmasi',
             self::CONFIRMATION => 'Konfirmasi',
             self::CANCELLED => 'Dibatalkan',
             default => ''
@@ -33,7 +33,7 @@ final class StatusEnum extends Enum
     public static function getLabels()
     {
         return [
-            self::NEW => 'Baru',
+            self::NEW => 'Menunggu Konfirmasi',
             self::CONFIRMATION => 'Konfirmasi',
             self::CANCELLED => 'Dibatalkan',
         ];
