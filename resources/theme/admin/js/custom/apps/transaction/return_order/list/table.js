@@ -93,7 +93,7 @@ var KTReturnOrdersList = function () {
                     render: function (data, type, row) {
                         let result = '';
                         if (row.status == 1 || row.status == "1") {
-                            result +=`<span class="badge badge-warning">New</span>`;
+                            result +=`<span class="badge badge-warning">Menunggu Konfirmasi</span>`;
                         } else if (row.status == 2 || row.status == "2") {
                             result +=`<span class="badge badge-success">Konfirmasi</span>`;
                         } else if (row.status == 3 || row.status == "3") {
