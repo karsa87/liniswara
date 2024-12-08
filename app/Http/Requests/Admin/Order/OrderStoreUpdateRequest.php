@@ -204,6 +204,10 @@ class OrderStoreUpdateRequest extends FormRequest
                 'nullable',
                 'boolean',
             ],
+            'order_school_id' => [
+                'nullable',
+                'numeric',
+            ],
         ];
     }
 

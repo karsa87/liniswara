@@ -32,7 +32,7 @@ var KTSuppliersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'asc']],
+            order: [[0, 'desc']],
             stateSave: true,
             ajax: {
                 url: table.dataset.url,

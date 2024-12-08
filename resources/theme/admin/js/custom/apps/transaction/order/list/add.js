@@ -125,8 +125,8 @@ var KTAppEcommerceSaveProduct = function () {
                 let data = $(type).data();
 
                 if (data != undefined) {
-                    $(type).closest("tr").children()[1].innerHTML = data.code;
-                    $(type).closest("tr").children()[2].innerHTML = data.stock;
+                    $(type).closest("tr").children()[2].innerHTML = data.code;
+                    $(type).closest("tr").children()[3].innerHTML = data.stock;
 
                     let price = data.price;
                     let discount = data.discount;
@@ -147,17 +147,17 @@ var KTAppEcommerceSaveProduct = function () {
                         discount = data.discount_zone_6;
                     }
 
-                    $(type).closest("tr").children()[3].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                    $(type).closest("tr").children()[3].querySelector('input.order_details_price').value = price;
+                    $(type).closest("tr").children()[4].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    $(type).closest("tr").children()[4].querySelector('input.order_details_price').value = price;
 
-                    $(type).closest("tr").children()[4].querySelector('span').innerHTML = discount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                    $(type).closest("tr").children()[4].querySelector('span.text-muted').innerHTML = data.discount_description;
-                    $(type).closest("tr").children()[4].querySelector('input.order_details_discount').value = discount;
-                    $(type).closest("tr").children()[4].querySelector('input.order_details_discount_description').value = data.discount_description;
-                    let qty = $(type).closest("tr").children()[5].querySelector('input.order_detail_qty').value;
+                    $(type).closest("tr").children()[5].querySelector('span').innerHTML = discount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    $(type).closest("tr").children()[5].querySelector('span.text-muted').innerHTML = data.discount_description;
+                    $(type).closest("tr").children()[5].querySelector('input.order_details_discount').value = discount;
+                    $(type).closest("tr").children()[5].querySelector('input.order_details_discount_description').value = data.discount_description;
+                    let qty = $(type).closest("tr").children()[6].querySelector('input.order_detail_qty').value;
 
                     let total = ((price * 1) - (discount * 1)) * qty;
-                    $(type).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    $(type).closest("tr").children()[7].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
                     calculateTotal();
                 }
@@ -181,13 +181,19 @@ var KTAppEcommerceSaveProduct = function () {
     const calculateTotal = () => {
         KTApp.showPageLoading();
         let totalAmountDetail = 0;
-        $('.amount_detail').each(function () {
-            let amount = $(this).text();
+        var no = 1;
+        $('[data-repeater-item]').each(function () {
+            console.log(no);
+            let amount = $(this).find('.amount_detail').text();
             amount = amount.replace(/[^0-9]/g, "");
             amount = parseInt(amount);
+            amount = isNaN(amount) ? 0 : amount;
             totalAmountDetail += amount;
+
+            $(this).find('.number_detail').text(no);
+            no++;
         });
-        console.log(totalAmountDetail);
+
         $('#total-amount-detail').text(totalAmountDetail.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
         KTApp.hidePageLoading();
     }
@@ -206,10 +212,11 @@ var KTAppEcommerceSaveProduct = function () {
                 // Init select2 on new repeated items
                 initConditionsProductSelect2();
                 initConditionsQuantity();
+                calculateTotal();
             },
 
             hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
+                deleteElement();
                 calculateTotal();
             },
         });
@@ -279,8 +286,8 @@ var KTAppEcommerceSaveProduct = function () {
                                 data = data[0];
                             }
 
-                            $(type).closest("tr").children()[1].innerHTML = data.code;
-                            $(type).closest("tr").children()[2].innerHTML = data.stock;
+                            $(type).closest("tr").children()[2].innerHTML = data.code;
+                            $(type).closest("tr").children()[3].innerHTML = data.stock;
 
                             let price = data.price;
                             let discount = data.discount;
@@ -301,35 +308,35 @@ var KTAppEcommerceSaveProduct = function () {
                                 discount = data.discount_zone_6;
                             }
 
-                            $(type).closest("tr").children()[3].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                            $(type).closest("tr").children()[3].querySelector('input.order_details_price').value = price;
+                            $(type).closest("tr").children()[4].querySelector('span').innerHTML = price.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[4].querySelector('input.order_details_price').value = price;
 
 
-                            $(type).closest("tr").children()[4].querySelector('span').innerHTML = discount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                            $(type).closest("tr").children()[4].querySelector('span.text-muted').innerHTML = data.discount_description;
-                            $(type).closest("tr").children()[4].querySelector('input.order_details_discount').value = discount;
-                            $(type).closest("tr").children()[4].querySelector('input.order_details_discount_description').value = data.discount_description;
+                            $(type).closest("tr").children()[5].querySelector('span').innerHTML = discount.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[5].querySelector('span.text-muted').innerHTML = data.discount_description;
+                            $(type).closest("tr").children()[5].querySelector('input.order_details_discount').value = discount;
+                            $(type).closest("tr").children()[5].querySelector('input.order_details_discount_description').value = data.discount_description;
 
                             let total = (price * 1) - (discount * 1);
-                            $(type).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[7].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
                             $(this).closest("tr").find('input.order_detail_qty').removeAttr('disabled');
 
                             calculateTotal();
                         } else {
-                            $(type).closest("tr").children()[1].innerHTML = '-';
                             $(type).closest("tr").children()[2].innerHTML = '-';
-
-                            $(type).closest("tr").children()[3].querySelector('span').innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                            $(type).closest("tr").children()[3].querySelector('input.order_details_price').value = 0;
-
+                            $(type).closest("tr").children()[3].innerHTML = '-';
 
                             $(type).closest("tr").children()[4].querySelector('span').innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                            $(type).closest("tr").children()[4].querySelector('span.text-muted').innerHTML = '';
-                            $(type).closest("tr").children()[4].querySelector('input.order_details_discount').value = 0;
-                            $(type).closest("tr").children()[4].querySelector('input.order_details_discount_description').value = '';
+                            $(type).closest("tr").children()[4].querySelector('input.order_details_price').value = 0;
 
-                            $(type).closest("tr").children()[6].innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+                            $(type).closest("tr").children()[5].querySelector('span').innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                            $(type).closest("tr").children()[5].querySelector('span.text-muted').innerHTML = '';
+                            $(type).closest("tr").children()[5].querySelector('input.order_details_discount').value = 0;
+                            $(type).closest("tr").children()[5].querySelector('input.order_details_discount_description').value = '';
+
+                            $(type).closest("tr").children()[7].innerHTML = (0).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
                             $(this).closest("tr").find('input.order_detail_qty').attr('disabled');
                         }
@@ -372,7 +379,7 @@ var KTAppEcommerceSaveProduct = function () {
             }
 
             let total = (price * qty) - (discount * qty);
-            $(this).closest("tr").children()[6].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            $(this).closest("tr").children()[7].innerHTML = total.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
             calculateTotal();
         });

@@ -32,7 +32,7 @@ var KTSuppliersList = function () {
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'asc']],
+            order: [[2, 'desc']],
             stateSave: true,
             ajax: {
                 url: table.dataset.url,
@@ -62,6 +62,7 @@ var KTSuppliersList = function () {
                 { data: 'user', orderable: false },
                 { data: 'label' },
                 { data: 'created_at' },
+                { data: null, orderable: false },
                 { data: null },
             ],
             columnDefs: [
@@ -78,16 +79,25 @@ var KTSuppliersList = function () {
                         return '';
                     }
                 },
-                // {
-                //     targets: 1,
-                //     render: function (data, type, row) {
-                //         if (row.branch != null && row.branch.name != undefined && row.branch.name != null) {
-                //             return row.branch.name;
-                //         }
+                {
+                    targets: 3,
+                    render: function (data, type, row) {
+                        var result = '';
+                        if (row.is_migrate) {
+                            result +=`<span class="badge badge-info">On Process</span>`;
+                        }
 
-                //         return '';
-                //     }
-                // },
+                        if (row.is_migrate_all) {
+                            result +=`<span class="badge badge-success">DONE</span>`;
+                        }
+
+                        if (!row.is_migrate && !row.is_migrate_all) {
+                            result +=`<span class="badge badge-secondary">Waiting</span>`;
+                        }
+
+                        return result;
+                    }
+                },
                 {
                     targets: -1,
                     data: null,

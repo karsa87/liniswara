@@ -28,6 +28,20 @@ class ExpeditionController extends Controller
                 });
             }
 
+            if (is_numeric($request->input('order.0.column'))) {
+                $column = $request->input('order.0.column');
+                $columnData = $request->input("columns.$column.data");
+                $sorting = $request->input('order.0.dir');
+
+                if ($sorting == 'desc') {
+                    $query->orderBy($columnData, 'DESC');
+                } else {
+                    $query->orderBy($columnData, 'ASC');
+                }
+            } else {
+                $query->orderBy('name', 'ASC');
+            }
+
             $totalAll = (clone $query)->count();
 
             $expeditions = $query->offset($request->get('start', 0))

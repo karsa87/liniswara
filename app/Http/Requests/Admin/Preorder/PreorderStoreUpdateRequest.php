@@ -191,6 +191,10 @@ class PreorderStoreUpdateRequest extends FormRequest
                 'nullable',
                 'boolean',
             ],
+            'preorder_school_id' => [
+                'nullable',
+                'numeric',
+            ],
         ];
     }
 

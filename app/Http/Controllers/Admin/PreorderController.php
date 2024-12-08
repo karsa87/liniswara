@@ -14,6 +14,7 @@ use App\Http\Resources\Admin\Preorder\PreorderResource;
 use App\Models\Preorder;
 use App\Models\PreorderDetail;
 use App\Models\PreorderShipping;
+use App\Models\School;
 use App\Services\TrackExpeditionService;
 use App\Services\WhatsappService;
 use Carbon\Carbon;
@@ -122,6 +123,7 @@ class PreorderController extends Controller
     {
         return view('admin.preorder._form', [
             'preorder' => new Preorder(),
+            'schools' => School::all()->pluck('name', 'id'),
         ]);
     }
 
@@ -153,6 +155,7 @@ class PreorderController extends Controller
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
                 'is_exclude_target' => $request->input('preorder_is_exclude_target', false),
+                'school_id' => $request->input('preorder_school_id'),
             ];
 
             if ($input['status_payment'] != StatusPaymentEnum::PAID) {
@@ -328,6 +331,7 @@ class PreorderController extends Controller
 
         return view('admin.preorder._form', [
             'preorder' => $preorder,
+            'schools' => School::all()->pluck('name', 'id'),
         ]);
     }
 
@@ -359,6 +363,7 @@ class PreorderController extends Controller
                 'discount_percentage' => $request->input('preorder_discount_percentage') ?: 0,
                 'discount_price' => $request->input('preorder_discount_price') ?: 0,
                 'is_exclude_target' => $request->input('preorder_is_exclude_target', false),
+                'school_id' => $request->input('preorder_school_id'),
             ];
 
             if ($input['status_payment'] != StatusPaymentEnum::PAID) {

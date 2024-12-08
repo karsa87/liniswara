@@ -249,9 +249,9 @@
                 <!--end:Menu item-->
                 @endif
 
-                @if (auth()->user()->hasPermission(['area-view', 'branch-view', 'supplier-view', 'collector-view', 'expedition-view']))
+                @if (auth()->user()->hasPermission(['area-view', 'branch-view', 'supplier-view', 'collector-view', 'expedition-view', 'writer-view', 'area-view']))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['branch.', 'supplier.', 'expedition.', 'collector.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['branch.', 'supplier.', 'expedition.', 'collector.', 'writer.', 'area.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">

@@ -278,6 +278,11 @@
                 <div class="card-toolbar">
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
+                        <select class="form-select mb-2" data-placeholder="Pilih Jenjang Sekolah" data-allow-clear="true" name="preorder_school_level" style="width: 200px;" id="form-select-school">
+                            @foreach ($schools as $key => $name)
+                                <option value="{{ $key }}" {{ $preorder->school_id == $key ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
                         <select class="form-select mb-2" data-placeholder="Select Zona" data-allow-clear="true" name="preorder_zone" style="width: 200px;" id="form-select-zone">
                             @foreach (\App\Enums\Preorder\ZoneEnum::MAP_LABEL as $key => $name)
                                 <option value="{{ $key }}" {{ $preorder->zone == $key ? 'selected' : '' }}>{{ $name }}</option>
@@ -298,6 +303,7 @@
                         <table class="table">
                             <thead>
                                 <tr class="fw-bold fs-6 text-gray-800">
+                                    <th>No</th>
                                     <th>Product</th>
                                     <th>Kode Produk</th>
                                     <th>Stock</th>
@@ -312,6 +318,7 @@
                                 @if ($preorder->details->count() > 0)
                                     @foreach ($preorder->details as $detail)
                                     <tr data-repeater-item="" data-id="1">
+                                        <td class="number_detail text-center">-</td>
                                         <td>
                                             <select class="form-select mb-2 preorder_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-preorder="product_option" name="preorder_details[1][product_id]">
                                                 <option></option>
@@ -372,6 +379,7 @@
                                     @endforeach
                                 @else
                                 <tr data-repeater-item="" data-id="1">
+                                    <td class="number_detail text-center">-</td>
                                     <td>
                                         <select class="form-select mb-2 preorder_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-preorder="product_option" name="preorder_details[1][product_id]">
                                             <option></option>

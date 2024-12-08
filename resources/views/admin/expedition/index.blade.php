@@ -159,10 +159,4 @@
 @push('js')
     <script src="{{ mix('assets/js/custom/apps/master/expedition/list/table.js') }}"></script>
     <script src="{{ mix('assets/js/custom/apps/master/expedition/list/add.js') }}"></script>
-
-    <script src="{{ mix('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ mix('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 @endpush

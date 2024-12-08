@@ -71,6 +71,7 @@
                     <th class="min-w-125px">User</th>
                     <th class="min-w-125px">Label</th>
                     <th class="min-w-125px">Tanggal Dibuat</th>
+                    <th class="min-w-125px">Status</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>

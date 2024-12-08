@@ -20,6 +20,10 @@ var KTWidgets = function () {
             var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
             var baseColor = KTUtil.getCssVariableValue('--bs-primary');
             var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');
+            var thirdColor = KTUtil.getCssVariableValue('--bs-success');
+            var fourColor = KTUtil.getCssVariableValue('--bs-info');
+            var fiveColor = KTUtil.getCssVariableValue('--bs-warning');
+            var sixColor = KTUtil.getCssVariableValue('--bs-danger');
 
             var options = {
                 series: [{
@@ -139,7 +143,7 @@ var KTWidgets = function () {
                         }
                     }
                 },
-                colors: [baseColor, secondaryColor],
+                colors: [baseColor, secondaryColor, thirdColor, fourColor, fiveColor, sixColor],
                 grid: {
                     borderColor: borderColor,
                     strokeDashArray: 4,

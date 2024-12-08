@@ -276,6 +276,11 @@
                 <div class="card-toolbar">
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
+                        <select class="form-select mb-2" data-placeholder="Select Sekolah" data-allow-clear="true" name="order_school" style="width: 200px;" id="form-select-school">
+                            @foreach ($schools as $key => $name)
+                                <option value="{{ $key }}" {{ $order->school_id == $key ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
                         <select class="form-select mb-2" data-placeholder="Select Zona" data-allow-clear="true" name="order_zone" style="width: 200px;" id="form-select-zone">
                             @foreach (\App\Enums\Preorder\ZoneEnum::MAP_LABEL as $key => $name)
                                 <option value="{{ $key }}" {{ $order->zone == $key ? 'selected' : '' }}>{{ $name }}</option>
@@ -296,6 +301,7 @@
                         <table class="table">
                             <thead>
                                 <tr class="fw-bold fs-6 text-gray-800">
+                                    <th>No</th>
                                     <th>Product</th>
                                     <th>Kode Produk</th>
                                     <th>Stock</th>
@@ -307,8 +313,9 @@
                                 </tr>
                             </thead>
                             <tbody data-repeater-list="order_details" id="table-detail-body">
-                                @foreach ($order->details as $detail)
+                                @foreach ($order->details as $i => $detail)
                                 <tr data-repeater-item="" data-id="1">
+                                    <td class="number_detail text-center">{{ $i+1 }}</td>
                                     <td>
                                         <span class="order_details_select_product"
                                             data-code="{{ $detail->product->code }}"
