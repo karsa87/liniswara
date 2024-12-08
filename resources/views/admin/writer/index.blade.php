@@ -108,7 +108,6 @@
                                             <!--end::Label-->
                                             <!--begin::Select2-->
                                             <select class="form-select form-select-solid fw-bold" data-placeholder="Pilih" data-allow-clear="true" name="writer_product_id[]" id="add-writer_product_id" data-url="{{ route('ajax.product.list') }}" multiple data-kt-add-writer="option">
-                                                <option value="" selected></option>
                                             </select>
                                             <!--end::Select2-->
                                         </div>
