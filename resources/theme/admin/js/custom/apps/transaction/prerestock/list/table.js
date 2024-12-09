@@ -84,15 +84,15 @@ var KTSuppliersList = function () {
                     render: function (data, type, row) {
                         var result = '';
                         if (row.is_migrate) {
-                            result +=`<span class="badge badge-info">On Process</span>`;
+                            result =`<span class="badge badge-info">Belum Lengkap</span>`;
                         }
 
                         if (row.is_migrate_all) {
-                            result +=`<span class="badge badge-success">DONE</span>`;
+                            result =`<span class="badge badge-success">Lengkap</span>`;
                         }
 
                         if (!row.is_migrate && !row.is_migrate_all) {
-                            result +=`<span class="badge badge-secondary">Waiting</span>`;
+                            result =`<span class="badge badge-secondary">Menunggu</span>`;
                         }
 
                         return result;

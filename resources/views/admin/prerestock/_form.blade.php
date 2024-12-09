@@ -111,7 +111,7 @@
                                     @foreach ($prerestock->details as $detail)
                                         <tr data-repeater-item="" data-id="1">
                                             <td>
-                                                <select class="form-select mb-2 prerestock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list', ['type' => 'minus']) }}" data-kt-ecommerce-catalog-add-prerestock="product_option" name="prerestock_details[1][product_id]">
+                                                <select class="form-select mb-2 prerestock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-prerestock="product_option" name="prerestock_details[1][product_id]">
                                                     <option value="{{ $detail->product->id }}" selected>{{ $detail->product->name }}</option>
                                                 </select>
                                             </td>
@@ -146,7 +146,7 @@
                                 @else
                                     <tr data-repeater-item="" data-id="1">
                                         <td>
-                                            <select class="form-select mb-2 prerestock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list', ['type' => 'minus']) }}" data-kt-ecommerce-catalog-add-prerestock="product_option" name="prerestock_details[1][product_id]">
+                                            <select class="form-select mb-2 prerestock_details_select_product" data-placeholder="Pilih produk" data-allow-clear="true" data-url="{{ route('ajax.product.list') }}" data-kt-ecommerce-catalog-add-prerestock="product_option" name="prerestock_details[1][product_id]">
                                                 <option></option>
                                             </select>
                                         </td>

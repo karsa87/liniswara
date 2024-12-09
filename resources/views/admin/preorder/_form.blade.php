@@ -278,7 +278,7 @@
                 <div class="card-toolbar">
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
-                        <select class="form-select mb-2" data-placeholder="Pilih Jenjang Sekolah" data-allow-clear="true" name="preorder_school_level" style="width: 200px;" id="form-select-school">
+                        <select class="form-select mb-2 mx-2" data-placeholder="Pilih Jenjang Sekolah" data-allow-clear="true" name="preorder_school_level" style="width: 200px;" id="form-select-school">
                             @foreach ($schools as $key => $name)
                                 <option value="{{ $key }}" {{ $preorder->school_id == $key ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
