@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Preorder;
 use App\Models\PreorderDetail;
 use App\Models\Product;
+use App\Models\School;
 use App\Services\OrderService;
 use App\Services\PreorderService;
 use Illuminate\Http\Request;
@@ -220,6 +221,26 @@ class DashboardController extends Controller
             ],
             'total_count' => Product::count(),
         ]);
+    }
+
+    public function widget_school(Request $request)
+    {
+        $schools = School::all();
+        $results = [];
+        foreach ($schools as $school) {
+            $results[$school->name] = [];
+        }
+
+        for ($i = 1; $i <= 12; $i++) {
+            foreach ($schools as $school) {
+                $results[$school->name][] = Preorder::where('school_id', $school->id)
+                    ->whereMonth('date', $i)
+                    ->where('is_exclude_target', false)
+                    ->sum('total_amount');
+            }
+        }
+
+        return response()->json($results);
     }
 
     public function maintanance()

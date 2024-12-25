@@ -8,6 +8,7 @@ use App\Enums\Preorder\ZoneEnum;
 use App\Enums\SettingKeyEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Preorder;
+use App\Models\School;
 use App\Models\Setting;
 use App\Services\CustomerService;
 use App\Services\OrderService;
@@ -241,6 +242,26 @@ class DashboardController extends Controller
         }
 
         return response()->json($result);
+    }
+
+    public function widget_school()
+    {
+        $schools = School::all();
+        $results = [];
+        foreach ($schools as $school) {
+            $results[$school->name] = [];
+        }
+
+        for ($i = 1; $i <= 12; $i++) {
+            foreach ($schools as $school) {
+                $results[$school->name][] = Preorder::where('school_id', $school->id)
+                    ->whereMonth('date', $i)
+                    ->where('is_exclude_target', false)
+                    ->sum('total_amount');
+            }
+        }
+
+        return response()->json($results);
     }
 
     public function maintanance()

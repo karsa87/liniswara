@@ -304,6 +304,37 @@
     </div>
 </div>
 
+<div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+    <div class="col-xl-12 mb-5 sm-xl-12">
+        <!--begin::Chart widget 8-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-5">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold d-flex align-items-center">
+                        Grafik Penjualan
+                    </span>
+                    <span class="text-muted mt-1 fw-semibold fs-7">
+                        Tahun {{ date('Y') }}
+                    </span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-6 text-center">
+                <span class="spinner-border spinner-border-xxl align-middle ms-2" id="widget-school-loader"></span>
+                <!--begin::Chart-->
+                <div id="kt_charts_sales_school" class="min-h-auto ps-4 pe-6" style="height: 350px" data-url="{{ route('marketing.dashboard.widget.school') }}"></div>
+                <!--end::Chart-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Chart widget 8-->
+    </div>
+</div>
+
 <!--begin::Row-->
 <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
     <!--begin::Col-->

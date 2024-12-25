@@ -22,4 +22,14 @@ class School extends Model
     {
         return $this->belongsToMany(Customer::class, 'customer_schools', 'school_id', 'customer_id')->withPivot('target');
     }
+
+    public function preorders()
+    {
+        return $this->hasMany(Preorder::class, 'school_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'school_id');
+    }
 }

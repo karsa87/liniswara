@@ -671,12 +671,209 @@ var KTWidgets = function () {
         });
     }
 
+    var initChartsWidgetSchool = function() {
+        var element = document.getElementById("kt_charts_sales_school");
+
+        if ( !element ) {
+            return;
+        }
+
+        var chart = {
+            self: null,
+            rendered: false
+        };
+
+        var initChart = function(schools) {
+            var height = parseInt(KTUtil.css(element, 'height'));
+            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+            var colors = [];
+            for (let i = 0; i < schools.length; i++) {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var j = 0; j < 6; j++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                colors.push(color);
+            }
+
+            var series = [];
+            Object.entries(schools).forEach(([key, value]) => {
+                series.push({
+                    name: key,
+                    data: value,
+                });
+            });
+
+            var options = {
+                series: series,
+                chart: {
+                    fontFamily: 'inherit',
+                    type: 'bar',
+                    height: height,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: ['80%'],
+                        borderRadius: [6]
+                    },
+                },
+                legend: {
+                    show: true
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 0.1,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'],
+                    axisBorder: {
+                        show: false,
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    labels: {
+                        style: {
+                            colors: labelColor,
+                            fontSize: '12px'
+                        }
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function(value) {
+                            var val = Math.abs(value);
+
+                            if (val >= 1000 && val < 1000000) {
+                                val = (val / 1000).toFixed(0) + 'Rb'
+                            } else if (val >= 1000000 && val < 1000000000) {
+                                val = (val / 1000000).toFixed(0) + 'Jt'
+                            } else if (val >= 1000000000) {
+                                val = (val / 1000000000).toFixed(0) + 'M'
+                            } else {
+                                val = val;
+                            }
+
+                            return val;
+                        },
+                        style: {
+                            colors: labelColor,
+                            fontSize: '12px'
+                        }
+                    }
+                },
+                fill: {
+                    opacity: 5
+                },
+                states: {
+                    normal: {
+                        filter: {
+                            type: 'none',
+                            value: 0
+                        }
+                    },
+                    hover: {
+                        filter: {
+                            type: 'none',
+                            value: 0
+                        }
+                    },
+                    active: {
+                        allowMultipleDataPointsSelection: false,
+                        filter: {
+                            type: 'none',
+                            value: 0
+                        }
+                    }
+                },
+                tooltip: {
+                    style: {
+                        fontSize: '12px'
+                    },
+                    y: {
+                        formatter: function (val) {
+                            return (val).toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        }
+                    }
+                },
+                colors: colors,
+                grid: {
+                    borderColor: borderColor,
+                    strokeDashArray: 4,
+                    yaxis: {
+                        lines: {
+                            show: true
+                        }
+                    }
+                }
+            };
+
+            chart.self = new ApexCharts(element, options);
+            chart.self.render();
+            chart.rendered = true;
+        }
+
+        // Init chart
+        axios.get(element.getAttribute('data-url')).then(function (response) {
+            if (response && response.data) {
+                let data = response.data;
+                initChart(data);
+            } else {
+                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                    text: "Sorry, looks like there are some errors detected, please try again.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        }).catch(function (error) {
+            let msg = "Gagal load data sekolah.";
+
+            Swal.fire({
+                title: "Failed load data",
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+        }).then(() => {
+            // Hide loading indication
+            document.getElementById('widget-school-loader').classList.add('d-none');
+        });
+
+        // Update chart on theme mode change
+        KTThemeMode.on("kt.thememode.change", function() {
+            if (chart.rendered) {
+                chart.self.destroy();
+            }
+
+            initChart();
+        });
+    }
+
     // Public methods
     return {
         init: function () {
             // Charts widgets
             initChartsWidgetZone();
             initChartsWidgetSales();
+            initChartsWidgetSchool();
             loadChartPreorder();
             loadChartOrder();
             loadChartProduct();

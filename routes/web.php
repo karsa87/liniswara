@@ -96,6 +96,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/widget/product', [
         DashboardController::class, 'widget_product',
     ])->name('dashboard.widget.product');
+    Route::get('/dashboard/widget/school', [
+        DashboardController::class, 'widget_school',
+    ])->name('dashboard.widget.school');
 
     Route::name('permission.')->prefix('permission/')->group(function () {
         Route::get('/', [
