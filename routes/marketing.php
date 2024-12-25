@@ -75,6 +75,9 @@ Route::name('payment.')->prefix('payment/')->group(function () {
     Route::get('region/transaction-rank-agent/{id?}', [
         PaymentController::class, 'transaction_rank_agent',
     ])->name('transaction_rank_agent');
+    Route::get('region/transaction-rank-school/{id?}', [
+        PaymentController::class, 'transaction_rank_school',
+    ])->name('transaction_rank_school');
 });
 
 Route::name('transaction.')->prefix('transaction/')->group(function () {

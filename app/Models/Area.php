@@ -76,6 +76,6 @@ class Area extends Model
             'area_schools',
             'area_id',
             'school_id',
-        );
+        )->withPivot('target');
     }
 }

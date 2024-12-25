@@ -16,6 +16,7 @@ use App\Models\Preorder;
 use App\Services\CustomerService;
 use App\Services\OrderService;
 use App\Services\PreorderService;
+use App\Services\SchoolService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,6 +26,7 @@ class PaymentController extends Controller
     public function __construct(
         private PreorderService $preorderService,
         private CustomerService $customerService,
+        private SchoolService $schoolService,
         private OrderService $orderService,
     ) {
     }
@@ -387,5 +389,16 @@ class PaymentController extends Controller
         $rankingAgents = $this->customerService->rankingSpecificAgent($id, $marketingTeam);
 
         return response()->json($rankingAgents);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function transaction_rank_school(Request $request, $id)
+    {
+        $marketingTeam = session(config('session.app.selected_marketing_tim'));
+        $rankingSchoolss = $this->schoolService->rankingByArea($id, $marketingTeam);
+
+        return response()->json($rankingSchoolss);
     }
 }
