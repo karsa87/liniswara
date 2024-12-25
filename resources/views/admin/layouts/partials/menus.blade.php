@@ -249,9 +249,9 @@
                 <!--end:Menu item-->
                 @endif
 
-                @if (auth()->user()->hasPermission(['area-view', 'branch-view', 'supplier-view', 'collector-view', 'expedition-view', 'writer-view', 'area-view']))
+                @if (auth()->user()->hasPermission(['area-view', 'branch-view', 'supplier-view', 'collector-view', 'expedition-view', 'writer-view', 'school-view']))
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['branch.', 'supplier.', 'expedition.', 'collector.', 'writer.', 'area.']) ? 'hover show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ str(request()->route()->getName())->startsWith(['branch.', 'supplier.', 'expedition.', 'collector.', 'writer.', 'area.', 'school.']) ? 'hover show' : '' }}">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -348,6 +348,21 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Area</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        @endhasPermission
+
+                        @hasPermission('school-view')
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ str(request()->route()->getName())->startsWith(['school.']) ? 'active here' : '' }}" href="{{ route('school.index') }}"">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Sekolah</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

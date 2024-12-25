@@ -234,6 +234,26 @@ Route::middleware('auth')->group(function () {
             ->name('update');
     });
 
+    Route::name('school.')->prefix('school/')->group(function () {
+        Route::get('/', [
+            SchoolController::class, 'index',
+        ])->name('index');
+        Route::get('/index/list', [
+            SchoolController::class, 'index',
+        ])->name('index.list');
+        Route::post('store', [
+            SchoolController::class, 'store',
+        ])->name('store');
+        Route::delete('delete/{id?}', [
+            SchoolController::class, 'destroy',
+        ])->where('id', '[0-9]+')
+            ->name('delete');
+        Route::put('update/{id?}', [
+            SchoolController::class, 'update',
+        ])->where('id', '[0-9]+')
+            ->name('update');
+    });
+
     Route::name('setting.')->prefix('setting/')->group(function () {
         Route::get('/', [
             SettingController::class, 'index',

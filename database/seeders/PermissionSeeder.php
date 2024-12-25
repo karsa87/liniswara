@@ -41,6 +41,7 @@ class PermissionSeeder extends Seeder
         $this->createPermissionWriter();
         $this->createPermissionReturnOrder();
         $this->createPermissionAreaSchool();
+        $this->createPermissionSchool();
 
         $this->syncPermissionRole();
     }
@@ -1155,6 +1156,46 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Sekolah Area - Delete',
                 'key' => 'area_school-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionSchool()
+    {
+        $permissions = [
+            [
+                'name' => 'Sekolah - Tambah',
+                'key' => 'school-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Sekolah - Edit',
+                'key' => 'school-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Sekolah - View',
+                'key' => 'school-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Sekolah - Delete',
+                'key' => 'school-delete',
                 'role-slug' => [
                     'developer',
                     'super-admin',

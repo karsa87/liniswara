@@ -388,4 +388,19 @@ return [
             ],
         ],
     ],
+    'school' => [
+        'index' => [
+            'title' => 'Sekolah',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Sekolah',
+                    'route' => 'school.index',
+                ],
+            ],
+        ],
+    ],
 ];
