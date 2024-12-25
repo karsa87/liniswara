@@ -19,19 +19,23 @@ class SchoolService
         $marketing = null,
     ): Collection {
         $area = Area::with([
-            'schools' => function ($qSchool) use ($marketing) {
+            'schools' => function ($qSchool) use ($marketing, $areaId) {
                 $qSchool->withSum([
-                    'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketing, $areaId) {
                         if ($marketing) {
                             $qPreorder->where('marketing', $marketing);
                         }
+
+                        $qPreorder->where('area_id', $areaId);
                     },
                 ], 'total_amount')
                     ->withCount([
-                        'preorders' => function ($qPreorder) use ($marketing) {
+                        'preorders' => function ($qPreorder) use ($marketing, $areaId) {
                             if ($marketing) {
                                 $qPreorder->where('marketing', $marketing);
                             }
+
+                            $qPreorder->where('area_id', $areaId);
                         },
                     ])
                     ->orderBy('preorders_total', 'DESC');
@@ -52,19 +56,23 @@ class SchoolService
         $marketing = null,
     ): Collection {
         $customer = Customer::with([
-            'schools' => function ($qSchool) use ($marketing) {
+            'schools' => function ($qSchool) use ($marketing, $customerId) {
                 $qSchool->withSum([
-                    'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketing, $customerId) {
                         if ($marketing) {
                             $qPreorder->where('marketing', $marketing);
                         }
+
+                        $qPreorder->where('customer_id', $customerId);
                     },
                 ], 'total_amount')
                     ->withCount([
-                        'preorders' => function ($qPreorder) use ($marketing) {
+                        'preorders' => function ($qPreorder) use ($marketing, $customerId) {
                             if ($marketing) {
                                 $qPreorder->where('marketing', $marketing);
                             }
+
+                            $qPreorder->where('customer_id', $customerId);
                         },
                     ])
                     ->orderBy('preorders_total', 'DESC');

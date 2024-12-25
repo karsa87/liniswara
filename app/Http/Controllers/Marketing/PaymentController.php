@@ -13,6 +13,7 @@ use App\Models\Area;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Preorder;
+use App\Models\School;
 use App\Services\CustomerService;
 use App\Services\OrderService;
 use App\Services\PreorderService;
@@ -331,6 +332,27 @@ class PaymentController extends Controller
         }
 
         return response()->json($result);
+    }
+
+    public function transaction_per_month_school_agent($id)
+    {
+        $schools = School::all();
+        $results = [];
+        foreach ($schools as $school) {
+            $results[$school->name] = [];
+        }
+
+        for ($i = 1; $i <= 12; $i++) {
+            foreach ($schools as $school) {
+                $results[$school->name][] = Preorder::where('school_id', $school->id)
+                    ->where('customer_id', $id)
+                    ->whereMonth('date', $i)
+                    ->where('is_exclude_target', false)
+                    ->sum('total_amount');
+            }
+        }
+
+        return response()->json($results);
     }
 
     /**
