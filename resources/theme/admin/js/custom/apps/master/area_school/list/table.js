@@ -1,76 +1,30 @@
 "use strict";
 
-// Class definition
-var KTUsersBranchsList = function () {
-    // Shared variables
+var KTAreaSchoolsList = function () {
+    // Define shared variables
+    var table = document.getElementById('kt_table_area_schools');
     var datatable;
-    var table;
 
-    // Init add schedule modal
-    var initBranchsList = () => {
-        // Set date data order
-        const tableRows = table.querySelectorAll('tbody tr');
-
-        tableRows.forEach(row => {
-            const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[2].innerHTML, "DD MMM YYYY, LT").format(); // select date from 2nd column in table
-            dateRow[2].setAttribute('data-order', realDate);
-        });
-
+    // Private functions
+    var initAreaSchoolTable = function () {
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
+            stateSave: true,
             ajax: {
                 url: table.dataset.url,
+                "data": function ( d ) {
+                }
             },
             columns: [
                 { data: 'name' },
-                { data: null },
                 { data: 'target' },
                 { data: null },
             ],
             columnDefs: [
-                {
-                    targets: 1,
-                    render: function (data, type, row) {
-                        var result = `
-                            <div class="d-flex flex-column">
-                        `;
-
-                        if (row.village) {
-                            result += `<span class="text-gray-800 text-hover-primary mb-1">${row.village.name}</span>`;
-                        }
-
-                        if (row.district) {
-                            result += `${row.district.name}`;
-                        }
-
-                        if (row.regency) {
-                            result += `<br> ${row.regency.name}`;
-                        }
-
-                        if (row.province) {
-                            result += `<br> ${row.province.name}`;
-                        }
-
-                        result += `</div>`;
-                        return result;
-                    }
-                },
-                {
-                    targets: 2,
-                    render: function (data, type, row) {
-                        let target = 0;
-                        if (typeof row.target == 'number') {
-                            target = row.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                        }
-
-                        return target;
-                    }
-                },
                 {
                     targets: -1,
                     data: null,
@@ -85,31 +39,23 @@ var KTUsersBranchsList = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
                         `;
 
-                        if ('area_school-view' in userPermissions) {
+                        if ('area_school-edit' in userPermissions) {
                             result += `
                                 <div class="menu-item px-3">
-                                    <a href="area/${row.id}/area-school" class="menu-link px-3" data-id='${row.id}'>Sekolah</a>
+                                    <a href="#" class="menu-link px-3" data-kt-areas-table-filter="update_row" data-bs-toggle="modal" data-bs-target="#kt_modal_add_area_school" data-id='${row.id}'>Edit</a>
                                 </div>
                             `;
                         }
 
-                        if ('area-edit' in userPermissions) {
+                        if ('area_school-delete' in userPermissions) {
                             result += `
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-areas-table-filter="update_row" data-bs-toggle="modal" data-bs-target="#kt_modal_update_area" data-id="${row.id}">Edit</a>
+                                    <a href="#" class="menu-link px-3" data-kt-areas-table-filter="delete_row" data-id='${row.id}'>Delete</a>
                                 </div>
                             `;
                         }
 
-                        if ('area-delete' in userPermissions) {
-                            result += `
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-areas-table-filter="delete_row" data-id="${row.id}">Delete</a>
-                                </div>
-                            `;
-                        }
-
-                        result += `</div>`;
+                        result += '</div>';
                         return result;
                     },
                 },
@@ -126,14 +72,14 @@ var KTUsersBranchsList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-areas-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-area-address-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
         filterSearch.dispatchEvent(new KeyboardEvent('keyup',  {'key':''}));
     }
 
-    // Delete user
+    // Delete subscirption
     var handleDeleteRows = () => {
         // Select all delete buttons
         const deleteButtons = table.querySelectorAll('[data-kt-areas-table-filter="delete_row"]');
@@ -232,7 +178,7 @@ var KTUsersBranchsList = function () {
         });
     }
 
-    // Update user
+    // Update area
     var handleEditRows = () => {
         // Select all update buttons
         const updateButtons = table.querySelectorAll('[data-kt-areas-table-filter="update_row"]');
@@ -245,54 +191,25 @@ var KTUsersBranchsList = function () {
                 // // Select parent row
                 const button = e.target.closest('a');
 
-                const element = document.getElementById('kt_modal_update_area');
-                const form = element.querySelector('#kt_modal_update_area_form');
+                const element = document.getElementById('kt_modal_add_area_school');
+                const form = element.querySelector('#kt_modal_add_area_school_form');
 
                 KTApp.showPageLoading();
 
                 // Check axios library docs: https://axios-http.com/docs/intro
                 axios.get(table.dataset.urlEdit + '/' + button.getAttribute('data-id')).then(function (response) {
                     if (response && response.data) {
-                        let area = response.data.data;
-                        form.querySelector("input[name='area_id']").value = area.id;
-                        form.querySelector("input[name='area_name']").value = area.name;
-                        form.querySelector("input[name='area_target']").value = area.target;
+                        let school = response.data.data;
+                        form.querySelector("input[name='area_school_target']").value = school.target;
 
-                        let detailAddress = '';
-                        $('#area_update_village_id').val('').trigger('change');
-                        if (area.village) {
-                            var stateEl = new Option(area.village.name, area.village.id, true, true);
-                            $('#area_update_village_id').append(stateEl);
-                            $('#area_update_village_id').val(area.village.id).trigger('change');
-
-                            detailAddress += `${area.village.name}`;
-                        }
-
-                        $('#area_update_district_id').val('').trigger('change');
-                        if (area.district) {
-                            var stateEl = new Option(area.district.name, area.district.id, true, true);
-                            $('#area_update_district_id').append(stateEl);
-                            $('#area_update_district_id').val(area.district.id).trigger('change');
-
-                            detailAddress += `, Kec. ${area.district.name}`;
-                        }
-
-                        $('#area_update_regency_id').val('').trigger('change');
-                        if (area.regency) {
-                            var stateEl = new Option(area.regency.name, area.regency.id, true, true);
-                            $('#area_update_regency_id').append(stateEl);
-                            $('#area_update_regency_id').val(area.regency.id).trigger('change');
-
-                            detailAddress += `<br/> ${area.regency.name}`;
-                        }
-
-                        $('#area_update_province_id').val('').trigger('change');
-                        if (area.province) {
-                            var stateEl = new Option(area.province.name, area.province.id, true, true);
-                            $('#area_update_province_id').append(stateEl);
-                            $('#area_update_province_id').val(area.province.id).trigger('change');
-
-                            detailAddress += ` - ${area.province.name}`;
+                        // Set the value, creating a new option if necessary
+                        if ($("#add-category_school_id").find("option[value=" + school.id + "]").length) {
+                            $("#add-category_school_id").val(school.id).trigger("change");
+                        } else {
+                            // Create the DOM option that is pre-selected by default
+                            var newState = new Option(school.name, school.id, true, true);
+                            // Append it to the select
+                            $("#add-category_school_id").append(newState).trigger('change');
                         }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -339,24 +256,22 @@ var KTUsersBranchsList = function () {
     return {
         // Public functions
         init: function () {
-            table = document.querySelector('#kt_areas_table');
-
             if (!table) {
                 return;
             }
 
-            initBranchsList();
+            initAreaSchoolTable();
             handleSearchDatatable();
             handleDeleteRows();
             handleEditRows();
         },
         refresh: function() {
-            datatable.ajax.reload(null, false); // user paging is not reset on reload
+            datatable.ajax.reload(null, false); // area paging is not reset on reload
         }
-    };
+    }
 }();
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTUsersBranchsList.init();
+    KTAreaSchoolsList.init();
 });

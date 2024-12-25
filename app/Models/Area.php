@@ -68,4 +68,14 @@ class Area extends Model
             'customer_id',
         );
     }
+
+    public function schools(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            School::class,
+            'area_schools',
+            'area_id',
+            'school_id',
+        );
+    }
 }

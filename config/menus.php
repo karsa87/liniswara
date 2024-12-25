@@ -354,4 +354,38 @@ return [
             ],
         ],
     ],
+    'area' => [
+        'index' => [
+            'title' => 'Area',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Area',
+                    'route' => '#',
+                ],
+            ],
+        ],
+    ],
+    'area_school' => [
+        'index' => [
+            'title' => 'Area Sekolah',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Area',
+                    'route' => 'area.index',
+                ],
+                [
+                    'name' => 'Area Sekolah',
+                    'route' => '#',
+                ],
+            ],
+        ],
+    ],
 ];

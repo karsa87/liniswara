@@ -32,4 +32,9 @@ class School extends Model
     {
         return $this->hasMany(Order::class, 'school_id');
     }
+
+    public function areas()
+    {
+        return $this->belongsToMany(Area::class, 'area_schools', 'school_id', 'area_id')->withPivot('target');
+    }
 }

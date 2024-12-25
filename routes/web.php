@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AreaController;
+use App\Http\Controllers\Admin\AreaSchoolController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -187,6 +188,30 @@ Route::middleware('auth')->group(function () {
             AreaController::class, 'update',
         ])->where('id', '[0-9]+')
             ->name('update');
+
+        Route::name('area_school.')->prefix('{areaId}/area-school')->group(function () {
+            Route::get('/', [
+                AreaSchoolController::class, 'index',
+            ])->name('index');
+            Route::get('/index/list', [
+                AreaSchoolController::class, 'index',
+            ])->name('index.list');
+            Route::get('/detail/{id?}', [
+                AreaSchoolController::class, 'show',
+            ])->where('id', '[0-9]+')
+                ->name('show');
+            Route::post('store', [
+                AreaSchoolController::class, 'store',
+            ])->name('store');
+            Route::delete('delete/{id?}', [
+                AreaSchoolController::class, 'destroy',
+            ])->where('id', '[0-9]+')
+                ->name('delete');
+            Route::put('update/{id?}', [
+                AreaSchoolController::class, 'update',
+            ])->where('id', '[0-9]+')
+                ->name('update');
+        });
     });
 
     Route::name('branch.')->prefix('branch/')->group(function () {
