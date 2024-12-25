@@ -78,4 +78,17 @@ class Customer extends Model
             'area_id'
         );
     }
+
+    /**
+     * The relation to school.
+     */
+    public function schools(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            School::class,
+            'customer_schools',
+            'customer_id',
+            'school_id'
+        )->withPivot('target');
+    }
 }

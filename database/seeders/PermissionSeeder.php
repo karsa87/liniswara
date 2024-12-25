@@ -26,6 +26,7 @@ class PermissionSeeder extends Seeder
         $this->createPermissionCollector();
         $this->createPermissionCustomer();
         $this->createPermissionCustomerAddress();
+        $this->createPermissionCustomerSchool();
         $this->createPermissionExpedition();
         $this->createPermissionCategory();
         $this->createPermissionProduct();
@@ -385,6 +386,46 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Alamat Agen - Delete',
                 'key' => 'customer_address-delete',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+        ];
+
+        $this->createPermission($permissions);
+    }
+
+    private function createPermissionCustomerSchool()
+    {
+        $permissions = [
+            [
+                'name' => 'Sekolah Agen - Tambah',
+                'key' => 'customer_school-tambah',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Sekolah Agen - Edit',
+                'key' => 'customer_school-edit',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Sekolah Agen - View',
+                'key' => 'customer_school-view',
+                'role-slug' => [
+                    'developer',
+                    'super-admin',
+                ],
+            ],
+            [
+                'name' => 'Sekolah Agen - Delete',
+                'key' => 'customer_school-delete',
                 'role-slug' => [
                     'developer',
                     'super-admin',

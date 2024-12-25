@@ -17,4 +17,9 @@ class School extends Model
     {
         return $this->belongsToMany(Product::class, 'product_schools', 'school_id', 'product_id');
     }
+
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class, 'customer_schools', 'school_id', 'customer_id')->withPivot('target');
+    }
 }

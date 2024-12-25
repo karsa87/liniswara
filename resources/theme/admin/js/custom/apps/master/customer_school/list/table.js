@@ -1,72 +1,30 @@
 "use strict";
 
-var KTSuppliersList = function () {
+var KTCustomerSchoolsList = function () {
     // Define shared variables
-    var table = document.getElementById('kt_table_customers');
+    var table = document.getElementById('kt_table_customer_schools');
     var datatable;
 
     // Private functions
-    var initSupplierTable = function () {
+    var initCustomerSchoolTable = function () {
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
             searchDelay: 1000,
             processing: true,
             serverSide: true,
-            order: [[1, 'asc']],
+            order: [[0, 'asc']],
+            stateSave: true,
             ajax: {
                 url: table.dataset.url,
                 "data": function ( d ) {
-                    // // Select filter options
-                    // const filterForm = document.querySelector('[data-kt-customer-table-filter="form"]');
-                    // const selectOptions = filterForm.querySelectorAll('select');
-
-                    // // Filter datatable on submit
-                    // var filterString = '';
-
-                    // // Get filter values
-                    // selectOptions.forEach((item, index) => {
-                    //     if (item.value && item.value !== '') {
-                    //         if (index !== 0) {
-                    //             filterString += ' ';
-                    //         }
-
-                    //         // Build filter value options
-                    //         filterString += item.value;
-                    //     }
-                    // });
-                    // d.search.role_id = filterString;
                 }
             },
             columns: [
-                { data: 'company' },
                 { data: 'name' },
-                { data: 'email' },
-                { data: 'phone_number', orderable: false },
                 { data: 'target' },
                 { data: null },
             ],
             columnDefs: [
-                {
-                    targets: 3,
-                    render: function (data) {
-                        if (data) {
-                            return `<a href="https://wa.me/${data}" class="badge badge-light-success fs-7 m-1">${data}</a>`;
-                        }
-
-                        return '';
-                    }
-                },
-                {
-                    targets: 4,
-                    render: function (data, type, row) {
-                        let target = 0;
-                        if (typeof row.target == 'number') {
-                            target = row.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                        }
-
-                        return target;
-                    }
-                },
                 {
                     targets: -1,
                     data: null,
@@ -81,31 +39,15 @@ var KTSuppliersList = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4" data-kt-menu="true">
                         `;
 
-                        if ('customer_address-view' in userPermissions) {
+                        if ('customer_school-edit' in userPermissions) {
                             result += `
                                 <div class="menu-item px-3">
-                                    <a href="customer/${row.id}/customer-address" class="menu-link px-3" data-id='${row.id}'>Alamat</a>
+                                    <a href="#" class="menu-link px-3" data-kt-customers-table-filter="update_row" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer_school" data-id='${row.id}'>Edit</a>
                                 </div>
                             `;
                         }
 
-                        if ('customer_school-view' in userPermissions) {
-                            result += `
-                                <div class="menu-item px-3">
-                                    <a href="customer/${row.id}/customer-school" class="menu-link px-3" data-id='${row.id}'>Sekolah</a>
-                                </div>
-                            `;
-                        }
-
-                        if ('customer-edit' in userPermissions) {
-                            result += `
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-customers-table-filter="update_row" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" data-id='${row.id}'>Edit</a>
-                                </div>
-                            `;
-                        }
-
-                        if ('customer-delete' in userPermissions) {
+                        if ('customer_school-delete' in userPermissions) {
                             result += `
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-customers-table-filter="delete_row" data-id='${row.id}'>Delete</a>
@@ -113,7 +55,7 @@ var KTSuppliersList = function () {
                             `;
                         }
 
-                        result += `</div>`;
+                        result += '</div>';
                         return result;
                     },
                 },
@@ -130,7 +72,7 @@ var KTSuppliersList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-customer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-customer-address-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -249,67 +191,25 @@ var KTSuppliersList = function () {
                 // // Select parent row
                 const button = e.target.closest('a');
 
-                const element = document.getElementById('kt_modal_add_customer');
-                const form = element.querySelector('#kt_modal_add_customer_form');
+                const element = document.getElementById('kt_modal_add_customer_school');
+                const form = element.querySelector('#kt_modal_add_customer_school_form');
 
                 KTApp.showPageLoading();
 
                 // Check axios library docs: https://axios-http.com/docs/intro
                 axios.get(table.dataset.urlEdit + '/' + button.getAttribute('data-id')).then(function (response) {
                     if (response && response.data) {
-                        let customer = response.data.data;
-                        form.querySelector("input[name='customer_id']").value = customer.id;
-                        form.querySelector("input[name='customer_name']").value = customer.name;
-                        form.querySelector("input[name='customer_email']").value = customer.email;
-                        form.querySelector("input[name='customer_company']").value = customer.company;
-                        form.querySelector("input[name='customer_phone_number']").value = customer.phone_number;
-                        form.querySelector("input[name='customer_target']").value = customer.target;
-                        // form.querySelector("select[name='customer_type']").value = customer.type;
+                        let school = response.data.data;
+                        form.querySelector("input[name='customer_school_target']").value = school.target;
 
-                        let detailAddress = '';
-                        form.querySelector("input[name='customer_village_id']").value = '';
-                        if (customer.village) {
-                            form.querySelector("input[name='customer_village_id']").value = customer.village.id;
-                            detailAddress += `${customer.village.name}`;
-                        }
-
-                        form.querySelector("input[name='customer_district_id']").value = '';
-                        if (customer.district) {
-                            form.querySelector("input[name='customer_district_id']").value = customer.district.id;
-                            detailAddress += `, Kec. ${customer.district.name}`;
-                        }
-
-                        form.querySelector("input[name='customer_regency_id']").value = '';
-                        if (customer.regency) {
-                            form.querySelector("input[name='customer_regency_id']").value = customer.regency.id;
-                            detailAddress += `<br/> ${customer.regency.name}`;
-                        }
-
-                        form.querySelector("input[name='customer_province_id']").value = '';
-                        if (customer.province) {
-                            form.querySelector("input[name='customer_province_id']").value = customer.province.id;
-                            detailAddress += ` - ${customer.province.name}`;
-                        }
-                        form.querySelector("textarea[name='customer_address']").value = customer.address;
-
-                        form.querySelector(`[data-kt-region="customer_region_description"]`).value = detailAddress;
-
-                        // $("#add-customer_area_id").select2('data', null);
-                        $("#add-customer_area_id").val([]).trigger('change');
-                        if (customer.area) {
-                            var areasId = [];
-                            customer.areas.forEach(area => {
-                                areasId.push(area.id);
-                                if ($("#add-customer_area_id").find("option[value=" + area.id + "]").length) {
-                                } else {
-                                    // Create the DOM option that is pre-selected by default
-                                    var newState = new Option(area.name, area.id, true, true);
-                                    // Append it to the select
-                                    $("#add-customer_area_id").append(newState);
-                                }
-                            });
-
-                            $("#add-customer_area_id").val(areasId).trigger('change');
+                        // Set the value, creating a new option if necessary
+                        if ($("#add-category_school_id").find("option[value=" + school.id + "]").length) {
+                            $("#add-category_school_id").val(school.id).trigger("change");
+                        } else {
+                            // Create the DOM option that is pre-selected by default
+                            var newState = new Option(school.name, school.id, true, true);
+                            // Append it to the select
+                            $("#add-category_school_id").append(newState).trigger('change');
                         }
                     } else {
                         // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -324,7 +224,6 @@ var KTSuppliersList = function () {
                         });
                     }
                 }).catch(function (error) {
-                    console.log(error);
                     let msg = "Sorry, looks like there are some errors detected, please try again.";
                     if (
                         error.response && error.response.data
@@ -354,43 +253,6 @@ var KTSuppliersList = function () {
         });
     }
 
-    // Init condition select2
-    const initConditionsSelect2 = () => {
-        // Tnit new repeating condition types
-        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-customer="customer_option"]');
-        allConditionTypes.forEach(type => {
-            if ($(type).hasClass("select2-hidden-accessible")) {
-                return;
-            } else {
-                if ($(type).data('url')) {
-                    $(type).select2({
-                        minimumInputLength: -1,
-                        ajax: {
-                            url: $(type).data('url'),
-                            dataType: 'json',
-                            data: function (params) {
-                                return {
-                                    q: $.trim(params.term)
-                                };
-                            },
-                            processResults: function(data) {
-                                // Transforms the top-level key of the response object from 'items' to 'results'
-                                return {
-                                    results: data.items
-                                };
-                            },
-                            cache: true
-                        }
-                    });
-                } else {
-                    $(type).select2({
-                        minimumResultsForSearch: -1
-                    });
-                }
-            }
-        });
-    }
-
     return {
         // Public functions
         init: function () {
@@ -398,11 +260,10 @@ var KTSuppliersList = function () {
                 return;
             }
 
-            initSupplierTable();
+            initCustomerSchoolTable();
             handleSearchDatatable();
             handleDeleteRows();
             handleEditRows();
-            initConditionsSelect2();
         },
         refresh: function() {
             datatable.ajax.reload(null, false); // customer paging is not reset on reload
@@ -412,5 +273,5 @@ var KTSuppliersList = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTSuppliersList.init();
+    KTCustomerSchoolsList.init();
 });

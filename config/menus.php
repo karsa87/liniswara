@@ -99,6 +99,25 @@ return [
             ],
         ],
     ],
+    'customer_school' => [
+        'index' => [
+            'title' => 'Sekolah Agen',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Master Data',
+                    'route' => '#',
+                ],
+                [
+                    'name' => 'Agen',
+                    'route' => 'customer.index',
+                ],
+                [
+                    'name' => 'Sekolah Agen',
+                    'route' => '#',
+                ],
+            ],
+        ],
+    ],
     'expedition' => [
         'index' => [
             'title' => 'Ekspedisi',

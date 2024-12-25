@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CollectorController;
 use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\CustomerSchoolController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExpeditionController;
 use App\Http\Controllers\Admin\FileController;
@@ -319,6 +320,30 @@ Route::middleware('auth')->group(function () {
                 ->name('delete');
             Route::put('update/{id?}', [
                 CustomerAddressController::class, 'update',
+            ])->where('id', '[0-9]+')
+                ->name('update');
+        });
+
+        Route::name('customer_school.')->prefix('{customerId}/customer-school')->group(function () {
+            Route::get('/', [
+                CustomerSchoolController::class, 'index',
+            ])->name('index');
+            Route::get('/index/list', [
+                CustomerSchoolController::class, 'index',
+            ])->name('index.list');
+            Route::get('/detail/{id?}', [
+                CustomerSchoolController::class, 'show',
+            ])->where('id', '[0-9]+')
+                ->name('show');
+            Route::post('store', [
+                CustomerSchoolController::class, 'store',
+            ])->name('store');
+            Route::delete('delete/{id?}', [
+                CustomerSchoolController::class, 'destroy',
+            ])->where('id', '[0-9]+')
+                ->name('delete');
+            Route::put('update/{id?}', [
+                CustomerSchoolController::class, 'update',
             ])->where('id', '[0-9]+')
                 ->name('update');
         });
