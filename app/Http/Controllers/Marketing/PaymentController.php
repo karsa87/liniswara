@@ -306,6 +306,17 @@ class PaymentController extends Controller
         return response()->json($rankingRegency);
     }
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function transaction_rank_school_agent(Request $request, $id)
+    {
+        $marketingTeam = session(config('session.app.selected_marketing_tim'));
+        $rankingSchool = $this->schoolService->rankingByCustomer($id, optional($marketingTeam)->value);
+
+        return response()->json($rankingSchool);
+    }
+
     public function transaction_per_month_agent($id)
     {
         $result = [

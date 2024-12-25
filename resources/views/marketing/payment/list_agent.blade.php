@@ -28,7 +28,7 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_customers" data-rank-regency="{{ route('marketing.payment.trasaction_rank_regency', 'REPLACE') }}">
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_customers" data-rank-regency="{{ route('marketing.payment.trasaction_rank_regency', 'REPLACE') }}" data-rank-school="{{ route('marketing.payment.transaction_rank_school_agent', 'REPLACE') }}">
                     <thead>
                         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                             <th class="min-w-25px"></th>
