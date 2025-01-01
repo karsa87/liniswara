@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\File;
 use App\Models\ImportDetail;
 use App\Models\Product;
+use App\Models\School;
 use App\Services\StockHistoryLogService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -61,27 +62,54 @@ class ProductImportJob implements ShouldQueue
                         continue;
                     }
 
+                    $categories = explode('-', $row[0] ?? '');
+                    $parent = trim($categories[0]);
+                    $child = trim($categories[1] ?? '');
+
                     $category = null;
-                    if (
-                        $row->has(0)
-                        && $row[0]
-                    ) {
-                        $category = Category::whereRaw('LOWER(name) = ?', $row[0])->first();
+                    if ($parent) {
+                        if ($child) {
+                            $category = Category::whereRaw('LOWER(name) = ?', str($child)->lower())->first();
+                        } else {
+                            $category = Category::whereRaw('LOWER(name) = ?', str($parent)->lower())->first();
+                        }
+
+                        if (empty($category)) {
+                            $parentCategory = Category::whereRaw('LOWER(name) = ?', str($parent)->lower())->first();
+                            if (count($categories) == 2 && ! empty($child)) {
+                                if (empty($parentCategory)) {
+                                    $parentCategory = Category::create([
+                                        'name' => $parent,
+                                        'slug' => str($parent)->slug(),
+                                    ]);
+                                }
+
+                                $category = Category::create([
+                                    'name' => $child,
+                                    'slug' => str($child)->slug(),
+                                    'parent_category_id' => $parentCategory->id,
+                                ]);
+                            } else {
+                                $category = $parentCategory;
+                            }
+                        }
                     }
+
+                    $schools = explode(';', $row[4] ?? '');
 
                     $input = [
                         'category_id' => optional($category)->id,
                         'name' => $row[1],
                         'code' => $row[2],
-                        'stock' => $row[3],
-                        'price' => $row[4],
-                        'price_zone_2' => $row[5],
-                        'price_zone_3' => $row[6],
-                        'price_zone_4' => $row[7],
-                        'price_zone_5' => $row[8],
-                        'price_zone_6' => $row[9],
-                        'description' => htmlentities($row[10]),
-                        'image_url' => $row[11],
+                        'stock' => $row[3] ?? 0,
+                        'price' => $row[5],
+                        'price_zone_2' => $row[6],
+                        'price_zone_3' => $row[7],
+                        'price_zone_4' => $row[8],
+                        'price_zone_5' => $row[9],
+                        'price_zone_6' => $row[10],
+                        'description' => htmlentities($row[11]),
+                        'image_url' => 'files/20250101/'.$row[12],
                         'discount_type' => ProductDiscountTypeEnum::DISCOUNT_NO,
                         'discount_price' => null,
                         'discount_percentage' => null,
@@ -95,11 +123,11 @@ class ProductImportJob implements ShouldQueue
                         'code' => [
                             'required',
                             'string',
-                            Rule::unique((new Product())->getTable(), 'code')->where(function ($query) {
-                                $query->whereNull('deleted_at');
+                            // Rule::unique((new Product())->getTable(), 'code')->where(function ($query) {
+                            //     $query->whereNull('deleted_at');
 
-                                return $query;
-                            }),
+                            //     return $query;
+                            // }),
                         ],
                         'name' => [
                             'required',
@@ -146,7 +174,7 @@ class ProductImportJob implements ShouldQueue
                         ],
                         'image_url' => [
                             'nullable',
-                            'url',
+                            // 'url',
                         ],
                     ], [], [
                         'category_id' => 'Kategori',
@@ -233,6 +261,21 @@ class ProductImportJob implements ShouldQueue
                                 $category->id,
                             ]);
                         }
+
+                        if (count($schools) > 0) {
+                            foreach ($schools as $school) {
+                                $school = School::whereRaw('LOWER(name) = ?', str(trim($school))->lower())->first();
+                                if (empty($school)) {
+                                    $school = School::create([
+                                        'name' => trim($school),
+                                    ]);
+                                }
+
+                                $school->product()->syncWithoutDetaching([
+                                    $product->id,
+                                ]);
+                            }
+                        }
                     }
 
                     $this->stockLogService->logStockIn(
@@ -250,6 +293,7 @@ class ProductImportJob implements ShouldQueue
             $this->import->status = StatusEnum::DONE;
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th);
             $this->import->status = StatusEnum::FAILED;
 
             $logFailed[] = [
