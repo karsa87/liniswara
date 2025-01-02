@@ -103,7 +103,7 @@
 								<div class="ms-5 ms-md-10">
 									<!--begin::Toggle-->
 									<button type="button" class="btn btn-flex btn-active-color-white align-items-cenrer justify-content-center justify-content-md-between align-items-lg-center flex-md-content-between bg-white bg-opacity-10 btn-color-white px-0 ps-md-6 pe-md-5 h-30px w-30px h-md-35px w-md-200px" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-										<span class="d-none d-md-inline">Transaksi 2024</span>
+										<span class="d-none d-md-inline">Transaksi 2025</span>
 										<i class="ki-duotone ki-down fs-4 ms-2 ms-md-3 me-0"></i>
 									</button>
 									<!--end::Toggle-->
@@ -120,6 +120,18 @@
 										<!--begin::Menu item-->
 										<div class="menu-item px-3">
 											<a href="{{ route('dashboard') }}" class="menu-link px-3">
+                                                <i class="ki-duotone ki-delivery-3 fs-4 ms-2 ms-md-3 me-0">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                                Transaksi 2025
+                                            </a>
+										</div>
+										<!--end::Menu item-->
+										<!--begin::Menu item-->
+										<div class="menu-item px-3">
+											<a href="https://2024-liniswara.nginx.biz.id/" class="menu-link px-3">
                                                 <i class="ki-duotone ki-delivery-3 fs-4 ms-2 ms-md-3 me-0">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>

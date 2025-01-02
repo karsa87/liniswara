@@ -102,7 +102,7 @@
                             <div class="ms-5 ms-md-10">
                                 <!--begin::Toggle-->
                                 <button type="button" class="btn btn-flex btn-secondary align-items-cenrer justify-content-center justify-content-md-between align-items-lg-center flex-md-content-between px-0 ps-md-6 pe-md-5 h-30px w-30px h-md-35px w-md-200px" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-                                    <span class="d-none d-md-inline">Transaksi 2024</span>
+                                    <span class="d-none d-md-inline">Transaksi 2025</span>
                                     <i class="ki-duotone ki-down fs-4 ms-2 ms-md-3 me-0"></i>
                                 </button>
                                 <!--end::Toggle-->
