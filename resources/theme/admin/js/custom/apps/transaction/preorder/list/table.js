@@ -302,19 +302,19 @@ var KTPreordersList = function () {
                         ) {
                             result += `<div class="separator mb-3 opacity-75"></div>`;
 
-                            // if ('preorder-update_discount' in userPermissions) {
-                            //     result += `
-                            //         <div class="menu-item px-3">
-                            //             <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_discount" data-bs-toggle="modal" data-bs-target="#kt_modal_update_discount_preorder" data-id='${row.id}'>
-                            //                 <i class="ki-duotone ki-discount fs-2 me-2 text-primary">
-                            //                     <span class="path1"></span>
-                            //                     <span class="path2"></span>
-                            //                 </i>
-                            //                 Diskon
-                            //             </a>
-                            //         </div>
-                            //     `;
-                            // }
+                            if ('preorder-update_discount' in userPermissions) {
+                                result += `
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3" data-kt-preorders-table-filter="update_discount" data-bs-toggle="modal" data-bs-target="#kt_modal_update_discount_preorder" data-id='${row.id}'>
+                                            <i class="ki-duotone ki-discount fs-2 me-2 text-primary">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            Diskon
+                                        </a>
+                                    </div>
+                                `;
+                            }
 
                             if ('preorder-update_status' in userPermissions) {
                                 result += `
