@@ -60,7 +60,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link py-3" href="{{ route('marketing.maintanance') }}" title="Menu setting pengingat pembayaran" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <a class="menu-link py-3" href="{{ route('marketing.follow.transaction.index') }}" title="Menu setting pengingat pembayaran" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                             <span class="menu-title">Ingatkan Pembayaran</span>
                         </a>
                         <!--end:Menu link-->

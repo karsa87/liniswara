@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Marketing\DashboardController;
+use App\Http\Controllers\Marketing\Follow\TransactionController as FollowTransactionController;
 use App\Http\Controllers\Marketing\PaymentController;
 use App\Http\Controllers\Marketing\StockController;
 use App\Http\Controllers\Marketing\TransactionController;
@@ -93,6 +94,12 @@ Route::name('transaction.')->prefix('transaction/')->group(function () {
     Route::get('{id?}', [
         TransactionController::class, 'detail',
     ])->name('detail');
+});
+
+Route::name('follow.')->prefix('follow')->group(function () {
+    Route::get('transaction', [
+        FollowTransactionController::class, 'index',
+    ])->name('transaction.index');
 });
 
 Route::name('stock.')->prefix('stock/')->group(function () {
