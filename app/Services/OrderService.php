@@ -29,6 +29,7 @@ class OrderService
             'customer.user',
             'branch',
             'shipping',
+            'school',
         ]);
 
         if ($statusOrder) {

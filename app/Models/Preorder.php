@@ -78,6 +78,14 @@ class Preorder extends Model
     /**
      * The data that belong to the file.
      */
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
+
+    /**
+     * The data that belong to the file.
+     */
     public function details(): HasMany
     {
         return $this->hasMany(PreorderDetail::class, 'preorder_id');

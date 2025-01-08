@@ -303,6 +303,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])->find($id);
 
@@ -329,6 +330,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])->find($id);
 
@@ -355,6 +357,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
             'details.preorder_detail',
         ])->find($id);
@@ -805,6 +808,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])->find($id);
 
@@ -826,6 +830,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])->find($id);
 
@@ -847,6 +852,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
             'shipping.expedition',
         ])->find($id);
@@ -869,6 +875,7 @@ class OrderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])->find($id);
 

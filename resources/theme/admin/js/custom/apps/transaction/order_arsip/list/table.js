@@ -168,7 +168,12 @@ var KTPreordersList = function () {
                             zone = 'Zona 6';
                         }
 
-                        return `${result}<br><span class="badge badge-dark">${zone}</span>`;
+                        result = `${result}<br><span class="badge badge-dark">${zone}</span>`
+                        if (row.school != null && row.school.id != undefined) {
+                            result += `<br><span class="badge badge-success">${row.school.name}</span>`
+                        }
+
+                        return result;
                     }
                 },
                 {

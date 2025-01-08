@@ -177,6 +177,14 @@ class PreorderResource extends JsonResource
             return $detail->product->stock < ($detail->qty - $detail->qty_order);
         })->count();
 
+        $school = null;
+        if ($this->school) {
+            $school = [
+                'id' => $this->school->id,
+                'name' => $this->school->name,
+            ];
+        }
+
         return [
             'id' => $this->id,
             'date' => Carbon::parse($this->date)->toDateString(),
@@ -214,6 +222,7 @@ class PreorderResource extends JsonResource
             'details_count' => $this->details->count(),
             'product_ready_count' => $ready,
             'product_not_ready_count' => $notReady,
+            'school' => $school,
         ];
     }
 }

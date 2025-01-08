@@ -49,6 +49,7 @@ class PreorderController extends Controller
                 },
                 'details.product',
                 'shipping',
+                'school',
             ])
                 ->withCount('details')
                 ->whereHas('details', function ($qDetail) {
@@ -269,6 +270,7 @@ class PreorderController extends Controller
             'branch',
             'shipping',
             'details.product',
+            'school',
         ])->find($id);
 
         if (is_null($preorder)) {
@@ -294,6 +296,7 @@ class PreorderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])
             ->withCount('details')
@@ -322,6 +325,7 @@ class PreorderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details.product',
         ])->find($id);
 
@@ -370,7 +374,7 @@ class PreorderController extends Controller
                 $input['paid_at'] = null;
             }
 
-            $preorder = Preorder::with('details', 'shipping')->find($id);
+            $preorder = Preorder::with('details', 'shipping', 'school')->find($id);
             if (empty($preorder)) {
                 return response()->json([
                     'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
@@ -481,7 +485,10 @@ class PreorderController extends Controller
     {
         DB::beginTransaction();
         try {
-            $preorder = Preorder::with('shipping')->find($id);
+            $preorder = Preorder::with([
+                'shipping',
+                'school',
+            ])->find($id);
             if (empty($preorder)) {
                 return response()->json([
                     'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
@@ -523,7 +530,10 @@ class PreorderController extends Controller
     {
         DB::beginTransaction();
         try {
-            $preorder = Preorder::with('shipping')->find($id);
+            $preorder = Preorder::with([
+                'shipping',
+                'school',
+            ])->find($id);
             if (empty($preorder)) {
                 return response()->json([
                     'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND],
@@ -591,6 +601,7 @@ class PreorderController extends Controller
     {
         $preorder = Preorder::with([
             'shipping.expedition',
+            'school',
         ])->find($id);
 
         if (is_null($preorder)) {
@@ -631,6 +642,7 @@ class PreorderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details' => function ($qDetail) {
                 $qDetail->whereRaw('qty != qty_order');
             },
@@ -655,6 +667,7 @@ class PreorderController extends Controller
             'customer.addresses',
             'branch',
             'shipping',
+            'school',
             'details' => function ($qDetail) {
                 $qDetail->whereRaw('qty != qty_order');
             },
@@ -674,6 +687,7 @@ class PreorderController extends Controller
         $query = Preorder::with([
             'customer.user',
             'customer_address',
+            'school',
         ]);
 
         if ($request->search_customer_id) {

@@ -38,7 +38,13 @@ var KTDetailAgent = function () {
                 {
                     targets: 2,
                     render: function (data, type, row) {
-                        return row.customer_address != undefined ? row.customer_address.name : '-';
+                        let result = row.customer_address != undefined ? row.customer_address.name : '-'
+
+                        if (row.notes != undefined && row.notes != null) {
+                            result += `<br>${row.notes}`
+                        }
+
+                        return ;
                     }
                 },
                 {

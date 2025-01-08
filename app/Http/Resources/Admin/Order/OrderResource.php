@@ -153,6 +153,14 @@ class OrderResource extends JsonResource
             }
         }
 
+        $school = null;
+        if ($this->school) {
+            $school = [
+                'id' => $this->school->id,
+                'name' => $this->school->name,
+            ];
+        }
+
         return [
             'id' => $this->id,
             'date' => Carbon::parse($this->date)->toDateString(),
@@ -184,6 +192,7 @@ class OrderResource extends JsonResource
             'details' => $details,
             'created_by' => $createdBy,
             'updated_by' => $updatedBy,
+            'school' => $school,
         ];
     }
 }
