@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\CustomerAddress;
 use App\Models\File;
 use App\Models\Import;
+use App\Models\School;
 use App\Models\User;
 use App\Utils\Phone;
 use Carbon\Carbon;
@@ -32,6 +33,7 @@ class CustomerController extends Controller
             $query = User::with([
                 'customer',
                 'customer.areas',
+                'customer.schools',
                 'customer.address.province:id,name',
                 'customer.address.regency:id,name',
                 'customer.address.district:id,name',
@@ -74,7 +76,11 @@ class CustomerController extends Controller
             ]);
         }
 
-        return view('admin.customer.index');
+        $schools = School::all()->pluck('name', 'id');
+
+        return view('admin.customer.index', [
+            'schools' => $schools,
+        ]);
     }
 
     /**
@@ -84,6 +90,8 @@ class CustomerController extends Controller
     {
         DB::beginTransaction();
         try {
+            $schools = collect($request->get('customer_schools'))->filter();
+
             $user = new User();
             $user->fill([
                 'name' => $request->input('customer_name'),
@@ -98,7 +106,7 @@ class CustomerController extends Controller
                 $customer->fill([
                     'type' => $request->input('customer_type'),
                     'user_id' => $user->id,
-                    'target' => $request->input('customer_target') ?? 0,
+                    'target' => $schools->sum(),
                     'marketing' => $request->input('customer_marketing'),
                 ]);
 
@@ -123,6 +131,15 @@ class CustomerController extends Controller
                     if ($areas) {
                         $customer->areas()->sync(array_unique($areas));
                     }
+
+                    $schools = $schools->map(function ($target) {
+                        return [
+                            'target' => $target,
+                        ];
+                    });
+                    if ($schools) {
+                        $customer->schools()->sync($schools);
+                    }
                 }
             }
 
@@ -146,6 +163,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::with([
             'areas',
+            'schools',
             'address.province:id,name',
             'address.regency:id,name',
             'address.district:id,name',
@@ -176,6 +194,8 @@ class CustomerController extends Controller
 
         DB::beginTransaction();
         try {
+            $schools = collect($request->get('customer_schools'))->filter();
+
             $user = $customer->user;
             $user->fill([
                 'name' => $request->input('customer_name'),
@@ -192,7 +212,7 @@ class CustomerController extends Controller
                 $customer->fill([
                     'type' => $request->input('customer_type'),
                     'user_id' => $user->id,
-                    'target' => $request->input('customer_target') ?? 0,
+                    'target' => $schools->sum(),
                     'marketing' => $request->input('customer_marketing'),
                 ]);
 
@@ -222,6 +242,15 @@ class CustomerController extends Controller
                     $areas = $request->input('customer_area_id');
                     if ($areas) {
                         $customer->areas()->sync(array_unique($areas));
+                    }
+
+                    $schools = $schools->map(function ($target) {
+                        return [
+                            'target' => $target,
+                        ];
+                    });
+                    if ($schools) {
+                        $customer->schools()->sync($schools);
                     }
                 }
             }

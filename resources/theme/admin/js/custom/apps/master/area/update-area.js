@@ -113,10 +113,28 @@ var KTUsersUpdateBranch = function () {
                         // Check axios library docs: https://axios-http.com/docs/intro
                         let param = new FormData(form);
                         param.append('_method', 'PUT');
+                        let formData = {};
+                        for (const pair of param.entries()) {
+                            if (pair[1] instanceof FileList) {
+                                formData[pair[0]] = [];
+                                for (const file of pair[1]) {
+                                    formData[pair[0]].push(file);
+                                }
+                            } else if (pair[0].includes('[')) {
+                                const key = pair[0].split('[')[0];
+                                const index = pair[0].split('[')[1].replace(']', '');
+                                if (!formData[key]) {
+                                    formData[key] = {};
+                                }
+                                formData[key][index] = pair[1];
+                            } else {
+                                formData[pair[0]] = pair[1];
+                            }
+                        }
 
                         axios.put(
                             submitButton.closest('form').getAttribute('action') + '/' + areaId,
-                            Object.fromEntries(param)
+                            formData
                         ).then(function (response) {
                             if (response) {
                                 form.reset();

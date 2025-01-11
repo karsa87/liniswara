@@ -47,6 +47,18 @@ class CustomerListResource extends JsonResource
             ];
         }
 
+        $schools = null;
+        if ($this->customer->schools) {
+            $schools = [];
+            foreach ($this->customer->schools as $school) {
+                $schools[] = [
+                    'id' => $school->id,
+                    'name' => $school->name,
+                    'target' => $school->pivot->target,
+                ];
+            }
+        }
+
         return [
             'id' => $this->customer->id,
             'name' => $this->name,
@@ -61,6 +73,7 @@ class CustomerListResource extends JsonResource
             'regency' => $regency,
             'district' => $district,
             'village' => $village,
+            'schools' => $schools,
         ];
     }
 }

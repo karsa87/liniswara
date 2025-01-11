@@ -59,12 +59,22 @@ var KTSuppliersList = function () {
                 {
                     targets: 4,
                     render: function (data, type, row) {
+                        let result_schools = "";
+                        if (row.schools != undefined && row.schools != null && row.schools.length > 0) {
+                            result_schools = "<br><ul class='fs-7 text-muted'>";
+                            row.schools.forEach(function (school) {
+                                let target_school = school.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                                result_schools += `<li>${school.name} : ${target_school}</li>`
+                            });
+                            result_schools += "</ul>";
+                        }
+
                         let target = 0;
                         if (typeof row.target == 'number') {
                             target = row.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                         }
 
-                        return target;
+                        return `<span class="fw-bold text-gray-600">${target}</span>` + result_schools;
                     }
                 },
                 {
@@ -263,8 +273,14 @@ var KTSuppliersList = function () {
                         form.querySelector("input[name='customer_email']").value = customer.email;
                         form.querySelector("input[name='customer_company']").value = customer.company;
                         form.querySelector("input[name='customer_phone_number']").value = customer.phone_number;
-                        form.querySelector("input[name='customer_target']").value = customer.target;
+                        // form.querySelector("input[name='customer_target']").value = customer.target;
                         // form.querySelector("select[name='customer_type']").value = customer.type;
+
+                        if (customer.schools != undefined && customer.schools != null) {
+                            customer.schools.forEach(school => {
+                                form.querySelector(`input[name='customer_schools[${school.id}]']`).value = school.target;
+                            })
+                        }
 
                         let detailAddress = '';
                         form.querySelector("input[name='customer_village_id']").value = '';
@@ -365,6 +381,7 @@ var KTSuppliersList = function () {
                 if ($(type).data('url')) {
                     $(type).select2({
                         minimumInputLength: -1,
+                        width: '100%',
                         ajax: {
                             url: $(type).data('url'),
                             dataType: 'json',

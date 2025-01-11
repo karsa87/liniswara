@@ -101,25 +101,31 @@
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="fv-row mb-7">
-                        <!--begin::Label-->
-                        <label class="fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Target</span>
-                            <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Area target is required to be unique.">
-                                <i class="ki-duotone ki-information fs-7">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
-                            </span>
-                        </label>
-                        <!--end::Label-->
-                        <!--begin::Input-->
-                        <input type="numeric" class="form-control form-control-solid" placeholder="Enter a area target" name="area_target" />
-                        <!--end::Input-->
-                    </div>
-                    <!--end::Input group-->
+
+
+                    @foreach ($schools as $id => $name)
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-semibold form-label mb-2">
+                                <span class="">{!! $name !!}</span>
+                                <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Target sekolah {!! $name !!}.">
+                                    <i class="ki-duotone ki-information fs-7">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                    </i>
+                                </span>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="numeric" class="form-control form-control-solid" placeholder="Enter a area target {!! $name !!}" name="area_schools[{!! $id !!}]" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                    @endforeach
+
+
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
@@ -253,25 +259,29 @@
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="fv-row mb-7">
-                        <!--begin::Label-->
-                        <label class="fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Target</span>
-                            <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Area target is required to be unique.">
-                                <i class="ki-duotone ki-information fs-7">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
-                            </span>
-                        </label>
-                        <!--end::Label-->
-                        <!--begin::Input-->
-                        <input type="numeric" class="form-control form-control-solid" placeholder="Enter a area target" name="area_target" />
-                        <!--end::Input-->
-                    </div>
-                    <!--end::Input group-->
+
+                    @foreach ($schools as $id => $name)
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-semibold form-label mb-2">
+                                <span class="">{!! $name !!}</span>
+                                <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Target sekolah {!! $name !!}.">
+                                    <i class="ki-duotone ki-information fs-7">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                    </i>
+                                </span>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="numeric" class="form-control form-control-solid" placeholder="Enter a area target {!! $name !!}" name="area_schools[{!! $id !!}]" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                    @endforeach
+
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->

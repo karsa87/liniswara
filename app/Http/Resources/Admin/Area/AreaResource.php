@@ -47,6 +47,18 @@ class AreaResource extends JsonResource
             ];
         }
 
+        $schools = null;
+        if ($this->schools) {
+            $schools = [];
+            foreach ($this->schools as $school) {
+                $schools[] = [
+                    'id' => optional($school)->id,
+                    'name' => optional($school)->name,
+                    'target' => optional($school)->pivot->target,
+                ];
+            }
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -56,6 +68,7 @@ class AreaResource extends JsonResource
             'regency' => $regency,
             'district' => $district,
             'village' => $village,
+            'schools' => $schools,
         ];
     }
 }

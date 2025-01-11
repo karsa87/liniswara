@@ -128,7 +128,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Marketing</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <select class="form-select form-control form-control-solid" data-placeholder="Select Marketing" data-allow-clear="true" name="customer_marketing" data-kt-ecommerce-catalog-add-customer="customer_option">
+                                            <select class="form-select form-control form-control-solid" data-placeholder="Select Marketing" data-allow-clear="true" name="customer_marketing" data-kt-ecommerce-catalog-add-customer="customer_option" style="width: 100%;">
                                                 @foreach (\App\Enums\Preorder\MarketingEnum::MAP_LABEL as $key => $name)
                                                     <option value="{{ $key }}">{{ $name }}</option>
                                                 @endforeach
@@ -136,19 +136,7 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row flex-row-fluid">
-                                            <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Target</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="numeric" name="customer_target" class="form-control form-control-solid mb-3 mb-lg-0" />
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-                                    </div>
 
-                                    <div>
                                         <!--begin::Input group-->
                                         <div class="fv-row flex-row-fluid">
                                             <!--begin::Label-->
@@ -162,6 +150,23 @@
                                         </div>
                                         <!--end::Input group-->
                                     </div>
+
+                                    @foreach ($schools->chunk(2) as $schoolChunks)
+                                    <div class="d-flex flex-column flex-md-row gap-5">
+                                        @foreach ($schoolChunks as $id => $name)
+                                            <!--begin::Input group-->
+                                            <div class="fv-row flex-row-fluid">
+                                                <!--begin::Label-->
+                                                <label class="required fw-semibold fs-6 mb-2">{!! $name !!}</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="number" name="customer_schools[{{ $id }}]" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Input group-->
+                                        @endforeach
+                                    </div>
+                                    @endforeach
 
                                     <div class="d-flex flex-column flex-md-row gap-5">
                                         <!--begin::Input group-->

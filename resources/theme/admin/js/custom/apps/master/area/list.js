@@ -63,12 +63,22 @@ var KTUsersBranchsList = function () {
                 {
                     targets: 2,
                     render: function (data, type, row) {
+                        let result_schools = "";
+                        if (row.schools != undefined && row.schools != null && row.schools.length > 0) {
+                            result_schools = "<br><ul class='fs-7 text-muted'>";
+                            row.schools.forEach(function (school) {
+                                let target_school = school.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                                result_schools += `<li>${school.name} : ${target_school}</li>`
+                            });
+                            result_schools += "</ul>";
+                        }
+
                         let target = 0;
                         if (typeof row.target == 'number') {
                             target = row.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
                         }
 
-                        return target;
+                        return `<span class="fw-bold text-gray-600">${target}</span>` + result_schools;
                     }
                 },
                 {
@@ -256,7 +266,13 @@ var KTUsersBranchsList = function () {
                         let area = response.data.data;
                         form.querySelector("input[name='area_id']").value = area.id;
                         form.querySelector("input[name='area_name']").value = area.name;
-                        form.querySelector("input[name='area_target']").value = area.target;
+                        // form.querySelector("input[name='area_target']").value = area.target;
+
+                        if (area.schools != undefined && area.schools != null) {
+                            area.schools.forEach(school => {
+                                form.querySelector(`input[name='area_schools[${school.id}]']`).value = school.target;
+                            })
+                        }
 
                         let detailAddress = '';
                         $('#area_update_village_id').val('').trigger('change');

@@ -108,7 +108,26 @@ var KTUsersAddBranch = function () {
                         submitButton.disabled = true;
 
                         // Check axios library docs: https://axios-http.com/docs/intro
-                        axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
+                        let param = new FormData(form);
+                        let formData = {};
+                        for (const pair of param.entries()) {
+                            if (pair[1] instanceof FileList) {
+                                formData[pair[0]] = [];
+                                for (const file of pair[1]) {
+                                    formData[pair[0]].push(file);
+                                }
+                            } else if (pair[0].includes('[')) {
+                                const key = pair[0].split('[')[0];
+                                const index = pair[0].split('[')[1].replace(']', '');
+                                if (!formData[key]) {
+                                    formData[key] = {};
+                                }
+                                formData[key][index] = pair[1];
+                            } else {
+                                formData[pair[0]] = pair[1];
+                            }
+                        }
+                        axios.post(submitButton.closest('form').getAttribute('action'), formData).then(function (response) {
                             if (response) {
                                 form.reset();
 

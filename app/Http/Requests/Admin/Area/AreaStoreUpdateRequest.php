@@ -33,7 +33,7 @@ class AreaStoreUpdateRequest extends FormRequest
                 'string',
                 'unique:'.(new Area())->getTable().',name'.($this->get('area_id') ? ','.$this->get('area_id') : ''),
             ],
-            'area_target' => [
+            'area_schools.*' => [
                 'nullable',
                 'numeric',
                 'min:0',

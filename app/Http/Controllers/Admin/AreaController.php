@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Area\AreaStoreUpdateRequest;
 use App\Http\Resources\Admin\Area\AreaResource;
 use App\Models\Area;
+use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -22,6 +23,7 @@ class AreaController extends Controller
                 'regency',
                 'district',
                 'village',
+                'schools',
             ]);
 
             if ($q = $request->input('search.value')) {
@@ -53,7 +55,11 @@ class AreaController extends Controller
             ]);
         }
 
-        return view('admin.area.index');
+        $schools = School::all()->pluck('name', 'id');
+
+        return view('admin.area.index', [
+            'schools' => $schools,
+        ]);
     }
 
     /**
@@ -66,6 +72,7 @@ class AreaController extends Controller
             'regency',
             'district',
             'village',
+            'schools',
         ])->find($id);
 
         if (is_null($area)) {
@@ -83,16 +90,29 @@ class AreaController extends Controller
     public function store(AreaStoreUpdateRequest $request)
     {
         try {
+            $schools = collect($request->get('area_schools'))->filter();
+
             $area = new Area();
             $area->fill([
                 'name' => $request->validated('area_name'),
-                'target' => $request->validated('area_target'),
+                'target' => $schools->sum(),
                 'province_id' => $request->validated('area_province_id'),
                 'regency_id' => $request->validated('area_regency_id'),
                 'district_id' => $request->validated('area_district_id'),
                 'village_id' => $request->validated('area_village_id'),
             ]);
-            $area->save();
+
+            if ($area->save()) {
+                $schools = $schools->map(function ($target) {
+                    return [
+                        'target' => $target,
+                    ];
+                });
+
+                if ($schools) {
+                    $area->schools()->sync($schools);
+                }
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
@@ -117,15 +137,28 @@ class AreaController extends Controller
         }
 
         try {
+            $schools = collect($request->get('area_schools'))->filter();
+
             $area->fill([
                 'name' => $request->validated('area_name'),
-                'target' => $request->validated('area_target'),
+                'target' => $schools->sum(),
                 'province_id' => $request->validated('area_province_id'),
                 'regency_id' => $request->validated('area_regency_id'),
                 'district_id' => $request->validated('area_district_id'),
                 'village_id' => $request->validated('area_village_id'),
             ]);
-            $area->save();
+
+            if ($area->save()) {
+                $schools = $schools->map(function ($target) {
+                    return [
+                        'target' => $target,
+                    ];
+                });
+
+                if ($schools) {
+                    $area->schools()->sync($schools);
+                }
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
