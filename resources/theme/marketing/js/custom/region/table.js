@@ -123,6 +123,11 @@ var KTRegionsList = function () {
 
         // Add event listener for opening and closing details
         datatable.on('click', 'td.dt-control', function (e) {
+            let table = e.target.closest('table');
+            if (table.id != 'kt_table_customers') {
+                return;
+            }
+
             let tr = e.target.closest('tr');
             let row = datatable.row(tr);
 
@@ -139,13 +144,14 @@ var KTRegionsList = function () {
 
     // Formatting function for row details - modify as you need
     var format = (element, data) => {
-        var urlRankAgent = element.target.closest('table').dataset.rankAgent.replace('REPLACE', data.id);
         var urlRankSchool = element.target.closest('table').dataset.rankSchool.replace('REPLACE', data.id);
+        var urlRankAgent = element.target.closest('table').dataset.rankAgent.replace('REPLACE', `${data.id}?school_id=REPLACE`);
 
         var result = '<h6 class="text-center">Target dan Pencapaian per Jenjang Sekolah</h6>';
-        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-school-${data.id}">
+        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-school-${data.id}" data-rank-agent="${urlRankAgent}">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-25px text-center"></th>
                     <th class="min-w-325px text-center">Sekolah</th>
                     <th class="min-w-125px">Target</th>
                     <th class="min-w-125px">Pencapaian</th>
@@ -154,8 +160,106 @@ var KTRegionsList = function () {
             </thead>
             <tbody></tbody>
         </table>`;
-        result += '<h6 class="text-center">Target dan Pencapaian per Agent</h6>';
-        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-agent-${data.id}">
+
+        KTApp.showPageLoading();
+        // Init chart
+        axios.get(urlRankSchool).then(function (response) {
+            if (response && response.data) {
+                response.data.forEach(dataSchool => {
+                    var preordersTotal = dataSchool.preorders_total ?? 0;
+                    var preordersTotalFormatted = '-';
+                    if (preordersTotal != null && preordersTotal != undefined) {
+                        preordersTotalFormatted = preordersTotal.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    }
+
+                    var percent_show = 0;
+                    var percent = 0;
+                    var nameSchool = dataSchool.name ? dataSchool.name : '-';
+                    var targetAgent = dataSchool.pivot.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    percent_show = Math.round((preordersTotal / dataSchool.pivot.target) * 100);
+                    percent = preordersTotal >= dataSchool.pivot.target ? 100 : Math.round((preordersTotal / dataSchool.pivot.target) * 100);
+
+                    var resultTr = `<tr data-school-id="${dataSchool.id}">
+                        <td class="dt-control"></td>
+                        <td>${nameSchool}</td>
+                        <td>${targetAgent}</td>
+                        <td>${preordersTotalFormatted}</td>
+                        <td>
+                        <div class="d-flex align-items-center flex-column mt-3 w-100">
+                            <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
+                                <span>${percent_show}%</span>
+                            </div>
+                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
+                                <div class="bg-success rounded h-8px" role="progressbar" style="width: ${percent}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>`;
+
+                    $(`#table-transaction-school-${data.id} tbody`).append(resultTr);
+                });
+
+                $(`#table-transaction-school-${data.id} tbody td.dt-control`).on('click', function (e) {
+                    e.preventDefault();
+
+                    let tr = e.target.closest('tr');
+                    let childRow = $(`#table-transaction-school-${data.id}`).find(`.child-row-${data.id}-${tr.dataset.schoolId}`);
+
+                    if (childRow.length > 0) {
+                        // This row is already open - remove child
+                        childRow.remove();
+                        tr.classList.remove('dt-hasChild');
+                    } else {
+                        // Add child row
+                        tr.classList.add('dt-hasChild');
+                        const newRow = document.createElement('tr');
+                        newRow.classList.add(`child-row-${data.id}-${tr.dataset.schoolId}`);
+                        let tableArea = formatArea(e, tr.dataset.schoolId);
+                        newRow.innerHTML = `<td colspan="${tr.children.length}">
+                            ${tableArea}
+                        </td>`;
+                        tr.after(newRow);
+                    }
+                });
+            } else {
+                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                    text: "Sorry, looks like there are some errors detected, please try again.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        }).catch(function (error) {
+            let msg = "Gagal load data.";
+
+            Swal.fire({
+                title: "Failed load data",
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+        }).then(() => {
+            // Hide loading indication
+            KTApp.hidePageLoading();
+        });
+
+        return result;
+    }
+
+    // Formatting function for row details - modify as you need
+    var formatArea = (element, school_id) => {
+        var urlRankAgent = element.target.closest('table').dataset.rankAgent.replace('REPLACE', school_id);
+
+        var result = '<h6 class="text-center">Target dan Pencapaian per Agent</h6>';
+        result += `<table class="table align-middle table-row-dashed fs-6 gy-5" id="table-transaction-agent-${school_id}">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-325px text-center">Agent</th>
@@ -201,7 +305,7 @@ var KTRegionsList = function () {
                         </td>
                     </tr>`;
 
-                    $(`#table-transaction-agent-${data.id} tbody`).append(resultTr);
+                    $(`#table-transaction-agent-${school_id} tbody`).append(resultTr);
                 });
             } else {
                 // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -217,71 +321,6 @@ var KTRegionsList = function () {
             }
         }).catch(function (error) {
             let msg = "Gagal load data.";
-
-            Swal.fire({
-                title: "Failed load data",
-                text: msg,
-                icon: "error",
-                buttonsStyling: false,
-                confirmButtonText: "Ok, got it!",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                }
-            });
-        }).then(() => {
-            // Hide loading indication
-            KTApp.hidePageLoading();
-        });
-
-        axios.get(urlRankSchool).then(function (response) {
-            if (response && response.data) {
-                response.data.forEach(dataSchool => {
-                    var preordersTotal = dataSchool.preorders_total ?? 0;
-                    var preordersTotalFormatted = '-';
-                    if (preordersTotal != null && preordersTotal != undefined) {
-                        preordersTotalFormatted = preordersTotal.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                    }
-
-                    var percent_show = 0;
-                    var percent = 0;
-                    var nameSchool = dataSchool.name ? dataSchool.name : '-';
-                    var targetAgent = dataSchool.pivot.target.toLocaleString('in-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                    percent_show = Math.round((preordersTotal / dataSchool.pivot.target) * 100);
-                    percent = preordersTotal >= dataSchool.pivot.target ? 100 : Math.round((preordersTotal / dataSchool.pivot.target) * 100);
-
-                    var resultTr = `<tr>
-                        <td>${nameSchool}</td>
-                        <td>${targetAgent}</td>
-                        <td>${preordersTotalFormatted}</td>
-                        <td>
-                        <div class="d-flex align-items-center flex-column mt-3 w-100">
-                            <div class="d-flex justify-content-between fw-bold fs-6 opacity-50 w-100 mt-auto mb-2">
-                                <span>${percent_show}%</span>
-                            </div>
-                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
-                                <div class="bg-success rounded h-8px" role="progressbar" style="width: ${percent}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        </td>
-                    </tr>`;
-
-                    $(`#table-transaction-school-${data.id} tbody`).append(resultTr);
-                });
-            } else {
-                // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                Swal.fire({
-                    text: "Sorry, looks like there are some errors detected, please try again.",
-                    icon: "error",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary"
-                    }
-                });
-            }
-        }).catch(function (error) {
-            let msg = "Gagal load data.";
-            console.log(error);
 
             Swal.fire({
                 title: "Failed load data",

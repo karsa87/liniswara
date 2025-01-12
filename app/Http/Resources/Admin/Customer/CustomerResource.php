@@ -60,6 +60,18 @@ class CustomerResource extends JsonResource
             $area = $areas && count($areas) > 0 ? $areas[0] : null;
         }
 
+        $schools = null;
+        if ($this->schools) {
+            $schools = [];
+            foreach ($this->schools as $school) {
+                $schools[] = [
+                    'id' => $school->id,
+                    'name' => $school->name,
+                    'target' => $school->pivot->target,
+                ];
+            }
+        }
+
         return [
             'id' => $this->id,
             'name' => optional($this->user)->name,
@@ -76,6 +88,7 @@ class CustomerResource extends JsonResource
             'village' => $village,
             'area' => $area,
             'areas' => $areas,
+            'schools' => $schools,
         ];
     }
 }

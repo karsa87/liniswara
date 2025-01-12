@@ -222,22 +222,31 @@ class PreorderService
      * **/
     public function rankingByRegencySpecificAgent(
         $agentId,
-        $marketing = null
+        $marketing = null,
+        $params = []
     ): Collection {
         $agent = Customer::with([
-            'areas' => function ($qArea) use ($marketing) {
+            'areas' => function ($qArea) use ($marketing, $params) {
                 $qArea->with('province:id,name');
                 $qArea->withSum([
-                    'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketing, $params) {
                         if ($marketing) {
                             $qPreorder->where('marketing', $marketing);
+                        }
+
+                        if (array_key_exists('school_id', $params)) {
+                            $qPreorder->where('school_id', $params['school_id']);
                         }
                     },
                 ], 'total_amount')
                     ->withCount([
-                        'preorders' => function ($qPreorder) use ($marketing) {
+                        'preorders' => function ($qPreorder) use ($marketing, $params) {
                             if ($marketing) {
                                 $qPreorder->where('marketing', $marketing);
+                            }
+
+                            if (array_key_exists('school_id', $params)) {
+                                $qPreorder->where('school_id', $params['school_id']);
                             }
                         },
                     ])

@@ -302,7 +302,7 @@ class PaymentController extends Controller
     public function transaction_rank_regency(Request $request, $id)
     {
         $marketingTeam = session(config('session.app.selected_marketing_tim'));
-        $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id, optional($marketingTeam)->value);
+        $rankingRegency = $this->preorderService->rankingByRegencySpecificAgent($id, optional($marketingTeam)->value, $request->all());
 
         return response()->json($rankingRegency);
     }
@@ -419,7 +419,7 @@ class PaymentController extends Controller
     public function transaction_rank_agent(Request $request, $id)
     {
         $marketingTeam = session(config('session.app.selected_marketing_tim'));
-        $rankingAgents = $this->customerService->rankingSpecificAgent($id, $marketingTeam);
+        $rankingAgents = $this->customerService->rankingSpecificAgent($id, $marketingTeam, $request->all());
 
         return response()->json($rankingAgents);
     }

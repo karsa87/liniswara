@@ -49,22 +49,31 @@ class CustomerService
     public function rankingSpecificAgent(
         $id,
         $marketing = null,
+        $params = []
     ): Collection {
         $area = Area::with([
             'customer.user:id,name',
             'customer.address:id,customer_id,name',
-            'customer' => function ($qCustomer) use ($marketing) {
+            'customer' => function ($qCustomer) use ($marketing, $params) {
                 $qCustomer->withSum([
-                    'preorders as preorders_total' => function ($qPreorder) use ($marketing) {
+                    'preorders as preorders_total' => function ($qPreorder) use ($marketing, $params) {
                         if ($marketing) {
                             $qPreorder->where('marketing', $marketing);
+                        }
+
+                        if (array_key_exists('school_id', $params)) {
+                            $qPreorder->where('school_id', $params['school_id']);
                         }
                     },
                 ], 'total_amount')
                     ->withCount([
-                        'preorders' => function ($qPreorder) use ($marketing) {
+                        'preorders' => function ($qPreorder) use ($marketing, $params) {
                             if ($marketing) {
                                 $qPreorder->where('marketing', $marketing);
+                            }
+
+                            if (array_key_exists('school_id', $params)) {
+                                $qPreorder->where('school_id', $params['school_id']);
                             }
                         },
                     ])
