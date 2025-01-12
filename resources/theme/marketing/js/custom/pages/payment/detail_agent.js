@@ -44,7 +44,7 @@ var KTDetailAgent = function () {
                             result += `<br>${row.notes}`
                         }
 
-                        return ;
+                        return result;
                     }
                 },
                 {
