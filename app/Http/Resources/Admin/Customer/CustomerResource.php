@@ -89,6 +89,7 @@ class CustomerResource extends JsonResource
             'area' => $area,
             'areas' => $areas,
             'schools' => $schools,
+            'marketing' => $this->marketing,
         ];
     }
 }

@@ -114,10 +114,18 @@ var KTSuppliersAddSupplier = function () {
                             } else if (pair[0].includes('[')) {
                                 const key = pair[0].split('[')[0];
                                 const index = pair[0].split('[')[1].replace(']', '');
-                                if (!formData[key]) {
-                                    formData[key] = {};
+
+                                if (index != '') {
+                                    if (!formData[key]) {
+                                        formData[key] = {};
+                                    }
+                                    formData[key][index] = pair[1];
+                                } else {
+                                    if (!formData[key]) {
+                                        formData[key] = [];
+                                    }
+                                    formData[key].push(pair[1]);
                                 }
-                                formData[key][index] = pair[1];
                             } else {
                                 formData[pair[0]] = pair[1];
                             }
@@ -166,7 +174,6 @@ var KTSuppliersAddSupplier = function () {
                                 });
                             }
                         }).catch(function (error) {
-                            console.log(error);
                             let msg = "Sorry, looks like there are some errors detected, please try again.";
                             if (
                                 error.response && error.response.data

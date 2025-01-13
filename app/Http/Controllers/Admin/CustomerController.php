@@ -194,6 +194,7 @@ class CustomerController extends Controller
 
         DB::beginTransaction();
         try {
+
             $schools = collect($request->get('customer_schools'))->filter();
 
             $user = $customer->user;
